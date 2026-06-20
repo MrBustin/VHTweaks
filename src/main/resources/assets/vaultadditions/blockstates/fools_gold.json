@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "the_vault:block/fools_gold",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "the_vault:block/fools_gold",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "the_vault:block/fools_gold"
+    },
+    "facing=west": {
+      "model": "the_vault:block/fools_gold",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "axis=x,above=true,below=true": {
+      "model": "the_vault:block/vault_stone_pillar_center",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,above=true,below=false": {
+      "model": "the_vault:block/vault_stone_pillar_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,above=false,below=true": {
+      "model": "the_vault:block/vault_stone_pillar_top",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,above=false,below=false": {
+      "model": "the_vault:block/vault_stone_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,above=true,below=true": {
+      "model": "the_vault:block/vault_stone_pillar_center"
+    },
+    "axis=y,above=true,below=false": {
+      "model": "the_vault:block/vault_stone_pillar_bottom"
+    },
+    "axis=y,above=false,below=true": {
+      "model": "the_vault:block/vault_stone_pillar_top"
+    },
+    "axis=y,above=false,below=false": {
+      "model": "the_vault:block/vault_stone_pillar"
+    },
+    "axis=z,above=true,below=true": {
+      "model": "the_vault:block/vault_stone_pillar_center",
+      "x": 90
+    },
+    "axis=z,above=true,below=false": {
+      "model": "the_vault:block/vault_stone_pillar_bottom",
+      "x": 90
+    },
+    "axis=z,above=false,below=true": {
+      "model": "the_vault:block/vault_stone_pillar_top",
+      "x": 90
+    },
+    "axis=z,above=false,below=false": {
+      "model": "the_vault:block/vault_stone_pillar",
+      "x": 90
+    }
+  }
+}

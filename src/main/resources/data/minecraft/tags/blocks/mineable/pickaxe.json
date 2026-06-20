@@ -8,6 +8,13 @@
     "woldsvaults:vault_salvager",
     "woldsvaults:compressed_vault_diamond_block",
     "woldsvaults:compressed_vault_carbon",
-    "woldsvaults:knowledge_star_block"
+    "woldsvaults:knowledge_star_block",
+    "vaultadditions:loot_statue_vault",
+    "vaultadditions:loot_statue_gift",
+    "vaultadditions:loot_statue_gift_mega",
+    "vaultadditions:loot_statue_arena",
+    "vaultadditions:statue_cauldron",
+    "vaultadditions:player_trader",
+    "vaultadditions:power_block"
   ]
 }

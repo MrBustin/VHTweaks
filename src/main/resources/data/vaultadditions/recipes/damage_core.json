@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "VVE",
+    "VPV",
+    "EVV"
+  ],
+  "key": {
+    "V": {
+      "item": "the_vault:vaulterite_ingot"
+    },
+    "E": {
+      "item": "the_vault:vault_essence"
+    },
+    "P":{
+      "item": "the_vault:perfect_painite"
+    }
+
+  },
+  "result": {
+    "item": "vaultadditions:damage_core",
+    "count": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "vaultadditions:block/loot_statue_gift_mega"
+    },
+    "facing=east": {
+      "model": "vaultadditions:block/loot_statue_gift_mega",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "vaultadditions:block/loot_statue_gift_mega",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "vaultadditions:block/loot_statue_gift_mega",
+      "y": 90
+    }
+  }
+}

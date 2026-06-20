@@ -1,0 +1,131 @@
+{
+  "variants": {
+    "tier=1,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t1"
+    },
+    "tier=1,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t1",
+      "y": 90
+    },
+    "tier=1,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t1",
+      "y": 270
+    },
+    "tier=1,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t1",
+      "y": 180
+    },
+
+    "tier=2,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t2"
+    },
+    "tier=2,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t2",
+      "y": 90
+    },
+    "tier=2,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t2",
+      "y": 270
+    },
+    "tier=2,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t2",
+      "y": 180
+    },
+
+    "tier=3,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t3"
+    },
+    "tier=3,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t3",
+      "y": 90
+    },
+    "tier=3,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t3",
+      "y": 270
+    },
+    "tier=3,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t3",
+      "y": 180
+    },
+
+    "tier=4,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t4"
+    },
+    "tier=4,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t4",
+      "y": 90
+    },
+    "tier=4,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t4",
+      "y": 270
+    },
+    "tier=4,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t4",
+      "y": 180
+    },
+
+    "tier=5,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t5"
+    },
+    "tier=5,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t5",
+      "y": 90
+    },
+    "tier=5,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t5",
+      "y": 270
+    },
+    "tier=5,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t5",
+      "y": 180
+    },
+
+    "tier=6,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t6"
+    },
+    "tier=6,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t6",
+      "y": 90
+    },
+    "tier=6,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t6",
+      "y": 270
+    },
+    "tier=6,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t6",
+      "y": 180
+    },
+
+    "tier=7,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t7"
+    },
+    "tier=7,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t7",
+      "y": 90
+    },
+    "tier=7,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t7",
+      "y": 270
+    },
+    "tier=7,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t7",
+      "y": 180
+    },
+
+    "tier=8,facing=east": {
+      "model": "vaultadditions:block/raid_plaque/t8"
+    },
+    "tier=8,facing=south": {
+      "model": "vaultadditions:block/raid_plaque/t8",
+      "y": 90
+    },
+    "tier=8,facing=north": {
+      "model": "vaultadditions:block/raid_plaque/t8",
+      "y": 270
+    },
+    "tier=8,facing=west": {
+      "model": "vaultadditions:block/raid_plaque/t8",
+      "y": 180
+    }
+  }
+}

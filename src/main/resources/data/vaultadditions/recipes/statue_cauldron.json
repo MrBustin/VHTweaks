@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "N N",
+    "NCN",
+    "POP"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    },
+    "P":{
+      "item": "the_vault:perfect_painite"
+    },
+    "O": {
+      "item": "the_vault:perfect_black_opal"
+    }
+
+  },
+  "result": {
+    "item": "vaultadditions:statue_cauldron",
+    "count": 1
+  }
+}

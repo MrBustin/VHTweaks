@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side",
+  "textures": {
+    "fire": "vaultadditions:block/enchanted_fire_0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "VSE",
+    "SPS",
+    "ESV"
+  ],
+  "key": {
+    "V": {
+      "item": "the_vault:vaulterite_ingot"
+    },
+    "E": {
+      "item": "the_vault:vault_essence"
+    },
+    "P":{
+      "item": "the_vault:gem_painite"
+    },
+    "S":{
+      "item": "the_vault:vault_scrap"
+    }
+
+  },
+  "result": {
+    "item": "vaultadditions:fracture_core",
+    "count": 1
+  }
+}
