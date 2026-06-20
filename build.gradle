@@ -196,6 +196,7 @@ dependencies {
     implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:5654080")
     implementation fg.deobf("curse.maven:sophisticated-core-618298:5296312")
     implementation fg.deobf("curse.maven:vault-filters-952507:7318439")
+    implementation fg.deobf("curse.maven:modular-routers-250294:4984984") // Vault Filters
     implementation fg.deobf('curse.maven:pehkui-319596:4823461') // scale abilities
     implementation fg.deobf('curse.maven:applied-energistics-2-223794:4136407') // Vault Filters
 
