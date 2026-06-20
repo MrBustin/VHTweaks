@@ -1,25 +1,44 @@
 package xyz.iwolfking.woldsvaults;
 
 import com.mojang.logging.LogUtils;
+import iskallia.vault.core.vault.VaultRegistry;
+import iskallia.vault.item.gear.VaultArmorItem;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import xyz.iwolfking.vhapi.api.events.VHAPIProcessorsEvent;
 import xyz.iwolfking.vhapi.api.registry.gear.CustomVaultGearRegistryEntry;
 import xyz.iwolfking.vhapi.api.registry.objective.CustomObjectiveRegistryEntry;
+import xyz.iwolfking.woldsvaults.blocks.renderers.ColoredVelvetBedRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.EventBlockRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.GlobeExpanderEntityRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.LootStatueBlockRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.PlayerTraderBlockRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.RaidPlaqueRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.StatueCauldronRenderer;
+import xyz.iwolfking.woldsvaults.configs.ServerConfigs;
 import xyz.iwolfking.woldsvaults.configs.core.WoldsVaultsConfig;
 import xyz.iwolfking.woldsvaults.core.AddonLoader;
 import xyz.iwolfking.woldsvaults.events.LivingEntityEvents;
@@ -29,8 +48,20 @@ import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
 import xyz.iwolfking.woldsvaults.init.ModCrystalObjectives;
 import xyz.iwolfking.woldsvaults.init.ModGameRules;
 import xyz.iwolfking.woldsvaults.init.ModVaultFilterAttributes;
+import xyz.iwolfking.woldsvaults.init.additions.ModBlockEntities;
+import xyz.iwolfking.woldsvaults.init.additions.ModBlocks;
+import xyz.iwolfking.woldsvaults.init.additions.ModCreativeTab;
+import xyz.iwolfking.woldsvaults.init.additions.ModItems;
+import xyz.iwolfking.woldsvaults.init.additions.ModKeybinds;
+import xyz.iwolfking.woldsvaults.init.additions.ModModels;
+import xyz.iwolfking.woldsvaults.init.additions.ModNetwork;
+import xyz.iwolfking.woldsvaults.init.additions.ModParticles;
+import xyz.iwolfking.woldsvaults.init.additions.ModScreens;
+import xyz.iwolfking.woldsvaults.init.additions.ModSounds;
+import xyz.iwolfking.woldsvaults.gear.gecko.armor.VaultGeckoArmorRenderer;
 import xyz.iwolfking.woldsvaults.models.AdditionalModels;
 import xyz.iwolfking.woldsvaults.network.PacketHandler;
+import xyz.iwolfking.woldsvaults.objectives.InfiniteRaidObjective;
 import xyz.iwolfking.woldsvaults.objectives.data.BrutalBossesRegistry;
 import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
 
@@ -39,19 +70,30 @@ import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
 public class WoldsVaults {
 
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final String MODID = "woldsvaults";
+    public static final String MOD_ID = MODID;
+    public static final CreativeModeTab VAULT_ADDITIONS_TAB = new ModCreativeTab(MODID);
 
     public WoldsVaults() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WoldsVaultsConfig.COMMON_SPEC, "woldsvaults-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC, "woldsvaults-server.toml");
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModItems.ITEMS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        ModParticles.PARTICLE_TYPES.register(modEventBus);
+        ModSounds.SOUNDS.register(modEventBus);
 
         modEventBus.addGenericListener(CustomObjectiveRegistryEntry.class, ModCustomVaultObjectiveEntries::registerCustomObjectives);
         modEventBus.addGenericListener(CustomVaultGearRegistryEntry.class, ModCustomVaultGearEntries::registerGearEntries);
+        modEventBus.addListener(this::additionsCommonSetup);
+        modEventBus.addListener(this::additionsClientSetup);
+        modEventBus.addListener(this::registerRenderers);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(AddonLoader::onAddPackFinders);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, SetupEvents::registerCustomModelRolls);
         MinecraftForge.EVENT_BUS.addListener(this::onVHAPIProcessorEnd);
@@ -59,6 +101,10 @@ public class WoldsVaults {
         MinecraftForge.EVENT_BUS.register(this);
         ModCrystalObjectives.init();
         new AdditionalModels();
+
+        if (FMLEnvironment.dist == Dist.DEDICATED_SERVER && !ModList.get().isLoaded("worldborderfixer")) {
+            LOGGER.error("Worldborderfixer is not installed. Please install 'Multi World Borders Unofficial'!");
+        }
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -67,6 +113,32 @@ public class WoldsVaults {
         ModVaultFilterAttributes.initAttributes();
 
         LivingEntityEvents.init();
+    }
+
+    private void additionsCommonSetup(final FMLCommonSetupEvent event) {
+        ModModels.register();
+        ModNetwork.initialize();
+        VaultRegistry.OBJECTIVE.add(InfiniteRaidObjective.KEY);
+    }
+
+    private void additionsClientSetup(final FMLClientSetupEvent event) {
+        ModScreens.register();
+        ModKeybinds.register();
+        BlockEntityRenderers.register(ModBlockEntities.EVENT_BLOCK_ENTITY.get(), EventBlockRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.GLOBE_EXPANDER_ENTITY.get(), GlobeExpanderEntityRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.LOOT_STATUE_BLOCK_ENTITY.get(), LootStatueBlockRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.STATUE_CAULDRON_BLOCK_ENTITY.get(), StatueCauldronRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.PLAYER_TRADER_BLOCK_ENTITY.get(), PlayerTraderBlockRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.COLORED_VELVET_BED_BLOCK_ENTITY.get(), ColoredVelvetBedRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.RAID_PLAQUE_BLOCK_ENTITY.get(), RaidPlaqueRenderer::new);
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.ENCHANTED_FIRE.get(), RenderType.cutout());
+        LOGGER.info("Registered Wold's Vaults block entity renderers");
+    }
+
+    @SubscribeEvent
+    public void registerRenderers(final EntityRenderersEvent.AddLayers event) {
+        GeoArmorRenderer.registerArmorRenderer(VaultArmorItem.class, VaultGeckoArmorRenderer::new);
+        LOGGER.info("Registered Wold's Vaults armor renderers");
     }
 
     private void onVHAPIProcessorEnd(VHAPIProcessorsEvent.End event) {

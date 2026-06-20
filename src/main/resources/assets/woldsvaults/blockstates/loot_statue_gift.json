@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "woldsvaults:block/loot_statue_gift"
+    },
+    "facing=east": {
+      "model": "woldsvaults:block/loot_statue_gift",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "woldsvaults:block/loot_statue_gift",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "woldsvaults:block/loot_statue_gift",
+      "y": 90
+    }
+  }
+}

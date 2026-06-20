@@ -41,18 +41,6 @@ authors="${mod_authors}" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''${mod_description}'''
 
-[[mods]]
-modId="vaultadditions"
-version="1.21.25"
-displayName="Vault Additions"
-displayURL="https://github.com/a1qs/vaultadditions"
-logoFile="vaultadditions.png"
-authors="a1qs"
-description='''
-This mod is a mod designed to work with Vault Hunters 3rd edition,
-It adds a variety of features, which can be seen documented on the github page of this project.
-'''
-
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies."${mod_id}"]] #optional
    # the modid of the dependency
@@ -94,18 +82,4 @@ mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange="[1.18.2-3.21.5.6573,)"
 ordering="AFTER"
-side="BOTH"
-
-[[dependencies.vaultadditions]]
-modId="forge"
-mandatory=true
-versionRange="[40,)"
-ordering="NONE"
-side="BOTH"
-
-[[dependencies.vaultadditions]]
-modId="the_vault"
-mandatory=true
-versionRange="[1.18.2-3.15.1.3298,)"
-ordering="NONE"
 side="BOTH"

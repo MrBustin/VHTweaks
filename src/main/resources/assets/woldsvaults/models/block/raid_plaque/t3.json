@@ -1,0 +1,7 @@
+{
+	"parent": "the_vault:block/soul_plaque/t3",
+	"textures": {
+		"1": "woldsvaults:block/raid_plaque/t3",
+		"particle": "woldsvaults:block/raid_plaque/t3"
+	}
+}

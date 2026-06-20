@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "woldsvaults:block/statue_cauldron"
+    },
+    "level=1": {
+      "model": "woldsvaults:block/statue_cauldron"
+    },
+    "level=2": {
+      "model": "woldsvaults:block/statue_cauldron"
+    },
+    "level=3": {
+      "model": "woldsvaults:block/statue_cauldron"
+    }
+  }
+}

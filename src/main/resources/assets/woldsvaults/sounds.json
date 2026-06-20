@@ -1,59 +1,167 @@
 {
-  "wold_ambient": {
-    "category": "hostile",
-    "sounds": [
-      "woldsvaults:wold/ambient1",
-      "woldsvaults:wold/ambient2",
-      "woldsvaults:wold/ambient3",
-      "woldsvaults:wold/ambient4"
-    ]
-  },
-  "wold_hurt": {
-    "category": "hostile",
-    "sounds": [
-      "woldsvaults:wold/hurt1",
-      "woldsvaults:wold/hurt2",
-      "woldsvaults:wold/hurt3"
-    ]
-  },
-  "wold_death": {
-    "category": "hostile",
-    "sounds": [
-      "woldsvaults:wold/death1",
-      "woldsvaults:wold/death2"
-    ]
-  },
-  "saferspaces_proc": {
-    "category": "player",
-    "subtitle": "woldsvaults.subtitle.saferspaces_proc",
-    "sounds": [
-      "woldsvaults:saferspaces/bear_01",
-      "woldsvaults:saferspaces/bear_02",
-      "woldsvaults:saferspaces/bear_03"
-    ]
-  },
-  "overworld_portal_spawn": {
-    "category": "block",
-    "sounds": [
-      "woldsvaults:portal_spawn"
-    ]
-  },
-  "one_up": {
-    "category": "player",
-    "sounds": [
-      "woldsvaults:1up"
-    ]
-  },
-  "super_mushroom": {
-    "category": "player",
-    "sounds": [
-      "woldsvaults:super_mushroom"
-    ]
-  },
-  "rang_ricochet": {
-    "category": "player",
-    "sounds": [
-      "woldsvaults:rang_ricochet"
-    ]
-  }
+    "wold_ambient":  {
+                         "category":  "hostile",
+                         "sounds":  [
+                                        "woldsvaults:wold/ambient1",
+                                        "woldsvaults:wold/ambient2",
+                                        "woldsvaults:wold/ambient3",
+                                        "woldsvaults:wold/ambient4"
+                                    ]
+                     },
+    "wold_hurt":  {
+                      "category":  "hostile",
+                      "sounds":  [
+                                     "woldsvaults:wold/hurt1",
+                                     "woldsvaults:wold/hurt2",
+                                     "woldsvaults:wold/hurt3"
+                                 ]
+                  },
+    "wold_death":  {
+                       "category":  "hostile",
+                       "sounds":  [
+                                      "woldsvaults:wold/death1",
+                                      "woldsvaults:wold/death2"
+                                  ]
+                   },
+    "saferspaces_proc":  {
+                             "category":  "player",
+                             "subtitle":  "woldsvaults.subtitle.saferspaces_proc",
+                             "sounds":  [
+                                            "woldsvaults:saferspaces/bear_01",
+                                            "woldsvaults:saferspaces/bear_02",
+                                            "woldsvaults:saferspaces/bear_03"
+                                        ]
+                         },
+    "overworld_portal_spawn":  {
+                                   "category":  "block",
+                                   "sounds":  [
+                                                  "woldsvaults:portal_spawn"
+                                              ]
+                               },
+    "one_up":  {
+                   "category":  "player",
+                   "sounds":  [
+                                  "woldsvaults:1up"
+                              ]
+               },
+    "super_mushroom":  {
+                           "category":  "player",
+                           "sounds":  [
+                                          "woldsvaults:super_mushroom"
+                                      ]
+                       },
+    "rang_ricochet":  {
+                          "category":  "player",
+                          "sounds":  [
+                                         "woldsvaults:rang_ricochet"
+                                     ]
+                      },
+    "blade_frenzy":  {
+                         "category":  "master",
+                         "sounds":  [
+                                        {
+                                            "name":  "woldsvaults:abilities/blade_frenzy",
+                                            "stream":  true
+                                        }
+                                    ]
+                     },
+    "hoy_activate_archon":  {
+                                "category":  "master",
+                                "sounds":  [
+                                               {
+                                                   "name":  "woldsvaults:abilities/hoy/activate_archon",
+                                                   "stream":  true
+                                               }
+                                           ]
+                            },
+    "hoy_archon_bolt":  {
+                            "category":  "master",
+                            "sounds":  [
+                                           {
+                                               "name":  "woldsvaults:abilities/hoy/archon_bolt",
+                                               "stream":  true
+                                           }
+                                       ]
+                        },
+    "hoy_dash":  {
+                     "category":  "master",
+                     "sounds":  [
+                                    {
+                                        "name":  "woldsvaults:abilities/hoy/dash",
+                                        "stream":  true
+                                    }
+                                ]
+                 },
+    "hoy_activate_manashield":  {
+                                    "category":  "master",
+                                    "sounds":  [
+                                                   {
+                                                       "name":  "woldsvaults:abilities/hoy/activate_manashield",
+                                                       "stream":  true
+                                                   }
+                                               ]
+                                },
+    "hoy_elytra_glide":  {
+                             "category":  "master",
+                             "sounds":  [
+                                            {
+                                                "name":  "woldsvaults:abilities/hoy/elytra_glide",
+                                                "stream":  true
+                                            }
+                                        ]
+                         },
+    "hoy_manashield_hit":  {
+                               "category":  "master",
+                               "sounds":  [
+                                              {
+                                                  "name":  "woldsvaults:abilities/hoy/hit_manashield",
+                                                  "stream":  true
+                                              }
+                                          ]
+                           },
+    "tiger_activate_archon":  {
+                                  "category":  "master",
+                                  "sounds":  [
+                                                 {
+                                                     "name":  "woldsvaults:abilities/tiger/activate_archon",
+                                                     "stream":  true
+                                                 }
+                                             ]
+                              },
+    "tiger_archon_bolt":  {
+                              "category":  "master",
+                              "sounds":  [
+                                             {
+                                                 "name":  "woldsvaults:abilities/tiger/archon_bolt",
+                                                 "stream":  true
+                                             }
+                                         ]
+                          },
+    "tiger_dash":  {
+                       "category":  "master",
+                       "sounds":  [
+                                      {
+                                          "name":  "woldsvaults:abilities/tiger/dash",
+                                          "stream":  true
+                                      }
+                                  ]
+                   },
+    "tiger_activate_manashield":  {
+                                      "category":  "master",
+                                      "sounds":  [
+                                                     {
+                                                         "name":  "woldsvaults:abilities/hoy/activate_manashield",
+                                                         "stream":  true
+                                                     }
+                                                 ]
+                                  },
+    "fart":  {
+                 "category":  "master",
+                 "sounds":  [
+                                {
+                                    "name":  "woldsvaults:abilities/tiger/dash_fart",
+                                    "stream":  true
+                                }
+                            ]
+             }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "woldsvaults:block/loot_statue_arena"
+    },
+    "facing=south": {
+      "model": "woldsvaults:block/loot_statue_arena",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "woldsvaults:block/loot_statue_arena",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "woldsvaults:block/loot_statue_arena",
+      "y": 90
+    }
+  }
+}

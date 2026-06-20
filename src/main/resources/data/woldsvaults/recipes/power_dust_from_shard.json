@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:power_shard"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:power_dust",
+    "count": 9
+  }
+}

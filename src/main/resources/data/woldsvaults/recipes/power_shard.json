@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "woldsvaults:power_dust"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:power_shard",
+    "count": 1
+  }
+}

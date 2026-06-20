@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:power_block"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:power_crystal",
+    "count": 9
+  }
+}

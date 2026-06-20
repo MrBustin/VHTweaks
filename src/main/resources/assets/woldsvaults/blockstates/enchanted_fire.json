@@ -1,0 +1,90 @@
+{
+  "multipart": [
+    {
+      "apply": [
+        {
+          "model": "woldsvaults:block/enchanted_fire_floor0"
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_floor1"
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "woldsvaults:block/enchanted_fire_side0"
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side1"
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt0"
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt1"
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "woldsvaults:block/enchanted_fire_side0",
+          "y": 90
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side1",
+          "y": 90
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt0",
+          "y": 90
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt1",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "woldsvaults:block/enchanted_fire_side0",
+          "y": 180
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side1",
+          "y": 180
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt0",
+          "y": 180
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt1",
+          "y": 180
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "woldsvaults:block/enchanted_fire_side0",
+          "y": 270
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side1",
+          "y": 270
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt0",
+          "y": 270
+        },
+        {
+          "model": "woldsvaults:block/enchanted_fire_side_alt1",
+          "y": 270
+        }
+      ]
+    }
+  ]
+}
