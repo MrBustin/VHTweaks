@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GXG",
+    " R ",
+    "GXG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:smooth_stone"
+    },
+    "X": {
+      "item": "the_vault:gem_alexandrite"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:scavenger_altar",
+    "count": 1
+  }
+}

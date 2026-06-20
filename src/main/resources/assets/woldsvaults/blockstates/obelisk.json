@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "half=upper": {
+      "model": "the_vault:block/empty"
+    },
+    "half=lower,filled=false": {
+      "model": "the_vault:block/obelisk_inactive"
+    },
+    "half=lower,filled=true": {
+      "model": "the_vault:block/obelisk_active"
+    }
+  }
+}

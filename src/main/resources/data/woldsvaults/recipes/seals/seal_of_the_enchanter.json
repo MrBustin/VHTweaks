@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XGX",
+    "XRX",
+    "XBX"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:enchanting_table"
+    },
+    "X": {
+      "item": "woldsvaults:compressed_vault_essence"
+    },
+    "R": {
+      "item": "the_vault:crystal_seal_sage"
+    },
+    "B": {
+      "item": "the_vault:extraordinary_alexandrite"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:crystal_seal_enchanter",
+    "count": 1
+  }
+}

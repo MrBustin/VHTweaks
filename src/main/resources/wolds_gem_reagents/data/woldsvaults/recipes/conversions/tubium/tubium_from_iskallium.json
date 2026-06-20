@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:gem_reagent_tubium"
+    },
+    {
+      "item": "the_vault:gem_iskallium"
+    }
+  ],
+  "result": {
+    "item": "the_vault:gem_tubium",
+    "count": 2
+  }
+}

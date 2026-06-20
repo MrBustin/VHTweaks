@@ -1,0 +1,87 @@
+{
+  "itemRegistryName": "the_vault:plushie",
+  "MODEL_ROLLS": {
+    "SCRAPPY": [
+      "the_vault:gear/plushie/axolotl",
+      "the_vault:gear/plushie/bee",
+      "the_vault:gear/plushie/babou",
+      "the_vault:gear/plushie/cat",
+      "the_vault:gear/plushie/cow",
+      "the_vault:gear/plushie/mooey",
+      "the_vault:gear/plushie/dolphin",
+      "the_vault:gear/plushie/frog",
+      "the_vault:gear/plushie/llama",
+      "the_vault:gear/plushie/panda",
+      "the_vault:gear/plushie/parrot",
+      "the_vault:gear/plushie/squiddy",
+      "the_vault:gear/plushie/squiddly",
+      "the_vault:gear/plushie/turtle"
+    ],
+    "COMMON": [
+      "the_vault:gear/plushie/aria",
+      "the_vault:gear/plushie/artic_fox",
+      "the_vault:gear/plushie/gurgles",
+      "the_vault:gear/plushie/phan",
+      "the_vault:gear/plushie/slime",
+      "the_vault:gear/plushie/molten",
+      "the_vault:gear/plushie/shelly",
+      "the_vault:gear/plushie/skitter",
+      "the_vault:gear/plushie/vincent",
+      "the_vault:gear/plushie/walter_theo",
+      "the_vault:gear/plushie/wanda"
+    ],
+    "RARE": [
+      "the_vault:gear/plushie/araevin",
+      "the_vault:gear/plushie/caigan",
+      "the_vault:gear/plushie/dearliest",
+      "the_vault:gear/plushie/dweller",
+      "the_vault:gear/plushie/jackal",
+      "the_vault:gear/plushie/joseph",
+      "the_vault:gear/plushie/blahaj",
+      "the_vault:gear/plushie/burnie",
+      "the_vault:gear/plushie/echo",
+      "the_vault:gear/plushie/eepy",
+      "the_vault:gear/plushie/glimmer",
+      "the_vault:gear/plushie/idris",
+      "the_vault:gear/plushie/evo",
+      "the_vault:gear/plushie/vixie"
+    ],
+    "EPIC": [
+      "the_vault:gear/plushie/hrry",
+      "the_vault:gear/plushie/sparklez",
+      "the_vault:gear/plushie/gander",
+      "the_vault:gear/plushie/ingot",
+      "the_vault:gear/plushie/eldrich",
+      "the_vault:gear/plushie/warden",
+      "the_vault:gear/plushie/rumble",
+      "the_vault:gear/plushie/dragon",
+      "the_vault:gear/plushie/winnie"
+    ],
+    "OMEGA": [
+      "the_vault:gear/plushie/attack8",
+      "the_vault:gear/plushie/dogv2",
+      "the_vault:gear/plushie/jrowez",
+      "the_vault:gear/plushie/justa",
+      "the_vault:gear/plushie/katables",
+      "the_vault:gear/plushie/wolf",
+      "the_vault:gear/plushie/bustin",
+      "the_vault:gear/plushie/caroline",
+      "the_vault:gear/plushie/cyber"
+
+    ],
+    "UNIQUE": [
+      "the_vault:gear/plushie/safer_spaces"
+    ],
+    "SPECIAL": [
+      "the_vault:gear/plushie/armani",
+      "the_vault:gear/plushie/breezy",
+      "the_vault:gear/plushie/bogster",
+      "the_vault:gear/plushie/clyde",
+      "the_vault:gear/plushie/sniffy",
+      "the_vault:gear/plushie/penny_rae",
+      "the_vault:gear/plushie/batty",
+      "the_vault:gear/plushie/kevin_bacon",
+      "the_vault:gear/plushie/wendy_scott"
+    ]
+  }
+}

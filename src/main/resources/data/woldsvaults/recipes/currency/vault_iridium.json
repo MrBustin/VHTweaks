@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    },
+    {
+      "item": "woldsvaults:vault_palladium"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:vault_iridium",
+    "count": 1
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SOS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "the_vault:extraordinary_black_opal"
+    },
+    "O": {
+      "item": "woldsvaults:extraordinary_pog_prism"
+    }
+  },
+  "result": {
+    "item": "the_vault:orb_frame",
+    "count": 1
+  }
+}

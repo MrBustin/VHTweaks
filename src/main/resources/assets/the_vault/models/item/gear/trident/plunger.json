@@ -1,0 +1,117 @@
+{
+	"credit": "Made with Blockbench",
+	"texture": "the_vault:item/gear/trident/plunger",
+	"textureSize": [
+		32,
+		32
+	],
+	"models": [
+		{
+			"part": "body",
+			"id": "body",
+			"invertAxis": "xy",
+			"translate": [
+				0,
+				-27,
+				0
+			],
+			"submodels": [
+				{
+					"id": "plunger",
+					"invertAxis": "xy",
+					"translate": [
+						0,
+						27,
+						0
+					],
+					"boxes": [
+						{
+							"coordinates": [
+								-2,
+								0,
+								2,
+								4,
+								1,
+								1
+							],
+							"textureOffset": [
+								12,
+								2
+							]
+						},
+						{
+							"coordinates": [
+								2,
+								0,
+								-2,
+								1,
+								1,
+								4
+							],
+							"textureOffset": [
+								10,
+								7
+							]
+						},
+						{
+							"coordinates": [
+								-3,
+								0,
+								-2,
+								1,
+								1,
+								4
+							],
+							"textureOffset": [
+								4,
+								6
+							]
+						},
+						{
+							"coordinates": [
+								-2,
+								0,
+								-3,
+								4,
+								1,
+								1
+							],
+							"textureOffset": [
+								12,
+								0
+							]
+						},
+						{
+							"coordinates": [
+								-2,
+								-2,
+								-2,
+								4,
+								2,
+								4
+							],
+							"textureOffset": [
+								0,
+								0
+							]
+						},
+						{
+							"coordinates": [
+								-0.5,
+								-14,
+								-0.5,
+								1,
+								12,
+								1
+							],
+							"textureOffset": [
+								0,
+								6
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

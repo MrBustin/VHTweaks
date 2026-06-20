@@ -1,0 +1,44 @@
+{
+  "itemRegistryName": "the_vault:rang",
+  "MODEL_ROLLS": {
+    "SCRAPPY": [
+      "the_vault:gear/rang/wooden",
+      "the_vault:gear/rang/stone",
+      "the_vault:gear/rang/chroma"
+    ],
+    "COMMON": [
+      "the_vault:gear/rang/crimson",
+      "the_vault:gear/rang/copper",
+      "the_vault:gear/rang/steel_chroma",
+      "the_vault:gear/rang/jack_of_clubs"
+    ],
+    "RARE": [
+      "the_vault:gear/rang/gold",
+      "the_vault:gear/rang/emerald",
+      "the_vault:gear/rang/gold_chroma",
+      "the_vault:gear/rang/king_of_diamonds"
+    ],
+    "EPIC": [
+      "the_vault:gear/rang/amethyst",
+      "the_vault:gear/rang/diamond",
+      "the_vault:gear/rang/black_chroma",
+      "the_vault:gear/rang/queen_of_hearts"
+    ],
+    "OMEGA": [
+      "the_vault:gear/rang/ourorangos",
+      "the_vault:gear/rang/geta",
+      "the_vault:gear/rang/prismatic",
+      "the_vault:gear/rang/ace_of_spades"
+    ],
+    "UNIQUE": [
+      "the_vault:gear/rang/trirang"
+    ],
+    "SPECIAL": [
+      "the_vault:gear/rang/bananarang",
+      "the_vault:gear/rang/ceiling_fan",
+      "the_vault:gear/rang/red_joker",
+      "the_vault:gear/rang/black_joker",
+      "the_vault:gear/rang/midnight"
+    ]
+  }
+}

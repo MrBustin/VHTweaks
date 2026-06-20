@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XGX",
+    "XRX",
+    "XBX"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:diamond_sword"
+    },
+    "X": {
+      "item": "woldsvaults:compressed_vault_essence"
+    },
+    "R": {
+      "item": "the_vault:crystal_seal_executioner"
+    },
+    "B": {
+      "item": "the_vault:vault_diamond_block"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:crystal_seal_titan",
+    "count": 1
+  }
+}

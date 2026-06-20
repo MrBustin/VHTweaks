@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": {
+      "model": "woldsvaults:item/tool"
+    },
+    "inventory": {
+      "model": "woldsvaults:item/tool"
+    }
+  }
+}

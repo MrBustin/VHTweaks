@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GPG",
+    " R ",
+    "GPG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:smooth_stone"
+    },
+    "P": {
+      "item": "the_vault:gem_painite"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:rune_pillar",
+    "count": 1
+  }
+}

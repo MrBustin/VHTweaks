@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XGX",
+    "XRX",
+    "XBX"
+  ],
+  "key": {
+    "G": {
+      "item": "the_vault:vault_meat_block"
+    },
+    "X": {
+      "item": "the_vault:dreamstone"
+    },
+    "R": {
+      "item": "the_vault:crystal_seal_hunter"
+    },
+    "B": {
+      "item": "the_vault:extraordinary_painite"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:crystal_seal_unhinged",
+    "count": 1
+  }
+}

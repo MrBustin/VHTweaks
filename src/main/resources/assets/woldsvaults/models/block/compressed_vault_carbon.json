@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "woldsvaults:block/compressed_vault_carbon"
+  }
+}

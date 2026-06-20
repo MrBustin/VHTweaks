@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GWG",
+    "XRX",
+    "GWG"
+  ],
+  "key": {
+    "G": {
+      "item": "woldsvaults:pog_prism"
+    },
+    "X":{
+      "item": "the_vault:angel_block"
+    },
+    "W": {
+      "item": "the_vault:omega_pog"
+    },
+    "R": {
+      "item": "woldsvaults:black_chromatic_steel_angel_ring"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:prismatic_angel_ring",
+    "count": 1
+  }
+}

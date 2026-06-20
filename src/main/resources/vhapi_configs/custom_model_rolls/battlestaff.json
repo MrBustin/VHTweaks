@@ -1,0 +1,41 @@
+{
+  "itemRegistryName": "the_vault:battlestaff",
+  "MODEL_ROLLS": {
+    "SCRAPPY": [
+      "the_vault:gear/battlestaff/battlestaff_0",
+      "the_vault:gear/battlestaff/battlestaff_copper"
+    ],
+    "COMMON": [
+      "the_vault:gear/battlestaff/battlestaff_lapis",
+      "the_vault:gear/battlestaff/battlestaff_purple",
+      "the_vault:gear/battlestaff/battlestaff_redstone",
+      "the_vault:gear/battlestaff/battlestaff_golden"
+    ],
+    "RARE": [
+      "the_vault:gear/battlestaff/battlestaff_diamond",
+      "the_vault:gear/battlestaff/battlestaff_emerald",
+      "the_vault:gear/battlestaff/battlestaff_light_blue"
+    ],
+    "EPIC": [
+      "the_vault:gear/battlestaff/battlestaff_growing",
+      "the_vault:gear/battlestaff/battlestaff_terror",
+      "the_vault:gear/battlestaff/ferryman"
+    ],
+    "OMEGA": [
+      "the_vault:gear/battlestaff/lightsaber",
+      "the_vault:gear/battlestaff/murakumogiri",
+      "the_vault:gear/battlestaff/chopstick_battlestaff",
+      "the_vault:gear/battlestaff/sun_wukong_staff",
+      "the_vault:gear/battlestaff/quackhammer"
+    ],
+    "UNIQUE": [
+      "the_vault:gear/battlestaff/bamboo_fightstick",
+      "the_vault:gear/battlestaff/ninja_baton",
+      "the_vault:gear/battlestaff/darksaber",
+      "the_vault:gear/battlestaff/scarlet_twins"
+    ],
+    "SPECIAL": [
+      "the_vault:gear/battlestaff/eldritch_staff"
+    ]
+  }
+}

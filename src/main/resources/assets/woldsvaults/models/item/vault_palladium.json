@@ -1,0 +1,32 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "woldsvaults:item/vault_palladium1"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "woldsvaults:count": 2
+            },
+            "model": "woldsvaults:item/vault_palladium2"
+        },
+        {
+            "predicate": {
+                "woldsvaults:count": 8
+            },
+            "model": "woldsvaults:item/vault_palladium3"
+        },
+        {
+            "predicate": {
+                "woldsvaults:count": 16
+            },
+            "model": "woldsvaults:item/vault_palladium4"
+        },
+        {
+            "predicate": {
+                "woldsvaults:count": 32
+            },
+            "model": "woldsvaults:item/vault_palladium5"
+        }
+    ]
+}

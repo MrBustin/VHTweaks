@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "woldsvaults:block/vault_diamond_block_1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "itemRegistryName": "the_vault:loot_sack",
+  "MODEL_ROLLS": {
+    "SCRAPPY": [
+      "the_vault:gear/loot_sack/bundle",
+      "the_vault:gear/loot_sack/gray"
+    ],
+    "COMMON": [
+      "the_vault:gear/loot_sack/light_blue",
+      "the_vault:gear/loot_sack/green"
+    ],
+    "RARE": [
+      "the_vault:gear/loot_sack/yellow",
+      "the_vault:gear/loot_sack/red"
+    ],
+    "EPIC": [
+      "the_vault:gear/loot_sack/purple",
+      "the_vault:gear/loot_sack/pink"
+    ],
+    "OMEGA": [
+      "the_vault:gear/loot_sack/tinkers_tankard",
+      "the_vault:gear/loot_sack/prismatic"
+    ],
+    "UNIQUE": [
+    ],
+    "SPECIAL": [
+      "the_vault:gear/loot_sack/midnight",
+      "the_vault:gear/loot_sack/hunny"
+    ]
+  }
+}

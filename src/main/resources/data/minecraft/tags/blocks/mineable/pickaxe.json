@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "woldsvaults:chromatic_gold_block",
+    "woldsvaults:gem_pog_block",
+    "woldsvaults:echo_pog_block",
+    "woldsvaults:omega_pog_block",
+    "woldsvaults:vault_salvager",
+    "woldsvaults:compressed_vault_diamond_block",
+    "woldsvaults:compressed_vault_carbon",
+    "woldsvaults:knowledge_star_block"
+  ]
+}

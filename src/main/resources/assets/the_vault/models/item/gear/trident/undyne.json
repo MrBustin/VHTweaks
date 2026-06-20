@@ -1,0 +1,122 @@
+{
+	"credit": "Made with Blockbench",
+	"texture": "the_vault:item/gear/trident/undyne",
+	"textureSize": [
+		64,
+		64
+	],
+	"models": [
+		{
+			"part": "body",
+			"id": "body",
+			"invertAxis": "xy",
+			"translate": [
+				0,
+				-27,
+				0
+			],
+			"boxes": [
+				{
+					"coordinates": [
+						-4.5,
+						25,
+						-0.5,
+						1,
+						1,
+						1
+					],
+					"textureOffset": [
+						19,
+						19
+					]
+				},
+				{
+					"coordinates": [
+						-3.5,
+						24,
+						-0.5,
+						7,
+						5,
+						1
+					],
+					"textureOffset": [
+						8,
+						12
+					],
+					"sizeAdd": 0.002
+				},
+				{
+					"coordinates": [
+						-1.5,
+						-17,
+						-0.5,
+						3,
+						53,
+						1
+					],
+					"textureOffset": [
+						0,
+						0
+					]
+				},
+				{
+					"coordinates": [
+						-2.5,
+						22,
+						-0.5,
+						5,
+						11,
+						1
+					],
+					"textureOffset": [
+						8,
+						0
+					],
+					"sizeAdd": 0.001
+				},
+				{
+					"coordinates": [
+						1.5,
+						18,
+						-0.5,
+						1,
+						4,
+						1
+					],
+					"textureOffset": [
+						8,
+						18
+					]
+				},
+				{
+					"coordinates": [
+						-2.5,
+						20,
+						-0.5,
+						1,
+						1,
+						1
+					],
+					"textureOffset": [
+						12,
+						18
+					]
+				},
+				{
+					"coordinates": [
+						-0.5,
+						36,
+						-0.5,
+						1,
+						1,
+						1
+					],
+					"textureOffset": [
+						16,
+						18
+					]
+				}
+			]
+		}
+	]
+}

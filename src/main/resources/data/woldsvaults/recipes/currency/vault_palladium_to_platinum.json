@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:vault_palladium"
+    }
+  ],
+  "result": {
+    "item": "the_vault:vault_platinum",
+    "count": 9
+  }
+}

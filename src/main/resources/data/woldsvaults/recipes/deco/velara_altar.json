@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " V ",
+    "ERE",
+    "BBB"
+  ],
+  "key": {
+    "V": {
+      "item": "woldsvaults:velara_apple"
+    },
+    "E": {
+      "item": "the_vault:eternal_soul"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    },
+    "B": {
+      "item": "the_vault:velara_brick"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:velara_altar",
+    "count": 1
+  }
+}

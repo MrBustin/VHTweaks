@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " T ",
+    "ERE",
+    "BBB"
+  ],
+  "key": {
+    "T": {
+      "item": "woldsvaults:tome_of_tenos"
+    },
+    "E": {
+      "item": "the_vault:eternal_soul"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    },
+    "B": {
+      "item": "the_vault:tenos_brick"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:tenos_altar",
+    "count": 1
+  }
+}

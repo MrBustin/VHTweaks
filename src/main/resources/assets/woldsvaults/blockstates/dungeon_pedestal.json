@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "woldsvaults:block/dungeon_pedestal",
+        "weight": 30
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "woldsvaults:item/vault_iridium1"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "woldsvaults:count": 2
+            },
+            "model": "woldsvaults:item/vault_iridium2"
+        },
+        {
+            "predicate": {
+                "woldsvaults:count": 8
+            },
+            "model": "woldsvaults:item/vault_iridium3"
+        },
+        {
+            "predicate": {
+                "woldsvaults:count": 16
+            },
+            "model": "woldsvaults:item/vault_iridium4"
+        },
+        {
+            "predicate": {
+                "woldsvaults:count": 32
+            },
+            "model": "woldsvaults:item/vault_iridium5"
+        }
+    ]
+}

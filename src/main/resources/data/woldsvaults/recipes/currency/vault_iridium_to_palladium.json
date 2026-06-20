@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:vault_iridium"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:vault_palladium",
+    "count": 9
+  }
+}

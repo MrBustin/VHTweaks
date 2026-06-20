@@ -1,0 +1,46 @@
+{
+  "percentOfExperienceDealtAsDurabilityDamage": 0.05,
+  "freeExperienceNotDealtAsDurabilityDamage": 6000,
+  "chests": {
+
+  },
+  "blocksMined": {
+
+  },
+  "treasureRoomsOpened": 3400.0,
+  "mobsKilled": {
+
+  },
+  "completion": {
+    "enchanted_elixir": {
+      "BAILED": 0,
+      "FAILED": 0,
+      "COMPLETED": 36000
+    },
+    "haunted_braziers": {
+      "BAILED": 0,
+      "FAILED": 0,
+      "COMPLETED": 14000
+    },
+    "unhinged_scavenger": {
+      "BAILED": 0,
+      "FAILED": 0,
+      "COMPLETED": 48000
+    },
+    "ballistic_bingo": {
+      "BAILED": 0,
+      "FAILED": 0,
+      "COMPLETED": 48000
+    },
+    "brutal_bosses": {
+      "BAILED": 0,
+      "FAILED": 0,
+      "COMPLETED": 24000
+    },
+    "zealot": {
+      "BAILED": 0,
+      "FAILED": 0,
+      "COMPLETED": 24000
+    }
+  }
+}

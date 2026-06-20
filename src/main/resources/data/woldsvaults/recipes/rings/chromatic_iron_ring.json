@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "XRX",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "the_vault:chromatic_iron_block"
+    },
+    "X":{
+      "item": "the_vault:angel_block"
+    },
+    "R": {
+      "item": "woldsvaults:diamond_ring"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:chromatic_iron_angel_ring",
+    "count": 1
+  }
+}

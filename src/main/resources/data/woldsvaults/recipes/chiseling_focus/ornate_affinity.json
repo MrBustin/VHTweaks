@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "the_vault:nullifying_focus"
+    },
+    {
+      "item": "woldsvaults:smashed_vault_gem_cluster"
+    },
+    {
+      "item": "the_vault:ornate_ingot"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:chiseling_focus",
+    "nbt": "{modifier:\"the_vault:ornate_affinity\"}",
+    "count": 1
+  }
+}

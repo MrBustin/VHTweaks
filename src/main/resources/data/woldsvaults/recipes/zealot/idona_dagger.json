@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E#E",
+    "ESE",
+    "EBE"
+  ],
+  "key": {
+    "#": {
+      "item": "the_vault:vault_rock"
+    },
+    "E": {
+      "item": "the_vault:vault_essence"
+    },
+    "S": {
+      "item": "the_vault:crystal_seal_empty"
+    },
+    "B": {
+      "item": "minecraft:iron_sword"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:idona_dagger",
+    "count": 1
+  }
+}

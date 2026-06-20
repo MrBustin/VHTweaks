@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "woldsvaults:item/gear/wooden_flower_sword"
+  }
+}

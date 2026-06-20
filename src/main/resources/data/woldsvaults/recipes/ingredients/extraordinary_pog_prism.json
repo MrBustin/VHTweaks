@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    "XRX",
+    "DEF"
+  ],
+  "key": {
+    "A": {
+      "item": "the_vault:extraordinary_larimar"
+    },
+    "B": {
+      "item": "the_vault:extraordinary_benitoite"
+    },
+    "C": {
+      "item": "the_vault:extraordinary_wutodie"
+    },
+    "D": {
+      "item": "the_vault:extraordinary_painite"
+    },
+    "E": {
+      "item": "the_vault:extraordinary_black_opal"
+    },
+    "F": {
+      "item": "the_vault:extraordinary_alexandrite"
+    },
+    "X": {
+      "item": "woldsvaults:pog_prism"
+    },
+    "R": {
+      "item": "the_vault:extraordinary_echo_gem"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:extraordinary_pog_prism",
+    "count": 1
+  }
+}

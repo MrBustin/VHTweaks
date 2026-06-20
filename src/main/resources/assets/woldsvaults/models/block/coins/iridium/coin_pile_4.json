@@ -1,0 +1,7 @@
+{
+  "parent": "the_vault:block/coins/coin_pile_decor_4",
+  "textures": {
+  	"coin": "woldsvaults:block/coinpileiridium",
+	"particle": "woldsvaults:block/coin_particle_iridium"
+  }
+}

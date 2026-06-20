@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GXG",
+    "XRX",
+    "GXG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:amethyst_block"
+    },
+    "X": {
+      "item": "the_vault:gem_wutodie"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:lodestone",
+    "count": 1
+  }
+}

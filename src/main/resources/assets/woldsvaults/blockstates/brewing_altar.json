@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "uses=0": { "model": "woldsvaults:block/brewing_altar" },
+    "uses=1": { "model": "woldsvaults:block/brewing_altar" },
+    "uses=2": { "model": "woldsvaults:block/brewing_altar" },
+    "uses=3": { "model": "woldsvaults:block/brewing_altar" },
+    "uses=4": { "model": "woldsvaults:block/brewing_altar" },
+    "uses=5": { "model": "woldsvaults:block/brewing_altar" }
+  }
+}

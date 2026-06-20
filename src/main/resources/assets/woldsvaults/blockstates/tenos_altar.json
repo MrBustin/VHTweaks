@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "woldsvaults:block/tenos_altar",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "woldsvaults:block/tenos_altar",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "woldsvaults:block/tenos_altar"
+    },
+    "facing=west": {
+      "model": "woldsvaults:block/tenos_altar",
+      "y": 90
+    }
+  }
+}

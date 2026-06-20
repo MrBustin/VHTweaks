@@ -1,0 +1,158 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "woldsvaults:item/trinket/unidentified_trinket"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "woldsvaults:trinket": 0
+            },
+            "model": "woldsvaults:item/trinket/carapace"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 1
+            },
+            "model": "woldsvaults:item/trinket/cat_in_a_jar"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 2
+            },
+            "model": "woldsvaults:item/trinket/centipede_feet"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 3
+            },
+            "model": "woldsvaults:item/trinket/chromatic_feather"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 4
+            },
+            "model": "woldsvaults:item/trinket/chromatic_powder"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 5
+            },
+            "model": "woldsvaults:item/trinket/clover"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 6
+            },
+            "model": "woldsvaults:item/trinket/crystal_ball"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 7
+            },
+            "model": "woldsvaults:item/trinket/cufflinks"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 8
+            },
+            "model": "woldsvaults:item/trinket/elven_socks"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 9
+            },
+            "model": "woldsvaults:item/trinket/ender_anchor"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 10
+            },
+            "model": "woldsvaults:item/trinket/giants_heart"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 11
+            },
+            "model": "woldsvaults:item/trinket/gluttony_pendant"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 12
+            },
+            "model": "woldsvaults:item/trinket/golden_burger"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 13
+            },
+            "model": "woldsvaults:item/trinket/high_heels"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 14
+            },
+            "model": "woldsvaults:item/trinket/idonas_blade"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 15
+            },
+            "model": "woldsvaults:item/trinket/lucky_goose"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 16
+            },
+            "model": "woldsvaults:item/trinket/miners_headlamp"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 17
+            },
+            "model": "woldsvaults:item/trinket/night_vision_goggles"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 18
+            },
+            "model": "woldsvaults:item/trinket/phylactery"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 19
+            },
+            "model": "woldsvaults:item/trinket/spellbook"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 20
+            },
+            "model": "woldsvaults:item/trinket/stone_of_jordan"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 21
+            },
+            "model": "woldsvaults:item/trinket/tenos_charm"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 22
+            },
+            "model": "woldsvaults:item/trinket/velaras_petal"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 23
+            },
+            "model": "woldsvaults:item/trinket/wendarrs_hourglass"
+        },
+        {
+            "predicate": {
+                "woldsvaults:trinket": 24
+            },
+            "model": "woldsvaults:item/trinket/wings"
+        }
+    ]
+}

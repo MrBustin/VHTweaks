@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "ERE",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "the_vault:living_rock_bricks"
+    },
+    "E": {
+      "item": "the_vault:gem_alexandrite"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:grid_gateway",
+    "count": 1
+  }
+}

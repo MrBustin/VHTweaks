@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "the_vault:nullifying_focus"
+    },
+    {
+      "item": "woldsvaults:smashed_vault_gem_cluster"
+    },
+    {
+      "item": "minecraft:lever"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:chiseling_focus",
+    "nbt": "{modifier:\"the_vault:trap_disarming\"}",
+    "count": 1
+  }
+}

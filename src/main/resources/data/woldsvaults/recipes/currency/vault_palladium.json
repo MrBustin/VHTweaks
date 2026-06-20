@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    },
+    {
+      "item": "the_vault:vault_platinum"
+    }
+  ],
+  "result": {
+    "item": "woldsvaults:vault_palladium",
+    "count": 1
+  }
+}

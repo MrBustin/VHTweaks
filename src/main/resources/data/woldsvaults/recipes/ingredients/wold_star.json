@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SOS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "woldsvaults:wold_star_chunk"
+    },
+    "O": {
+      "item": "the_vault:omega_pog"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:wold_star",
+    "count": 1
+  }
+}

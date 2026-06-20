@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woldsvaults:gem_reagent_xenium"
+    },
+    {
+      "item": "the_vault:gem_upaline"
+    }
+  ],
+  "result": {
+    "item": "the_vault:gem_xenium",
+    "count": 2
+  }
+}

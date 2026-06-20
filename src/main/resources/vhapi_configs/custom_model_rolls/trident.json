@@ -1,0 +1,50 @@
+{
+  "itemRegistryName": "the_vault:trident",
+  "MODEL_ROLLS": {
+    "SCRAPPY": [
+      "the_vault:gear/trident/vanilla",
+      "the_vault:gear/trident/scrappy_1",
+      "the_vault:gear/trident/scrappy_2",
+      "the_vault:gear/trident/scrappy_3",
+      "the_vault:gear/trident/scrappy_4"
+    ],
+    "COMMON": [
+      "the_vault:gear/trident/axolotl",
+      "the_vault:gear/trident/emerald",
+      "the_vault:gear/trident/golden",
+      "the_vault:gear/trident/guardian",
+      "the_vault:gear/trident/orange",
+      "the_vault:gear/trident/pink",
+      "the_vault:gear/trident/prismarine",
+      "the_vault:gear/trident/purple"
+    ],
+    "RARE": [
+      "the_vault:gear/trident/holy_spear",
+      "the_vault:gear/trident/pitchfork",
+      "the_vault:gear/trident/royal",
+      "the_vault:gear/trident/seabird"
+    ],
+    "EPIC": [
+      "the_vault:gear/trident/aquatic_rage",
+      "the_vault:gear/trident/catch",
+      "the_vault:gear/trident/fjord_ballad",
+      "the_vault:gear/trident/void"
+    ],
+    "OMEGA": [
+      "the_vault:gear/trident/crimson",
+      "the_vault:gear/trident/crystal",
+      "the_vault:gear/trident/divineguard",
+      "the_vault:gear/trident/phantomguard",
+      "the_vault:gear/trident/prismatic",
+      "the_vault:gear/trident/fork"
+    ],
+    "UNIQUE": [
+      "the_vault:gear/trident/marlin",
+      "the_vault:gear/trident/mjolnir"
+    ],
+    "SPECIAL": [
+      "the_vault:gear/trident/scarlet_piercer",
+      "the_vault:gear/trident/death_knight_spear"
+    ]
+  }
+}

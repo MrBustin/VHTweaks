@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "ERE",
+    "BBB"
+  ],
+  "key": {
+    "I": {
+      "item": "woldsvaults:idona_dagger"
+    },
+    "E": {
+      "item": "the_vault:eternal_soul"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    },
+    "B": {
+      "item": "the_vault:idona_brick"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:idona_altar",
+    "count": 1
+  }
+}

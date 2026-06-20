@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GXG",
+    "XRX",
+    "GXG"
+  ],
+  "key": {
+    "G": {
+      "item": "the_vault:gem_larimar"
+    },
+    "X": {
+      "item": "the_vault:augment"
+    },
+    "R": {
+      "item": "the_vault:vault_essence"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:augment_box",
+    "count": 1
+  }
+}

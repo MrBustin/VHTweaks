@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "woldsvaults:block/wendarr_altar",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "woldsvaults:block/wendarr_altar",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "woldsvaults:block/wendarr_altar"
+    },
+    "facing=west": {
+      "model": "woldsvaults:block/wendarr_altar",
+      "y": 90
+    }
+  }
+}

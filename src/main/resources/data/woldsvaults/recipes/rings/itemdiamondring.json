@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GXG",
+    "XRX",
+    "GXG"
+  ],
+  "key": {
+    "G": {
+      "item": "woldsvaults:compressed_vault_essence_2"
+    },
+    "X":{
+      "item": "woldsvaults:compressed_vault_diamond_block"
+    },
+    "R": {
+      "item": "woldsvaults:pog_prism"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:diamond_ring",
+    "count": 1
+  }
+}

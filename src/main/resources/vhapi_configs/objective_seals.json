@@ -1,0 +1,504 @@
+{
+  "MODIFIER_STABILITY": {
+    "instabilityPerCraft": 0.05,
+    "exhaustProbability": 0.25,
+    "curseColor": "#9C6E3B"
+  },
+  "MOTES": {
+    "clarityLevelCost": 1,
+    "purityLevelCost": 2,
+    "sanctityLevelCost": 4
+  },
+  "THEMES": [],
+  "LAYOUTS": [],
+  "OBJECTIVES": {
+  },
+  "TIMES": {
+
+  },
+  "SEALS": {
+    "woldsvaults:crystal_seal_spirits": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "haunted_braziers",
+          "objective_probability": 1.0,
+          "target": {
+            "type": "uniform",
+            "min": 5,
+            "max": 12
+          }
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_cave_deepslate"
+        }
+      },
+      {
+        "level": 20,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "haunted_braziers",
+          "objective_probability": 1.0,
+          "target": {
+            "type": "uniform",
+            "min": 4,
+            "max": 6
+          }
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_cave_deepslate"
+        }
+      },
+      {
+        "level": 50,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "haunted_braziers",
+          "objective_probability": 1.0,
+          "target": {
+            "type": "uniform",
+            "min": 4,
+            "max": 8
+          }
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_cave_deepslate"
+        },
+        "modifiers": {
+          "type": "default",
+          "list": [
+            {
+              "modifier": "the_vault:rotten",
+              "count": 1
+            }
+          ],
+          "random_modifiers": true
+        }
+      },
+      {
+        "level": 70,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "haunted_braziers",
+          "objective_probability": 1.0,
+          "target": {
+            "type": "uniform",
+            "min": 6,
+            "max": 8
+          }
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_cave_deepslate"
+        },
+        "modifiers": {
+          "type": "default",
+          "list": [
+            {
+              "modifier": "the_vault:rotten",
+              "count": 1
+            }
+          ],
+          "random_modifiers": true
+        }
+      },
+      {
+        "level": 90,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "haunted_braziers",
+          "objective_probability": 1.0,
+          "target": {
+            "type": "uniform",
+            "min": 6,
+            "max": 10
+          }
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_cave_deepslate"
+        },
+        "modifiers": {
+          "type": "default",
+          "list": [
+            {
+              "modifier": "the_vault:rotten",
+              "count": 1
+            }
+          ],
+          "random_modifiers": true
+        }
+      }
+    ],
+    "woldsvaults:crystal_seal_zealot": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "zealot",
+          "target": {
+            "type": "uniform",
+            "min": 3,
+            "max": 5
+          }
+        }
+      }
+    ],
+    "woldsvaults:crystal_seal_doomsayer": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "scaling_ballistic_bingo",
+          "objective_probability": 0.25,
+          "sealCount": 0
+        },
+        "modifiers": {
+          "type": "default",
+          "list": [],
+          "random_modifiers": true,
+          "clarity": false
+        }
+      }
+    ],
+    "woldsvaults:crystal_seal_titan": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "brutal_bosses",
+          "objective_probability": 0.25,
+          "target": {
+            "type": "uniform",
+            "min": 1,
+            "max": 3
+          },
+          "wave": {
+            "type": "uniform",
+            "min": 1,
+            "max": 1
+          }
+        },
+        "layout": {
+          "type": "polygon",
+          "tunnel_span": 1,
+          "vertices": [
+            {
+              "x": -10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 10
+            },
+            {
+              "x": 10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": -10
+            }
+          ]
+        }
+      },
+      {
+        "level": 10,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "brutal_bosses",
+          "objective_probability": 0.25,
+          "target": {
+            "type": "uniform",
+            "min": 2,
+            "max": 4
+          },
+          "wave": {
+            "type": "uniform",
+            "min": 1,
+            "max": 1
+          }
+        },
+        "layout": {
+          "type": "polygon",
+          "tunnel_span": 1,
+          "vertices": [
+            {
+              "x": -10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 10
+            },
+            {
+              "x": 10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": -10
+            }
+          ]
+        }
+      },
+      {
+        "level": 40,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "brutal_bosses",
+          "objective_probability": 0.25,
+          "target": {
+            "type": "uniform",
+            "min": 3,
+            "max": 5
+          },
+          "wave": {
+            "type": "uniform",
+            "min": 1,
+            "max": 1
+          }
+        },
+        "layout": {
+          "type": "polygon",
+          "tunnel_span": 1,
+          "vertices": [
+            {
+              "x": -10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 10
+            },
+            {
+              "x": 10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": -10
+            }
+          ]
+        }
+      },
+      {
+        "level": 60,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "brutal_bosses",
+          "objective_probability": 0.25,
+          "target": {
+            "type": "uniform",
+            "min": 3,
+            "max": 5
+          },
+          "wave": {
+            "type": "uniform",
+            "min": 1,
+            "max": 1
+          }
+        },
+        "layout": {
+          "type": "polygon",
+          "tunnel_span": 1,
+          "vertices": [
+            {
+              "x": -10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 10
+            },
+            {
+              "x": 10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": -10
+            }
+          ]
+        }
+      },
+      {
+        "level": 90,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "brutal_bosses",
+          "objective_probability": 0.25,
+          "target": {
+            "type": "uniform",
+            "min": 4,
+            "max": 5
+          },
+          "wave": {
+            "type": "uniform",
+            "min": 1,
+            "max": 2
+          }
+        },
+        "layout": {
+          "type": "polygon",
+          "tunnel_span": 1,
+          "vertices": [
+            {
+              "x": -10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 10
+            },
+            {
+              "x": 10,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": -10
+            }
+          ]
+        }
+      }
+    ],
+    "woldsvaults:crystal_seal_enchanter": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "enchanted_elixir",
+          "objective_probability": 0.5
+        }
+      },
+      {
+        "level": 30,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "enchanted_elixir",
+          "objective_probability": 0.5
+        }
+      },
+      {
+        "level": 65,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "enchanted_elixir",
+          "objective_probability": 0.3
+        }
+      }
+    ],
+    "woldsvaults:crystal_seal_alchemy": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "alchemy",
+          "objective_probability": 1.0,
+          "required_progress": 1.0
+        }
+      },
+      {
+        "level": 20,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "alchemy",
+          "objective_probability": 0.8,
+          "required_progress": 1.5
+        }
+      },
+      {
+        "level": 50,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "alchemy",
+          "objective_probability": 0.6,
+          "required_progress": 2.0
+        }
+      },
+      {
+        "level": 80,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "alchemy",
+          "objective_probability": 0.4,
+          "required_progress": 2.5
+        }
+      }
+    ],
+    "woldsvaults:crystal_seal_unhinged": [
+      {
+        "level": 0,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "unhinged_scavenger",
+          "objective_probability": 1.0
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_chaos"
+        }
+      },
+      {
+        "level": 30,
+        "input": [
+          "the_vault:vault_crystal"
+        ],
+        "objective": {
+          "type": "unhinged_scavenger",
+          "objective_probability": 0.75
+        },
+        "theme": {
+          "type": "value",
+          "id": "the_vault:classic_vault_chaos"
+        }
+      }
+    ]
+  },
+  "PROPERTIES": []
+}

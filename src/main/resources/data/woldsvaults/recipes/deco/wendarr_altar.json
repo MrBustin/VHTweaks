@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "ERE",
+    "BBB"
+  ],
+  "key": {
+    "W": {
+      "item": "woldsvaults:wendarr_gem"
+    },
+    "E": {
+      "item": "the_vault:eternal_soul"
+    },
+    "R": {
+      "item": "woldsvaults:general_decor_scroll"
+    },
+    "B": {
+      "item": "the_vault:wendarr_brick"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:wendarr_altar",
+    "count": 1
+  }
+}

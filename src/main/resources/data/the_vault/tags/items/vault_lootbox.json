@@ -1,0 +1,15 @@
+{
+    "replace": false,
+    "values": [
+        "the_vault:mystery_box",
+        "the_vault:material_box",
+        "the_vault:pandora_box",
+        "woldsvaults:gem_box",
+        "woldsvaults:supply_box",
+        "woldsvaults:augment_box",
+        "woldsvaults:inscription_box",
+        "woldsvaults:catalyst_box",
+        "woldsvaults:vaultar_box",
+        "woldsvaults:omega_box"
+    ]
+}

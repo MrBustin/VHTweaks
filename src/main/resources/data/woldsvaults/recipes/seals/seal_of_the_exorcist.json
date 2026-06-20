@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XGX",
+    "XRX",
+    "XBX"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:soul_campfire"
+    },
+    "X": {
+      "item": "minecraft:soul_sand"
+    },
+    "R": {
+      "item": "the_vault:crystal_seal_scout"
+    },
+    "B": {
+      "item": "the_vault:extraordinary_wutodie"
+    }
+  },
+  "result": {
+    "item": "woldsvaults:crystal_seal_spirits",
+    "count": 1
+  }
+}

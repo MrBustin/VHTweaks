@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "woldsvaults:item/research_token/research_token_waystones"
+  }
+}

@@ -1,0 +1,212 @@
+package xyz.iwolfking.woldsvaults.objectives;
+
+import iskallia.vault.VaultMod;
+import iskallia.vault.block.DivineAltarBlock;
+import iskallia.vault.block.PlaceholderBlock;
+import iskallia.vault.block.entity.ScavengerAltarTileEntity;
+import iskallia.vault.container.oversized.OverSizedInventory;
+import iskallia.vault.container.oversized.OverSizedItemStack;
+import iskallia.vault.core.Version;
+import iskallia.vault.core.data.adapter.Adapters;
+import iskallia.vault.core.data.adapter.basic.EnumAdapter;
+import iskallia.vault.core.data.key.FieldKey;
+import iskallia.vault.core.data.key.SupplierKey;
+import iskallia.vault.core.event.CommonEvents;
+import iskallia.vault.core.event.common.BlockSetEvent;
+import iskallia.vault.core.random.JavaRandom;
+import iskallia.vault.core.vault.Vault;
+import iskallia.vault.core.vault.VaultLevel;
+import iskallia.vault.core.vault.objective.Objective;
+import iskallia.vault.core.vault.objective.Objectives;
+import iskallia.vault.core.vault.objective.PvPObjective;
+import iskallia.vault.core.vault.objective.ScavengerObjective;
+import iskallia.vault.core.vault.objective.scavenger.ScavengeTask;
+import iskallia.vault.core.vault.objective.scavenger.ScavengerGoal;
+import iskallia.vault.core.vault.player.Listener;
+import iskallia.vault.core.vault.player.Listeners;
+import iskallia.vault.core.vault.player.Runner;
+import iskallia.vault.core.world.data.entity.PartialCompoundNbt;
+import iskallia.vault.core.world.data.tile.PartialBlockState;
+import iskallia.vault.core.world.data.tile.PartialTile;
+import iskallia.vault.core.world.storage.VirtualWorld;
+import iskallia.vault.init.ModBlocks;
+import iskallia.vault.init.ModConfigs;
+import iskallia.vault.item.GodBlessingItem;
+import iskallia.vault.item.KeystoneItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.loading.LoadingModList;
+import xyz.iwolfking.woldsvaults.api.util.ObjectiveHelper;
+import xyz.iwolfking.woldsvaults.configs.UnhingedScavengerConfig;
+import xyz.iwolfking.woldsvaults.items.ItemScavengerPouch;
+
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+import java.util.function.Supplier;
+
+public class UnhingedScavengerObjective extends ScavengerObjective {
+
+    public static final FieldKey<UnhingedScavengerObjective.Config> CONFIG = FieldKey.of("config", UnhingedScavengerObjective.Config.class).with(Version.v1_19, Adapters.ofEnum(UnhingedScavengerObjective.Config.class, EnumAdapter.Mode.ORDINAL), DISK.all()).register(FIELDS);
+
+    public static final SupplierKey<Objective> E_KEY = SupplierKey.of("unhinged_scavenger", Objective.class).with(Version.v1_12, UnhingedScavengerObjective::new);
+    public static final FieldKey<ResourceLocation> ENTRY_POOL;
+    @Override
+    public SupplierKey<Objective> getKey() {
+        return E_KEY;
+    }
+    public UnhingedScavengerObjective(float objectiveProbability, Config config, ResourceLocation pool) {
+        this.set(GOALS, new GoalMap());
+        this.set(OBJECTIVE_PROBABILITY, objectiveProbability);
+        this.set(CONFIG, config);
+        this.set(ENTRY_POOL, pool);
+    }
+
+    public UnhingedScavengerObjective() {
+        this.set(GOALS, new GoalMap());
+    }
+
+    public static UnhingedScavengerObjective of(float objectiveProbability, UnhingedScavengerObjective.Config config, ResourceLocation pool) {
+        return new UnhingedScavengerObjective(objectiveProbability, config, pool);
+    }
+
+
+    @Override
+    public void initServer(VirtualWorld world, Vault vault) {
+        ObjectiveHelper.handleAddingNormalizedToVault(vault, world);
+
+        CommonEvents.OBJECTIVE_PIECE_GENERATION.register(this, data -> {
+            this.ifPresent(OBJECTIVE_PROBABILITY, probability -> data.setProbability(probability));
+        });
+        this.registerObjectiveTemplate(world, vault);
+
+        CommonEvents.SCAVENGER_ALTAR_CONSUME.register(this, data -> {
+            if (data.getLevel() == world && ((ScavengerAltarTileEntity)data.getTile()).getItemPlacedBy() != null) {
+                Listener listener = (vault.get(Vault.LISTENERS)).get(((ScavengerAltarTileEntity)data.getTile()).getItemPlacedBy());
+                if (listener instanceof Runner) {
+                    BlockState state = data.getTile().getBlockState();
+                    if (state.getBlock() == ModBlocks.DIVINE_ALTAR) {
+                        if (((ScavengerAltarTileEntity)data.getTile()).getHeldItem().getItem() instanceof KeystoneItem keystone) {
+                            if (keystone.getGod() != state.getValue(DivineAltarBlock.GOD)) {
+                                return;
+                            }
+                        } else {
+                            if (!(((ScavengerAltarTileEntity)data.getTile()).getHeldItem().getItem() instanceof GodBlessingItem)) {
+                                return;
+                            }
+
+                            if (GodBlessingItem.getGod(((ScavengerAltarTileEntity)data.getTile()).getHeldItem()) != state.getValue(DivineAltarBlock.GOD)) {
+                                return;
+                            }
+                        }
+                    }
+
+                    boolean creative = listener.getPlayer().map(ServerPlayer::isCreative).orElse(false);
+                    CompoundTag nbt = ((ScavengerAltarTileEntity)data.getTile()).getHeldItem().getTag();
+                    if (creative || nbt != null && nbt.getString("VaultId").equals((vault.get(Vault.ID)).toString())) {
+                        List<ScavengerGoal> goals = this.get(GOALS).get(listener.get(Listener.ID));
+                        for (ScavengerGoal goal: goals) {
+                            goal.consume(((ScavengerAltarTileEntity)data.getTile()).getHeldItem());
+                        }
+
+                    }
+                }
+            }
+        });
+
+        CommonEvents.SCAVENGER_ALTAR_CONSUME.register(this, data -> {
+            if (!(data.getTile() instanceof ScavengerAltarTileEntity entity)) return;
+            if (!(entity.getHeldItem().getItem() instanceof ItemScavengerPouch)) return;
+
+            ItemStack pouch = entity.getHeldItem();
+            OverSizedInventory inv = ItemScavengerPouch.getInventory(pouch);
+            List<ScavengerGoal> goals = this.get(GOALS).get(entity.getItemPlacedBy());
+            if (goals == null) return;
+
+            Listener listener = vault.get(Vault.LISTENERS).get(entity.getItemPlacedBy());
+            boolean changed = false;
+
+            for (int i = 0; i < inv.getOverSizedContents().size(); i++) {
+                OverSizedItemStack os = inv.getOverSizedContents().get(i);
+                if (os.isEmpty()) continue;
+
+                ItemStack temp = os.overSizedStack().copy();
+                if (!temp.hasTag() || !temp.getTag().contains("VaultId")) continue;
+
+                if (!temp.getTag().getString("VaultId").equals(vault.get(Vault.ID).toString())) {
+                    if (listener == null || !listener.getPlayer().map(ServerPlayer::isCreative).orElse(false)) {
+                        continue;
+                    }
+                }
+
+                int before = temp.getCount();
+                for (ScavengerGoal goal : goals) {
+                    goal.consume(temp);
+                }
+
+                int consumed = before - temp.getCount();
+                if (consumed > 0) {
+                    ItemScavengerPouch.getInventory(pouch).removeItem(i, consumed);
+                    changed = true;
+                }
+            }
+
+            if (changed) {
+                ItemScavengerPouch.getInventory(pouch).save();
+            }
+        });
+
+        for (ScavengeTask task : (this.getOr(CONFIG, Config.DEFAULT)).get().getTasks()) {
+            task.initServer(world, vault, this);
+        }
+
+        (this.get(CHILDREN)).forEach(child -> child.initServer(world, vault));
+    }
+
+    @Override
+    public void tickListener(VirtualWorld world, Vault vault, Listener listener) {
+        if (listener instanceof Runner && listener.getPriority(this) < 0) {
+            listener.addObjective(vault, this);
+            this.generateGoal(vault, listener);
+        }
+
+        ScavengerGoal.ObjList goal = this.get(GOALS).get(listener.get(Listener.ID));
+        if (goal != null && goal.areAllCompleted()) {
+            this.get(CHILDREN).forEach(child -> child.tickListener(world, vault, listener));
+        }
+    }
+
+    private void generateGoal(Vault vault, Listener listener) {
+        ScavengerGoal.ObjList list = new ScavengerGoal.ObjList();
+        this.get(GOALS).put(listener.get(Listener.ID), list);
+        JavaRandom random = JavaRandom.ofInternal(vault.get(Vault.SEED) ^ listener.get(Listener.ID).getMostSignificantBits());
+        list.addAll((this.getOr(CONFIG, UnhingedScavengerObjective.Config.DEFAULT)).get().generateGoals(this.getOr(ENTRY_POOL, VaultMod.id("default")), vault.get(Vault.LEVEL).get(), random));
+    }
+
+    static {
+        ENTRY_POOL = FieldKey.of("entry_pool", ResourceLocation.class).with(Version.v1_46, Adapters.IDENTIFIER, DISK.all()).register(FIELDS);
+    }
+
+
+
+
+    public static enum Config {
+        DEFAULT(() -> xyz.iwolfking.woldsvaults.init.ModConfigs.UNHINGED_SCAVENGER),
+        DIVINE_PARADOX(() -> ModConfigs.DIVINE_PARADOX);
+
+        private Supplier<UnhingedScavengerConfig> supplier;
+
+        private Config(Supplier supplier) {
+            this.supplier = supplier;
+        }
+
+        public UnhingedScavengerConfig get() {
+            return this.supplier.get();
+        }
+    }
+}
