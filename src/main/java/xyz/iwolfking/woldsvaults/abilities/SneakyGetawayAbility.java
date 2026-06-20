@@ -20,9 +20,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import iskallia.vault.entity.scale.EntityScaleHelper;
-import iskallia.vault.entity.scale.EntityScaleProfile;
-import xyz.iwolfking.woldsvaults.api.scale.WoldsScaleSources;
+import virtuoel.pehkui.api.ScaleData;
+import virtuoel.pehkui.api.ScaleType;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 
 import java.util.Optional;
@@ -114,9 +113,11 @@ public class SneakyGetawayAbility extends InstantManaAbility {
     }
 
     public static class SneakyGetawayEffect extends MobEffect {
+        private final ScaleType scaleType;
         private static final UUID SNEAKY_GETAWAY_SPEED_ADDITION_UUID = UUID.fromString("42171e94-3ecd-4ca2-ac3f-2aa4c7cb125b");
-        public SneakyGetawayEffect(MobEffectCategory mobEffectCategory, int i, ResourceLocation id) {
+        public SneakyGetawayEffect(MobEffectCategory mobEffectCategory, int i, ScaleType scaleType, ResourceLocation id) {
             super(mobEffectCategory, i);
+            this.scaleType = scaleType;
             this.setRegistryName(id);
         }
 
@@ -132,12 +133,8 @@ public class SneakyGetawayAbility extends InstantManaAbility {
                     speedPercentAdded = ability.getSpeedPercentAdded();
                 }
                 //set scale
-                EntityScaleHelper.setScaleInstant(
-                        player,
-                        WoldsScaleSources.SIZE_NO_MOVEMENT,
-                        size,
-                        EntityScaleProfile.BODY_AND_VISIBILITY
-                );
+                ScaleData scaleData = scaleType.getScaleData(player);
+                scaleData.setScale(size);
                 AttributeInstance speedAtt = player.getAttribute(Attributes.MOVEMENT_SPEED);
                 if (speedAtt != null && size != 0) {
                     //add to the speed
@@ -151,7 +148,9 @@ public class SneakyGetawayAbility extends InstantManaAbility {
         public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
             if (entity instanceof ServerPlayer player) {
                 //reset scale
-                EntityScaleHelper.clearScale(player, WoldsScaleSources.SIZE_NO_MOVEMENT, EntityScaleHelper.PEHKUI_COMPAT_TRANSITION_TICKS);
+                ScaleData scaleData = scaleType.getScaleData(player);
+                scaleData.setTargetScale(1.0F);
+                scaleData.setScaleTickDelay(scaleData.getScaleTickDelay());
                 //reset speed
                 AttributeInstance speedAtt = player.getAttribute(Attributes.MOVEMENT_SPEED);
                 if (speedAtt != null) {

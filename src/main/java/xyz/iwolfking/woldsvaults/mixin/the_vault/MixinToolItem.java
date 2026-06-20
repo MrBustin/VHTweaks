@@ -1,10 +1,12 @@
 package xyz.iwolfking.woldsvaults.mixin.the_vault;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import iskallia.vault.gear.attribute.type.VaultGearAttributeTypeMerger;
+import iskallia.vault.gear.data.VaultGearData;
 import iskallia.vault.gear.item.VaultGearItem;
 import iskallia.vault.init.ModBlocks;
 import iskallia.vault.item.render.core.IManualModelLoading;
 import iskallia.vault.item.tool.ToolItem;
-import iskallia.vault.item.tool.ToolItem.ToolContext;
 import iskallia.vault.item.tool.ToolMaterial;
 import iskallia.vault.item.tool.ToolType;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -67,7 +69,7 @@ public abstract class MixinToolItem extends TieredItem implements VaultGearItem,
      * @author iwolfking
      * @reason Add custom tool names
      */
-    @Inject(method = "m_7626_", at = @At("HEAD"), cancellable = true, remap = true)
+    @Inject(method = "getName", at = @At("HEAD"), cancellable = true, remap = true)
     public void getName(ItemStack stack, CallbackInfoReturnable<Component> cir) {
         ToolType type = ToolType.of(stack);
         ToolMaterial material = getMaterial(stack);
@@ -78,9 +80,9 @@ public abstract class MixinToolItem extends TieredItem implements VaultGearItem,
         }
     }
 
-    @Inject(method = "hasAffinity(Liskallia/vault/item/tool/ToolItem$ToolContext;Lnet/minecraft/world/level/block/state/BlockState;)Z", at = @At("TAIL"), cancellable = true)
-    public void hasAffinity(ToolContext context, BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if(context.has(ModGearAttributes.TREASURE_AFFINITY) && state.is(ModBlocks.TREASURE_CHEST)) {
+    @Inject(method = "hasAffinity", at = @At("TAIL"), cancellable = true)
+    public void hasAffinity(ItemStack stack, BlockState state, CallbackInfoReturnable<Boolean> cir, @Local VaultGearData data) {
+        if(data.get(ModGearAttributes.TREASURE_AFFINITY, VaultGearAttributeTypeMerger.anyTrue()) && state.is(ModBlocks.TREASURE_CHEST)) {
             cir.setReturnValue(true);
         }
     }

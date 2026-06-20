@@ -16,6 +16,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xyz.iwolfking.woldsvaults.api.pehkui.CustomScaleTypes;
 import xyz.iwolfking.woldsvaults.init.*;
 import xyz.iwolfking.woldsvaults.init.client.ModModels;
 
@@ -58,6 +59,7 @@ public class RegistryEvents {
 
     @SubscribeEvent
     public static void onEffectRegister(RegistryEvent.Register<MobEffect> event) {
+        CustomScaleTypes.init();
         ModEffects.register(event);
     }
 

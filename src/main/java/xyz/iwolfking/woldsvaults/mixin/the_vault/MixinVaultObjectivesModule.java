@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.iwolfking.woldsvaults.objectives.AlchemyObjective;
 import xyz.iwolfking.woldsvaults.objectives.BallisticBingoObjective;
-import xyz.iwolfking.woldsvaults.objectives.BrutalBossesObjective;
 import xyz.iwolfking.woldsvaults.objectives.EnchantedElixirObjective;
 import xyz.iwolfking.woldsvaults.objectives.HauntedBraziersObjective;
 import xyz.iwolfking.woldsvaults.objectives.UnhingedScavengerObjective;
@@ -50,9 +49,10 @@ public abstract class MixinVaultObjectivesModule {
             cir.setReturnValue("monolith");
         } else if (objective instanceof EnchantedElixirObjective) {
             cir.setReturnValue("elixir");
-        } else if (objective instanceof BrutalBossesObjective) {
-            cir.setReturnValue("brutal_bosses");
         }
+//        else if (objective instanceof BrutalBossesObjective) {
+//            cir.setReturnValue("brutal_bosses");
+//        }
     }
 
     @Inject(method = "getSize", at = @At("HEAD"), cancellable = true)
@@ -68,7 +68,7 @@ public abstract class MixinVaultObjectivesModule {
         }
 
         Objective objective = this.getFirstRenderedObjective(vault, listener).orElse(null);
-        if (objective instanceof ZealotObjective || objective instanceof AlchemyObjective || objective instanceof BrutalBossesObjective
+        if (objective instanceof ZealotObjective || objective instanceof AlchemyObjective
                 || objective instanceof HauntedBraziersObjective || objective instanceof EnchantedElixirObjective) {
             cir.setReturnValue(Pair.of(155, 25));
             return;

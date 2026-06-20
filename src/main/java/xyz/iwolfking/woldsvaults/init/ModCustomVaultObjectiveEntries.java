@@ -8,7 +8,7 @@ import xyz.iwolfking.woldsvaults.objectives.*;
 
 public class ModCustomVaultObjectiveEntries {
 
-    public static final CustomObjectiveRegistryEntry BRUTAL_BOSSES = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("brutal_bosses", "Brutal Bosses", BrutalBossesCrystalObjective.class, BrutalBossesCrystalObjective::new, BrutalBossesObjective.E_KEY, BrutalBossesObjective.class).setCrateItem(xyz.iwolfking.woldsvaults.init.ModBlocks.VAULT_CRATE_BRUTAL_BOSSES).build();
+    //public static final CustomObjectiveRegistryEntry BRUTAL_BOSSES = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("brutal_bosses", "Brutal Bosses", BrutalBossesCrystalObjective.class, BrutalBossesCrystalObjective::new, BrutalBossesObjective.E_KEY, BrutalBossesObjective.class).setCrateItem(xyz.iwolfking.woldsvaults.init.ModBlocks.VAULT_CRATE_BRUTAL_BOSSES).build();
     public static final CustomObjectiveRegistryEntry ENCHANTED_ELIXIR = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("enchanted_elixir", "Enchanted Elixir", EnchantedElixirCrystalObjective.class, EnchantedElixirCrystalObjective::new, EnchantedElixirObjective.E_KEY, EnchantedElixirObjective.class).setCrateItem(ModBlocks.VAULT_CRATE_ELIXIR).build();
     public static final CustomObjectiveRegistryEntry UNHINGED_SCAVENGER_HUNT = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("unhinged_scavenger", "Unhinged Scavenger Hunt", UnhingedScavengerCrystalObjective.class, UnhingedScavengerCrystalObjective::new, UnhingedScavengerObjective.E_KEY, UnhingedScavengerObjective.class).setCrateItem(xyz.iwolfking.woldsvaults.init.ModBlocks.VAULT_CRATE_UNHINGED_SCAVENGER).build();
     public static final CustomObjectiveRegistryEntry HAUNTED_BRAZIERS = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("haunted_braziers", "Haunted Braziers", HauntedBraziersCrystalObjective.class, HauntedBraziersCrystalObjective::new, HauntedBraziersObjective.E_KEY, HauntedBraziersObjective.class).setCrateItem(xyz.iwolfking.woldsvaults.init.ModBlocks.VAULT_CRATE_HAUNTED_BRAZIERS).build();
@@ -18,7 +18,7 @@ public class ModCustomVaultObjectiveEntries {
 
 
     public static void registerCustomObjectives(RegistryEvent.Register<CustomObjectiveRegistryEntry> event) {
-        event.getRegistry().register(BRUTAL_BOSSES);
+        //event.getRegistry().register(BRUTAL_BOSSES);
         event.getRegistry().register(ENCHANTED_ELIXIR);
         event.getRegistry().register(UNHINGED_SCAVENGER_HUNT);
         event.getRegistry().register(HAUNTED_BRAZIERS);
