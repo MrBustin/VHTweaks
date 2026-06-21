@@ -1,0 +1,19 @@
+{
+
+  // This is the name of the template pool itself.
+  "name": "woldsvaults:portal_end_template",
+
+  "fallback": "minecraft:empty",
+
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "woldsvaults:portal2_end_ruin0",
+        "processors": "woldsvaults:portal_wear",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

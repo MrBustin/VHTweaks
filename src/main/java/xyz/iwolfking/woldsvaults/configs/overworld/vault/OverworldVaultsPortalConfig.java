@@ -1,0 +1,157 @@
+package xyz.iwolfking.woldsvaults.configs.overworld.vault;
+
+
+
+import com.google.gson.annotations.Expose;
+import com.mojang.datafixers.util.Pair;
+import xyz.iwolfking.woldsvaults.WoldsVaults;
+import xyz.iwolfking.woldsvaults.configs.overworld.VaultConfigRegistry;
+import xyz.iwolfking.woldsvaults.configs.overworld.vault.entry.CrystalDataEntry;
+import xyz.iwolfking.woldsvaults.configs.overworld.vault.entry.ModifierStackEntry;
+import xyz.iwolfking.woldsvaults.configs.overworld.vault.entry.PortalEntry;
+import xyz.iwolfking.woldsvaults.mixin.overworld.accessor.AccessorPoolCrystalTheme;
+import iskallia.vault.VaultMod;
+import iskallia.vault.config.Config;
+import iskallia.vault.core.world.roll.IntRoll;
+import iskallia.vault.item.crystal.CrystalData;
+import iskallia.vault.item.crystal.layout.ClassicInfiniteCrystalLayout;
+import iskallia.vault.item.crystal.objective.BingoCrystalObjective;
+import iskallia.vault.item.crystal.objective.ScavengerCrystalObjective;
+import iskallia.vault.item.crystal.theme.PoolCrystalTheme;
+import iskallia.vault.item.crystal.theme.ValueCrystalTheme;
+import iskallia.vault.item.crystal.time.ValueCrystalTime;
+import iskallia.vault.util.data.WeightedList;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.server.ServerLifecycleHooks;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class OverworldVaultsPortalConfig extends Config {
+
+    private static final Random RANDOM = new Random();
+    @Expose public float CHANCE_OF_NETHER_THEME_IN_NETHER;
+    @Expose public float CHANCE_OF_VOID_THEME_IN_END;
+    @Expose public WeightedList<ResourceLocation> DIMENSION_CHOOSE_LIST = new WeightedList<>();
+    @Expose public WeightedList<PortalEntry> PORTAL_LIST = new WeightedList<>();
+    @Expose public List<ResourceLocation> NETHER_VAULT_THEMES = new ArrayList<>();
+    @Expose public List<ResourceLocation> VOID_VAULT_THEMES = new ArrayList<>();
+
+    @Override
+    public String getName() {
+        return "woldsvaults_portals";
+    }
+
+    @Override
+    protected void reset() {
+        CHANCE_OF_NETHER_THEME_IN_NETHER = 0.10F;
+        CHANCE_OF_VOID_THEME_IN_END = 0.075F;
+
+        DIMENSION_CHOOSE_LIST.add(Level.OVERWORLD.location(), 1);
+        DIMENSION_CHOOSE_LIST.add(Level.NETHER.location(), 1);
+        DIMENSION_CHOOSE_LIST.add(Level.END.location(), 1);
+
+        CrystalDataEntry entry0 = new CrystalDataEntry(
+                new BingoCrystalObjective(),
+                new ClassicInfiniteCrystalLayout(1),
+                new PoolCrystalTheme(VaultMod.id("raw")),
+                null,
+                List.of(new ModifierStackEntry(VaultMod.id("locked"), 1), new ModifierStackEntry(VaultMod.id("soul_boost"), 4)),
+                new ValueCrystalTime(IntRoll.ofConstant(1800)),
+                20,
+                false
+                );
+
+        PORTAL_LIST.add(new PortalEntry(
+                entry0,
+                "\u00A73You sense a brutal energy in %s. (S-Tier Vault)",
+                "\u00A7oA brutal OverworldVault presence is still open in %s.",
+                "\u00A7o\u00A75The brutal OverworldVault in %s decays and closes.",
+                3600,
+                true
+        ), 20);
+
+        CrystalDataEntry entry1 = new CrystalDataEntry(
+                new ScavengerCrystalObjective(0.6F, VaultMod.id("default")),
+                new ClassicInfiniteCrystalLayout(1),
+                new PoolCrystalTheme(VaultMod.id("raw")),
+                null,
+                List.of(new ModifierStackEntry(VaultMod.id("energizing"), 16), new ModifierStackEntry(VaultMod.id("item_quantity"), 16)),
+                new ValueCrystalTime(IntRoll.ofConstant(3600)),
+                100,
+                false
+        );
+
+        PORTAL_LIST.add(new PortalEntry(
+                entry1,
+                "\u00A73You sense an overwhelming energy in %s. (S++-Tier Vault)",
+                "\u00A7oAn overwhelming OverworldVault presence is still open in %s.",
+                "\u00A7o\u00A75The overwhelming OverworldVault in %s decays and closes.",
+                3600,
+                true
+        ), 2);
+
+        NETHER_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_nether_crimson"));
+        NETHER_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_nether_warped"));
+        NETHER_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_nether_blackstone"));
+        NETHER_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_nether_soul"));
+
+        VOID_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_void"));
+        VOID_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_end_void"));
+        VOID_VAULT_THEMES.add(new ResourceLocation("the_vault:classic_vault_factory_void"));
+    }
+
+
+    public static Pair<PortalEntry, CrystalData> getRandomCrystalData(ResourceKey<Level> dimension) {
+        OverworldVaultsPortalConfig cfg = VaultConfigRegistry.OVERWORLD_VAULTS_PORTAL_CONFIG;
+
+        CrystalData crystal = CrystalData.empty();
+
+        PortalEntry portalEntry = cfg.PORTAL_LIST.getRandom(Config.rand);
+        if (portalEntry != null) {
+            CrystalDataEntry.applyData(portalEntry.getCrystalData(), crystal);
+            ResourceLocation curTheme = null;
+
+            if(portalEntry.getCrystalData().getTheme() instanceof PoolCrystalTheme theme) {
+                curTheme = ((AccessorPoolCrystalTheme) theme).getId();
+            }
+
+            if(dimension.equals(Level.NETHER) && RANDOM.nextFloat() <= cfg.CHANCE_OF_NETHER_THEME_IN_NETHER) {
+
+                if(!(curTheme != null && curTheme.equals(VaultMod.id("raw")))) {
+                    crystal.setTheme(new ValueCrystalTheme(
+                            cfg.NETHER_VAULT_THEMES.get(RANDOM.nextInt(cfg.NETHER_VAULT_THEMES.size()))
+                    ));
+                }
+            } else if (dimension.equals(Level.END) && RANDOM.nextFloat() <= cfg.CHANCE_OF_VOID_THEME_IN_END) {
+                if(!(curTheme != null && curTheme.equals(VaultMod.id("raw")))) {
+                    crystal.setTheme(new ValueCrystalTheme(
+                            cfg.NETHER_VAULT_THEMES.get(RANDOM.nextInt(cfg.NETHER_VAULT_THEMES.size()))
+                    ));
+                }
+                if(!(curTheme != null && curTheme.equals(VaultMod.id("raw")))) {
+                    crystal.setTheme(new ValueCrystalTheme(
+                            cfg.VOID_VAULT_THEMES.get(RANDOM.nextInt(cfg.VOID_VAULT_THEMES.size()))
+                    ));
+                }
+            }
+
+
+        } else {
+            WoldsVaults.LOGGER.error("Found invalid portal data inside of '{}' config!", VaultConfigRegistry.OVERWORLD_VAULTS_PORTAL_CONFIG.getName());
+        }
+
+        return Pair.of(portalEntry, crystal);
+    }
+
+
+    public ServerLevel getLevel(MinecraftServer srv)  {
+        return srv.getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, this.DIMENSION_CHOOSE_LIST.getRandom(Config.rand)));
+    }
+}

@@ -41,8 +41,17 @@ import xyz.iwolfking.woldsvaults.blocks.renderers.StatueCauldronRenderer;
 import xyz.iwolfking.woldsvaults.configs.ServerConfigs;
 import xyz.iwolfking.woldsvaults.configs.core.WoldsVaultsConfig;
 import xyz.iwolfking.woldsvaults.core.AddonLoader;
+import xyz.iwolfking.woldsvaults.client.overworld.OverworldVaultCompassHandler;
+import xyz.iwolfking.woldsvaults.client.overworld.OverworldVaultKeybinds;
+import xyz.iwolfking.woldsvaults.client.overworld.gui.OverworldVaultGuiUpdateManager;
+import xyz.iwolfking.woldsvaults.events.overworld.DimensionChangeEvent;
 import xyz.iwolfking.woldsvaults.events.LivingEntityEvents;
+import xyz.iwolfking.woldsvaults.events.overworld.OnPlayerLogin;
+import xyz.iwolfking.woldsvaults.events.overworld.OverworldVaultEventHandler;
+import xyz.iwolfking.woldsvaults.events.overworld.ServerTickEvent;
 import xyz.iwolfking.woldsvaults.events.SetupEvents;
+import xyz.iwolfking.woldsvaults.events.overworld.StructureTrackingEventHandler;
+import xyz.iwolfking.woldsvaults.events.overworld.VaultLifecycleEventHandler;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultGearEntries;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
 import xyz.iwolfking.woldsvaults.init.ModCrystalObjectives;
@@ -59,11 +68,14 @@ import xyz.iwolfking.woldsvaults.init.additions.ModParticles;
 import xyz.iwolfking.woldsvaults.init.additions.ModScreens;
 import xyz.iwolfking.woldsvaults.init.additions.ModSounds;
 import xyz.iwolfking.woldsvaults.gear.gecko.armor.VaultGeckoArmorRenderer;
+import xyz.iwolfking.woldsvaults.init.overworld.OverworldVaultSounds;
 import xyz.iwolfking.woldsvaults.models.AdditionalModels;
 import xyz.iwolfking.woldsvaults.network.PacketHandler;
+import xyz.iwolfking.woldsvaults.network.overworld.OverworldVaultNetwork;
 import xyz.iwolfking.woldsvaults.objectives.InfiniteRaidObjective;
 import xyz.iwolfking.woldsvaults.objectives.data.BrutalBossesRegistry;
 import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
+import xyz.iwolfking.woldsvaults.world.overworld.structure.OverworldVaultStructures;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("woldsvaults")
@@ -93,13 +105,23 @@ public class WoldsVaults {
         modEventBus.addGenericListener(CustomVaultGearRegistryEntry.class, ModCustomVaultGearEntries::registerGearEntries);
         modEventBus.addListener(this::additionsCommonSetup);
         modEventBus.addListener(this::additionsClientSetup);
+        modEventBus.addListener(this::overworldVaultCommonSetup);
+        modEventBus.addListener(this::overworldVaultClientSetup);
         modEventBus.addListener(this::registerRenderers);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(AddonLoader::onAddPackFinders);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, SetupEvents::registerCustomModelRolls);
         MinecraftForge.EVENT_BUS.addListener(this::onVHAPIProcessorEnd);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(StructureTrackingEventHandler.class);
+        MinecraftForge.EVENT_BUS.register(OverworldVaultEventHandler.class);
+        MinecraftForge.EVENT_BUS.addListener(ServerTickEvent::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(OverworldVaultGuiUpdateManager::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(DimensionChangeEvent::onDimensionChange);
+        MinecraftForge.EVENT_BUS.addListener(OnPlayerLogin::onPlayerLoginEvent);
         ModCrystalObjectives.init();
+        OverworldVaultSounds.register(modEventBus);
+        OverworldVaultStructures.register(modEventBus);
         new AdditionalModels();
 
         if (FMLEnvironment.dist == Dist.DEDICATED_SERVER && !ModList.get().isLoaded("worldborderfixer")) {
@@ -133,6 +155,20 @@ public class WoldsVaults {
         BlockEntityRenderers.register(ModBlockEntities.RAID_PLAQUE_BLOCK_ENTITY.get(), RaidPlaqueRenderer::new);
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.ENCHANTED_FIRE.get(), RenderType.cutout());
         LOGGER.info("Registered Wold's Vaults block entity renderers");
+    }
+
+    private void overworldVaultCommonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            OverworldVaultNetwork.register();
+            VaultLifecycleEventHandler.init();
+        });
+    }
+
+    private void overworldVaultClientSetup(final FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            OverworldVaultCompassHandler.init();
+            OverworldVaultKeybinds.register();
+        });
     }
 
     @SubscribeEvent

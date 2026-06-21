@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 
 /**
- * Class exclusively used to fix a bug with OverVaults Compass network messages
+ * Class used to fix a bug with overworld vault compass network messages
  */
 @Mixin(value = VaultMessage.Unload.class, remap = false)
 public class MixinVaultMessageUnload {
@@ -41,3 +41,4 @@ public class MixinVaultMessageUnload {
         ci.cancel();
     }
 }
+

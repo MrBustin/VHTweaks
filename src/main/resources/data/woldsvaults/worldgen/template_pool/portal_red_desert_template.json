@@ -1,0 +1,29 @@
+{
+
+  // This is the name of the template pool itself.
+  "name": "woldsvaults:portal_red_desert_template",
+
+  "fallback": "minecraft:empty",
+
+  "elements": [
+    {
+      "weight": 4,
+      "element": {
+        "location": "woldsvaults:portal1_mesa_ruin0",
+        "processors": "woldsvaults:portal_wear",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+
+    {
+      "weight": 4,
+      "element": {
+        "location": "woldsvaults:portal2_mesa_ruin0",
+        "processors": "woldsvaults:portal_wear",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

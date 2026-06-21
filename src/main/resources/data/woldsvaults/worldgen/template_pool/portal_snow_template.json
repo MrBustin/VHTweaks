@@ -1,0 +1,37 @@
+{
+
+  // This is the name of the template pool itself.
+  "name": "woldsvaults:portal_snow_template",
+
+  "fallback": "minecraft:empty",
+
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "woldsvaults:portal3_ruin1",
+        "processors": "woldsvaults:portal_wear",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      } 
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "woldsvaults:portal3_ruin2",
+        "processors": "woldsvaults:portal_wear",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      } 
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "woldsvaults:portal3_ruin3",
+        "processors": "woldsvaults:portal_wear",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      } 
+    }
+  ]
+}

@@ -163,5 +163,11 @@
                                     "stream":  true
                                 }
                             ]
-             }
+             },
+    "portal_spawn":  {
+                         "subtitle":  "sounds.woldsvaults.portal_spawn",
+                         "sounds":  [
+                                        "woldsvaults:portal_spawn"
+                                    ]
+                     }
 }
