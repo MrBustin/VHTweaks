@@ -58,7 +58,7 @@ import xyz.iwolfking.woldsvaults.items.alchemy.CatalystItem;
 import xyz.iwolfking.woldsvaults.objectives.data.alchemy.AlchemyTasks;
 import xyz.iwolfking.woldsvaults.api.util.GameruleHelper;
 import xyz.iwolfking.woldsvaults.api.util.SigilUtils;
-import xyz.iwolfking.woldsvaults.api.util.VaultModifierUtils;
+import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 
 import java.util.*;
 

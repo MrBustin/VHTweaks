@@ -1,7 +1,7 @@
 package xyz.iwolfking.woldsvaults.events.overworld;
 
 import xyz.iwolfking.woldsvaults.configs.overworld.VaultConfigRegistry;
-import xyz.iwolfking.woldsvaults.util.overworld.MiscUtil;
+import xyz.iwolfking.woldsvaults.util.MiscUtil;
 import xyz.iwolfking.woldsvaults.util.overworld.OverworldVaultCrystalUtil;
 import xyz.iwolfking.woldsvaults.world.overworld.ActiveCrystalSavedData;
 import xyz.iwolfking.woldsvaults.world.overworld.PortalData;

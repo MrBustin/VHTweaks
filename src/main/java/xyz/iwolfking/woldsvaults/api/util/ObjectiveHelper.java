@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import xyz.iwolfking.woldsvaults.init.ModGameRules;
 import xyz.iwolfking.woldsvaults.modifiers.vault.DifficultyLockModifier;
+import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 
 import java.util.ArrayList;
 import java.util.List;

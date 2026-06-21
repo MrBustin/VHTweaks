@@ -3,6 +3,7 @@ package xyz.iwolfking.woldsvaults.util.overworld;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.configs.overworld.VaultConfigRegistry;
 import xyz.iwolfking.woldsvaults.configs.overworld.vault.entry.PortalEntry;
+import xyz.iwolfking.woldsvaults.util.MiscUtil;
 import xyz.iwolfking.woldsvaults.world.overworld.ActiveCrystalSavedData;
 import xyz.iwolfking.woldsvaults.world.overworld.PortalData;
 import xyz.iwolfking.woldsvaults.world.overworld.StructureSize;

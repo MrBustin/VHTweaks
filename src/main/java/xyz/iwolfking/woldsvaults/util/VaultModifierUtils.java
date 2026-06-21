@@ -57,6 +57,15 @@ public class VaultModifierUtils {
         }
     }
 
+    public static <T extends VaultModifier<?>> List<T> getModifiersOfType(Vault vault, Class<T> type) {
+        return vault.get(Vault.MODIFIERS)
+                .getModifiers()
+                .stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .toList();
+    }
+
     public static boolean hasCountOfModifiers(Vault vault, ResourceLocation modifierId, int count) {
         return getCountOfModifiers(vault, modifierId) >= count;
     }

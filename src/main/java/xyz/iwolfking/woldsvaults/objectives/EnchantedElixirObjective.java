@@ -24,7 +24,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.iwolfking.woldsvaults.api.core.vault_events.lib.EventTag;
 import xyz.iwolfking.woldsvaults.api.util.ObjectiveHelper;
-import xyz.iwolfking.woldsvaults.api.util.VaultModifierUtils;
+import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 import xyz.iwolfking.woldsvaults.init.ModConfigs;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirEventAmountModifier;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirPoolModifier;

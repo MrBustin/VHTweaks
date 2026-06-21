@@ -3,6 +3,7 @@ package xyz.iwolfking.woldsvaults.api.util;
 import iskallia.vault.VaultMod;
 import iskallia.vault.core.vault.Modifiers;
 import iskallia.vault.core.vault.Vault;
+import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 
 public class SigilUtils {
     public static void addStacksFromSigil(Vault vault) {

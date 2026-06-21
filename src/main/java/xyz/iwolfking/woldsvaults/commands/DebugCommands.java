@@ -3,8 +3,10 @@ package xyz.iwolfking.woldsvaults.commands;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import xyz.iwolfking.woldsvaults.events.overworld.ServerTickEvent;
 import xyz.iwolfking.woldsvaults.gear.effect.AttributeTransmogEffect;
 import iskallia.vault.gear.attribute.VaultGearModifier;
 import iskallia.vault.gear.data.VaultGearData;
@@ -42,6 +44,16 @@ public class DebugCommands {
                         .then(Commands.literal("configureWorldBorders")
                                 .then(Commands.argument("worldBorderSize", DoubleArgumentType.doubleArg(-5.9999968E7D, 5.9999968E7D))
                                         .executes(this::configureWorldBorders)
+                                )
+                        )
+                        .then(Commands.literal("modifyActivationTimer")
+                                .then(Commands.argument("timeInTicks", IntegerArgumentType.integer())
+                                        .executes(this::modifyActivationTimer)
+                                )
+                        )
+                        .then(Commands.literal("modifyModifierRemovalTimer")
+                                .then(Commands.argument("timeInTicks", IntegerArgumentType.integer())
+                                        .executes(this::modifyModifierRemovalTimer)
                                 )
                         )
                         .then(Commands.literal("serializeHeldModifiers")
@@ -84,6 +96,18 @@ public class DebugCommands {
         }
 
         context.getSource().sendSuccess(new TranslatableComponent("commands.worldborder.set.immediate", String.format(Locale.ROOT, "%.1f", amount)), true);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private int modifyActivationTimer(CommandContext<CommandSourceStack> context) {
+        int modifyTimer = IntegerArgumentType.getInteger(context, "timeInTicks");
+        ServerTickEvent.counter += modifyTimer;
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private int modifyModifierRemovalTimer(CommandContext<CommandSourceStack> context) {
+        int modifyTimer = IntegerArgumentType.getInteger(context, "timeInTicks");
+        ServerTickEvent.activePortalTickCounter += modifyTimer;
         return Command.SINGLE_SUCCESS;
     }
 
