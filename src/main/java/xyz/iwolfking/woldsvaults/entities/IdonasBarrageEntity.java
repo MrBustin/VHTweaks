@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.entities;
 
-import xyz.iwolfking.woldsvaults.init.additions.ModEntities;
+import xyz.iwolfking.woldsvaults.init.ModEntities;
 import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.world.data.VaultPartyData;

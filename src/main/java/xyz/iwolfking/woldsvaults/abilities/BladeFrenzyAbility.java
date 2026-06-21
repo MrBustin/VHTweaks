@@ -3,7 +3,7 @@ package xyz.iwolfking.woldsvaults.abilities;
 import com.google.gson.JsonObject;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.init.additions.ModNetwork;
-import xyz.iwolfking.woldsvaults.init.additions.ModSounds;
+import xyz.iwolfking.woldsvaults.init.ModSounds;
 import xyz.iwolfking.woldsvaults.network.BladeFrenzyParticleMessage;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.net.BitBuffer;

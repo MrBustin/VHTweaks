@@ -8,7 +8,7 @@ import xyz.iwolfking.woldsvaults.data.PlayerAdditionalVaultStatData;
 import xyz.iwolfking.woldsvaults.data.PowerCrystalData;
 import xyz.iwolfking.woldsvaults.events.additions.WoldsVaultsEvent;
 import xyz.iwolfking.woldsvaults.init.additions.ModBlockEntities;
-import xyz.iwolfking.woldsvaults.init.additions.ModItems;
+import xyz.iwolfking.woldsvaults.init.ModItems;
 import xyz.iwolfking.woldsvaults.items.PowerCrystal;
 import xyz.iwolfking.woldsvaults.util.TimeUtil;
 import iskallia.vault.util.InventoryUtil;

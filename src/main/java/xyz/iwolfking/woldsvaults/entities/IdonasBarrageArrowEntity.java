@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.entities;
 
-import xyz.iwolfking.woldsvaults.init.additions.ModEntities;
+import xyz.iwolfking.woldsvaults.init.ModEntities;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

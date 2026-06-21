@@ -1,7 +1,7 @@
 package xyz.iwolfking.woldsvaults.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes;
+import xyz.iwolfking.woldsvaults.init.ModGearAttributes;
 import iskallia.vault.block.VaultChestBlock;
 import iskallia.vault.block.entity.VaultChestTileEntity;
 import iskallia.vault.gear.data.AttributeGearData;

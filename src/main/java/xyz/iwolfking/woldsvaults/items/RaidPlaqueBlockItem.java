@@ -1,7 +1,7 @@
 package xyz.iwolfking.woldsvaults.items;
 
 import xyz.iwolfking.woldsvaults.configs.Configs;
-import xyz.iwolfking.woldsvaults.init.additions.ModBlocks;
+import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import iskallia.vault.block.item.SoulPlaqueBlockItem;
 import iskallia.vault.init.ModConfigs;
 import net.minecraft.server.level.ServerPlayer;

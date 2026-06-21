@@ -31,10 +31,10 @@ public class VaultGearAttributeHelper {
     }
 
     public static VaultGearAttributeInstance<Float> airMobilitySpeed(float playerBaseSpeed) {
-        return VaultGearAttributeInstance.cast(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.AIR_MOBILITY_SPEED, playerBaseSpeed);
+        return VaultGearAttributeInstance.cast(xyz.iwolfking.woldsvaults.init.ModGearAttributes.AIR_MOBILITY_SPEED, playerBaseSpeed);
     }
 
     public static VaultGearAttributeInstance<Float> airMobilityControl(float playerBaseAirMovement) {
-        return VaultGearAttributeInstance.cast(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.AIR_MOBILITY_CONTROL, playerBaseAirMovement);
+        return VaultGearAttributeInstance.cast(xyz.iwolfking.woldsvaults.init.ModGearAttributes.AIR_MOBILITY_CONTROL, playerBaseAirMovement);
     }
 }

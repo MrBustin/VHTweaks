@@ -3,7 +3,7 @@ package xyz.iwolfking.woldsvaults.client.renderers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import xyz.iwolfking.woldsvaults.blocks.ColoredVelvetBed;
 import xyz.iwolfking.woldsvaults.blocks.tiles.ColoredVelvetBedBlockEntity;
-import xyz.iwolfking.woldsvaults.init.additions.ModBlocks;
+import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

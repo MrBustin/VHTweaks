@@ -1,7 +1,7 @@
 package xyz.iwolfking.woldsvaults.blocks.containers;
 
 import xyz.iwolfking.woldsvaults.blocks.tiles.PlayerTraderBlockEntity;
-import xyz.iwolfking.woldsvaults.init.additions.ModContainers;
+import xyz.iwolfking.woldsvaults.init.ModContainers;
 import iskallia.vault.container.oversized.OverSizedSlotContainer;
 import iskallia.vault.container.slot.TabSlot;
 import net.minecraft.core.BlockPos;

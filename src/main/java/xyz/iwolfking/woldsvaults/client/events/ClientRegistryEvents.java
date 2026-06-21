@@ -3,7 +3,7 @@ package xyz.iwolfking.woldsvaults.client.events;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.client.renderers.IdonasBarrageArrowRenderer;
 import xyz.iwolfking.woldsvaults.client.renderers.IdonasBarrageRenderer;
-import xyz.iwolfking.woldsvaults.init.additions.ModEntities;
+import xyz.iwolfking.woldsvaults.init.ModEntities;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;

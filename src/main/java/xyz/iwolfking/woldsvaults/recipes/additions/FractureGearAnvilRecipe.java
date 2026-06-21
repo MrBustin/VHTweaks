@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.recipes.additions;
 
-import xyz.iwolfking.woldsvaults.init.additions.ModItems;
+import xyz.iwolfking.woldsvaults.init.ModItems;
 import iskallia.vault.gear.data.VaultGearData;
 import iskallia.vault.recipe.anvil.AnvilContext;
 import net.minecraft.world.item.Item;

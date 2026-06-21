@@ -2,7 +2,7 @@ package xyz.iwolfking.woldsvaults.abilities;
 
 import com.google.gson.JsonObject;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.init.additions.ModEffects;
+import xyz.iwolfking.woldsvaults.init.ModEffects;
 import xyz.iwolfking.woldsvaults.util.SoundChoice;
 import xyz.iwolfking.woldsvaults.gear.attribute.special.LegacyManaShieldAbsorptionModification;
 import xyz.iwolfking.woldsvaults.gear.effect.AbilitySoundTransmogEffect;

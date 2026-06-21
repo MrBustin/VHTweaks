@@ -19,6 +19,6 @@ public class MixinModGearAttributes {
 
     @Inject(method = "registerAssociations", at = @At("TAIL"))
     private static void registerAdditionalAssociations(CallbackInfo ci) {
-        VANILLA_ATTRIBUTES.put(ModAttributes.SIZE_SCALE, AttributeModifier.Operation.MULTIPLY_TOTAL, xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.SIZE_SCALE);
+        VANILLA_ATTRIBUTES.put(ModAttributes.SIZE_SCALE, AttributeModifier.Operation.MULTIPLY_TOTAL, xyz.iwolfking.woldsvaults.init.ModGearAttributes.SIZE_SCALE);
     }
 }

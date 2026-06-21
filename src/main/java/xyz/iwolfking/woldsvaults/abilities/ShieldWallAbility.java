@@ -2,7 +2,7 @@ package xyz.iwolfking.woldsvaults.abilities;
 
 import com.google.gson.JsonObject;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.init.additions.ModEffects;
+import xyz.iwolfking.woldsvaults.init.ModEffects;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.event.CommonEvents;
 import iskallia.vault.core.event.common.EntityDamageBlockEvent;

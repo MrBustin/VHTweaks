@@ -6,8 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.mojang.datafixers.util.Pair;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.init.additions.ModModels;
-import xyz.iwolfking.woldsvaults.init.additions.ModSounds;
+import xyz.iwolfking.woldsvaults.init.client.ModModels;
+import xyz.iwolfking.woldsvaults.init.ModSounds;
 import xyz.iwolfking.woldsvaults.util.ModelUtil;
 import xyz.iwolfking.woldsvaults.util.SoundChoice;
 import xyz.iwolfking.woldsvaults.util.VaultGearAttributeHelper;
@@ -290,7 +290,7 @@ public class TransmogEffectsConfig extends Config {
 
         for (TransmogEffect effect : effects) {
             if (effect instanceof AttributeTransmogEffect<?> attributeEffect
-                    && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT
+                    && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT
                     && Double.compare(((Number) attributeEffect.getVaultGearAttributeInstance().getValue()).doubleValue(), value) == 0) {
                 hasKineticReduction = true;
                 break;
@@ -301,7 +301,7 @@ public class TransmogEffectsConfig extends Config {
             return;
         }
 
-        updatedEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, value)));
+        updatedEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, value)));
 
         JsonArray serializedEffects = new JsonArray();
         for (TransmogEffect effect : updatedEffects) {
@@ -325,7 +325,7 @@ public class TransmogEffectsConfig extends Config {
 
         for (TransmogEffect effect : effects) {
             if (effect instanceof AttributeTransmogEffect<?> attributeEffect
-                    && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT
+                    && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT
                     && Double.compare(((Number) attributeEffect.getVaultGearAttributeInstance().getValue()).doubleValue(), value) == 0) {
                 hasFallReduction = true;
                 break;
@@ -336,7 +336,7 @@ public class TransmogEffectsConfig extends Config {
             return;
         }
 
-        updatedEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, value)));
+        updatedEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, value)));
 
         JsonArray serializedEffects = new JsonArray();
         for (TransmogEffect effect : updatedEffects) {
@@ -460,7 +460,7 @@ public class TransmogEffectsConfig extends Config {
 
     private boolean isAirMobilityPairBonus(TransmogEffect effect, float playerBaseSpeed, float playerBaseAirMovement) {
         if (!(effect instanceof AttributeTransmogEffect<?> attributeEffect)
-                || attributeEffect.getVaultGearAttributeInstance().getAttribute() != xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.AIR_MOBILITY) {
+                || attributeEffect.getVaultGearAttributeInstance().getAttribute() != xyz.iwolfking.woldsvaults.init.ModGearAttributes.AIR_MOBILITY) {
             return false;
         }
 
@@ -477,13 +477,13 @@ public class TransmogEffectsConfig extends Config {
 
     private boolean isAirMobilitySpeedBonus(TransmogEffect effect, float playerBaseSpeed) {
         return effect instanceof AttributeTransmogEffect<?> attributeEffect
-                && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.AIR_MOBILITY_SPEED
+                && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.ModGearAttributes.AIR_MOBILITY_SPEED
                 && Double.compare(((Number) attributeEffect.getVaultGearAttributeInstance().getValue()).doubleValue(), playerBaseSpeed) == 0;
     }
 
     private boolean isAirMobilityControlBonus(TransmogEffect effect, float playerBaseAirMovement) {
         return effect instanceof AttributeTransmogEffect<?> attributeEffect
-                && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.AIR_MOBILITY_CONTROL
+                && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.ModGearAttributes.AIR_MOBILITY_CONTROL
                 && Double.compare(((Number) attributeEffect.getVaultGearAttributeInstance().getValue()).doubleValue(), playerBaseAirMovement) == 0;
     }
 
@@ -541,7 +541,7 @@ public class TransmogEffectsConfig extends Config {
             }
 
             if (effect instanceof AttributeTransmogEffect<?> attributeEffect
-                    && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT
+                    && attributeEffect.getVaultGearAttributeInstance().getAttribute() == xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT
                     && Double.compare(((Number) attributeEffect.getVaultGearAttributeInstance().getValue()).doubleValue(), 0.25F) == 0) {
                 hasKineticReduction = true;
             }
@@ -555,7 +555,7 @@ public class TransmogEffectsConfig extends Config {
         }
 
         if (!hasKineticReduction) {
-            updatedEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)));
+            updatedEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)));
             changed = true;
         }
 
@@ -614,8 +614,8 @@ public class TransmogEffectsConfig extends Config {
             effects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.abilityManaCostPercentage(ModAbilities.EMPOWER, -0.25F)).serialize());
             effects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.airMobilitySpeed(0.05F)).serialize());
             effects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.airMobilityControl(0.05F)).serialize());
-            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
-            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
             effects.add(new VanillaAttributeArmorTransmogEffect<>(Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_BASE, 0.2F).serialize());
             effects.add(new AbilitySoundTransmogEffect(ModAbilities.SMITE_ARCHON, new SoundChoice(ModSounds.TIGER_ACTIVATE_ARCHON.get())).serialize());
             effects.add(new AbilitySoundTransmogEffect("Smite_Abstract", new SoundChoice(ModSounds.TIGER_ARCHON_BOLT.get())).serialize());
@@ -631,8 +631,8 @@ public class TransmogEffectsConfig extends Config {
             effects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.abilityManaCostPercentage(ModAbilities.SMITE_ARCHON, -0.35F)).serialize());
             effects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.airMobilitySpeed(0.05F)).serialize());
             effects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.airMobilityControl(0.05F)).serialize());
-            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
-            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+            effects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
             effects.add(new ElytraSoundTransmogEffect(ModSounds.HOY_ELYTRA_GLIDE.get(), 0.2F).serialize());
             effects.add(new AbilitySoundTransmogEffect(ModAbilities.SMITE_ARCHON, new SoundChoice(ModSounds.HOY_ACTIVATE_ARCHON.get())).serialize());
             effects.add(new AbilitySoundTransmogEffect("Smite_Abstract", new SoundChoice(ModSounds.HOY_ARCHON_BOLT.get())).serialize());
@@ -646,8 +646,8 @@ public class TransmogEffectsConfig extends Config {
         vikingEffects.add(new StyledTalentLevelTransmogEffect(VaultGearAttributeHelper.talentLevel("Berserking", 2)).serialize());
         vikingEffects.add(new StyledTalentLevelTransmogEffect(VaultGearAttributeHelper.talentLevel("Last_Stand", 1)).serialize());
         vikingEffects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.abilityLevel("Rampage", 2)).serialize());
-        vikingEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
-        vikingEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+        vikingEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+        vikingEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
         transmogEffects.add(ModModels.Armor.VIKING.getModel().getId().toString(), vikingEffects);
 
         JsonArray celestialEffects = new JsonArray();
@@ -655,8 +655,8 @@ public class TransmogEffectsConfig extends Config {
         celestialEffects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.abilityManaCostPercentage(ModAbilities.EMPOWER, -0.25F)).serialize());
         celestialEffects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.airMobilitySpeed(0.05F)).serialize());
         celestialEffects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.airMobilityControl(0.1F)).serialize());
-        celestialEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
-        celestialEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+        celestialEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+        celestialEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
         celestialEffects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.abilityCooldownPercentage(ModAbilities.GHOST_WALK, -0.5F)).serialize());
         celestialEffects.add(new VanillaAttributeArmorTransmogEffect<>(Attributes.MOVEMENT_SPEED, AttributeModifier.Operation.MULTIPLY_BASE, 0.1F).serialize());
         transmogEffects.add(ModModels.Armor.CELESTIAL.getModel().getId().toString(), celestialEffects);
@@ -666,8 +666,8 @@ public class TransmogEffectsConfig extends Config {
         spaceMarineEffects.add(new AttributeTransmogEffect<>(VaultGearAttributeHelper.abilityManaCostPercentage(ModAbilities.DASH, -0.25F)).serialize());
         spaceMarineEffects.add(new StyledAbilityLevelTransmogEffect(VaultGearAttributeHelper.abilityLevel(ModAbilities.DASH, 1), true).serialize());
         spaceMarineEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(ModGearAttributes.RESISTANCE, 0.1F)).serialize());
-        spaceMarineEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
-        spaceMarineEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+        spaceMarineEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.KINETIC_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
+        spaceMarineEffects.add(new AttributeTransmogEffect<>(new VaultGearAttributeInstance<>(xyz.iwolfking.woldsvaults.init.ModGearAttributes.FALL_DAMAGE_REDUCTION_PERCENT, 0.25F)).serialize());
         spaceMarineEffects.add(new VanillaAttributeArmorTransmogEffect<>(ModAttributes.SIZE_SCALE, AttributeModifier.Operation.MULTIPLY_TOTAL, 0.25F).serialize());
         transmogEffects.add(ModModels.Armor.SPACE_MARINE.getModel().getId().toString(), spaceMarineEffects);
     }

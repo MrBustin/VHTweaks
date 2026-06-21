@@ -2,7 +2,7 @@ package xyz.iwolfking.woldsvaults.items;
 
 import xyz.iwolfking.woldsvaults.blocks.GlobeExpanderBlock;
 import xyz.iwolfking.woldsvaults.data.PlayerAdditionalVaultStatData;
-import xyz.iwolfking.woldsvaults.init.additions.ModBlocks;
+import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import iskallia.vault.client.gui.overlay.VaultBarOverlay;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.ChatFormatting;

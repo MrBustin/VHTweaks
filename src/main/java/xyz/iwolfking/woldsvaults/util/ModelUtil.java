@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.util;
 
-import xyz.iwolfking.woldsvaults.init.additions.ModModels;
+import xyz.iwolfking.woldsvaults.init.client.ModModels;
 import xyz.iwolfking.woldsvaults.gear.gecko.VaultGeckoModel;
 import iskallia.vault.dynamodel.DynamicModel;
 import iskallia.vault.dynamodel.model.armor.ArmorModel;

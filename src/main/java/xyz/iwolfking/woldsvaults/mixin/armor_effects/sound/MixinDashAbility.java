@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.mixin.armor_effects.sound;
 
-import xyz.iwolfking.woldsvaults.init.additions.ModSounds;
+import xyz.iwolfking.woldsvaults.init.ModSounds;
 import xyz.iwolfking.woldsvaults.util.DateHelper;
 import xyz.iwolfking.woldsvaults.util.SoundChoice;
 import xyz.iwolfking.woldsvaults.gear.effect.AbilitySoundTransmogEffect;

@@ -2,6 +2,7 @@ package xyz.iwolfking.woldsvaults.init.additions;
 
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.blocks.tiles.*;
+import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

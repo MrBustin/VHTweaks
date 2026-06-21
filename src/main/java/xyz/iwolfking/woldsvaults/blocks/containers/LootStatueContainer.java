@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.blocks.containers;
 
-import xyz.iwolfking.woldsvaults.init.additions.ModContainers;
+import xyz.iwolfking.woldsvaults.init.ModContainers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;

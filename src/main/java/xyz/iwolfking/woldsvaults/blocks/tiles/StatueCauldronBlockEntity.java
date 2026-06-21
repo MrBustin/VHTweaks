@@ -134,7 +134,7 @@ public class StatueCauldronBlockEntity extends BlockEntity {
 
                         level.addFreshEntity(itemEntity);
 
-                        level.setBlock(blockPos, xyz.iwolfking.woldsvaults.init.additions.ModBlocks.STATUE_CAULDRON.get().defaultBlockState().setValue(StatueCauldronBlock.LEVEL, 1) ,3);
+                        level.setBlock(blockPos, xyz.iwolfking.woldsvaults.init.ModBlocks.STATUE_CAULDRON.get().defaultBlockState().setValue(StatueCauldronBlock.LEVEL, 1) ,3);
                         be.setStatueCount(0);
                         be.getNames().clear();
                         be.sendUpdates();

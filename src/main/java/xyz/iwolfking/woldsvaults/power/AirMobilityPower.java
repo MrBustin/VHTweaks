@@ -5,7 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.client.vault.ClientPowerData;
 import xyz.iwolfking.woldsvaults.client.events.KeybindEvents;
-import xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes;
+import xyz.iwolfking.woldsvaults.init.ModGearAttributes;
 import xyz.iwolfking.woldsvaults.client.menu.PowerTree;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.net.BitBuffer;

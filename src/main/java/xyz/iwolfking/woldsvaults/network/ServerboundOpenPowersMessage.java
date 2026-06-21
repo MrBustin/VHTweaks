@@ -1,7 +1,7 @@
 package xyz.iwolfking.woldsvaults.network;
 
 import xyz.iwolfking.woldsvaults.data.PlayerPowersData;
-import xyz.iwolfking.woldsvaults.init.additions.ModContainers;
+import xyz.iwolfking.woldsvaults.init.ModContainers;
 import xyz.iwolfking.woldsvaults.client.menu.PowerTree;
 import iskallia.vault.container.NBTElementContainer;
 import iskallia.vault.core.net.ArrayBitBuffer;

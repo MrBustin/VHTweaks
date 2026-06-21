@@ -3,7 +3,7 @@ package xyz.iwolfking.woldsvaults.power;
 import com.google.gson.JsonObject;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.data.PlayerPowersData;
-import xyz.iwolfking.woldsvaults.init.additions.vault.ModGearAttributes;
+import xyz.iwolfking.woldsvaults.init.ModGearAttributes;
 import xyz.iwolfking.woldsvaults.client.menu.PowerTree;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.net.BitBuffer;

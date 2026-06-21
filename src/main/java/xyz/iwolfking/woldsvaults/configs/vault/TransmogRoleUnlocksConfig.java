@@ -3,7 +3,7 @@ package xyz.iwolfking.woldsvaults.configs.vault;
 import com.google.gson.annotations.Expose;
 import com.mojang.datafixers.util.Pair;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.init.additions.ModModels;
+import xyz.iwolfking.woldsvaults.init.client.ModModels;
 import iskallia.vault.config.Config;
 import iskallia.vault.dynamodel.DynamicModel;
 import iskallia.vault.init.ModDynamicModels;

@@ -10,6 +10,9 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
+import xyz.iwolfking.woldsvaults.entities.IdonasBarrageArrowEntity;
+import xyz.iwolfking.woldsvaults.entities.IdonasBarrageEntity;
+import xyz.iwolfking.woldsvaults.entities.ThornCloudEntity;
 import xyz.iwolfking.woldsvaults.entities.WoldBoss;
 import xyz.iwolfking.woldsvaults.entities.aprilfools.JackBoxEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
@@ -46,6 +49,9 @@ public class ModEntities {
     public static EntityType<HostilePigEntity> HOSTILE_PIG;
     public static EntityType<HaturkeyEntity> HATURKIN;
     public static EntityType<JackBoxEntity> JACK_BOX;
+    public static EntityType<ThornCloudEntity> THORN_CLOUD;
+    public static EntityType<IdonasBarrageArrowEntity> IDONAS_BARRAGE_ARROW;
+    public static EntityType<IdonasBarrageEntity> IDONAS_BARRAGE;
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
         WOLD = registerLivingWV("wold", EntityType.Builder.of(WoldBoss::new, MobCategory.MONSTER)
@@ -78,6 +84,16 @@ public class ModEntities {
                 .fireImmune()
                 .setCustomClientFactory(((spawnEntity, level) ->
                         new JackBoxEntity(JACK_BOX, level))), JackBoxEntity::createAttributes, event);
+
+        THORN_CLOUD = registerWV("thorn_cloud", EntityType.Builder.of(ThornCloudEntity::new, MobCategory.MISC), event);
+        IDONAS_BARRAGE_ARROW = registerWV("idonas_barrage_arrow", EntityType.Builder.<IdonasBarrageArrowEntity>of(IdonasBarrageArrowEntity::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F)
+                .clientTrackingRange(4)
+                .updateInterval(20), event);
+        IDONAS_BARRAGE = registerWV("idonas_barrage", EntityType.Builder.<IdonasBarrageEntity>of(IdonasBarrageEntity::new, MobCategory.MISC)
+                .sized(8.0F, 0.5F)
+                .clientTrackingRange(8)
+                .updateInterval(2), event);
 
     }
 

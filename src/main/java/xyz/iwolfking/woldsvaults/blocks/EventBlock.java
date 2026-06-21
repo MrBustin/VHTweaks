@@ -2,7 +2,7 @@ package xyz.iwolfking.woldsvaults.blocks;
 
 import xyz.iwolfking.woldsvaults.blocks.tiles.EventBlockEntity;
 import xyz.iwolfking.woldsvaults.init.additions.ModBlockEntities;
-import xyz.iwolfking.woldsvaults.init.additions.ModBlocks;
+import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;

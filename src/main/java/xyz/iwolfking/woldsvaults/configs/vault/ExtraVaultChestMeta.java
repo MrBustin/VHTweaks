@@ -2,7 +2,7 @@ package xyz.iwolfking.woldsvaults.configs.vault;
 
 import com.google.gson.annotations.Expose;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.init.additions.ModItems;
+import xyz.iwolfking.woldsvaults.init.ModItems;
 import iskallia.vault.config.Config;
 import iskallia.vault.config.entry.ItemEntry;
 import iskallia.vault.init.ModBlocks;

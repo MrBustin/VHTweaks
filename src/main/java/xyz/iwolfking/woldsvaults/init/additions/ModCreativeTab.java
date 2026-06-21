@@ -3,6 +3,7 @@ package xyz.iwolfking.woldsvaults.init.additions;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import xyz.iwolfking.woldsvaults.init.ModItems;
 
 public class ModCreativeTab extends CreativeModeTab {
 
