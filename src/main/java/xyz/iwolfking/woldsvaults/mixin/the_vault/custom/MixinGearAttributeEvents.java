@@ -5,7 +5,6 @@ import iskallia.vault.core.event.CommonEvents;
 import iskallia.vault.core.event.common.EntityChainAttackedEvent;
 import iskallia.vault.core.event.common.EntityDamageBlockEvent;
 import iskallia.vault.core.event.common.EntityStunnedEvent;
-import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.event.GearAttributeEvents;
 import iskallia.vault.event.PlayerActiveFlags;

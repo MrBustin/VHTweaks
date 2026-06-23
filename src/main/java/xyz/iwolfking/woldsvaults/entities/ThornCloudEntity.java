@@ -1,7 +1,6 @@
 package xyz.iwolfking.woldsvaults.entities;
 
 import xyz.iwolfking.woldsvaults.init.ModEntities;
-import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.init.ModParticles;
 import iskallia.vault.world.data.VaultPartyData;
 
@@ -264,17 +263,17 @@ public class ThornCloudEntity extends Entity {
             return true;
         }
 
-        if (target instanceof EternalEntity) {
-            UUID eternalTargetOwnerUUID = ((EternalEntity)target).getOwner().map(Function.identity(), Entity::getUUID);
-            if (eternalTargetOwnerUUID.equals(ownerUUID)) {
-                return false;
-            }
-
-            VaultPartyData.Party party = VaultPartyData.get(serverLevel).getParty(eternalTargetOwnerUUID).orElse(null);
-            if (party != null && party.hasMember(ownerUUID)) {
-                return false;
-            }
-        }
+//        if (target instanceof EternalEntity) {
+//            UUID eternalTargetOwnerUUID = ((EternalEntity)target).getOwner().map(Function.identity(), Entity::getUUID);
+//            if (eternalTargetOwnerUUID.equals(ownerUUID)) {
+//                return false;
+//            }
+//
+//            VaultPartyData.Party party = VaultPartyData.get(serverLevel).getParty(eternalTargetOwnerUUID).orElse(null);
+//            if (party != null && party.hasMember(ownerUUID)) {
+//                return false;
+//            }
+//        }
 
         if (target instanceof TamableAnimal tamable) {
             if (ownerUUID.equals(tamable.getOwnerUUID())) {

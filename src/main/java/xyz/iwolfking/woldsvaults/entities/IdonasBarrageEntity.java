@@ -1,7 +1,6 @@
 package xyz.iwolfking.woldsvaults.entities;
 
 import xyz.iwolfking.woldsvaults.init.ModEntities;
-import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.world.data.VaultPartyData;
 import net.minecraft.nbt.CompoundTag;
@@ -252,17 +251,17 @@ public class IdonasBarrageEntity extends Entity {
             return true;
         }
 
-        if (target instanceof EternalEntity eternal) {
-            UUID eternalOwnerUUID = eternal.getOwner().map(Function.identity(), Entity::getUUID);
-            if (eternalOwnerUUID.equals(this.ownerUniqueId)) {
-                return false;
-            }
-
-            VaultPartyData.Party party = VaultPartyData.get(serverLevel).getParty(eternalOwnerUUID).orElse(null);
-            if (party != null && party.hasMember(this.ownerUniqueId)) {
-                return false;
-            }
-        }
+//        if (target instanceof EternalEntity eternal) {
+//            UUID eternalOwnerUUID = eternal.getOwner().map(Function.identity(), Entity::getUUID);
+//            if (eternalOwnerUUID.equals(this.ownerUniqueId)) {
+//                return false;
+//            }
+//
+//            VaultPartyData.Party party = VaultPartyData.get(serverLevel).getParty(eternalOwnerUUID).orElse(null);
+//            if (party != null && party.hasMember(this.ownerUniqueId)) {
+//                return false;
+//            }
+//        }
 
         if (target instanceof TamableAnimal tamable && this.ownerUniqueId.equals(tamable.getOwnerUUID())) {
             return false;

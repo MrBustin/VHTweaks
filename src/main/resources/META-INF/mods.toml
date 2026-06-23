@@ -79,7 +79,7 @@ side="BOTH"
 [[dependencies."${mod_id}"]]
 modId="the_vault"
 mandatory=true
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange="[1.18.2-3.21.5.6573,)"
+# Accept any installed Vault Hunters version.
+versionRange="[0,)"
 ordering="AFTER"
 side="BOTH"

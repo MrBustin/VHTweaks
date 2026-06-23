@@ -2,7 +2,6 @@ package xyz.iwolfking.woldsvaults.entities;
 
 import iskallia.vault.entity.VaultBoss;
 import iskallia.vault.entity.ai.*;
-import iskallia.vault.entity.entity.EternalEntity;
 import xyz.iwolfking.woldsvaults.init.ModSounds;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
@@ -64,7 +63,7 @@ public class WoldBoss extends Zombie implements VaultBoss {
     }
 
     public boolean hurt(DamageSource source, float amount) {
-        if (!(source.getEntity() instanceof Player) && !(source.getEntity() instanceof EternalEntity) && source != DamageSource.OUT_OF_WORLD) {
+        if (!(source.getEntity() instanceof Player) && source != DamageSource.OUT_OF_WORLD) {
             return false;
         } else if (!this.isInvulnerableTo(source) && source != DamageSource.FALL) {
             if (this.teleportTask.attackEntityFrom(source, amount)) {

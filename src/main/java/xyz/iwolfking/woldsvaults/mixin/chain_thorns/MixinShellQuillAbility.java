@@ -1,7 +1,6 @@
 package xyz.iwolfking.woldsvaults.mixin.chain_thorns;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.entity.entity.PetEntity;
 import iskallia.vault.skill.ability.effect.ShellQuillAbility;
 import iskallia.vault.util.EntityHelper;
@@ -50,7 +49,7 @@ public abstract class MixinShellQuillAbility {
         DamageSource src = ThornsReflectDamageSource.of(player);
         float chainRange = AreaOfEffectHelper.adjustAreaOfEffect(player, ability, 5.0F);
         List<Mob> nearby = EntityHelper.getNearby(player.getLevel(), source.blockPosition(), chainRange, Mob.class);
-        nearby.removeIf(mob -> mob instanceof EternalEntity || mob instanceof PetEntity || mob.isInvulnerableTo(src));
+        nearby.removeIf(mob -> mob instanceof PetEntity || mob.isInvulnerableTo(src));
         if (nearby.isEmpty()) {
             return;
         }
