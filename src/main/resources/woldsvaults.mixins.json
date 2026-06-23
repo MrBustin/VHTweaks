@@ -91,7 +91,6 @@
                    "the_vault.skills.modifications.MixinIceBoltChunkAbility",
                    "MixinAntiqueStampCollectorBook",
                    "MixinDynamicModelRegistries",
-                   "MixinEntityDragonBase",
                    "MixinEntityEvents",
                    "MixinMultiJumpTrinket",
                    "MixinPlayerTabNameEvent",
