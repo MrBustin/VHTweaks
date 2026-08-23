@@ -192,8 +192,8 @@ dependencies {
     compileOnly "net.luckperms:api:5.5"
 
     // Vault Hunters Core Mods
-    implementation fg.deobf("curse.maven:vault-hunters-official-mod-458203:7967092")
-    implementation fg.deobf("curse.maven:vault-hunters-api-1118899:8208136") // 3.21
+    implementation fg.deobf("curse.maven:vault-hunters-official-mod-458203:8508967")
+    implementation fg.deobf("curse.maven:vault-hunters-api-1118899:8571300") // 3.21
     implementation fg.deobf("curse.maven:geckolib-388172:4181370")
     implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:5654080")
     implementation fg.deobf("curse.maven:sophisticated-core-618298:5296312")
