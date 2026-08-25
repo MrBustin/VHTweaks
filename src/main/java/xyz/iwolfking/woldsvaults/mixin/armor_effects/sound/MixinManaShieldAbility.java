@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = ManaShieldAbility.class, remap = false)
+@Mixin(value = ManaShieldAbility.class)
 public class MixinManaShieldAbility extends Ability {
     @Inject(method = "lambda$doAction$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"))
     public void injectSoundEvents(ServerPlayer player, CallbackInfoReturnable<Ability.ActionResult> cir) {
