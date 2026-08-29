@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.monster.Evoker;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -13,6 +14,7 @@ import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.entities.IdonasBarrageArrowEntity;
 import xyz.iwolfking.woldsvaults.entities.IdonasBarrageEntity;
 import xyz.iwolfking.woldsvaults.entities.ThornCloudEntity;
+import xyz.iwolfking.woldsvaults.entities.VaultNecromancer;
 import xyz.iwolfking.woldsvaults.entities.WoldBoss;
 import xyz.iwolfking.woldsvaults.entities.aprilfools.JackBoxEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
@@ -31,6 +33,7 @@ import java.util.function.Supplier;
 public class ModEntities {
     private static final Map<EntityType<? extends LivingEntity>, Supplier<AttributeSupplier.Builder>> ATTRIBUTE_BUILDERS = new HashMap<>();
     public static EntityType<WoldBoss> WOLD;
+    public static EntityType<VaultNecromancer> VAULT_NECROMANCER;
     public static EntityType<GreenGhost> GREEN_GHOST;
     public static EntityType<BlueGhost> BLUE_GHOST;
     public static EntityType<BlackGhost> BLACK_GHOST;
@@ -56,6 +59,10 @@ public class ModEntities {
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
         WOLD = registerLivingWV("wold", EntityType.Builder.of(WoldBoss::new, MobCategory.MONSTER)
                 .sized(1.2F, 3.9F), Zombie::createAttributes, event);
+        VAULT_NECROMANCER = registerLivingWV("vault_necromancer", EntityType.Builder.of(VaultNecromancer::new, MobCategory.MONSTER)
+                .sized(0.6F, 1.95F)
+                .clientTrackingRange(8)
+                .setCustomClientFactory((spawnEntity, level) -> new VaultNecromancer(VAULT_NECROMANCER, level)), Evoker::createAttributes, event);
         GREEN_GHOST = registerLivingWV("green_ghost", EntityType.Builder.of(GreenGhost::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(8).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new GreenGhost(GREEN_GHOST, level))), GreenGhost::createAttributes, event);
         BLUE_GHOST = registerLivingWV("blue_ghost", EntityType.Builder.of(BlueGhost::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(8).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new BlueGhost(BLUE_GHOST, level))), BlueGhost::createAttributes, event);
         BLACK_GHOST = registerLivingWV("black_ghost", EntityType.Builder.of(BlackGhost::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(8).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new BlackGhost(BLACK_GHOST, level))), BlackGhost::createAttributes, event);

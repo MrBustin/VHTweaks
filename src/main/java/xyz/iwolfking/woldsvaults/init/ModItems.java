@@ -79,6 +79,7 @@ public class ModItems {
     public static ItemScavengerPouch SCAVENGER_POUCH_ITEM;
 
     public static BasicMobEggItem WOLD_EGG;
+    public static BasicMobEggItem VAULT_NECROMANCER_EGG;
     public static BasicMobEggItem BOOGIEMAN_EGG;
     public static BasicMobEggItem MONSTER_EYE_EGG;
     public static BasicMobEggItem ROBOT_EGG;
@@ -206,6 +207,7 @@ public class ModItems {
         SUPER_MUSHROOM = new SuperMushroomItem(WoldsVaults.id("super_mushroom"));
 
         WOLD_EGG = new BasicMobEggItem(WoldsVaults.id("wold_spawn_egg"), () -> ModEntities.WOLD, 1447446, DyeColor.GRAY.getId(), (new Item.Properties()).tab(VAULT_MOD_GROUP));
+        VAULT_NECROMANCER_EGG = new BasicMobEggItem(WoldsVaults.id("vault_necromancer_spawn_egg"), () -> ModEntities.VAULT_NECROMANCER, 9804699, DyeColor.GRAY.getId(), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         BOOGIEMAN_EGG = new BasicMobEggItem(WoldsVaults.id("boogieman_spawn_egg"), () -> iskallia.vault.init.ModEntities.BOOGIEMAN, 333333, DyeColor.GRAY.getId(), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         MONSTER_EYE_EGG = new BasicMobEggItem(WoldsVaults.id("monster_eye_spawn_egg"), () -> iskallia.vault.init.ModEntities.MONSTER_EYE, 333333, DyeColor.GRAY.getId(), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         ROBOT_EGG = new BasicMobEggItem(WoldsVaults.id("robot_spawn_egg"), () -> iskallia.vault.init.ModEntities.ROBOT, 333333, DyeColor.GRAY.getId(), (new Item.Properties()).tab(VAULT_MOD_GROUP));
@@ -315,6 +317,7 @@ public class ModItems {
         registry.register(PRISMATIC_ANGEL_RING);
         registry.register(EXPERTISE_ORB_ITEM);
         registry.register(WOLD_EGG);
+        registry.register(VAULT_NECROMANCER_EGG);
         registry.register(BOOGIEMAN_EGG);
         registry.register(ROBOT_EGG);
         registry.register(MONSTER_EYE_EGG);
