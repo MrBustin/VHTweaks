@@ -127,7 +127,6 @@
                    "power_crystals.MixinClassicLootLogic",
                    "power_crystals.MixinSkillGates",
                    "power_crystals.MixinSkillTabContainerElement",
-                   "power_crystals.border.MixinVirtualWorlds",
                    "raid_plaques.MixinRaidCrystalObjective",
                    "registry.MixinAbilitiesConfig",
                    "registry.MixinModAbilityLabelBindings",
