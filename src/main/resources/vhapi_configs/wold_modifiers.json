@@ -66,6 +66,19 @@
           "icon": "the_vault:gui/modifiers/impossible"
         }
       },
+      "woldsvaults:easy": {
+        "properties": {
+          "difficulty": "EASY",
+          "lockHigher": false
+        },
+        "display": {
+          "name": "Easy",
+          "color": "#EBFF8D",
+          "description": "This vault's difficulty is locked to Easy!",
+          "descriptionFormatted": "This vault's difficulty is locked to Easy!",
+          "icon": "the_vault:gui/modifiers/impossible"
+        }
+      },
       "woldsvaults:normalized_lock": {
         "properties": {
           "difficulty": "NORMAL",
