@@ -11,7 +11,7 @@
           "color": "#EBFF8D",
           "description": "This vault's difficulty is locked to at least Normal!",
           "descriptionFormatted": "This vault's difficulty is locked to at least Normal!",
-          "icon": "the_vault:gui/modifiers/impossible"
+          "icon": "the_vault:gui/modifiers/normal"
         }
       },
       "woldsvaults:hard": {
@@ -24,7 +24,7 @@
           "color": "#EBFF8D",
           "description": "This vault's difficulty is locked to at least Hard!",
           "descriptionFormatted": "This vault's difficulty is locked to at least Hard!",
-          "icon": "the_vault:gui/modifiers/impossible"
+          "icon": "the_vault:gui/modifiers/hard"
         }
       },
       "woldsvaults:impossible": {
@@ -50,7 +50,7 @@
           "color": "#EBFF8D",
           "description": "This vault's difficulty is locked to Fragged!",
           "descriptionFormatted": "This vault's difficulty is locked to Fragged!",
-          "icon": "the_vault:gui/modifiers/impossible"
+          "icon": "the_vault:gui/modifiers/fragged"
         }
       },
       "woldsvaults:piece_of_cake": {
@@ -63,7 +63,7 @@
           "color": "#EBFF8D",
           "description": "This vault's difficulty is locked to Piece of Cake!",
           "descriptionFormatted": "This vault's difficulty is locked to Piece of Cake!",
-          "icon": "the_vault:gui/modifiers/impossible"
+          "icon": "the_vault:gui/modifiers/piece_of_cake"
         }
       },
       "woldsvaults:easy": {
@@ -76,7 +76,7 @@
           "color": "#EBFF8D",
           "description": "This vault's difficulty is locked to Easy!",
           "descriptionFormatted": "This vault's difficulty is locked to Easy!",
-          "icon": "the_vault:gui/modifiers/impossible"
+          "icon": "the_vault:gui/modifiers/easy"
         }
       },
       "woldsvaults:normalized_lock": {
@@ -89,7 +89,7 @@
           "color": "#EBFF8D",
           "description": "This vault's difficulty is locked to Normal!",
           "descriptionFormatted": "This vault's difficulty is locked to Normal!",
-          "icon": "the_vault:gui/modifiers/impossible"
+          "icon": "the_vault:gui/modifiers/normal"
         }
       }
     },
