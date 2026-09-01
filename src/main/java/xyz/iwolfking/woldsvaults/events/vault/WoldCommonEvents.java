@@ -5,6 +5,7 @@ import iskallia.vault.core.event.Event;
 
 public class WoldCommonEvents {
     public static final BrewingAltarBrewEvent BREWING_ALTAR_BREW_EVENT = register(new BrewingAltarBrewEvent());
+    public static final UsedVaultBottleEvent VAULT_BOTTLE_DRINK = register(new UsedVaultBottleEvent());
 
     private static <T extends Event<?, ?>> T register(T event) {
         CommonEvents.REGISTRY.add(event);

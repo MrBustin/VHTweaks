@@ -14,6 +14,10 @@ import xyz.iwolfking.woldsvaults.expertises.PylonPilfererExpertise;
 import xyz.iwolfking.woldsvaults.prestige.CrystalSizePrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.GearSealerPrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.ToolCapacityPrestigePower;
+import xyz.iwolfking.woldsvaults.talent.CritHitChanceTalent;
+import xyz.iwolfking.woldsvaults.talent.CritHitDamageTalent;
+import xyz.iwolfking.woldsvaults.talent.HealthyElixirTalent;
+import xyz.iwolfking.woldsvaults.talent.PotentElixirTalent;
 
 
 @Mixin(value = Skill.Adapter.class, remap = false)
@@ -34,6 +38,8 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         //Talents
         this.register("crit_hit_chance", CritHitChanceTalent.class, CritHitChanceTalent::new);
         this.register("crit_hit_damage", CritHitDamageTalent.class, CritHitDamageTalent::new);
+        this.register("potent_elixir", PotentElixirTalent.class, PotentElixirTalent::new);
+        this.register("healthy_elixir", HealthyElixirTalent.class, HealthyElixirTalent::new);
 
         //Expertises
         this.register("craftsman", CraftsmanExpertise.class, CraftsmanExpertise::new);
