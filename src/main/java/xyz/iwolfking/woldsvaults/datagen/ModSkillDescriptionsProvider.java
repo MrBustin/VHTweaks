@@ -102,6 +102,24 @@ public class ModSkillDescriptionsProvider extends AbstractSkillDescriptionsProvi
                 TalentDescriptionsHelper.appendOverlevelDescription("Lunge", "add", "+0.1 Attack Range", "#0D7A39", description);
             });
 
+            builder.addDescription("Medic", description -> {
+                description.add(JsonDescription.text("Improve your healing skills and sources with increased "));
+                description.add(JsonDescription.text("Healing Effectiveness", "#7DF587"));
+                description.add(JsonDescription.text(".\n\n1 "));
+                description.add(JsonDescription.text("+10% Healing Effectiveness", "#7DF587"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+20% Healing Effectiveness", "#7DF587"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("+30% Healing Effectiveness", "#7DF587"));
+                description.add(JsonDescription.text("\n\n4 "));
+                description.add(JsonDescription.text("+40% Healing Effectiveness", "#7DF587"));
+                description.add(JsonDescription.text("\n\n5 "));
+                description.add(JsonDescription.text("+50% Healing Effectiveness", "#7DF587"));
+                description.add(JsonDescription.text("\n\n"));
+                TalentDescriptionsHelper.appendOverlevelDescription("Medic", "add", "+10% Healing Effectiveness", "#0D7A39", description);
+
+            });
+
 
         });
 
