@@ -3,7 +3,8 @@ package xyz.iwolfking.woldsvaults.events;
 public enum WoldActiveFlags {
     IS_REAVING_ATTACKING,
     IS_ECHOING_ATTACKING,
-    IS_USING_SAFER_SPACE;
+    IS_USING_SAFER_SPACE,
+    IS_FANG_ATTACKING;
 
     private final ThreadLocal<Integer> activeReferences = ThreadLocal.withInitial(() -> 0);
 

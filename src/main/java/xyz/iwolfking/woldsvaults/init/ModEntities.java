@@ -19,6 +19,7 @@ import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostilePigEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileSheepEntity;
 import xyz.iwolfking.woldsvaults.entities.ghosts.*;
+import xyz.iwolfking.woldsvaults.entities.msc.CustomFangEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.CranberrySlimeEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.HaturkeyEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.HostileTurkeyEntity;
@@ -52,6 +53,8 @@ public class ModEntities {
     public static EntityType<ThornCloudEntity> THORN_CLOUD;
     public static EntityType<IdonasBarrageArrowEntity> IDONAS_BARRAGE_ARROW;
     public static EntityType<IdonasBarrageEntity> IDONAS_BARRAGE;
+    public static EntityType<CustomFangEntity> CUSTOM_FANGS;
+
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
         WOLD = registerLivingWV("wold", EntityType.Builder.of(WoldBoss::new, MobCategory.MONSTER)
@@ -94,6 +97,9 @@ public class ModEntities {
                 .sized(8.0F, 0.5F)
                 .clientTrackingRange(8)
                 .updateInterval(2), event);
+
+        CUSTOM_FANGS = registerWV("custom_fangs", EntityType.Builder.<CustomFangEntity>of(CustomFangEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new CustomFangEntity(CUSTOM_FANGS, level))), event);
+
 
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
+import xyz.iwolfking.woldsvaults.network.message.LuckyHitCooldownParticleMessage;
 
 public class ModNetwork {
     private static final String VERSION = "1.0.0";
@@ -27,6 +28,7 @@ public class ModNetwork {
         CHANNEL.registerMessage(nextId(), BladeFrenzyParticleMessage.class, BladeFrenzyParticleMessage::encode, BladeFrenzyParticleMessage::decode, BladeFrenzyParticleMessage::handle);
         CHANNEL.registerMessage(nextId(), EventSyncMessage.class, EventSyncMessage::encode, EventSyncMessage::decode, EventSyncMessage::handle);
         CHANNEL.registerMessage(nextId(), UpdatePlayerTraderDataMessage.class, UpdatePlayerTraderDataMessage::encode, UpdatePlayerTraderDataMessage::decode, UpdatePlayerTraderDataMessage::handle);
+        CHANNEL.registerMessage(nextId(), LuckyHitCooldownParticleMessage.class, LuckyHitCooldownParticleMessage::encode, LuckyHitCooldownParticleMessage::decode, LuckyHitCooldownParticleMessage::handle);
     }
 
     public static int nextId() {

@@ -18,6 +18,9 @@ import xyz.iwolfking.woldsvaults.talent.CritHitChanceTalent;
 import xyz.iwolfking.woldsvaults.talent.CritHitDamageTalent;
 import xyz.iwolfking.woldsvaults.talent.HealthyElixirTalent;
 import xyz.iwolfking.woldsvaults.talent.PotentElixirTalent;
+import xyz.iwolfking.woldsvaults.talent.lucky_hit.CooldownReductionLuckyHitTalent;
+import xyz.iwolfking.woldsvaults.talent.lucky_hit.ExecutionDamageLuckyHitTalent;
+import xyz.iwolfking.woldsvaults.talent.lucky_hit.FangedStrikeLuckyHitTalent;
 
 
 @Mixin(value = Skill.Adapter.class, remap = false)
@@ -40,6 +43,9 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("crit_hit_damage", CritHitDamageTalent.class, CritHitDamageTalent::new);
         this.register("potent_elixir", PotentElixirTalent.class, PotentElixirTalent::new);
         this.register("healthy_elixir", HealthyElixirTalent.class, HealthyElixirTalent::new);
+        this.register("execution_lucky_hit", ExecutionDamageLuckyHitTalent.class, ExecutionDamageLuckyHitTalent::new);
+        this.register("cooldown_lucky_hit", CooldownReductionLuckyHitTalent.class, CooldownReductionLuckyHitTalent::new);
+        this.register("fanged_lucky_hit", FangedStrikeLuckyHitTalent.class, FangedStrikeLuckyHitTalent::new);
 
         //Expertises
         this.register("craftsman", CraftsmanExpertise.class, CraftsmanExpertise::new);

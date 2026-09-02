@@ -120,6 +120,49 @@ public class ModSkillDescriptionsProvider extends AbstractSkillDescriptionsProvi
 
             });
 
+            builder.addDescription("Arcane_Strike", description -> {
+                description.add(JsonDescription.text("Enhances your "));
+                description.add(JsonDescription.text("Lucky Hits ", "#6DF5A3"));
+                description.add(JsonDescription.text("causing them to reduce all of your abilities "));
+                description.add(JsonDescription.text("cooldowns by a percentage of their maximum cooldown time"));
+                description.add(JsonDescription.text(".\n\n1 "));
+                description.add(JsonDescription.text("+2% reduced cooldown", "#cbe6fe"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+3% reduced cooldown", "#cbe6fe"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("+4% reduced cooldown", "#cbe6fe"));
+                description.add(JsonDescription.text("\n\n"));
+                TalentDescriptionsHelper.appendOverlevelDescription("Arcane Cascade", "add", "+0.5% reduced cooldown", "#cbe6fe", description);
+            });
+            builder.addDescription("Fanged_Strike", description -> {
+                description.add(JsonDescription.text("Enhances your "));
+                description.add(JsonDescription.text("Lucky Hits ", "#6DF5A3"));
+                description.add(JsonDescription.text("causing them to launch a Fang striking your target from below dealing a small portion of your attack's "));
+                description.add(JsonDescription.text("damage ", "#C23627"));
+                description.add(JsonDescription.text("and procs any on-hit effects again"));
+                description.add(JsonDescription.text(".\n\n1 "));
+                description.add(JsonDescription.text("+5% damage", "#C23627"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+7.5% damage", "#C23627"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("+10% damage", "#C23627"));
+                description.add(JsonDescription.text("\n\n"));
+                TalentDescriptionsHelper.appendOverlevelDescription("Fanged Strike", "add", "+1% increased damage", "#C23627", description);
+            });
+
+            builder.addDescription("Execution_Strike", description -> {
+                description.add(JsonDescription.text("Enhances your "));
+                description.add(JsonDescription.text("Lucky Hits ", "#6DF5A3"));
+                description.add(JsonDescription.text("causing them to deal a portion of the target's "));
+                description.add(JsonDescription.text("missing health ", "red"));
+                description.add(JsonDescription.text("as bonus "));
+                description.add(JsonDescription.text("damage ", "red"));
+                description.add(JsonDescription.text(".\n\n1 "));
+                description.add(JsonDescription.text("+15% of missing health", "#d80000"));
+                description.add(JsonDescription.text("\n\n"));
+                TalentDescriptionsHelper.appendOverlevelDescription("Executing Strike", "add", "+1% increased missing health damage", "#d80000", description);
+            });
+
 
         });
 

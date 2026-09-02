@@ -29,6 +29,7 @@
     "accessors.ClassicPolygonCrystalLayoutAccessor",
     "accessors.ClassicSpiralCrystalLayoutAccessor",
     "accessors.ClientEventsAccessor",
+    "accessors.EvokerFangsAccessor",
     "accessors.InvokeAttributeSnapshotAttributeValue",
     "accessors.SheepAccessor",
     "accessors.VaultAltarTileEntityAccessor",
