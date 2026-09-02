@@ -75,7 +75,7 @@ public class MixinModConfigs {
 
         //Add Mythic roll types
         VaultGearTypeConfig.RollType mythicRoll = new VaultGearTypeConfig.RollType(new WeightedList<>(Map.of(VaultGearRarity.valueOf("MYTHIC"), 1)));
-        ((VaultGearRollTypeConfigRollTypeAccessor)mythicRoll).setColor(3);
+        ((VaultGearRollTypeConfigRollTypeAccessor)mythicRoll).setColor(12000284);
 
         ((VaultGearRollTypeConfigAccessor)ModConfigs.VAULT_GEAR_TYPE_CONFIG).getRolls().put("Mythic", mythicRoll);
 
