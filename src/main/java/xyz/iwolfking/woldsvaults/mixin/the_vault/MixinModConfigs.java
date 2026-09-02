@@ -7,15 +7,24 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import iskallia.vault.VaultMod;
+import iskallia.vault.config.entry.IntRangeEntry;
 import iskallia.vault.config.gear.VaultGearTierConfig;
+import iskallia.vault.config.gear.VaultGearTypeConfig;
+import iskallia.vault.gear.VaultGearRarity;
 import iskallia.vault.init.ModConfigs;
+import iskallia.vault.util.data.WeightedList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.iwolfking.woldsvaults.api.data.gear.UnusualModifiers;
+import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearCommonConfigAccessor;
+import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearRollTypeConfigAccessor;
+import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearRollTypeConfigRollTypeAccessor;
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearTierConfigAccessor;
 
 import java.io.IOException;
@@ -26,6 +35,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +43,7 @@ import java.util.Set;
 
 @Mixin(value = ModConfigs.class, remap = false)
 public class MixinModConfigs {
+    @Shadow public static Map<ResourceLocation, VaultGearTierConfig> VAULT_GEAR_CONFIG;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject(method = "register", at = @At("HEAD"), remap = false)
@@ -45,6 +56,42 @@ public class MixinModConfigs {
             mergeObjectiveSealsIntoVaultCrystal(configDir.resolve("vault_crystal.json"));
         } catch (IOException e) {
             System.out.println("[WoldsVaults] Failed to prepare default Vault config files: " + e.getMessage());
+        }
+    }
+
+    @Inject(method = "register", at = @At("TAIL"), remap = false)
+    private static void onReloadConfigs(CallbackInfo ci) {
+        xyz.iwolfking.woldsvaults.init.ModConfigs.register();
+
+        Set<ResourceLocation> CURRENT_GEAR_CONFIGS =new HashSet<>(ModConfigs.VAULT_GEAR_CONFIG.keySet());
+
+
+        for(ResourceLocation loc : CURRENT_GEAR_CONFIGS) {
+            VAULT_GEAR_CONFIG.put(VaultMod.id(loc.getPath() + "_mythic"), new VaultGearTierConfig(VaultMod.id(loc.getPath() + "_mythic")).readConfig());
+        }
+
+        ((VaultGearCommonConfigAccessor)ModConfigs.VAULT_GEAR_COMMON).getCraftingPotentialRanges().put(VaultGearRarity.valueOf("MYTHIC"), new IntRangeEntry(250, 650));
+
+
+        //Add Mythic roll types
+        VaultGearTypeConfig.RollType mythicRoll = new VaultGearTypeConfig.RollType(new WeightedList<>(Map.of(VaultGearRarity.valueOf("MYTHIC"), 1)));
+        ((VaultGearRollTypeConfigRollTypeAccessor)mythicRoll).setColor(3);
+
+        ((VaultGearRollTypeConfigAccessor)ModConfigs.VAULT_GEAR_TYPE_CONFIG).getRolls().put("Mythic", mythicRoll);
+
+
+
+        //Initialize unusual modifier values
+        for(ResourceLocation config : ModConfigs.VAULT_GEAR_CONFIG.keySet()) {
+            if(UnusualModifiers.UNUSUAL_MODIFIERS_MAP_PREFIX.containsKey(config)) {
+                ((VaultGearTierConfigAccessor)ModConfigs.VAULT_GEAR_CONFIG.get(config)).getModifierGroup().put(VaultGearTierConfig.ModifierAffixTagGroup.valueOf("UNUSUAL_PREFIX"), UnusualModifiers.UNUSUAL_MODIFIERS_MAP_PREFIX.get(config));
+            }
+        }
+
+        for(ResourceLocation config : ModConfigs.VAULT_GEAR_CONFIG.keySet()) {
+            if(UnusualModifiers.UNUSUAL_MODIFIERS_MAP_SUFFIX.containsKey(config)) {
+                ((VaultGearTierConfigAccessor)ModConfigs.VAULT_GEAR_CONFIG.get(config)).getModifierGroup().put(VaultGearTierConfig.ModifierAffixTagGroup.valueOf("UNUSUAL_SUFFIX"), UnusualModifiers.UNUSUAL_MODIFIERS_MAP_SUFFIX.get(config));
+            }
         }
     }
 
@@ -223,24 +270,6 @@ public class MixinModConfigs {
         for (JsonElement element : source) {
             if (element.isJsonPrimitive()) {
                 target.add(element.getAsString());
-            }
-        }
-    }
-
-    @Inject(method = "register", at = @At("TAIL"), remap = false)
-    private static void onReloadConfigs(CallbackInfo ci) {
-        xyz.iwolfking.woldsvaults.init.ModConfigs.register();
-
-        //Initialize unusual modifier values
-        for(ResourceLocation config : ModConfigs.VAULT_GEAR_CONFIG.keySet()) {
-            if(UnusualModifiers.UNUSUAL_MODIFIERS_MAP_PREFIX.containsKey(config)) {
-                ((VaultGearTierConfigAccessor)ModConfigs.VAULT_GEAR_CONFIG.get(config)).getModifierGroup().put(VaultGearTierConfig.ModifierAffixTagGroup.valueOf("UNUSUAL_PREFIX"), UnusualModifiers.UNUSUAL_MODIFIERS_MAP_PREFIX.get(config));
-            }
-        }
-
-        for(ResourceLocation config : ModConfigs.VAULT_GEAR_CONFIG.keySet()) {
-            if(UnusualModifiers.UNUSUAL_MODIFIERS_MAP_SUFFIX.containsKey(config)) {
-                ((VaultGearTierConfigAccessor)ModConfigs.VAULT_GEAR_CONFIG.get(config)).getModifierGroup().put(VaultGearTierConfig.ModifierAffixTagGroup.valueOf("UNUSUAL_SUFFIX"), UnusualModifiers.UNUSUAL_MODIFIERS_MAP_SUFFIX.get(config));
             }
         }
     }

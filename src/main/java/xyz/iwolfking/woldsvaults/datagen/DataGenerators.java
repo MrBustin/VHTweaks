@@ -17,6 +17,7 @@ public class DataGenerators {
 
         if (event.includeServer()) {
             gen.addProvider(new ModSkillDescriptionsProvider(gen));
+            //gen.addProvider(new ModVaultGearTiersProvider(gen));
         }
 
     }
