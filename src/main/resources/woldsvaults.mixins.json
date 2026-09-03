@@ -171,6 +171,7 @@
     "the_vault.MixinCardItem",
     "the_vault.MixinCatalystItem",
     "the_vault.MixinToolItemRenderer",
+    "the_vault.custom.MixinTransmogTableScreen",
     "the_vault.custom.MixinUniqueCodexScreen",
     "the_vault.fixes.MixinObeliskObjective",
     "vault_gecko_compat.MixinModDynamicModels",
