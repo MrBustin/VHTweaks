@@ -17,6 +17,7 @@ public class ServerConfigs {
     public static final ForgeConfigSpec.ConfigValue<Double> GROW_PLAYER_CAP;
     public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_POWER_MENU;
     public static final ForgeConfigSpec.ConfigValue<Boolean> LIMIT_WITHER_SPAWN_GLOBAL_SOUND;
+    public static final ForgeConfigSpec.DoubleValue MYTHIC_CRAFT_CHANCE;
 
 
     static {
@@ -53,6 +54,9 @@ public class ServerConfigs {
 
         LIMIT_WITHER_SPAWN_GLOBAL_SOUND = BUILDER.comment("When enabled, replaces the global Wither spawn sound with a ranged sound heard within 64 blocks")
                 .define("LIMIT_WITHER_SPAWN_GLOBAL_SOUND", false);
+
+        MYTHIC_CRAFT_CHANCE = BUILDER.comment("Chance for crafted Vault Forge gear to use the Mythic roll pool. Requires player level 100, crafted level 100, and max level 100 proficiency.")
+                .defineInRange("MYTHIC_CRAFT_CHANCE", 0.02, 0.0, 1.0);
 
         BUILDER.pop(); // General Settings End
 
