@@ -45,10 +45,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 import xyz.iwolfking.woldsvaults.init.ModSounds;
 import xyz.iwolfking.woldsvaults.mixin.LivingEntityAccessor;
+import xyz.iwolfking.woldsvaults.talent.VoltaicDistanceTalent;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -173,5 +175,17 @@ public class MixinGearAttributeEvents {
 
             CommonEvents.ENTITY_STUNNED.invoke(new EntityStunnedEvent.Data(player, attacker));
         }
+    }
+
+    @Redirect(
+            method = "lambda$triggerKnockbackAttack$14",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Liskallia/vault/util/EntityHelper;knockbackIgnoreResist(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;F)V"
+            )
+    )
+    private static void increaseShockingHitKnockback(LivingEntity target, LivingEntity attacker, float strength) {
+        float distanceIncrease = attacker instanceof Player player ? VoltaicDistanceTalent.getShockingDistanceIncrease(player) : 0.0F;
+        EntityHelper.knockbackIgnoreResist(target, attacker, strength + distanceIncrease);
     }
 }

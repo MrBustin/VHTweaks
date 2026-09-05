@@ -41,6 +41,7 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("cooldown_lucky_hit", CooldownReductionLuckyHitTalent.class, CooldownReductionLuckyHitTalent::new);
         this.register("fanged_lucky_hit", FangedStrikeLuckyHitTalent.class, FangedStrikeLuckyHitTalent::new);
         this.register("momentum_engine", MomentumEngineTalent.class, MomentumEngineTalent::new);
+        this.register("voltaic_distance", VoltaicDistanceTalent.class, VoltaicDistanceTalent::new);
 
 
         //Expertises
