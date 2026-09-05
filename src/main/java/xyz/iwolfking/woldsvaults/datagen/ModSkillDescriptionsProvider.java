@@ -191,7 +191,7 @@ public class ModSkillDescriptionsProvider extends AbstractSkillDescriptionsProvi
                 description.add(JsonDescription.text("+12.5%", "#FFA500"));
                 description.add(JsonDescription.text("\n\n3 "));
                 description.add(JsonDescription.text("+18.75%", "#FFA500"));
-                description.add(JsonDescription.text("\n\n4"));
+                description.add(JsonDescription.text("\n\n4 "));
                 description.add(JsonDescription.text("+25.0%", "#FFA500"));
                 description.add(JsonDescription.text("\n\n"));
                 //TalentDescriptionsHelper.appendOverlevelDescription("Crit Hit Chance", "add", "+0.1 %", "#C7FFE7", description);
