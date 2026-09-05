@@ -163,6 +163,55 @@ public class ModSkillDescriptionsProvider extends AbstractSkillDescriptionsProvi
                 TalentDescriptionsHelper.appendOverlevelDescription("Executing Strike", "add", "+1% increased missing health damage", "#d80000", description);
             });
 
+            builder.addDescription("Momentum_Engine", description -> {
+                description.add(JsonDescription.text("While moving, builds up stacks of "));
+                description.add(JsonDescription.text("Momentum ", "#E9C375"));
+                description.add(JsonDescription.text("increasing your "));
+                description.add(JsonDescription.text("Movement Speed", "#f6cd0e"));
+                description.add(JsonDescription.text(". When at the maximum stacks, the next melee strike consumes all stacks to trigger a guaranteed "));
+                description.add(JsonDescription.text("Shocking Hit ", "#ffeb07"));
+                description.add(JsonDescription.text("with a modified radius and knockback. Remaining stationary or performing a melee strike will remove stacks."));
+                description.add(JsonDescription.text(".\n\n1 "));
+                description.add(JsonDescription.text("5 max stacks, 4% Movement Speed per stack, stacking every 4 seconds. 6 Radius with 120% Knockback.", "#C7FFE7"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+5 max stacks, 4% Movement Speed per stack, stacking every 3.5 seconds. 7 Radius with 140% Knockback", "#C7FFE7"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("5 max stacks, 4% Movement Speed per stack, stacking every 3 seconds. 8 Radius with 160% Knockback.", "#C7FFE7"));
+                description.add(JsonDescription.text("\n\n"));
+                TalentDescriptionsHelper.appendOverlevelDescription("Momentum Engine", "add", "+0.1 second charge reduction and increased knock and size", "#C7FFE7", description);
+            });
+
+            builder.addDescription("Crit_Hit_Chance", description -> {
+                description.add(JsonDescription.text("Adds a passive "));
+                description.add(JsonDescription.text("Chance ", "#FFA500"));
+                description.add(JsonDescription.text("to land a minecraft critical hit without jumping "));
+                description.add(JsonDescription.text("\n\n1 "));
+                description.add(JsonDescription.text("+6.25%", "#FFA500"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+12.5%", "#FFA500"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("+18.75%", "#FFA500"));
+                description.add(JsonDescription.text("\n\n4"));
+                description.add(JsonDescription.text("+25.0%", "#FFA500"));
+                description.add(JsonDescription.text("\n\n"));
+                //TalentDescriptionsHelper.appendOverlevelDescription("Crit Hit Chance", "add", "+0.1 %", "#C7FFE7", description);
+            });
+
+            builder.addDescription("Crit_Hit_Damage", description -> {
+                description.add(JsonDescription.text("Makes your critical hits do more "));
+                description.add(JsonDescription.text("Damage ", "#FF0000"));
+                description.add(JsonDescription.text("\n\n1 "));
+                description.add(JsonDescription.text("+6.25%", "#FF0000"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+12.5%", "#FF0000"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("+18.75%", "#FF0000"));
+                description.add(JsonDescription.text("\n\n4 "));
+                description.add(JsonDescription.text("+25.0%", "#FF0000"));
+                description.add(JsonDescription.text("\n\n"));
+                //TalentDescriptionsHelper.appendOverlevelDescription("Crit Hit Chance", "add", "+0.1 %", "#C7FFE7", description);
+            });
+
 
         });
 

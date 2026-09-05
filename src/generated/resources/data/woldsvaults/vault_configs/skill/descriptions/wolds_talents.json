@@ -82,6 +82,116 @@
         "color": "#7DF587"
       }
     ],
+    "Momentum_Engine": [
+      {
+        "text": "While moving, builds up stacks of "
+      },
+      {
+        "text": "Momentum ",
+        "color": "#E9C375"
+      },
+      {
+        "text": "increasing your "
+      },
+      {
+        "text": "Movement Speed",
+        "color": "#f6cd0e"
+      },
+      {
+        "text": ". When at the maximum stacks, the next melee strike consumes all stacks to trigger a guaranteed "
+      },
+      {
+        "text": "Shocking Hit ",
+        "color": "#ffeb07"
+      },
+      {
+        "text": "with a modified radius and knockback. Remaining stationary or performing a melee strike will remove stacks."
+      },
+      {
+        "text": ".\n\n1 "
+      },
+      {
+        "text": "5 max stacks, 4% Movement Speed per stack, stacking every 4 seconds. 6 Radius with 120% Knockback.",
+        "color": "#C7FFE7"
+      },
+      {
+        "text": "\n\n2 "
+      },
+      {
+        "text": "+5 max stacks, 4% Movement Speed per stack, stacking every 3.5 seconds. 7 Radius with 140% Knockback",
+        "color": "#C7FFE7"
+      },
+      {
+        "text": "\n\n3 "
+      },
+      {
+        "text": "5 max stacks, 4% Movement Speed per stack, stacking every 3 seconds. 8 Radius with 160% Knockback.",
+        "color": "#C7FFE7"
+      },
+      {
+        "text": "\n\n"
+      },
+      {
+        "text": "\n\n"
+      },
+      {
+        "text": "Overlevels of the "
+      },
+      {
+        "text": "Momentum Engine",
+        "color": "gold"
+      },
+      {
+        "text": " talent "
+      },
+      {
+        "text": "add "
+      },
+      {
+        "text": "+0.1 second charge reduction and increased knock and size",
+        "color": "#C7FFE7"
+      }
+    ],
+    "Crit_Hit_Damage": [
+      {
+        "text": "Makes your critical hits do more "
+      },
+      {
+        "text": "Damage ",
+        "color": "#FF0000"
+      },
+      {
+        "text": "\n\n1 "
+      },
+      {
+        "text": "+6.25%",
+        "color": "#FF0000"
+      },
+      {
+        "text": "\n\n2 "
+      },
+      {
+        "text": "+12.5%",
+        "color": "#FF0000"
+      },
+      {
+        "text": "\n\n3 "
+      },
+      {
+        "text": "+18.75%",
+        "color": "#FF0000"
+      },
+      {
+        "text": "\n\n4 "
+      },
+      {
+        "text": "+25.0%",
+        "color": "#FF0000"
+      },
+      {
+        "text": "\n\n"
+      }
+    ],
     "Lunge": [
       {
         "text": "Increases the reach in which you hit with melee weapons with additional "
@@ -382,6 +492,49 @@
       {
         "text": "+1% increased damage",
         "color": "#C23627"
+      }
+    ],
+    "Crit_Hit_Chance": [
+      {
+        "text": "Adds a passive "
+      },
+      {
+        "text": "Chance ",
+        "color": "#FFA500"
+      },
+      {
+        "text": "to land a minecraft critical hit without jumping "
+      },
+      {
+        "text": "\n\n1 "
+      },
+      {
+        "text": "+6.25%",
+        "color": "#FFA500"
+      },
+      {
+        "text": "\n\n2 "
+      },
+      {
+        "text": "+12.5%",
+        "color": "#FFA500"
+      },
+      {
+        "text": "\n\n3 "
+      },
+      {
+        "text": "+18.75%",
+        "color": "#FFA500"
+      },
+      {
+        "text": "\n\n4"
+      },
+      {
+        "text": "+25.0%",
+        "color": "#FFA500"
+      },
+      {
+        "text": "\n\n"
       }
     ],
     "Potent_Elixir": [
