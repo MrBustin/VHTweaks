@@ -11,10 +11,7 @@ import xyz.iwolfking.woldsvaults.expertises.*;
 import xyz.iwolfking.woldsvaults.prestige.CrystalSizePrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.GearSealerPrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.ToolCapacityPrestigePower;
-import xyz.iwolfking.woldsvaults.talent.CritHitChanceTalent;
-import xyz.iwolfking.woldsvaults.talent.CritHitDamageTalent;
-import xyz.iwolfking.woldsvaults.talent.HealthyElixirTalent;
-import xyz.iwolfking.woldsvaults.talent.PotentElixirTalent;
+import xyz.iwolfking.woldsvaults.talent.*;
 import xyz.iwolfking.woldsvaults.talent.lucky_hit.CooldownReductionLuckyHitTalent;
 import xyz.iwolfking.woldsvaults.talent.lucky_hit.ExecutionDamageLuckyHitTalent;
 import xyz.iwolfking.woldsvaults.talent.lucky_hit.FangedStrikeLuckyHitTalent;
@@ -43,6 +40,8 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("execution_lucky_hit", ExecutionDamageLuckyHitTalent.class, ExecutionDamageLuckyHitTalent::new);
         this.register("cooldown_lucky_hit", CooldownReductionLuckyHitTalent.class, CooldownReductionLuckyHitTalent::new);
         this.register("fanged_lucky_hit", FangedStrikeLuckyHitTalent.class, FangedStrikeLuckyHitTalent::new);
+        this.register("momentum_engine", MomentumEngineTalent.class, MomentumEngineTalent::new);
+
 
         //Expertises
         this.register("craftsman", CraftsmanExpertise.class, CraftsmanExpertise::new);
