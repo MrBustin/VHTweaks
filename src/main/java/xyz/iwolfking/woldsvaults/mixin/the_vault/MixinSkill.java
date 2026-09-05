@@ -7,10 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.iwolfking.woldsvaults.abilities.*;
-import xyz.iwolfking.woldsvaults.expertises.CraftsmanExpertise;
-import xyz.iwolfking.woldsvaults.expertises.EclecticGearExpertise;
-import xyz.iwolfking.woldsvaults.expertises.NavigatorExpertise;
-import xyz.iwolfking.woldsvaults.expertises.PylonPilfererExpertise;
+import xyz.iwolfking.woldsvaults.expertises.*;
 import xyz.iwolfking.woldsvaults.prestige.CrystalSizePrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.GearSealerPrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.ToolCapacityPrestigePower;
@@ -52,6 +49,8 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("augmentation_luck", EclecticGearExpertise.class, EclecticGearExpertise::new);
         this.register("pylon_pilferer", PylonPilfererExpertise.class, PylonPilfererExpertise::new);
         this.register("navigator", NavigatorExpertise.class, NavigatorExpertise::new);
+        this.register("grave_insurance", GraveInsurance.class, GraveInsurance::new);
+
 
         //Prestige Powers
         this.register("tool_capacity_power", ToolCapacityPrestigePower.class, ToolCapacityPrestigePower::new);
