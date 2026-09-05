@@ -192,6 +192,49 @@
         "text": "\n\n"
       }
     ],
+    "Voltaic_Distance": [
+      {
+        "text": "Extends the "
+      },
+      {
+        "text": "Range ",
+        "color": "#00FFFF"
+      },
+      {
+        "text": "shocked mobs get launched"
+      },
+      {
+        "text": "\n\n1 "
+      },
+      {
+        "text": "+25%",
+        "color": "#00FFFF"
+      },
+      {
+        "text": "\n\n2 "
+      },
+      {
+        "text": "+50%",
+        "color": "#00FFFF"
+      },
+      {
+        "text": "\n\n3 "
+      },
+      {
+        "text": "+75%",
+        "color": "#00FFFF"
+      },
+      {
+        "text": "\n\n4 "
+      },
+      {
+        "text": "+100%",
+        "color": "#00FFFF"
+      },
+      {
+        "text": "\n\n"
+      }
+    ],
     "Lunge": [
       {
         "text": "Increases the reach in which you hit with melee weapons with additional "

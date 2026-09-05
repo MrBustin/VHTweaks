@@ -212,6 +212,22 @@ public class ModSkillDescriptionsProvider extends AbstractSkillDescriptionsProvi
                 //TalentDescriptionsHelper.appendOverlevelDescription("Crit Hit Chance", "add", "+0.1 %", "#C7FFE7", description);
             });
 
+            builder.addDescription("Voltaic_Distance", description -> {
+                description.add(JsonDescription.text("Extends the "));
+                description.add(JsonDescription.text("Range ", "#00FFFF"));
+                description.add(JsonDescription.text("shocked mobs get launched"));
+                description.add(JsonDescription.text("\n\n1 "));
+                description.add(JsonDescription.text("+25%", "#00FFFF"));
+                description.add(JsonDescription.text("\n\n2 "));
+                description.add(JsonDescription.text("+50%", "#00FFFF"));
+                description.add(JsonDescription.text("\n\n3 "));
+                description.add(JsonDescription.text("+75%", "#00FFFF"));
+                description.add(JsonDescription.text("\n\n4 "));
+                description.add(JsonDescription.text("+100%", "#00FFFF"));
+                description.add(JsonDescription.text("\n\n"));
+                //TalentDescriptionsHelper.appendOverlevelDescription("Crit Hit Chance", "add", "+0.1 %", "#C7FFE7", description);
+            });
+
 
         });
 
