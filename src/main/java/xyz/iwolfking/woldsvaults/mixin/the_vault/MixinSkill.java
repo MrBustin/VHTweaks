@@ -50,6 +50,7 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("pylon_pilferer", PylonPilfererExpertise.class, PylonPilfererExpertise::new);
         this.register("navigator", NavigatorExpertise.class, NavigatorExpertise::new);
         this.register("grave_insurance", GraveInsurance.class, GraveInsurance::new);
+        this.register("gambler", GamblerExpertise.class, GamblerExpertise::new);
 
 
         //Prestige Powers

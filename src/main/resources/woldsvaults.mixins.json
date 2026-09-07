@@ -119,6 +119,8 @@
     "the_vault.custom.MixinAttributeSnapshot",
     "the_vault.custom.MixinAttributeSnapshotCalculator",
     "the_vault.custom.MixinBingoTask",
+    "the_vault.custom.MixinBoosterPackConfig",
+    "the_vault.custom.MixinBoosterPackItem",
     "the_vault.custom.MixinBottleItem",
     "the_vault.custom.MixinCatalystAnvilRecipe",
     "the_vault.custom.MixinClassicListenersLogic",
