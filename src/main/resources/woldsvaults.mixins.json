@@ -138,6 +138,7 @@
     "the_vault.custom.MixinObjectiveTemplates",
     "the_vault.custom.MixinPlayerSpiritRecoveryData",
     "the_vault.custom.MixinPylonBlock",
+    "the_vault.custom.MixinRunner",
     "the_vault.custom.MixinScavengerObjective",
     "the_vault.custom.MixinSpecialAbilityModificationRegistry",
     "the_vault.custom.MixinToolForgeRecipe",
