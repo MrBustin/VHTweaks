@@ -150,6 +150,7 @@
     "the_vault.custom.MixinVaultXPFoodItem",
     "the_vault.custom.MixinWildSpawnerTileEntity",
     "the_vault.fixes.MixinBingoObjective",
+    "the_vault.fixes.MixinDamageImmunityTrinket",
     "the_vault.fixes.MixinVaultUtils",
     "the_vault.optimization.MixinGearStackingTalent",
     "the_vault.recipes.MixinAnvilRecipes",
