@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mixins Reference - VHTweaks</title>
+  <style>
+    @page {
+      margin: 0.65in;
+    }
+
+    body {
+      color: #1f2933;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    h1 {
+      border-bottom: 2px solid #2f855a;
+      color: #102a43;
+      font-size: 28px;
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+    }
+
+    h2 {
+      color: #243b53;
+      font-size: 18px;
+      margin: 24px 0 8px;
+    }
+
+    h3 {
+      color: #334e68;
+      font-size: 14px;
+      margin: 18px 0 6px;
+    }
+
+    p {
+      margin: 0 0 9px;
+    }
+
+    code {
+      background: #f0f4f8;
+      border-radius: 3px;
+      color: #102a43;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 11px;
+      padding: 1px 3px;
+    }
+
+    pre {
+      background: #f0f4f8;
+      border-left: 4px solid #2f855a;
+      border-radius: 4px;
+      color: #102a43;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 10.5px;
+      line-height: 1.35;
+      margin: 8px 0 12px;
+      padding: 9px 11px;
+      white-space: pre-wrap;
+    }
+
+    ul {
+      margin: 4px 0 12px 20px;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .path {
+      color: #52606d;
+      font-size: 10.5px;
+      margin-bottom: 8px;
+    }
+
+    .note {
+      background: #f7fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 5px;
+      margin: 12px 0;
+      padding: 10px 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mixins Reference - VHTweaks</h1>
+
+  <h2>What A Mixin Is</h2>
+  <p>A mixin is a runtime patch class. In a Minecraft mod, it lets your code change classes you do not own, such as Minecraft, Forge, or The Vault classes.</p>
+  <p>Instead of editing another mod's source code directly, you write a class that says: when this target class loads, inject or replace specific behavior.</p>
+
+  <h2>Where This Repo Registers Mixins</h2>
+  <p>The mixin list lives in:</p>
+  <p class="path">src/main/resources/woldsvaults.mixins.json</p>
+  <pre>"package": "xyz.iwolfking.woldsvaults.mixin",
+"mixins": [
+  "MixinPlayerInventory",
+  "MixinDynamicModelRegistries",
+  ...
+]</pre>
+  <p>The package is the base folder. Each entry in <code>mixins</code> points to a mixin class under that package.</p>
+
+  <h2>Basic Shape</h2>
+  <pre>@Mixin(value = SomeTargetClass.class)
+public class MyMixin {
+    // patch methods go here
+}</pre>
+  <p><code>@Mixin</code> chooses the class being patched. The annotations inside the class choose what kind of patch happens.</p>
+
+  <h2>Example: Injecting Before Inventory Add</h2>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/MixinPlayerInventory.java</p>
+  <pre>@Mixin(value = Inventory.class, priority = 1500)
+public class MixinPlayerInventory {
+    @Inject(method = "add(Lnet/minecraft/world/item/ItemStack;)Z",
+            at = @At("HEAD"),
+            cancellable = true)
+    private void handleInterceptingItemAddition(ItemStack pStack,
+            CallbackInfoReturnable&lt;Boolean&gt; cir) {
+        if (ItemScavengerPouch.interceptPlayerInventoryItemAddition(
+                (Inventory)(Object)this, pStack)) {
+            cir.setReturnValue(true);
+        }
+    }
+}</pre>
+  <p>This targets Minecraft's <code>Inventory</code> class. It runs at the start of <code>Inventory.add(ItemStack)</code>.</p>
+  <p>If the scavenger pouch handles the item, <code>cir.setReturnValue(true)</code> immediately returns <code>true</code> and prevents the original inventory logic from continuing.</p>
+  <pre>boolean add(ItemStack stack) {
+    if (ItemScavengerPouch.interceptPlayerInventoryItemAddition(this, stack)) {
+        return true;
+    }
+
+    // normal Minecraft inventory code
+}</pre>
+
+  <h2>Example: Injecting After A Method Returns</h2>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/MixinDynamicModelRegistries.java</p>
+  <pre>@Inject(method = "getUniqueRegistries",
+        at = @At("RETURN"),
+        cancellable = true)
+public void addArmorModelRegistry(CallbackInfoReturnable&lt;Set&lt;DynamicModelRegistry&lt;?&gt;&gt;&gt; cir) {
+    Set&lt;DynamicModelRegistry&lt;?&gt;&gt; registries = new HashSet&lt;&gt;(cir.getReturnValue());
+    registries.add(ModDynamicModels.Armor.MODEL_REGISTRY);
+    cir.setReturnValue(Collections.unmodifiableSet(registries));
+}</pre>
+  <p>This preserves the original return value, adds the armor model registry, then replaces the returned set.</p>
+
+  <h2>Example: Redirecting One Method Call</h2>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/the_vault/custom/MixinPylonBlock.java</p>
+  <pre>@Redirect(method = "playerDestroy",
+        at = @At(value = "INVOKE",
+        target = "Liskallia/vault/config/TemporalShardConfig;getDropChance()F"))
+private float modifyChance(TemporalShardConfig instance, Player player, Level level) {
+    return instance.getDropChance() + getPylonPilfererBonus(player);
+}</pre>
+  <p>This targets <code>PylonBlock.playerDestroy</code>. When the original method calls <code>TemporalShardConfig.getDropChance()</code>, this mixin replaces that call with one that adds the player's Pylon Pilferer bonus.</p>
+
+  <h2>Example: Modifying A Constructor Argument</h2>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/the_vault/custom/MixinVaultXPFoodItem.java</p>
+  <pre>@ModifyVariable(
+        method = "&lt;init&gt;(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/item/Item$Properties;I)V",
+        at = @At("HEAD"),
+        index = 3,
+        argsOnly = true)
+private static int clampConstructorArg(int originalLevelLimit) {
+    if (originalLevelLimit == -1 || originalLevelLimit &gt; DEFAULT_LEVEL_CAP) {
+        return DEFAULT_LEVEL_CAP;
+    }
+    return originalLevelLimit;
+}</pre>
+  <p>This changes the <code>levelLimit</code> constructor argument before <code>VaultXPFoodItem</code> uses it. In this repo, XP food is capped at level 100.</p>
+
+  <h2>Accessors And Invokers</h2>
+  <h3>Accessor</h3>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/LivingEntityAccessor.java</p>
+  <pre>@Mixin(value = LivingEntity.class)
+public interface LivingEntityAccessor {
+    @Accessor("lastHurt")
+    void setLastHurt(float lastHurt);
+}</pre>
+  <p>An accessor exposes a field from the target class. Here, code can set Minecraft's internal <code>LivingEntity.lastHurt</code> field.</p>
+
+  <h3>Invoker</h3>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/GameRulesBooleanValueAccessor.java</p>
+  <pre>@Mixin(GameRules.BooleanValue.class)
+public interface GameRulesBooleanValueAccessor {
+    @Invoker("create")
+    static GameRules.Type&lt;GameRules.BooleanValue&gt; create(boolean defaultValue) {
+        throw new AssertionError();
+    }
+}</pre>
+  <p>An invoker exposes a method from the target class. The body throws because Mixin replaces it at runtime.</p>
+
+  <h2>Example: Wrapping An Operation</h2>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/MixinItemStack.java</p>
+  <pre>@WrapOperation(
+        method = "hurt",
+        at = @At(value = "INVOKE",
+        target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"))
+public Item gearDurabilityPrestigeForWoldItems(ItemStack instance, Operation&lt;Item&gt; original) {
+    Item item = original.call(instance);
+
+    if (item instanceof VaultBattleStaffItem
+            || item instanceof VaultTridentItem
+            || item instanceof VaultPlushieItem
+            || item instanceof VaultLootSackItem
+            || item instanceof VaultRangItem) {
+        return ModItems.FOCUS;
+    }
+
+    return item;
+}</pre>
+  <p><code>@WrapOperation</code> lets the mixin call the original operation, inspect the result, and optionally return something else. Here, custom Wold gear items pretend to be <code>ModItems.FOCUS</code> for part of the durability logic.</p>
+
+  <h2>Example: Overwriting Entire Methods</h2>
+  <p class="path">src/main/java/xyz/iwolfking/woldsvaults/mixin/the_vault/custom/MixinWildSpawnerTileEntity.java</p>
+  <pre>@Overwrite
+private static void spawnEntity(...) {
+    ...
+}
+
+@Overwrite
+private void initSpawnerGroup() {
+    ...
+}</pre>
+  <p><code>@Overwrite</code> replaces the whole target method. This repo uses it to change Vault Hunters wild spawner behavior for haunted/spooky vaults and buffed wraith spawning.</p>
+  <div class="note">
+    <p><strong>Rule of thumb:</strong> use <code>@Overwrite</code> sparingly. It is powerful, but if the original mod updates that method later, your overwrite does not automatically inherit those fixes.</p>
+  </div>
+
+  <h2>Other Common Annotations</h2>
+  <ul>
+    <li><code>@Shadow</code>: declares a field or method that already exists in the target class so your mixin can reference it.</li>
+    <li><code>@Unique</code>: marks helper fields or methods owned by the mixin so they do not collide with target members.</li>
+    <li><code>@At("HEAD")</code>: inject at the beginning of a method.</li>
+    <li><code>@At("RETURN")</code>: inject after the method has produced a return value.</li>
+    <li><code>CallbackInfo</code>: callback object for void methods.</li>
+    <li><code>CallbackInfoReturnable&lt;T&gt;</code>: callback object for methods that return a value.</li>
+  </ul>
+
+  <h2>How To Think About Mixins</h2>
+  <p>Pick the smallest patch that changes the behavior you need:</p>
+  <ul>
+    <li>Use <code>@Inject</code> when you can add behavior before or after a method.</li>
+    <li>Use <code>@Redirect</code> or <code>@WrapOperation</code> when one specific call needs to change.</li>
+    <li>Use <code>@ModifyVariable</code> when an argument or local variable needs adjustment.</li>
+    <li>Use <code>@Accessor</code> or <code>@Invoker</code> when you only need access to hidden data or methods.</li>
+    <li>Use <code>@Overwrite</code> only when smaller patch points cannot express the change clearly.</li>
+  </ul>
+
+  <p>The short version: a mixin is a runtime patch class. In this repo, mixins let VHTweaks alter Minecraft and Vault Hunters behavior without directly editing their source code.</p>
+</body>
+</html>
