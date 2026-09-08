@@ -32,7 +32,7 @@ public class VaultModifierUtils {
     }
 
     public static void addModifierFromPool(Vault vault, ResourceLocation modifierPool) {
-        List<VaultModifier<?>> modifiers = ModConfigs.VAULT_MODIFIER_POOLS.getRandom(modifierPool, 0, (RandomSource) JavaRandom.ofNanoTime());
+        List<VaultModifier<?>> modifiers = ModConfigs.VAULT_MODIFIER_POOLS.getRandom(modifierPool, 0, JavaRandom.ofNanoTime());
 
         if(!modifiers.isEmpty()) {
             Iterator<VaultModifier<?>> modIter = modifiers.iterator();
@@ -40,17 +40,17 @@ public class VaultModifierUtils {
             VaultModifier<?> modifier = VaultModifierRegistry.get(VaultMod.id("empty"));
 
             while(modIter.hasNext()) {
-                VaultModifier<?> mod = (VaultModifier<?>) modIter.next();
+                VaultModifier<?> mod = modIter.next();
                 modifier = mod;
-                ((Modifiers)vault.get(Vault.MODIFIERS)).addModifier(mod, 1, true, ChunkRandom.any());
+                (vault.get(Vault.MODIFIERS)).addModifier(mod, 1, true, ChunkRandom.ofNanoTime());
             }
 
             if(modifier.getId().equals(VaultMod.id("empty"))) {
                 return;
             }
 
-            for (Listener listener : ((Listeners) vault.get(Vault.LISTENERS)).getAll()) {
-                listener.getPlayer().ifPresent((other) -> {
+            for (Listener listener : vault.get(Vault.LISTENERS).getAll()) {
+                listener.getPlayer().ifPresent(other -> {
                     sendModifierAddedMessage(other, modifiers.get(0), 1);
                 });
             }

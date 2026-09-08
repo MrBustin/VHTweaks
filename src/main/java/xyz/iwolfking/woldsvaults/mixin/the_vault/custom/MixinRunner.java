@@ -6,7 +6,6 @@ import iskallia.vault.core.vault.VaultUtils;
 import iskallia.vault.core.vault.player.Listener;
 import iskallia.vault.core.vault.player.Runner;
 import iskallia.vault.core.world.storage.VirtualWorld;
-import iskallia.vault.skill.base.LearnableSkill;
 import iskallia.vault.skill.base.Skill;
 import iskallia.vault.skill.tree.ExpertiseTree;
 import iskallia.vault.world.data.PlayerExpertisesData;
@@ -15,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import xyz.iwolfking.woldsvaults.expertises.SurpriseModifiersExpertise;
 import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 
 @Mixin(value = Runner.class, remap = false)
@@ -26,11 +26,8 @@ public abstract class MixinRunner extends Listener {
             ServerPlayer player = this.getPlayer().get();
             ExpertiseTree expertiseTree = PlayerExpertisesData.get(player.server).getExpertises(player);
             int surpriseModifiersExpertiseLevel = 0;
-            for(Skill expertise : expertiseTree.skills) {
-                if(expertise.getId().equals("Surprise_Favors")) {
-                    surpriseModifiersExpertiseLevel = ((LearnableSkill)expertise).getSpentLearnPoints();
-                    break;
-                }
+            for(SurpriseModifiersExpertise expertise : expertiseTree.getAll(SurpriseModifiersExpertise.class, Skill::isUnlocked)) {
+                surpriseModifiersExpertiseLevel = Math.max(surpriseModifiersExpertiseLevel, expertise.getExpertiseLevel());
             }
             if(surpriseModifiersExpertiseLevel > 0) {
                 if(world.getRandom().nextFloat() < (surpriseModifiersExpertiseLevel * 0.2F)) {
@@ -38,7 +35,7 @@ public abstract class MixinRunner extends Listener {
                         return;
                     }
                     else {
-                        VaultModifierUtils.addModifierFromPool(vault, VaultMod.id("random_positive"));
+                        VaultModifierUtils.addModifierFromPool(vault, VaultMod.id("catalyst_positive"));
                     }
                 }
             }
