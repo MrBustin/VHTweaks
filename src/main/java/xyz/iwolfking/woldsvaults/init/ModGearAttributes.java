@@ -158,6 +158,9 @@ public class ModGearAttributes {
             null
     );
 
+    public static final VaultGearAttribute<Float> INCREASED_EFFECT_CLOUD_CHANCE = attr("effect_cloud_chance_additive", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Effect Cloud Chance", 3109217), VaultGearAttributeComparator.floatComparator());
+
+
     @SubscribeEvent
     public static void init(RegistryEvent.Register<VaultGearAttribute<?>> event) {
         IForgeRegistry<VaultGearAttribute<?>> registry = event.getRegistry();
@@ -197,6 +200,7 @@ public class ModGearAttributes {
                       registry.register(AIR_MOBILITY_SPEED);
                       registry.register(AIR_MOBILITY_CONTROL);
                       registry.register(AIR_MOBILITY);
+                      registry.register(INCREASED_EFFECT_CLOUD_CHANCE);
 
     }
 
