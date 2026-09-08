@@ -169,5 +169,29 @@
                          "sounds":  [
                                         "woldsvaults:portal_spawn"
                                     ]
-                     }
+                     },
+  "loginar_attack": {
+    "sounds": [
+      "woldsvaults:loginar/loginar_attack"
+    ]
+  },
+  "loginar_death": {
+    "sounds": [
+      "woldsvaults:loginar/loginar_death1",
+      "woldsvaults:loginar/loginar_death2"
+    ]
+  },
+  "loginar_hurt": {
+    "sounds": [
+      "woldsvaults:loginar/loginar_hurt1",
+      "woldsvaults:loginar/loginar_hurt2",
+      "woldsvaults:loginar/loginar_hurt3",
+      "woldsvaults:loginar/loginar_hurt4"
+    ]
+  },
+  "loginar_idle": {
+    "sounds": [
+      "woldsvaults:loginar/loginar_idle"
+    ]
+  }
 }

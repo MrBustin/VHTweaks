@@ -17,6 +17,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xyz.iwolfking.woldsvaults.api.pehkui.CustomScaleTypes;
+import xyz.iwolfking.woldsvaults.entities.astral.client.renderers.*;
 import xyz.iwolfking.woldsvaults.init.*;
 import xyz.iwolfking.woldsvaults.init.client.ModModels;
 
@@ -50,6 +51,12 @@ public class RegistryEvents {
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         ModBlocks.registerTileEntityRenderers(event);
+        event.registerEntityRenderer(ModEntities.LOGINAR, LoginarEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.ASTRAL_STALKER, AstralStalkerRenderer::new);
+        event.registerEntityRenderer(ModEntities.NEBULA_SENTINEL, NebulaSentinelRenderer::new);
+        event.registerEntityRenderer(ModEntities.STAR_DEVOURER_ENTITY, StarDevourerRenderer::new);
+        event.registerEntityRenderer(ModEntities.SINGULARITY_CREEPER, SingularityCreeperRenderer::new);
+
     }
 
     @SubscribeEvent

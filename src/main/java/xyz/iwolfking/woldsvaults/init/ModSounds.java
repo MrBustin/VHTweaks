@@ -18,6 +18,10 @@ public class ModSounds {
     public static SoundEvent ONE_UP;
     public static SoundEvent SUPER_MUSHROOM;
     public static SoundEvent RANG_RICOCHET;
+    public static SoundEvent LOGINAR_IDLE;
+    public static SoundEvent LOGINAR_DEATH;
+    public static SoundEvent LOGINAR_HURT;
+    public static SoundEvent LOGINAR_ATTACK;
 
 
     public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
@@ -29,6 +33,10 @@ public class ModSounds {
         ONE_UP = registerSound(event, "one_up");
         SUPER_MUSHROOM = registerSound(event, "super_mushroom");
         RANG_RICOCHET = registerSound(event, "rang_ricochet");
+        LOGINAR_IDLE = registerSound(event, "loginar_idle");
+        LOGINAR_DEATH = registerSound(event, "loginar_death");
+        LOGINAR_HURT = registerSound(event, "loginar_hurt");
+        LOGINAR_ATTACK = registerSound(event, "loginar_attack");
 
     }
 

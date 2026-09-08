@@ -17,6 +17,7 @@ import xyz.iwolfking.woldsvaults.entities.ThornCloudEntity;
 import xyz.iwolfking.woldsvaults.entities.VaultNecromancer;
 import xyz.iwolfking.woldsvaults.entities.WoldBoss;
 import xyz.iwolfking.woldsvaults.entities.aprilfools.JackBoxEntity;
+import xyz.iwolfking.woldsvaults.entities.astral.*;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostilePigEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileSheepEntity;
@@ -57,6 +58,12 @@ public class ModEntities {
     public static EntityType<IdonasBarrageArrowEntity> IDONAS_BARRAGE_ARROW;
     public static EntityType<IdonasBarrageEntity> IDONAS_BARRAGE;
     public static EntityType<CustomFangEntity> CUSTOM_FANGS;
+    public static EntityType<LoginarHostileAlienEntity> LOGINAR;
+    public static EntityType<AstralStalkerEntity> ASTRAL_STALKER;
+    public static EntityType<NebulaSentinelEntity> NEBULA_SENTINEL;
+    public static EntityType<SingularityCreeperEntity> SINGULARITY_CREEPER;
+    public static EntityType<StarDevourerEntity> STAR_DEVOURER_ENTITY;
+
 
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
@@ -106,6 +113,13 @@ public class ModEntities {
                 .updateInterval(2), event);
 
         CUSTOM_FANGS = registerWV("custom_fangs", EntityType.Builder.<CustomFangEntity>of(CustomFangEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new CustomFangEntity(CUSTOM_FANGS, level))), event);
+
+        LOGINAR = registerLivingWV("loginar", EntityType.Builder.of(LoginarHostileAlienEntity::new, MobCategory.MONSTER).sized(1.0F, 1.0F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new LoginarHostileAlienEntity(LOGINAR, level))), LoginarHostileAlienEntity::createAttributes, event);
+        ASTRAL_STALKER = registerLivingWV("astral_stalker", EntityType.Builder.of(AstralStalkerEntity::new, MobCategory.MONSTER).sized(0.6F, 1.99F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new AstralStalkerEntity(ASTRAL_STALKER, level))), AstralStalkerEntity::createAttributes, event);
+        NEBULA_SENTINEL = registerLivingWV("nebula_sentinel", EntityType.Builder.of(NebulaSentinelEntity::new, MobCategory.MONSTER).sized(1.4F, 2.7F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new NebulaSentinelEntity(NEBULA_SENTINEL, level))), NebulaSentinelEntity::createAttributes, event);
+        STAR_DEVOURER_ENTITY = registerLivingWV("star_devourer", EntityType.Builder.of(StarDevourerEntity::new, MobCategory.MONSTER).sized(1.95F, 2.2F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new StarDevourerEntity(STAR_DEVOURER_ENTITY, level))), StarDevourerEntity::createAttributes, event);
+        SINGULARITY_CREEPER = registerLivingWV("singularity_creeper", EntityType.Builder.of(SingularityCreeperEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new SingularityCreeperEntity(SINGULARITY_CREEPER, level))), SingularityCreeperEntity::createAttributes, event);
+
 
 
     }
