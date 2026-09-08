@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives;
+package xyz.iwolfking.woldsvaults.objectives.enchanted_elixir;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,9 +29,6 @@ import xyz.iwolfking.woldsvaults.init.ModConfigs;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirEventAmountModifier;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirPoolModifier;
 import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
-import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirBreakpointMap;
-import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirCollectionMap;
-import xyz.iwolfking.woldsvaults.objectives.lib.BasicEnchantedEvent;
 
 import java.util.ArrayList;
 import java.util.List;

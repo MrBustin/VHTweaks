@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives;
+package xyz.iwolfking.woldsvaults.objectives.zealot;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -25,15 +25,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-
-
-import java.util.Iterator;
-import java.util.Objects;
 
 public class ZealotObjective extends Objective {
     public static final ResourceLocation HUD = WoldsVaults.id("textures/gui/zealot/hud.png");

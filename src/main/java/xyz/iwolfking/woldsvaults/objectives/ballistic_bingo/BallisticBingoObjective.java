@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives;
+package xyz.iwolfking.woldsvaults.objectives.ballistic_bingo;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;

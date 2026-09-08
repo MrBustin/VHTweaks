@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives;
+package xyz.iwolfking.woldsvaults.objectives.ballistic_bingo;
 
 import com.google.gson.JsonObject;
 import iskallia.vault.VaultMod;
@@ -10,8 +10,6 @@ import iskallia.vault.core.vault.ClassicPortalLogic;
 import iskallia.vault.core.vault.Vault;
 import iskallia.vault.core.vault.objective.*;
 import iskallia.vault.item.crystal.CrystalData;
-import iskallia.vault.item.crystal.objective.BingoCrystalObjective;
-import iskallia.vault.item.crystal.objective.CrystalObjective;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.*;
@@ -19,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.TooltipFlag;
 import xyz.iwolfking.woldsvaults.init.ModConfigs;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
+import xyz.iwolfking.woldsvaults.objectives.WoldCrystalObjective;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,18 +27,7 @@ public class BallisticBingoCrystalObjective extends WoldCrystalObjective {
     protected float objectiveProbability;
     protected boolean blackout;
 
-    public BallisticBingoCrystalObjective() {
-    }
-
-    public BallisticBingoCrystalObjective(float objectiveProbability) {
-        this.objectiveProbability = objectiveProbability;
-    }
-
-    public BallisticBingoCrystalObjective(float objectiveProbability, boolean blackout) {
-        this.objectiveProbability = objectiveProbability;
-        this.blackout = blackout;
-    }
-
+    public BallisticBingoCrystalObjective() {}
 
     @Override
     public void configure(Vault vault, RandomSource random, @Nullable String sigil) {
@@ -62,7 +50,7 @@ public class BallisticBingoCrystalObjective extends WoldCrystalObjective {
         MutableComponent objectiveTooltip = new TranslatableComponent("util.woldsvaults.objective_text")
                 .withStyle(ChatFormatting.WHITE);
 
-        if(blackout) {
+        if (blackout) {
             objectiveTooltip.append("Blackout ").withStyle(Style.EMPTY.withColor(this.getColor(time).orElseThrow()));
         }
 
@@ -102,7 +90,7 @@ public class BallisticBingoCrystalObjective extends WoldCrystalObjective {
     }
 
     @Override
-    ResourceLocation getObjectiveId() {
+    protected ResourceLocation getObjectiveId() {
         return ModCustomVaultObjectiveEntries.BALLISTIC_BINGO.getRegistryName();
     }
 }

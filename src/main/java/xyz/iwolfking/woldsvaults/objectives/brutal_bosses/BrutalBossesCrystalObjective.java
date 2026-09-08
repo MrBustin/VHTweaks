@@ -1,4 +1,4 @@
-//package xyz.iwolfking.woldsvaults.objectives;
+//package xyz.iwolfking.woldsvaults.objectives.brutal_bosses;
 //
 //import com.google.gson.JsonObject;
 //import iskallia.vault.block.VaultCrateBlock;

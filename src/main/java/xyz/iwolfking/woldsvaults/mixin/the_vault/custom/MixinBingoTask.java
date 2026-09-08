@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.iwolfking.woldsvaults.api.WoldVaultUtils;
-import xyz.iwolfking.woldsvaults.objectives.BallisticBingoObjective;
+import xyz.iwolfking.woldsvaults.objectives.ballistic_bingo.BallisticBingoObjective;
 
 @Mixin(value = BingoTask.class, remap = false)
 public abstract class MixinBingoTask extends ConfiguredTask<ConfiguredTask.Config> implements LevelEntryList.ILevelEntry {

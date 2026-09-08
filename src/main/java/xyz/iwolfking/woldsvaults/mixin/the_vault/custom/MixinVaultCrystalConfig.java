@@ -7,7 +7,7 @@ import iskallia.vault.item.crystal.CrystalData;
 import iskallia.vault.item.crystal.objective.CrystalObjective;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import xyz.iwolfking.woldsvaults.objectives.ScalingBallisticBingoCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.ballistic_bingo.ScalingBallisticBingoCrystalObjective;
 
 @Mixin(value = VaultCrystalConfig.class, remap = false)
 public class MixinVaultCrystalConfig {

@@ -18,6 +18,7 @@ public class Configs {
     public static TransmogRoleUnlocksConfig TRANSMOG_ROLE_UNLOCKS;
     public static RaidPlaqueConfig RAID_PLAQUE_CONFIG;
     public static TransmogEffectsConfig TRANSMOG_EFFECTS_CONFIG;
+    public static FruitCakeConfig FRUIT_CAKE;
 
     public static void registerCustomConfigs() {
         POWERS_GUI = new PowerGUIConfig().readConfig();
@@ -35,5 +36,6 @@ public class Configs {
         TRANSMOG_ROLE_UNLOCKS = new TransmogRoleUnlocksConfig().readConfig();
         RAID_PLAQUE_CONFIG = new RaidPlaqueConfig().readConfig();
         TRANSMOG_EFFECTS_CONFIG = new TransmogEffectsConfig().readConfig();
+        FRUIT_CAKE = new FruitCakeConfig().readConfig();
     }
 }

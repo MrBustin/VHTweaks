@@ -1,4 +1,4 @@
-//package xyz.iwolfking.woldsvaults.objectives;
+//package xyz.iwolfking.woldsvaults.objectives.brutal_bosses;
 //
 //import iskallia.vault.VaultMod;
 //import iskallia.vault.block.ObeliskBlock;

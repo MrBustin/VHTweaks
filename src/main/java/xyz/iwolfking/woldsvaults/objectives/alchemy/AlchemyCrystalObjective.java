@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives;
+package xyz.iwolfking.woldsvaults.objectives.alchemy;
 
 import com.google.gson.JsonObject;
 import iskallia.vault.block.VaultCrateBlock;
@@ -11,6 +11,8 @@ import iskallia.vault.item.crystal.CrystalData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
+import xyz.iwolfking.woldsvaults.objectives.WoldCrystalObjective;
+
 import javax.annotation.Nullable;
 import java.util.Optional;
 
@@ -18,13 +20,7 @@ public class AlchemyCrystalObjective extends WoldCrystalObjective {
     protected float objectiveProbability;
     protected float requiredProgress;
 
-    public AlchemyCrystalObjective(float objectiveProbability, float requiredProgress) {
-        this.objectiveProbability = objectiveProbability;
-        this.requiredProgress = requiredProgress;
-    }
-
-    public AlchemyCrystalObjective() {
-    }
+    public AlchemyCrystalObjective() {}
 
     @Override
     public Optional<Integer> getColor(float v) {
@@ -49,7 +45,7 @@ public class AlchemyCrystalObjective extends WoldCrystalObjective {
     }
 
     @Override
-    ResourceLocation getObjectiveId() {
+    protected ResourceLocation getObjectiveId() {
         return ModCustomVaultObjectiveEntries.ALCHEMY.getRegistryName();
     }
 

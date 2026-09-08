@@ -72,7 +72,7 @@ import xyz.iwolfking.woldsvaults.init.overworld.OverworldVaultSounds;
 import xyz.iwolfking.woldsvaults.models.AdditionalModels;
 import xyz.iwolfking.woldsvaults.network.PacketHandler;
 import xyz.iwolfking.woldsvaults.network.overworld.OverworldVaultNetwork;
-import xyz.iwolfking.woldsvaults.objectives.InfiniteRaidObjective;
+import xyz.iwolfking.woldsvaults.objectives.infinite_raid.InfiniteRaidObjective;
 import xyz.iwolfking.woldsvaults.objectives.data.BrutalBossesRegistry;
 import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
 import xyz.iwolfking.woldsvaults.world.overworld.structure.OverworldVaultStructures;
