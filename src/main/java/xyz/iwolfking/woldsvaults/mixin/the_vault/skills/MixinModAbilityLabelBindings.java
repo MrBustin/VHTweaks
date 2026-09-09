@@ -56,5 +56,22 @@ public abstract class MixinModAbilityLabelBindings {
                 ability -> AbilityLabelFormatters.decimal(ability.getLevitateSpeed())
 
         ));
+
+        ModAbilityLabelBindings.register(EvokerFangsAbility.class, Map.of(
+                "radius",
+                ability -> AbilityLabelFormatters.decimal(ability.getRadius()),
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getRadius()),
+                "baseDamage",
+                ability -> AbilityLabelFormatters.decimal(ability.getBaseDamage()),
+                "damageMultiplier",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getDamageMultiplier()),
+                "executeThreshold",
+                ability -> AbilityLabelFormatters.percentRounded(ability.getExecuteThreshold()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost())
+        ));
     }
 }
