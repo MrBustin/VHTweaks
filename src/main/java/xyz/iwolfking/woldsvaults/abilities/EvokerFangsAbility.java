@@ -3,6 +3,7 @@ package xyz.iwolfking.woldsvaults.abilities;
 import com.google.gson.JsonObject;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.net.BitBuffer;
+import iskallia.vault.skill.ability.effect.spi.core.Ability;
 import iskallia.vault.skill.ability.effect.spi.core.InstantManaAbility;
 import iskallia.vault.skill.base.SkillContext;
 import iskallia.vault.util.calc.AreaOfEffectHelper;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import xyz.iwolfking.woldsvaults.api.util.DelayedExecutionHelper;
 import xyz.iwolfking.woldsvaults.entities.msc.CustomFangEntity;
 
+
 import java.util.Optional;
 
 public class EvokerFangsAbility extends InstantManaAbility {
@@ -26,7 +28,7 @@ public class EvokerFangsAbility extends InstantManaAbility {
     private int waveDelay = 10;
 
     @Override
-    protected ActionResult doAction(SkillContext context) {
+    protected Ability.ActionResult doAction(SkillContext context) {
         return context.getSource().as(ServerPlayer.class).map(player -> {
             ServerLevel level = (ServerLevel) player.level;
             double realRadius = AreaOfEffectHelper.adjustAreaOfEffect(player, this, (float) this.radius);
@@ -55,8 +57,8 @@ public class EvokerFangsAbility extends InstantManaAbility {
             }
 
             this.putOnCooldown(context);
-            return ActionResult.successCooldownImmediate();
-        }).orElse(ActionResult.fail());
+            return Ability.ActionResult.successCooldownImmediate();
+        }).orElse(Ability.ActionResult.fail());
     }
 
     private void spawnFangRing(ServerPlayer player, ServerLevel level, double dist, float damage) {
