@@ -15,6 +15,10 @@ public class AddonLoader {
 
 
     public static void onAddPackFinders(final AddPackFindersEvent event) {
+        if(event.getPackType() == PackType.CLIENT_RESOURCES) {
+            registerAddon(event, "wolds_vault_client_overrides");
+        }
+
         if(event.getPackType() == PackType.SERVER_DATA) {
             if(WoldsVaultsConfig.COMMON.enableGemDropsOverhaul.get()) {
                 registerAddon(event, "wolds_vault_gem_drops_overhaul");
