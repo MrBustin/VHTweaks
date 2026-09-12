@@ -23,6 +23,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -323,6 +324,24 @@ public class LivingEntityEvents {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void parry(LivingHurtEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+
+        if (!(entity instanceof Player))
+            return;
+
+        DamageSource source = event.getSource();
+
+        if (!(source instanceof EntityDamageSource) || source.isExplosion() || source.isBypassInvul())
+            return;
+
+        float parryChance = AttributeSnapshotHelper.getInstance().getSnapshot(entity).getAttributeValue(ModGearAttributes.PARRY, VaultGearAttributeTypeMerger.floatSum());
+        boolean parry = entity.getRandom().nextDouble() < parryChance;
+
+        event.setCanceled(parry);
     }
 
     /**

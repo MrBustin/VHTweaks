@@ -162,6 +162,9 @@ public class ModGearAttributes {
 
     public static final VaultGearAttribute<Boolean> IMPLODING_JAVELIN = attr("javelin_implode", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Imploding Javelin", 3085471), VaultGearAttributeComparator.booleanComparator());
 
+    public static final VaultGearAttribute<Float> PARRY = attr("parry", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Parry", 12186190), VaultGearAttributeComparator.floatComparator());
+
+
 
     @SubscribeEvent
     public static void init(RegistryEvent.Register<VaultGearAttribute<?>> event) {
@@ -204,6 +207,7 @@ public class ModGearAttributes {
                       registry.register(AIR_MOBILITY);
                       registry.register(INCREASED_EFFECT_CLOUD_CHANCE);
                       registry.register(IMPLODING_JAVELIN);
+                      registry.register(PARRY);
 
     }
 
