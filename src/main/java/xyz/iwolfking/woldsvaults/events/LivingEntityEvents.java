@@ -16,6 +16,7 @@ import iskallia.vault.snapshot.AttributeSnapshotHelper;
 import iskallia.vault.util.calc.EffectDurationHelper;
 import iskallia.vault.util.calc.PlayerStat;
 import iskallia.vault.world.data.ServerVaults;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -342,6 +344,45 @@ public class LivingEntityEvents {
         boolean parry = entity.getRandom().nextDouble() < parryChance;
 
         event.setCanceled(parry);
+    }
+
+    @SubscribeEvent
+    public static void drippingLava(LivingHurtEvent event) {
+        if(!WoldEventHelper.isNormalAttack()) {
+            return;
+        }
+
+        if(event.getSource().isProjectile()) {
+            return;
+        }
+
+        if(event.getSource().getEntity() instanceof Player player) {
+            boolean drippingLava = AttributeSnapshotHelper.getInstance().getSnapshot(player).getAttributeValue(ModGearAttributes.DRIPPING_LAVA, VaultGearAttributeTypeMerger.anyTrue());
+            if(drippingLava) {
+                tryPlaceLava(event.getEntityLiving());
+            }
+        }
+    }
+
+    private static void tryPlaceLava(LivingEntity target) {
+        if (!(target.level instanceof ServerLevel level)) return;
+
+        if (LivingEntityEvents.random.nextFloat() >= 0.01f) return;
+
+        BlockPos basePos = target.blockPosition();
+
+        BlockPos pos = basePos.offset(
+                LivingEntityEvents.random.nextInt(3) - 1,
+                0,
+                LivingEntityEvents.random.nextInt(3) - 1
+        );
+
+        if (!level.getBlockState(pos).isAir()) return;
+
+        BlockPos below = pos.below();
+        if (!level.getBlockState(below).isSolidRender(level, below)) return;
+
+        level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
     }
 
     /**
