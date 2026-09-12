@@ -160,6 +160,8 @@ public class ModGearAttributes {
 
     public static final VaultGearAttribute<Float> INCREASED_EFFECT_CLOUD_CHANCE = attr("effect_cloud_chance_additive", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Effect Cloud Chance", 3109217), VaultGearAttributeComparator.floatComparator());
 
+    public static final VaultGearAttribute<Boolean> IMPLODING_JAVELIN = attr("javelin_implode", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Imploding Javelin", 3085471), VaultGearAttributeComparator.booleanComparator());
+
 
     @SubscribeEvent
     public static void init(RegistryEvent.Register<VaultGearAttribute<?>> event) {
@@ -201,6 +203,7 @@ public class ModGearAttributes {
                       registry.register(AIR_MOBILITY_CONTROL);
                       registry.register(AIR_MOBILITY);
                       registry.register(INCREASED_EFFECT_CLOUD_CHANCE);
+                      registry.register(IMPLODING_JAVELIN);
 
     }
 
