@@ -385,6 +385,30 @@ public class LivingEntityEvents {
         level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
     }
 
+    @SubscribeEvent
+    public static void burningHit(LivingHurtEvent event) {
+        if(!WoldEventHelper.isNormalAttack()) {
+            return;
+        }
+
+        if(event.getSource().isProjectile()) {
+            return;
+        }
+
+        if(event.getSource().getEntity() instanceof Player player) {
+            float burnChance = AttributeSnapshotHelper.getInstance().getSnapshot(player).getAttributeValue(ModGearAttributes.BURNING_HIT_CHANCE, VaultGearAttributeTypeMerger.floatSum());
+
+            if(burnChance != 0) {
+
+//                if(random.nextFloat() < LuckHelper.getLuckAffectedChance(burnChance, player)) {
+//                    PercentBurnEffect.applyPercentBurn(event.getEntityLiving(), player, 200);
+//                }
+
+                player.getLevel().playSound(null, event.getEntity(), SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS, 1.0F, 1.0F);
+            }
+        }
+    }
+
     /**
      * Handles the reduction/cancellation of fall damage for players with the Feather Trinket equipped.
      * <p>

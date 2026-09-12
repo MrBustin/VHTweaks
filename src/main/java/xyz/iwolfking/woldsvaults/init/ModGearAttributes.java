@@ -166,6 +166,8 @@ public class ModGearAttributes {
 
     public static final VaultGearAttribute<Boolean> DRIPPING_LAVA = attr("dripping_lava", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Dripping Lava", 12976128), VaultGearAttributeComparator.booleanComparator());
 
+    public static final VaultGearAttribute<Float> BURNING_HIT_CHANCE = attr("burning_hit_chance", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Burning Hit Chance", 12976128), VaultGearAttributeComparator.floatComparator());
+
 
 
     @SubscribeEvent
@@ -211,6 +213,7 @@ public class ModGearAttributes {
                       registry.register(IMPLODING_JAVELIN);
                       registry.register(PARRY);
                       registry.register(DRIPPING_LAVA);
+                      registry.register(BURNING_HIT_CHANCE);
 
     }
 
