@@ -41,6 +41,7 @@ import xyz.iwolfking.woldsvaults.api.helper.WoldAttributeHelper;
 import xyz.iwolfking.woldsvaults.data.HexEffects;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.EchoingPotionEffect;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.HemorrhagedEffect;
+import xyz.iwolfking.woldsvaults.effect.mobeffects.PercentBurnEffect;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 import xyz.iwolfking.woldsvaults.init.ModGearAttributes;
 import xyz.iwolfking.woldsvaults.items.gear.VaultLootSackItem;
@@ -399,12 +400,10 @@ public class LivingEntityEvents {
             float burnChance = AttributeSnapshotHelper.getInstance().getSnapshot(player).getAttributeValue(ModGearAttributes.BURNING_HIT_CHANCE, VaultGearAttributeTypeMerger.floatSum());
 
             if(burnChance != 0) {
-
-//                if(random.nextFloat() < LuckHelper.getLuckAffectedChance(burnChance, player)) {
-//                    PercentBurnEffect.applyPercentBurn(event.getEntityLiving(), player, 200);
-//                }
-
-                player.getLevel().playSound(null, event.getEntity(), SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                if(random.nextFloat() < burnChance) {
+                    PercentBurnEffect.applyPercentBurn(event.getEntityLiving(), player, 200, event.getAmount());
+                    player.getLevel().playSound(null, event.getEntity(), SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                }
             }
         }
     }

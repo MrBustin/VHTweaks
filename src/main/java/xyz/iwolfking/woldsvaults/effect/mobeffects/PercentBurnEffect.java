@@ -15,7 +15,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.events.WoldActiveFlags;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 
 import javax.annotation.Nullable;
@@ -72,11 +71,7 @@ public class PercentBurnEffect extends MobEffect {
             source = DamageSource.MAGIC;
         }
 
-//        WoldActiveFlags.IS_NO_KNOCKBACK_DAMAGE.runWithFlag(() -> {
-//            ActiveFlags.IS_AP_ATTACKING.push();
-//            target.hurt(source, damage);
-//            ActiveFlags.IS_AP_ATTACKING.pop();
-//        });
+        ActiveFlags.IS_DOT_ATTACKING.runIfNotSet(() -> target.hurt(source, damage));
 
         spawnFireParticles(target);
     }
