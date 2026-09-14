@@ -193,5 +193,11 @@
     "sounds": [
       "woldsvaults:loginar/loginar_idle"
     ]
+  },
+  "witchskall_idle": {
+    "category": "hostile",
+    "sounds": [
+      "woldsvaults:witchskall/idle"
+    ]
   }
 }

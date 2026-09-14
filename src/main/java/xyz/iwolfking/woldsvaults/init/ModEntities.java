@@ -61,6 +61,7 @@ public class ModEntities {
     public static EntityType<SingularityCreeperEntity> SINGULARITY_CREEPER;
     public static EntityType<StarDevourerEntity> STAR_DEVOURER_ENTITY;
     public static EntityType<CrystalVendorEntity> CRYSTAL_VENDOR_ENTITY;
+    public static EntityType<WitchskallEntity> WITCHSKALL;
 
 
 
@@ -123,7 +124,10 @@ public class ModEntities {
                 .clientTrackingRange(8)
                 .setCustomClientFactory((spawnEntity, level) -> new CrystalVendorEntity(CRYSTAL_VENDOR_ENTITY, level)), Villager::createAttributes, event);
 
-
+        WITCHSKALL = registerLivingWV("witchskall", EntityType.Builder.of(WitchskallEntity::new, MobCategory.MONSTER)
+                .sized(0.6F, 1.95F)
+                .clientTrackingRange(8)
+                .setCustomClientFactory((spawnEntity, level) -> new WitchskallEntity(WITCHSKALL, level)), Evoker::createAttributes, event);
 
     }
 
