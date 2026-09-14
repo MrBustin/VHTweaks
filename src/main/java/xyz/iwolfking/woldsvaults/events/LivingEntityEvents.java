@@ -12,6 +12,7 @@ import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.gear.attribute.type.VaultGearAttributeTypeMerger;
 import iskallia.vault.gear.data.VaultGearData;
 import iskallia.vault.gear.item.VaultGearItem;
+import iskallia.vault.gear.trinket.TrinketHelper;
 import iskallia.vault.snapshot.AttributeSnapshotHelper;
 import iskallia.vault.util.calc.EffectDurationHelper;
 import iskallia.vault.util.calc.PlayerStat;
@@ -37,11 +38,13 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xyz.iwolfking.woldsvaults.abilities.SneakyGetawayAbility;
 import xyz.iwolfking.woldsvaults.api.helper.WoldAttributeHelper;
 import xyz.iwolfking.woldsvaults.data.HexEffects;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.EchoingPotionEffect;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.HemorrhagedEffect;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.PercentBurnEffect;
+import xyz.iwolfking.woldsvaults.effect.trinket.EffectOnHitTakenEffect;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 import xyz.iwolfking.woldsvaults.init.ModGearAttributes;
 import xyz.iwolfking.woldsvaults.items.gear.VaultLootSackItem;
@@ -406,6 +409,26 @@ public class LivingEntityEvents {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerHit(LivingHurtEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+
+        if (!(entity instanceof Player))
+            return;
+
+        DamageSource source = event.getSource();
+
+        if (!(source instanceof EntityDamageSource) || source.isExplosion() || source.isBypassInvul())
+            return;
+
+        TrinketHelper.getTrinkets(entity, EffectOnHitTakenEffect.class).forEach(effectOnHitTakenEffectTrinketStack -> {
+            if(entity.getRandom().nextFloat() <= effectOnHitTakenEffectTrinketStack.trinket().getConfig().getChance() && !entity.hasEffect(effectOnHitTakenEffectTrinketStack.trinket().getConfig().getEffect())) {
+                entity.addEffect(new MobEffectInstance(effectOnHitTakenEffectTrinketStack.trinket().getConfig().getEffectInstance()));
+            }
+        });
+
     }
 
     /**

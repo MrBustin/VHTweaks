@@ -38,7 +38,7 @@ public class ModTrinkets {
 
     static {
         MINERS_HARDHAT = new AttributeTrinket<>(VaultMod.id("miners_hardhat"), ModGearAttributes.COPIOUSLY, 0.5F);
-        RUNNING_SHOES = new VanillaAttributeTrinket(VaultMod.id("running_shoes"), Attributes.MOVEMENT_SPEED, 0.25F, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        RUNNING_SHOES = new VanillaAttributeTrinket(VaultMod.id("running_shoes"), Attributes.MOVEMENT_SPEED, 0.25F, AttributeModifier.Operation.ADDITION);
         CHROMATIC_DIFFUSER =  new AttributeTrinket<>(VaultMod.id("chromatic_diffuser"), xyz.iwolfking.woldsvaults.init.ModGearAttributes.INCREASED_EFFECT_CLOUD_CHANCE, 0.1F);
         VIBRATING_STONE =  new MultiAttributeTrinket<>(VaultMod.id("vibrating_stone"), List.of(xyz.iwolfking.woldsvaults.init.ModGearAttributes.ECHOING_CHANCE, xyz.iwolfking.woldsvaults.init.ModGearAttributes.ECHOING_DAMAGE), List.of(0.1F, 0.25F));
         IMMORTAL_SEAL =  new EffectOnHitTakenEffect(VaultMod.id("immortal_seal"), 0.05F, ModEffects.IMMORTALITY, 1, 60);
