@@ -8,7 +8,6 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.monster.Evoker;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
@@ -122,7 +121,7 @@ public class ModEntities {
         CRYSTAL_VENDOR_ENTITY = registerLivingWV("crystal_vendor", EntityType.Builder.of(CrystalVendorEntity::new, MobCategory.MISC)
                 .sized(0.6F, 1.95F)
                 .clientTrackingRange(8)
-                .setCustomClientFactory((spawnEntity, level) -> new CrystalVendorEntity(CRYSTAL_VENDOR_ENTITY, level)), Villager::createAttributes, event);
+                .setCustomClientFactory((spawnEntity, level) -> new CrystalVendorEntity(CRYSTAL_VENDOR_ENTITY, level)), CrystalVendorEntity::createAttributes, event);
 
         WITCHSKALL = registerLivingWV("witchskall", EntityType.Builder.of(WitchskallEntity::new, MobCategory.MONSTER)
                 .sized(0.6F, 1.95F)

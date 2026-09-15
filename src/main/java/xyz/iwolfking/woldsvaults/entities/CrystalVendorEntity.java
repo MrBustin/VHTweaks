@@ -1,13 +1,88 @@
 package xyz.iwolfking.woldsvaults.entities;
 
 
+import iskallia.vault.container.GreedTraderContainer;
+import iskallia.vault.entity.entity.GreedTraderData;
+import iskallia.vault.world.data.PlayerGreedTraderData;
+import iskallia.vault.world.data.PlayerGreedTreeData;
+import iskallia.vault.world.data.PlayerVaultStatsData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
-public class CrystalVendorEntity extends Villager {
+import javax.annotation.Nullable;
 
-    public CrystalVendorEntity(EntityType<? extends Villager> pEntityType, Level pLevel) {
+public class CrystalVendorEntity extends PathfinderMob {
+
+    public CrystalVendorEntity(EntityType<? extends CrystalVendorEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+
+    public InteractionResult mobInteract(Player player, InteractionHand pHand) {
+        if (!this.level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            int greedTier = PlayerGreedTreeData.get(serverPlayer.getLevel()).getGreedTier(serverPlayer);
+            NetworkHooks.openGui(serverPlayer, new MenuProvider() {
+                public Component getDisplayName() {
+                    return new TextComponent("Mr. Greedy");
+                }
+
+                @Nullable
+                public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
+                    return new GreedTraderContainer(windowId, player);
+                }
+            }, (buf) -> {
+                PlayerGreedTraderData traderData = PlayerGreedTraderData.get(serverPlayer.getLevel());
+                int playerVaultLevel = PlayerVaultStatsData.get(serverPlayer.getLevel()).getVaultStats(serverPlayer).getVaultLevel();
+                traderData.writeOffers(serverPlayer.getUUID(), greedTier, playerVaultLevel, buf);
+                int reputation = PlayerGreedTreeData.get(serverPlayer.getLevel()).getGreedReputation(serverPlayer);
+                buf.writeInt(reputation);
+                buf.writeInt(traderData.getResetCost(serverPlayer.getUUID()));
+                buf.writeInt(traderData.getQuestRerollCost(serverPlayer.getUUID()));
+                buf.writeInt(GreedTraderData.getGreedCoinCount(serverPlayer));
+            });
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        } else {
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        }
+    }
+
+
+    public boolean hurt(DamageSource source, float amount) {
+        return false;
+    }
+
+    public boolean isInvulnerableTo(DamageSource source) {
+        return true;
+    }
+
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
+    public boolean isBaby() {
+        return false;
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return PathfinderMob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.5D)
+                .add(Attributes.FOLLOW_RANGE, 48.0D);
     }
 }
