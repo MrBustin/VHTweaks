@@ -3,10 +3,13 @@ package xyz.iwolfking.woldsvaults.entities;
 
 import iskallia.vault.container.GreedTraderContainer;
 import iskallia.vault.entity.entity.GreedTraderData;
+import iskallia.vault.init.ModSounds;
 import iskallia.vault.world.data.PlayerGreedTraderData;
 import iskallia.vault.world.data.PlayerGreedTreeData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -22,7 +25,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -62,6 +64,28 @@ public class CrystalVendorEntity extends PathfinderMob {
     }
 
 
+
+
+
+
+
+    public int getAmbientSoundInterval() {
+        return 400;
+    }
+
+    @Nullable
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.VILLAGER_AMBIENT;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.VILLAGER_HURT;
+    }
+
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.VILLAGER_DEATH;
+    }
+
     public boolean hurt(DamageSource source, float amount) {
         return false;
     }
@@ -71,11 +95,6 @@ public class CrystalVendorEntity extends PathfinderMob {
     }
 
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean isBaby() {
         return false;
     }
 
