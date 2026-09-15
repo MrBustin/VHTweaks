@@ -1,9 +1,7 @@
 package xyz.iwolfking.woldsvaults.entities;
 
 
-import iskallia.vault.container.GreedTraderContainer;
 import iskallia.vault.entity.entity.GreedTraderData;
-import iskallia.vault.init.ModSounds;
 import iskallia.vault.world.data.PlayerGreedTraderData;
 import iskallia.vault.world.data.PlayerGreedTreeData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
@@ -25,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
+import xyz.iwolfking.woldsvaults.container.CrystalTraderContainer;
 
 import javax.annotation.Nullable;
 
@@ -40,12 +39,12 @@ public class CrystalVendorEntity extends PathfinderMob {
             int greedTier = PlayerGreedTreeData.get(serverPlayer.getLevel()).getGreedTier(serverPlayer);
             NetworkHooks.openGui(serverPlayer, new MenuProvider() {
                 public Component getDisplayName() {
-                    return new TextComponent("Mr. Greedy");
+                    return new TextComponent("Mr. White");
                 }
 
                 @Nullable
                 public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-                    return new GreedTraderContainer(windowId, player);
+                    return new CrystalTraderContainer(windowId, player);
                 }
             }, (buf) -> {
                 PlayerGreedTraderData traderData = PlayerGreedTraderData.get(serverPlayer.getLevel());

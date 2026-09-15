@@ -13,6 +13,7 @@ import xyz.iwolfking.woldsvaults.blocks.containers.PlayerTraderContainer;
 import xyz.iwolfking.woldsvaults.blocks.containers.RenameContainer;
 import xyz.iwolfking.woldsvaults.blocks.containers.VaultSalvagerContainer;
 import xyz.iwolfking.woldsvaults.client.menu.PowerTree;
+import xyz.iwolfking.woldsvaults.container.CrystalTraderContainer;
 import xyz.iwolfking.woldsvaults.items.scavenger_pouch.menu.ScavengerPouchContainer;
 
 public class ModContainers {
@@ -23,6 +24,7 @@ public class ModContainers {
     public static MenuType<LootStatueContainer> LOOT_STATUE_CONTAINER;
     public static MenuType<RenameContainer> RENAMING_CONTAINER;
     public static MenuType<PlayerTraderContainer> PLAYER_TRADER_CONTAINER;
+    public static MenuType<CrystalTraderContainer> CRYSTAL_TRADER_CONTAINER;
 
     public static void register(RegistryEvent.Register<MenuType<?>> event) {
         VAULT_SALVAGER_CONTAINER = IForgeMenuType.create((windowId, inventory, buffer) -> {
@@ -58,6 +60,8 @@ public class ModContainers {
             return new PlayerTraderContainer(windowId, world, pos, inventory);
         });
 
+        CRYSTAL_TRADER_CONTAINER = IForgeMenuType.create(CrystalTraderContainer::fromNetwork);
+
         event.getRegistry().registerAll(
                 new MenuType[]{
                         (MenuType) VAULT_SALVAGER_CONTAINER.setRegistryName("vault_salvager_container"),
@@ -65,7 +69,8 @@ public class ModContainers {
                         POWERS_TAB_CONTAINER.setRegistryName("power_tab"),
                         LOOT_STATUE_CONTAINER.setRegistryName("loot_statue_container"),
                         RENAMING_CONTAINER.setRegistryName("renaming_container"),
-                        PLAYER_TRADER_CONTAINER.setRegistryName("player_trader_container")
+                        PLAYER_TRADER_CONTAINER.setRegistryName("player_trader_container"),
+                        CRYSTAL_TRADER_CONTAINER.setRegistryName("crystal_trader_container")
                 });
     }
 }
