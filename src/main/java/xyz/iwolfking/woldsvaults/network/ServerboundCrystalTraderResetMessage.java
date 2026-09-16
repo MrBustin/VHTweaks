@@ -22,10 +22,11 @@ public class ServerboundCrystalTraderResetMessage {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            if (player == null || !(player.containerMenu instanceof CrystalTraderContainer)) {
+            if (player == null || !(player.containerMenu instanceof CrystalTraderContainer container)) {
                 return;
             }
 
+            java.util.UUID traderId = container.getTraderId();
             PlayerCrystalTraderData traderData = PlayerCrystalTraderData.get(player.getLevel());
             PlayerGreedTreeData treeData = PlayerGreedTreeData.get(player.getLevel());
             GreedTree tree = treeData.getGreedTree(player);
@@ -33,7 +34,7 @@ public class ServerboundCrystalTraderResetMessage {
                 return;
             }
 
-            int resetCost = traderData.getResetCost(player.getUUID());
+            int resetCost = traderData.getResetCost(traderId);
             int reputation = tree.getGreedReputation();
             if (reputation < resetCost) {
                 return;
@@ -42,7 +43,7 @@ public class ServerboundCrystalTraderResetMessage {
             tree.setGreedReputation(reputation - resetCost);
             treeData.setDirty();
             treeData.sync(player);
-            traderData.resetShop(player);
+            traderData.resetShop(player, traderId);
         });
         context.setPacketHandled(true);
     }

@@ -44,15 +44,16 @@ public class CrystalVendorEntity extends PathfinderMob {
 
                 @Nullable
                 public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-                    return new CrystalTraderContainer(windowId, player);
+                    return new CrystalTraderContainer(windowId, player, CrystalVendorEntity.this.getUUID());
                 }
             }, (buf) -> {
                 PlayerCrystalTraderData traderData = PlayerCrystalTraderData.get(serverPlayer.getLevel());
                 int playerVaultLevel = PlayerVaultStatsData.get(serverPlayer.getLevel()).getVaultStats(serverPlayer).getVaultLevel();
-                traderData.writeOffers(serverPlayer.getUUID(), greedTier, playerVaultLevel, buf);
+                buf.writeUUID(this.getUUID());
+                traderData.writeOffers(this.getUUID(), greedTier, playerVaultLevel, buf);
                 int reputation = PlayerGreedTreeData.get(serverPlayer.getLevel()).getGreedReputation(serverPlayer);
                 buf.writeInt(reputation);
-                buf.writeInt(traderData.getResetCost(serverPlayer.getUUID()));
+                buf.writeInt(traderData.getResetCost(this.getUUID()));
                 buf.writeInt(GreedTraderData.getGreedCoinCount(serverPlayer));
             });
             return InteractionResult.sidedSuccess(this.level.isClientSide);

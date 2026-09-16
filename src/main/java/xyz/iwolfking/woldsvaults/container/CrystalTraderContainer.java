@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class CrystalTraderContainer extends AbstractElementContainer {
+    private final UUID traderId;
     private final List<PlayerCrystalTraderData.TradeOffer> offers;
     private final Set<Integer> soldOutIndices;
     private int reputationBalance;
@@ -22,7 +24,12 @@ public class CrystalTraderContainer extends AbstractElementContainer {
     private int playerCoinCount;
 
     public CrystalTraderContainer(int windowId, Player player) {
+        this(windowId, player, player.getUUID());
+    }
+
+    public CrystalTraderContainer(int windowId, Player player, UUID traderId) {
         super(ModContainers.CRYSTAL_TRADER_CONTAINER, windowId, player);
+        this.traderId = traderId;
         this.offers = new ArrayList<>();
         this.soldOutIndices = new HashSet<>();
         this.reputationBalance = 0;
@@ -30,8 +37,9 @@ public class CrystalTraderContainer extends AbstractElementContainer {
         this.playerCoinCount = 0;
     }
 
-    public CrystalTraderContainer(int windowId, Player player, List<PlayerCrystalTraderData.TradeOffer> offers, Set<Integer> soldOutIndices, int reputationBalance, int resetCost, int playerCoinCount) {
+    public CrystalTraderContainer(int windowId, Player player, UUID traderId, List<PlayerCrystalTraderData.TradeOffer> offers, Set<Integer> soldOutIndices, int reputationBalance, int resetCost, int playerCoinCount) {
         super(ModContainers.CRYSTAL_TRADER_CONTAINER, windowId, player);
+        this.traderId = traderId;
         this.offers = new ArrayList<>(offers);
         this.soldOutIndices = new HashSet<>(soldOutIndices);
         this.reputationBalance = reputationBalance;
@@ -42,6 +50,10 @@ public class CrystalTraderContainer extends AbstractElementContainer {
     @Override
     public MenuType<?> getType() {
         return ModContainers.CRYSTAL_TRADER_CONTAINER;
+    }
+
+    public UUID getTraderId() {
+        return this.traderId;
     }
 
     public List<PlayerCrystalTraderData.TradeOffer> getOffers() {
@@ -101,6 +113,7 @@ public class CrystalTraderContainer extends AbstractElementContainer {
     }
 
     public static CrystalTraderContainer fromNetwork(int windowId, Inventory inventory, FriendlyByteBuf buf) {
+        UUID traderId = buf.readUUID();
         int offerCount = buf.readInt();
         List<PlayerCrystalTraderData.TradeOffer> offers = new ArrayList<>();
         Set<Integer> soldOut = new HashSet();
@@ -118,7 +131,7 @@ public class CrystalTraderContainer extends AbstractElementContainer {
         int reputationBalance = buf.readInt();
         int resetCost = buf.readInt();
         int playerCoinCount = buf.readInt();
-        return new CrystalTraderContainer(windowId, inventory.player, offers, soldOut, reputationBalance, resetCost, playerCoinCount);
+        return new CrystalTraderContainer(windowId, inventory.player, traderId, offers, soldOut, reputationBalance, resetCost, playerCoinCount);
     }
 
 }

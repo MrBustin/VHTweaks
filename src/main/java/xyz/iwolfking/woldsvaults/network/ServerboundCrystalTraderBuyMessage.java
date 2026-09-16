@@ -34,15 +34,16 @@ public class ServerboundCrystalTraderBuyMessage {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            if (player == null || !(player.containerMenu instanceof CrystalTraderContainer)) {
+            if (player == null || !(player.containerMenu instanceof CrystalTraderContainer container)) {
                 return;
             }
 
+            java.util.UUID traderId = container.getTraderId();
             PlayerCrystalTraderData traderData = PlayerCrystalTraderData.get(player.getLevel());
             int greedTier = PlayerGreedTreeData.get(player.getLevel()).getGreedTier(player);
             int playerVaultLevel = PlayerVaultStatsData.get(player.getLevel()).getVaultStats(player).getVaultLevel();
-            List<PlayerCrystalTraderData.TradeOffer> offers = traderData.getOffers(player.getUUID(), greedTier, playerVaultLevel);
-            if (message.tradeIndex < 0 || message.tradeIndex >= offers.size() || traderData.isSoldOut(player.getUUID(), message.tradeIndex)) {
+            List<PlayerCrystalTraderData.TradeOffer> offers = traderData.getOffers(traderId, greedTier, playerVaultLevel);
+            if (message.tradeIndex < 0 || message.tradeIndex >= offers.size() || traderData.isSoldOut(traderId, message.tradeIndex)) {
                 return;
             }
 
@@ -52,11 +53,11 @@ public class ServerboundCrystalTraderBuyMessage {
                 return;
             }
 
-            traderData.markSoldOut(player.getUUID(), message.tradeIndex);
+            traderData.markSoldOut(traderId, message.tradeIndex);
             ItemHandlerHelper.giveItemToPlayer(player, offer.createItemStack());
             player.level.playSound(null, player.blockPosition(), ModSounds.GREED_TRADER_PURCHASE, SoundSource.MASTER, 0.4F, 1.0F);
             player.inventoryMenu.broadcastChanges();
-            traderData.syncToClient(player);
+            traderData.syncToClient(player, traderId);
         });
         context.setPacketHandled(true);
     }

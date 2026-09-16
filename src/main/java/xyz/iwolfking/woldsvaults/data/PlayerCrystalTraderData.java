@@ -35,13 +35,13 @@ import java.util.stream.Collectors;
 
 public class PlayerCrystalTraderData extends SavedData {
     protected static final String DATA_NAME = "woldsvaults_PlayerCrystalTrader";
-    private final Map<UUID, PlayerCrystalTraderData.PlayerOfferData> playerOffers = new HashMap();
+    private final Map<UUID, PlayerCrystalTraderData.PlayerOfferData> traderOffers = new HashMap();
 
     public PlayerCrystalTraderData() {
     }
 
-    public List<PlayerCrystalTraderData.TradeOffer> getOffers(UUID playerUuid, int greedTier, int playerVaultLevel) {
-        PlayerCrystalTraderData.PlayerOfferData data = (PlayerCrystalTraderData.PlayerOfferData)this.playerOffers.get(playerUuid);
+    public List<PlayerCrystalTraderData.TradeOffer> getOffers(UUID traderId, int greedTier, int playerVaultLevel) {
+        PlayerCrystalTraderData.PlayerOfferData data = this.traderOffers.get(traderId);
         if (data != null && !data.offers.isEmpty()) {
             int slotCount = this.calculateSlotCount(greedTier);
             if (greedTier != data.generatedAtTier || data.offers.size() != slotCount) {
@@ -57,26 +57,26 @@ public class PlayerCrystalTraderData extends SavedData {
         } else {
             int slotCount = this.calculateSlotCount(greedTier);
             List<PlayerCrystalTraderData.TradeOffer> offers = this.rollOffers(greedTier, slotCount, playerVaultLevel);
-            this.playerOffers.put(playerUuid, new PlayerCrystalTraderData.PlayerOfferData(offers, greedTier));
+            this.traderOffers.put(traderId, new PlayerCrystalTraderData.PlayerOfferData(offers, greedTier));
             this.setDirty();
             return offers;
         }
     }
 
-    public void rerollOffers(ServerPlayer player) {
+    public void rerollOffers(ServerPlayer player, UUID traderId) {
         int greedTier = PlayerGreedTreeData.get(player.getLevel()).getGreedTier(player);
         int playerVaultLevel = PlayerVaultStatsData.get(player.getLevel()).getVaultStats(player).getVaultLevel();
         int slotCount = this.calculateSlotCount(greedTier);
         List<PlayerCrystalTraderData.TradeOffer> newOffers = this.rollOffers(greedTier, slotCount, playerVaultLevel);
-        PlayerCrystalTraderData.PlayerOfferData existing = (PlayerCrystalTraderData.PlayerOfferData)this.playerOffers.get(player.getUUID());
+        PlayerCrystalTraderData.PlayerOfferData existing = this.traderOffers.get(traderId);
         PlayerCrystalTraderData.PlayerOfferData data = new PlayerCrystalTraderData.PlayerOfferData(newOffers, greedTier);
         if (existing != null) {
             data.resetCount = existing.resetCount;
         }
 
-        this.playerOffers.put(player.getUUID(), data);
+        this.traderOffers.put(traderId, data);
         this.setDirty();
-        this.syncToClient(player);
+        this.syncToClient(player, traderId);
     }
 
     private int calculateSlotCount(int greedTier) {
@@ -243,13 +243,13 @@ public class PlayerCrystalTraderData extends SavedData {
         }
     }
 
-    public boolean isSoldOut(UUID playerUuid, int index) {
-        PlayerCrystalTraderData.PlayerOfferData data = this.playerOffers.get(playerUuid);
+    public boolean isSoldOut(UUID traderId, int index) {
+        PlayerCrystalTraderData.PlayerOfferData data = this.traderOffers.get(traderId);
         return data != null && data.soldOutIndices.contains(index);
     }
 
-    public void markSoldOut(UUID playerUuid, int index) {
-        PlayerCrystalTraderData.PlayerOfferData data = this.playerOffers.get(playerUuid);
+    public void markSoldOut(UUID traderId, int index) {
+        PlayerCrystalTraderData.PlayerOfferData data = this.traderOffers.get(traderId);
         if (data != null) {
             data.soldOutIndices.add(index);
             this.setDirty();
@@ -257,33 +257,33 @@ public class PlayerCrystalTraderData extends SavedData {
 
     }
 
-    public Set<Integer> getSoldOutIndices(UUID playerUuid) {
-        PlayerCrystalTraderData.PlayerOfferData data = this.playerOffers.get(playerUuid);
+    public Set<Integer> getSoldOutIndices(UUID traderId) {
+        PlayerCrystalTraderData.PlayerOfferData data = this.traderOffers.get(traderId);
         return data != null ? Collections.unmodifiableSet(data.soldOutIndices) : Collections.emptySet();
     }
 
-    public int getResetCount(UUID playerUuid) {
-        PlayerCrystalTraderData.PlayerOfferData data = this.playerOffers.get(playerUuid);
+    public int getResetCount(UUID traderId) {
+        PlayerCrystalTraderData.PlayerOfferData data = this.traderOffers.get(traderId);
         return data != null ? data.resetCount : 0;
     }
 
-    public int getResetCost(UUID playerUuid) {
-        int resetCount = this.getResetCount(playerUuid);
+    public int getResetCost(UUID traderId) {
+        int resetCount = this.getResetCount(traderId);
         return 3 + resetCount;
     }
 
-    public void resetShop(ServerPlayer player) {
-        PlayerCrystalTraderData.PlayerOfferData existing = this.playerOffers.get(player.getUUID());
+    public void resetShop(ServerPlayer player, UUID traderId) {
+        PlayerCrystalTraderData.PlayerOfferData existing = this.traderOffers.get(traderId);
         if (existing != null) {
             ++existing.resetCount;
         }
 
-        this.rerollOffers(player);
+        this.rerollOffers(player, traderId);
     }
 
-    public void writeOffers(UUID playerUuid, int greedTier, int playerVaultLevel, FriendlyByteBuf buf) {
-        List<PlayerCrystalTraderData.TradeOffer> offers = this.getOffers(playerUuid, greedTier, playerVaultLevel);
-        Set<Integer> soldOut = this.getSoldOutIndices(playerUuid);
+    public void writeOffers(UUID traderId, int greedTier, int playerVaultLevel, FriendlyByteBuf buf) {
+        List<PlayerCrystalTraderData.TradeOffer> offers = this.getOffers(traderId, greedTier, playerVaultLevel);
+        Set<Integer> soldOut = this.getSoldOutIndices(traderId);
         buf.writeInt(offers.size());
 
         for(int i = 0; i < offers.size(); ++i) {
@@ -295,13 +295,13 @@ public class PlayerCrystalTraderData extends SavedData {
 
     }
 
-    public void syncToClient(ServerPlayer player) {
+    public void syncToClient(ServerPlayer player, UUID traderId) {
         int greedTier = PlayerGreedTreeData.get(player.getLevel()).getGreedTier(player);
         int playerVaultLevel = PlayerVaultStatsData.get(player.getLevel()).getVaultStats(player).getVaultLevel();
-        List<PlayerCrystalTraderData.TradeOffer> offers = this.getOffers(player.getUUID(), greedTier, playerVaultLevel);
-        Set<Integer> soldOut = this.getSoldOutIndices(player.getUUID());
+        List<PlayerCrystalTraderData.TradeOffer> offers = this.getOffers(traderId, greedTier, playerVaultLevel);
+        Set<Integer> soldOut = this.getSoldOutIndices(traderId);
         int reputation = PlayerGreedTreeData.get(player.getLevel()).getGreedReputation(player);
-        int resetCost = this.getResetCost(player.getUUID());
+        int resetCost = this.getResetCost(traderId);
         int coinCount = GreedTraderData.getGreedCoinCount(player);
         ModNetwork.sendToClient(new ClientboundCrystalTraderSyncMessage(offers, soldOut, reputation, resetCost, coinCount), player);
     }
@@ -313,14 +313,17 @@ public class PlayerCrystalTraderData extends SavedData {
     }
 
     public void load(CompoundTag nbt) {
-        this.playerOffers.clear();
-        CompoundTag playersTag = nbt.getCompound("Players");
+        this.traderOffers.clear();
+        CompoundTag tradersTag = nbt.getCompound("Traders");
+        if (tradersTag.isEmpty()) {
+            tradersTag = nbt.getCompound("Players");
+        }
 
-        for(String uuidStr : playersTag.getAllKeys()) {
+        for(String uuidStr : tradersTag.getAllKeys()) {
             UUID uuid = UUID.fromString(uuidStr);
-            CompoundTag playerTag = playersTag.getCompound(uuidStr);
-            int generatedAtTier = playerTag.getInt("GeneratedAtTier");
-            ListTag offersTag = playerTag.getList("Offers", 10);
+            CompoundTag traderTag = tradersTag.getCompound(uuidStr);
+            int generatedAtTier = traderTag.getInt("GeneratedAtTier");
+            ListTag offersTag = traderTag.getList("Offers", 10);
             List<PlayerCrystalTraderData.TradeOffer> offers = new ArrayList();
 
             for(int i = 0; i < offersTag.size(); ++i) {
@@ -333,25 +336,25 @@ public class PlayerCrystalTraderData extends SavedData {
             }
 
             PlayerCrystalTraderData.PlayerOfferData offerData = new PlayerCrystalTraderData.PlayerOfferData(offers, generatedAtTier);
-            if (playerTag.contains("SoldOut")) {
-                for(int idx : playerTag.getIntArray("SoldOut")) {
+            if (traderTag.contains("SoldOut")) {
+                for(int idx : traderTag.getIntArray("SoldOut")) {
                     offerData.soldOutIndices.add(idx);
                 }
             }
 
-            offerData.resetCount = playerTag.getInt("ResetCount");
-            this.playerOffers.put(uuid, offerData);
+            offerData.resetCount = traderTag.getInt("ResetCount");
+            this.traderOffers.put(uuid, offerData);
         }
 
     }
 
     public CompoundTag save(CompoundTag nbt) {
-        CompoundTag playersTag = new CompoundTag();
-        this.playerOffers.forEach((uuid, data) -> {
-            CompoundTag playerTag = new CompoundTag();
-            playerTag.putInt("GeneratedAtTier", data.generatedAtTier);
-            playerTag.putIntArray("SoldOut", data.soldOutIndices.stream().mapToInt(Integer::intValue).toArray());
-            playerTag.putInt("ResetCount", data.resetCount);
+        CompoundTag tradersTag = new CompoundTag();
+        this.traderOffers.forEach((uuid, data) -> {
+            CompoundTag traderTag = new CompoundTag();
+            traderTag.putInt("GeneratedAtTier", data.generatedAtTier);
+            traderTag.putIntArray("SoldOut", data.soldOutIndices.stream().mapToInt(Integer::intValue).toArray());
+            traderTag.putInt("ResetCount", data.resetCount);
             ListTag offersTag = new ListTag();
 
             for(PlayerCrystalTraderData.TradeOffer offer : data.offers) {
@@ -361,10 +364,10 @@ public class PlayerCrystalTraderData extends SavedData {
                 offersTag.add(offerTag);
             }
 
-            playerTag.put("Offers", offersTag);
-            playersTag.put(uuid.toString(), playerTag);
+            traderTag.put("Offers", offersTag);
+            tradersTag.put(uuid.toString(), traderTag);
         });
-        nbt.put("Players", playersTag);
+        nbt.put("Traders", tradersTag);
         return nbt;
     }
 
