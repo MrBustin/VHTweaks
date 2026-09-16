@@ -1,7 +1,6 @@
 package xyz.iwolfking.woldsvaults.entities;
 
 
-import iskallia.vault.entity.entity.GreedTraderData;
 import iskallia.vault.world.data.PlayerGreedTreeData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import xyz.iwolfking.woldsvaults.container.CrystalTraderContainer;
 import xyz.iwolfking.woldsvaults.data.PlayerCrystalTraderData;
+import xyz.iwolfking.woldsvaults.util.CrystalTraderCurrencyHelper;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +54,7 @@ public class CrystalVendorEntity extends PathfinderMob {
                 int reputation = PlayerGreedTreeData.get(serverPlayer.getLevel()).getGreedReputation(serverPlayer);
                 buf.writeInt(reputation);
                 buf.writeInt(traderData.getResetCost(this.getUUID()));
-                buf.writeInt(GreedTraderData.getGreedCoinCount(serverPlayer));
+                buf.writeInt(CrystalTraderCurrencyHelper.getCurrencyCount(serverPlayer));
             });
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else {

@@ -23,6 +23,7 @@ public class ModConfigs {
     public static HauntedBraziersConfig HAUNTED_BRAZIERS;
     public static EnchantedElixirConfig ENCHANTED_ELIXIR;
     public static AlchemyObjectiveConfig ALCHEMY_OBJECTIVE;
+    public static CrystalTraderConfig CRYSTAL_TRADER;
 
     public static void register() {
 //        try (InputStream stream = WoldsVaults.class.getResourceAsStream("/default_configs/unhinged_scavenger.json")) {
@@ -47,6 +48,7 @@ public class ModConfigs {
         HAUNTED_BRAZIERS = (HauntedBraziersConfig) (new HauntedBraziersConfig().readConfig());
         ENCHANTED_ELIXIR = (EnchantedElixirConfig) (new EnchantedElixirConfig().readConfig());
         ALCHEMY_OBJECTIVE = (AlchemyObjectiveConfig) (new AlchemyObjectiveConfig().readConfig());
+        CRYSTAL_TRADER = (CrystalTraderConfig) (new CrystalTraderConfig().readConfig());
         UNHINGED_SCAVENGER = (UnhingedScavengerConfig) (new UnhingedScavengerConfig().readConfig());
     }
 }

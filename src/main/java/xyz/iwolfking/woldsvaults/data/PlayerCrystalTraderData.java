@@ -1,13 +1,11 @@
 package xyz.iwolfking.woldsvaults.data;
 
 import iskallia.vault.config.gear.VaultEtchingConfig;
-import iskallia.vault.config.greed.GreedTraderConfig;
 import iskallia.vault.core.random.JavaRandom;
 import iskallia.vault.core.random.RandomSource;
 import iskallia.vault.core.vault.modifier.VaultModifierStack;
 import iskallia.vault.core.vault.modifier.registry.VaultModifierRegistry;
 import iskallia.vault.core.world.generator.layout.ArchitectRoomEntry;
-import iskallia.vault.entity.entity.GreedTraderData;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.init.ModItems;
 import iskallia.vault.item.InfusedCatalystItem;
@@ -27,8 +25,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.saveddata.SavedData;
+import xyz.iwolfking.woldsvaults.configs.CrystalTraderConfig;
 import xyz.iwolfking.woldsvaults.init.additions.ModNetwork;
 import xyz.iwolfking.woldsvaults.network.ClientboundCrystalTraderSyncMessage;
+import xyz.iwolfking.woldsvaults.util.CrystalTraderCurrencyHelper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -85,16 +85,16 @@ public class PlayerCrystalTraderData extends SavedData {
 
     private List<PlayerCrystalTraderData.TradeOffer> rollOffers(int greedTier, int count, int playerVaultLevel) {
         List<PlayerCrystalTraderData.TradeOffer> offers = new ArrayList();
-        GreedTraderConfig config = ModConfigs.GREED_TRADER;
+        CrystalTraderConfig config = xyz.iwolfking.woldsvaults.init.ModConfigs.CRYSTAL_TRADER;
         if (config == null) {
             return offers;
         } else {
-            List<GreedTraderConfig.TradeEntry> availableEntries = config.getAvailableEntries(greedTier);
+            List<CrystalTraderConfig.TradeEntry> availableEntries = config.getAvailableEntries(greedTier);
             if (availableEntries.isEmpty()) {
                 return offers;
             } else {
                 Random random = new Random();
-                int totalWeight = availableEntries.stream().mapToInt(GreedTraderConfig.TradeEntry::getWeight).sum();
+                int totalWeight = availableEntries.stream().mapToInt(CrystalTraderConfig.TradeEntry::getWeight).sum();
                 if (totalWeight <= 0) {
                     return offers;
                 } else {
@@ -103,9 +103,9 @@ public class PlayerCrystalTraderData extends SavedData {
                     while(offers.size() < count && attempts++ < maxAttempts) {
                         int roll = random.nextInt(totalWeight);
                         int cumulative = 0;
-                        GreedTraderConfig.TradeEntry entry = null;
+                        CrystalTraderConfig.TradeEntry entry = null;
 
-                        for(GreedTraderConfig.TradeEntry candidate : availableEntries) {
+                        for(CrystalTraderConfig.TradeEntry candidate : availableEntries) {
                             cumulative += candidate.getWeight();
                             if (roll < cumulative) {
                                 entry = candidate;
@@ -127,7 +127,7 @@ public class PlayerCrystalTraderData extends SavedData {
         }
     }
 
-    private PlayerCrystalTraderData.TradeOffer rollSingleOffer(GreedTraderConfig.TradeEntry entry, int greedTier, GreedTraderConfig config, Random random, int playerVaultLevel) {
+    private PlayerCrystalTraderData.TradeOffer rollSingleOffer(CrystalTraderConfig.TradeEntry entry, int greedTier, CrystalTraderConfig config, Random random, int playerVaultLevel) {
         PlayerCrystalTraderData.TradeOffer tradeOffer;
         if (entry.getType().equals("pool")) {
             tradeOffer = this.rollFromPool(entry, greedTier, config, random, playerVaultLevel);
@@ -138,7 +138,7 @@ public class PlayerCrystalTraderData extends SavedData {
         return tradeOffer;
     }
 
-    private PlayerCrystalTraderData.TradeOffer rollNormalItem(GreedTraderConfig.TradeEntry entry, GreedTraderConfig config, Random random) {
+    private PlayerCrystalTraderData.TradeOffer rollNormalItem(CrystalTraderConfig.TradeEntry entry, CrystalTraderConfig config, Random random) {
         ItemStack templateStack = entry.getItemStack();
         if (templateStack != null && !templateStack.isEmpty()) {
             ItemStack offerStack = templateStack.copy();
@@ -152,24 +152,24 @@ public class PlayerCrystalTraderData extends SavedData {
         }
     }
 
-    private PlayerCrystalTraderData.TradeOffer rollFromPool(GreedTraderConfig.TradeEntry entry, int greedTier, GreedTraderConfig config, Random random, int playerVaultLevel) {
+    private PlayerCrystalTraderData.TradeOffer rollFromPool(CrystalTraderConfig.TradeEntry entry, int greedTier, CrystalTraderConfig config, Random random, int playerVaultLevel) {
         String poolId = entry.getPoolId();
         if (poolId == null) {
             return null;
         } else {
-            List<GreedTraderConfig.PoolEntry> poolEntries = config.getPoolEntries(poolId, greedTier);
+            List<CrystalTraderConfig.PoolEntry> poolEntries = config.getPoolEntries(poolId, greedTier);
             if (poolEntries.isEmpty()) {
                 return null;
             } else {
-                int totalWeight = poolEntries.stream().mapToInt(GreedTraderConfig.PoolEntry::getWeight).sum();
+                int totalWeight = poolEntries.stream().mapToInt(CrystalTraderConfig.PoolEntry::getWeight).sum();
                 if (totalWeight <= 0) {
                     return null;
                 } else {
                     int roll = random.nextInt(totalWeight);
                     int cumulative = 0;
-                    GreedTraderConfig.PoolEntry chosen = null;
+                    CrystalTraderConfig.PoolEntry chosen = null;
 
-                    for(GreedTraderConfig.PoolEntry poolEntry : poolEntries) {
+                    for(CrystalTraderConfig.PoolEntry poolEntry : poolEntries) {
                         cumulative += poolEntry.getWeight();
                         if (roll < cumulative) {
                             chosen = poolEntry;
@@ -193,7 +193,7 @@ public class PlayerCrystalTraderData extends SavedData {
         }
     }
 
-    private ItemStack buildPoolEntryStack(GreedTraderConfig.PoolEntry poolEntry, Random random, int playerVaultLevel) {
+    private ItemStack buildPoolEntryStack(CrystalTraderConfig.PoolEntry poolEntry, Random random, int playerVaultLevel) {
         ItemStack stack;
         if (poolEntry.getType().equals("random_crystal")) {
             stack = this.buildCrystal(poolEntry.getCrystal(), random, playerVaultLevel);
@@ -204,11 +204,11 @@ public class PlayerCrystalTraderData extends SavedData {
         return stack;
     }
 
-    private ItemStack buildCrystal(GreedTraderConfig.CrystalBuilder builder, Random random, int playerVaultLevel) {
+    private ItemStack buildCrystal(CrystalTraderConfig.CrystalBuilder builder, Random random, int playerVaultLevel) {
         if (builder == null) {
             return null;
         } else {
-            GreedTraderConfig config = ModConfigs.GREED_TRADER;
+            CrystalTraderConfig config = xyz.iwolfking.woldsvaults.init.ModConfigs.CRYSTAL_TRADER;
             ItemStack stack = new ItemStack(ModItems.VAULT_CRYSTAL);
             CrystalData crystal = CrystalData.read(stack);
             crystal.getProperties().setLevel(playerVaultLevel);
@@ -302,7 +302,7 @@ public class PlayerCrystalTraderData extends SavedData {
         Set<Integer> soldOut = this.getSoldOutIndices(traderId);
         int reputation = PlayerGreedTreeData.get(player.getLevel()).getGreedReputation(player);
         int resetCost = this.getResetCost(traderId);
-        int coinCount = GreedTraderData.getGreedCoinCount(player);
+        int coinCount = CrystalTraderCurrencyHelper.getCurrencyCount(player);
         ModNetwork.sendToClient(new ClientboundCrystalTraderSyncMessage(offers, soldOut, reputation, resetCost, coinCount), player);
     }
 

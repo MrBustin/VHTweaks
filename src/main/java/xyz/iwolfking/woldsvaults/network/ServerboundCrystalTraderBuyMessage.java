@@ -1,6 +1,5 @@
 package xyz.iwolfking.woldsvaults.network;
 
-import iskallia.vault.entity.entity.GreedTraderData;
 import iskallia.vault.init.ModSounds;
 import iskallia.vault.world.data.PlayerGreedTreeData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
@@ -11,6 +10,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.NetworkEvent;
 import xyz.iwolfking.woldsvaults.container.CrystalTraderContainer;
 import xyz.iwolfking.woldsvaults.data.PlayerCrystalTraderData;
+import xyz.iwolfking.woldsvaults.util.CrystalTraderCurrencyHelper;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -48,8 +48,7 @@ public class ServerboundCrystalTraderBuyMessage {
             }
 
             PlayerCrystalTraderData.TradeOffer offer = offers.get(message.tradeIndex);
-            if (GreedTraderData.getGreedCoinCount(player) < offer.coinCost()
-                    || !GreedTraderData.consumeGreedCoins(player, offer.coinCost())) {
+            if (!CrystalTraderCurrencyHelper.consumeCurrency(player, offer.coinCost())) {
                 return;
             }
 

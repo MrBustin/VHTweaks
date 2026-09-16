@@ -59,6 +59,7 @@ import xyz.iwolfking.woldsvaults.container.CrystalTraderContainer;
 import xyz.iwolfking.woldsvaults.data.PlayerCrystalTraderData;
 import xyz.iwolfking.woldsvaults.network.ServerboundCrystalTraderBuyMessage;
 import xyz.iwolfking.woldsvaults.network.ServerboundCrystalTraderResetMessage;
+import xyz.iwolfking.woldsvaults.util.CrystalTraderCurrencyHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -276,8 +277,8 @@ public abstract class CrystalTraderScreen extends AbstractElementContainerScreen
                 int startX = buyBtnX + (buyBtnW - totalWidth) / 2;
                 int textColor = canAfford ? -1 : -7829368;
                 this.addDetailEl((LabelElement)(new LabelElement(Spatials.positionXYZ(startX, buyBtnY + 1 + (buyBtnH - 9) / 2, 2), (new TextComponent(buyText)).withStyle(Style.EMPTY.withColor(textColor)), LabelTextStyle.shadowFromTextColor())).layout(this.translateWorldSpatial()));
-                ItemStackDisplayElement<?> coinIcon = new ItemStackDisplayElement(Spatials.positionXYZ(startX + textWidth + iconGap, buyBtnY + (buyBtnH - iconSize) / 2, 10), new ItemStack(ModItems.GREED_COIN));
-                coinIcon.setScale((float)iconSize / 16.0F);
+                ItemStackDisplayElement<?> coinIcon = new ItemStackDisplayElement(Spatials.positionXYZ(startX + textWidth + iconGap, buyBtnY + ((buyBtnH - iconSize) / 2) - 5, 10), CrystalTraderCurrencyHelper.createCurrencyStack());
+                coinIcon.setScale((float)iconSize / 8.0F);
                 this.addDetailEl((ItemStackDisplayElement)coinIcon.layout(this.translateWorldSpatial()));
             } else {
                 this.addDetailEl((LabelElement)(new LabelElement(Spatials.positionXY(148, 94), Spatials.size(147, 10), (new TextComponent("Select an item")).withStyle(ChatFormatting.DARK_GRAY), LabelTextStyle.defaultStyle().center().wrap())).layout(this.translateWorldSpatial()));
