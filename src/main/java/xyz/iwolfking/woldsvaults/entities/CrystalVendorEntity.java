@@ -2,7 +2,6 @@ package xyz.iwolfking.woldsvaults.entities;
 
 
 import iskallia.vault.entity.entity.GreedTraderData;
-import iskallia.vault.world.data.PlayerGreedTraderData;
 import iskallia.vault.world.data.PlayerGreedTreeData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import xyz.iwolfking.woldsvaults.container.CrystalTraderContainer;
+import xyz.iwolfking.woldsvaults.data.PlayerCrystalTraderData;
 
 import javax.annotation.Nullable;
 
@@ -47,13 +47,12 @@ public class CrystalVendorEntity extends PathfinderMob {
                     return new CrystalTraderContainer(windowId, player);
                 }
             }, (buf) -> {
-                PlayerGreedTraderData traderData = PlayerGreedTraderData.get(serverPlayer.getLevel());
+                PlayerCrystalTraderData traderData = PlayerCrystalTraderData.get(serverPlayer.getLevel());
                 int playerVaultLevel = PlayerVaultStatsData.get(serverPlayer.getLevel()).getVaultStats(serverPlayer).getVaultLevel();
                 traderData.writeOffers(serverPlayer.getUUID(), greedTier, playerVaultLevel, buf);
                 int reputation = PlayerGreedTreeData.get(serverPlayer.getLevel()).getGreedReputation(serverPlayer);
                 buf.writeInt(reputation);
                 buf.writeInt(traderData.getResetCost(serverPlayer.getUUID()));
-                buf.writeInt(traderData.getQuestRerollCost(serverPlayer.getUUID()));
                 buf.writeInt(GreedTraderData.getGreedCoinCount(serverPlayer));
             });
             return InteractionResult.sidedSuccess(this.level.isClientSide);
