@@ -70,8 +70,6 @@ public abstract class CrystalTraderScreen extends AbstractElementContainerScreen
     protected final List<IElement> contentElements = new ArrayList();
     protected final List<IElement> detailElements = new ArrayList();
     private boolean suppressContainerClose = false;
-    private final List<float[]> reputationParticles = new ArrayList();
-    private long lastParticleTick = 0L;
 
     protected CrystalTraderScreen(CrystalTraderContainer container, Inventory inventory, Component title) {
         super(container, inventory, title, ScreenRenderers.getImmediate(), ScreenTooltipRenderer::create);
@@ -98,67 +96,8 @@ public abstract class CrystalTraderScreen extends AbstractElementContainerScreen
 
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        this.renderGreedReputation(poseStack, partialTick);
     }
 
-    private void renderGreedReputation(PoseStack poseStack, float partialTick) {
-        Minecraft minecraft = Minecraft.getInstance();
-        int reputation = ((CrystalTraderContainer)this.menu).getReputationBalance();
-        long currentTick = ClientScheduler.INSTANCE.getTick();
-        float time = (float)currentTick + partialTick;
-        float shimmerPhase = time * 0.015F % 1.0F;
-        float shimmer = (float)((double)0.5F + (double)0.5F * Math.sin((double)shimmerPhase * Math.PI * (double)2.0F));
-        int r = 255;
-        int g = (int)(210.0F + 30.0F * shimmer);
-        int b = (int)(50.0F + 40.0F * shimmer);
-        int shimmerColor = r << 16 | g << 8 | b;
-        String repNumber = String.valueOf(reputation);
-        Component numberComponent = (new TextComponent(repNumber)).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(16777215)));
-        Component labelComponent = (new TextComponent(" Greed Reputation")).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(shimmerColor)));
-        int numberWidth = minecraft.font.width(numberComponent);
-        int labelWidth = minecraft.font.width(labelComponent);
-        int totalWidth = numberWidth + labelWidth;
-        int guiRight = this.leftPos + 305 - 5;
-        int x = guiRight - totalWidth;
-        int y = this.topPos - 12;
-        minecraft.font.drawShadow(poseStack, numberComponent, (float)x, (float)y, 16777215);
-        minecraft.font.drawShadow(poseStack, labelComponent, (float)(x + numberWidth), (float)y, shimmerColor);
-        if (currentTick != this.lastParticleTick) {
-            this.lastParticleTick = currentTick;
-            if (reputation > 0 && minecraft.level != null && minecraft.level.random.nextFloat() < 0.4F) {
-                float px = (float)x + minecraft.level.random.nextFloat() * (float)numberWidth;
-                float py = (float)(y + 8);
-                float vx = (minecraft.level.random.nextFloat() - 0.5F) * 0.3F;
-                float vy = 0.3F + minecraft.level.random.nextFloat() * 0.4F;
-                float life = (float)(15 + minecraft.level.random.nextInt(10));
-                this.reputationParticles.add(new float[]{px, py, vx, vy, life, life});
-            }
-
-            this.reputationParticles.removeIf((pxx) -> pxx[4] <= 0.0F);
-
-            for(float[] p : this.reputationParticles) {
-                p[0] += p[2];
-                p[1] += p[3];
-                p[3] += 0.02F;
-                p[4]--;
-            }
-        }
-
-        poseStack.pushPose();
-        poseStack.translate((double)0.0F, (double)0.0F, (double)400.0F);
-
-        for(float[] p : this.reputationParticles) {
-            float alpha = Math.max(0.0F, p[4] / p[5]);
-            int pr = (int)(255.0F * (0.9F + 0.1F * alpha));
-            int pg = (int)(180.0F * alpha + 80.0F);
-            int pb = (int)(40.0F * alpha);
-            int color = (int)(alpha * 255.0F) << 24 | pr << 16 | pg << 8 | pb;
-            int size = alpha > 0.5F ? 2 : 1;
-            fill(poseStack, (int)p[0], (int)p[1], (int)p[0] + size, (int)p[1] + size, color);
-        }
-
-        poseStack.popPose();
-    }
 
     public void removed() {
         if (!this.suppressContainerClose) {
@@ -213,25 +152,6 @@ public abstract class CrystalTraderScreen extends AbstractElementContainerScreen
     protected static enum Tab {
         SHOP;
         private Tab() {
-        }
-    }
-
-    protected static class ClickableElement<E extends CrystalTraderScreen.ClickableElement<E>> extends ContainerElement<E> {
-        private final Runnable onClick;
-
-        public ClickableElement(ISpatial spatial, Runnable onClick) {
-            super(spatial);
-            this.onClick = onClick;
-        }
-
-        public boolean onMouseClicked(double mouseX, double mouseY, int buttonIndex) {
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-            this.onClick.run();
-            return true;
-        }
-
-        public <T extends IElement> T addElement(T element) {
-            return (T)super.addElement(element);
         }
     }
 
