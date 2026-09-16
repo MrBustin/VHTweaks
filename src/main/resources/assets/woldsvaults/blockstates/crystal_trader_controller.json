@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "woldsvaults:block/crystal_trader_controller"
+    },
+    "facing=east": {
+      "model": "woldsvaults:block/crystal_trader_controller"
+    },
+    "facing=south": {
+      "model": "woldsvaults:block/crystal_trader_controller"
+    },
+    "facing=west": {
+      "model": "woldsvaults:block/crystal_trader_controller"
+    }
+  }
+}
