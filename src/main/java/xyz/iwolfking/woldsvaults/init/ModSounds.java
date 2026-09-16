@@ -22,6 +22,7 @@ public class ModSounds {
     public static SoundEvent LOGINAR_DEATH;
     public static SoundEvent LOGINAR_HURT;
     public static SoundEvent LOGINAR_ATTACK;
+    public static SoundEvent WITCHSKALL_IDLE;
 
 
     public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
@@ -37,6 +38,7 @@ public class ModSounds {
         LOGINAR_DEATH = registerSound(event, "loginar_death");
         LOGINAR_HURT = registerSound(event, "loginar_hurt");
         LOGINAR_ATTACK = registerSound(event, "loginar_attack");
+        WITCHSKALL_IDLE = registerSound(event, "witchskall_idle");
 
     }
 

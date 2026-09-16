@@ -11,6 +11,7 @@ import xyz.iwolfking.woldsvaults.client.menu.LootStatueMenu;
 import xyz.iwolfking.woldsvaults.client.menu.PlayerTraderMenu;
 import xyz.iwolfking.woldsvaults.client.menu.RenameMenu;
 import xyz.iwolfking.woldsvaults.client.menu.PowerElementContainerScreen;
+import xyz.iwolfking.woldsvaults.container.screen.CrystalTraderScreen;
 
 @OnlyIn(Dist.CLIENT)
 public class ModScreens {
@@ -21,5 +22,6 @@ public class ModScreens {
         MenuScreens.register(ModContainers.LOOT_STATUE_CONTAINER, LootStatueMenu::new);
         MenuScreens.register(ModContainers.RENAMING_CONTAINER, RenameMenu::new);
         MenuScreens.register(ModContainers.PLAYER_TRADER_CONTAINER, PlayerTraderMenu::new);
+        MenuScreens.register(ModContainers.CRYSTAL_TRADER_CONTAINER, CrystalTraderScreen.Shop::new);
     }
 }

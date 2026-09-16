@@ -11,11 +11,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.entities.IdonasBarrageArrowEntity;
-import xyz.iwolfking.woldsvaults.entities.IdonasBarrageEntity;
-import xyz.iwolfking.woldsvaults.entities.ThornCloudEntity;
-import xyz.iwolfking.woldsvaults.entities.VaultNecromancer;
-import xyz.iwolfking.woldsvaults.entities.WoldBoss;
+import xyz.iwolfking.woldsvaults.entities.*;
 import xyz.iwolfking.woldsvaults.entities.aprilfools.JackBoxEntity;
 import xyz.iwolfking.woldsvaults.entities.astral.*;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
@@ -63,6 +59,8 @@ public class ModEntities {
     public static EntityType<NebulaSentinelEntity> NEBULA_SENTINEL;
     public static EntityType<SingularityCreeperEntity> SINGULARITY_CREEPER;
     public static EntityType<StarDevourerEntity> STAR_DEVOURER_ENTITY;
+    public static EntityType<CrystalVendorEntity> CRYSTAL_VENDOR_ENTITY;
+    public static EntityType<WitchskallEntity> WITCHSKALL;
 
 
 
@@ -120,7 +118,15 @@ public class ModEntities {
         STAR_DEVOURER_ENTITY = registerLivingWV("star_devourer", EntityType.Builder.of(StarDevourerEntity::new, MobCategory.MONSTER).sized(1.95F, 2.2F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new StarDevourerEntity(STAR_DEVOURER_ENTITY, level))), StarDevourerEntity::createAttributes, event);
         SINGULARITY_CREEPER = registerLivingWV("singularity_creeper", EntityType.Builder.of(SingularityCreeperEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).clientTrackingRange(16).fireImmune().setCustomClientFactory(((spawnEntity, level) -> new SingularityCreeperEntity(SINGULARITY_CREEPER, level))), SingularityCreeperEntity::createAttributes, event);
 
+        CRYSTAL_VENDOR_ENTITY = registerLivingWV("crystal_vendor", EntityType.Builder.of(CrystalVendorEntity::new, MobCategory.MISC)
+                .sized(0.6F, 1.95F)
+                .clientTrackingRange(8)
+                .setCustomClientFactory((spawnEntity, level) -> new CrystalVendorEntity(CRYSTAL_VENDOR_ENTITY, level)), CrystalVendorEntity::createAttributes, event);
 
+        WITCHSKALL = registerLivingWV("witchskall", EntityType.Builder.of(WitchskallEntity::new, MobCategory.MONSTER)
+                .sized(0.6F, 1.95F)
+                .clientTrackingRange(8)
+                .setCustomClientFactory((spawnEntity, level) -> new WitchskallEntity(WITCHSKALL, level)), Evoker::createAttributes, event);
 
     }
 

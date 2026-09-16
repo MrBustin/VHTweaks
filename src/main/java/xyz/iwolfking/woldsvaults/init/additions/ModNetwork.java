@@ -29,6 +29,9 @@ public class ModNetwork {
         CHANNEL.registerMessage(nextId(), EventSyncMessage.class, EventSyncMessage::encode, EventSyncMessage::decode, EventSyncMessage::handle);
         CHANNEL.registerMessage(nextId(), UpdatePlayerTraderDataMessage.class, UpdatePlayerTraderDataMessage::encode, UpdatePlayerTraderDataMessage::decode, UpdatePlayerTraderDataMessage::handle);
         CHANNEL.registerMessage(nextId(), LuckyHitCooldownParticleMessage.class, LuckyHitCooldownParticleMessage::encode, LuckyHitCooldownParticleMessage::decode, LuckyHitCooldownParticleMessage::handle);
+        CHANNEL.registerMessage(nextId(), ClientboundCrystalTraderSyncMessage.class, ClientboundCrystalTraderSyncMessage::encode, ClientboundCrystalTraderSyncMessage::decode, ClientboundCrystalTraderSyncMessage::handle);
+        CHANNEL.registerMessage(nextId(), ServerboundCrystalTraderBuyMessage.class, ServerboundCrystalTraderBuyMessage::encode, ServerboundCrystalTraderBuyMessage::decode, ServerboundCrystalTraderBuyMessage::handle);
+        CHANNEL.registerMessage(nextId(), ServerboundCrystalTraderResetMessage.class, ServerboundCrystalTraderResetMessage::encode, ServerboundCrystalTraderResetMessage::decode, ServerboundCrystalTraderResetMessage::handle);
     }
 
     public static int nextId() {
