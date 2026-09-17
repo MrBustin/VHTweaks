@@ -6,6 +6,7 @@ import iskallia.vault.gear.attribute.VaultGearAttribute;
 import iskallia.vault.gear.attribute.config.ConfigurableAttributeGenerator;
 import iskallia.vault.gear.attribute.custom.effect.EffectGearAttribute;
 import iskallia.vault.gear.attribute.custom.effect.EffectTrialAttribute;
+import iskallia.vault.gear.attribute.custom.loot.ManaPerLootAttribute;
 import iskallia.vault.gear.attribute.type.VaultGearAttributeType;
 import iskallia.vault.gear.comparator.VaultGearAttributeComparator;
 import iskallia.vault.gear.reader.VaultGearModifierReader;
@@ -17,6 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.HemorrhagedEffect;
+import xyz.iwolfking.woldsvaults.gear.attribute.PercentManaPerLootAttribute;
 import xyz.iwolfking.woldsvaults.gear.attribute.custom.PoisonTrailReader;
 import xyz.iwolfking.woldsvaults.util.UniqueEffectGearAttribute;
 
@@ -169,6 +171,9 @@ public class ModGearAttributes {
     public static final VaultGearAttribute<Float> BURNING_HIT_CHANCE = attr("burning_hit_chance", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Burning Hit Chance", 12976128), VaultGearAttributeComparator.floatComparator());
 
 
+    public static final VaultGearAttribute<PercentManaPerLootAttribute> PERCENT_MANA_PER_LOOTED_TILE = attr("percent_mana_per_looted_tile", PercentManaPerLootAttribute.type(), PercentManaPerLootAttribute.generator(), PercentManaPerLootAttribute.reader(), PercentManaPerLootAttribute.comparator());
+
+
 
     @SubscribeEvent
     public static void init(RegistryEvent.Register<VaultGearAttribute<?>> event) {
@@ -214,6 +219,7 @@ public class ModGearAttributes {
                       registry.register(PARRY);
                       registry.register(DRIPPING_LAVA);
                       registry.register(BURNING_HIT_CHANCE);
+                      registry.register(PERCENT_MANA_PER_LOOTED_TILE);
 
     }
 
