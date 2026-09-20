@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.iwolfking.woldsvaults.client.data.ClientDiscoveredCapesData;
 import xyz.iwolfking.woldsvaults.client.gui.framework.element.CapeSelectorElement;
@@ -120,6 +121,11 @@ public abstract class MixinPlayerCustomisationStationScreen
                 this::woldsvaults$showCapeTab)
                 .tooltip(Tooltips.single(() -> new TextComponent("Capes")))
                 .layout(this.translateWorldSpatial()));
+    }
+
+    @ModifyVariable(method = "refreshTabs", at = @At(value = "STORE"), ordinal = 0)
+    private boolean woldsvaults$unselectNativeTabs(boolean nativeTabSelected) {
+        return nativeTabSelected && !this.woldsvaults$capeTabSelected;
     }
 
     @Inject(method = "showTab", at = @At("HEAD"))
