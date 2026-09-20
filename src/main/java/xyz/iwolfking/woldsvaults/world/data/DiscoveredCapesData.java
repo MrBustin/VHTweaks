@@ -153,6 +153,12 @@ public class DiscoveredCapesData extends SavedData {
         ModNetwork.sendToClient(buildAssignmentsMessage(srv), player);
     }
 
+    public void syncAssignmentsToAll() {
+        MinecraftServer srv = ServerLifecycleHooks.getCurrentServer();
+        if (srv == null) return;
+        ModNetwork.broadcastToAllPlayers(buildAssignmentsMessage(srv));
+    }
+
     private CapeAssignmentsMessage buildAssignmentsMessage(MinecraftServer server) {
         Map<UUID, CapeAssignmentsMessage.Assignment> assignments = new HashMap<>();
         server.getPlayerList().getPlayers().forEach(player -> {

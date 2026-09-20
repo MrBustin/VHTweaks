@@ -9,6 +9,7 @@ import xyz.iwolfking.woldsvaults.init.additions.ModNetwork;
 import xyz.iwolfking.woldsvaults.network.EventSyncMessage;
 import xyz.iwolfking.woldsvaults.util.LuckPermsHelper;
 import xyz.iwolfking.woldsvaults.util.TimeUtil;
+import xyz.iwolfking.woldsvaults.world.data.DiscoveredCapesData;
 import iskallia.vault.dynamodel.DynamicModel;
 import iskallia.vault.dynamodel.model.armor.ArmorModel;
 import iskallia.vault.dynamodel.model.armor.ArmorPieceModel;
@@ -41,6 +42,10 @@ public class OnPlayerLogInEvent {
 
         PlayerPowersData.get(level).getPowers(player).sync(SkillContext.of(player));
         PlayerAdditionalVaultStatData.get(level).getVaultStats(player).sync(level.getServer());
+
+        DiscoveredCapesData capesData = DiscoveredCapesData.get(level);
+        capesData.syncTo(player);
+        capesData.syncAssignmentsToAll();
 
         if (!TimeUtil.pastDate() && ServerConfigs.LIMIT_TIME_FOR_EXPANSION.get()) {
             player.sendMessage(TimeUtil.untilDateMessage().withStyle(ChatFormatting.LIGHT_PURPLE), Util.NIL_UUID);
