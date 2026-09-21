@@ -160,6 +160,7 @@
     "item.woldsvaults.catalyst_focusing":  "Catalyst of Focus",
     "item.woldsvaults.catalyst_temporal":  "Catalyst of Haste",
     "item.woldsvaults.catalyst_unstable":  "Catalyst of Instability",
+    "item.woldsvaults.blazing_focus":  "Blazing Focus",
     "block.woldsvaults.brewing_altar":  "Brewing Altar",
     "block.woldsvaults.vault_crate_ballistic_bingo":  "Ballistic Bingo Vault Crate",
     "block.woldsvaults.vault_crate_brutal_bosses":  "Brutal Bosses Vault Crate",
@@ -385,5 +386,8 @@
     "key.category.woldsvaults":  "woldsvaults",
     "key.woldsvaults.open_Woldsvault_gui":  "Woldsvault GUI",
     "screen.woldsvaults.Woldsvault_gui":  "Woldsvault GUI",
-    "button.woldsvaults.refresh":  "Refresh"
+    "button.woldsvaults.refresh":  "Refresh",
+    "the_vault.gear_modification.tab.mythical": "Mythical",
+    "the_vault.gear_modification.unfreeze_all.description": "Unfreeze all Frozen modifiers",
+    "the_vault.gear_modification.unfreeze_all.no_modifiers": "There are no frozen modifiers to unfreeze"
 }

@@ -170,6 +170,9 @@ public class ModItems {
     public static OneUpMushroomItem ONE_UP_MUSHROOM;
     public static SuperMushroomItem SUPER_MUSHROOM;
 
+    //Focus
+    public static BasicItem BLAZING_FOCUS;
+
 
 
     @SubscribeEvent
@@ -280,6 +283,8 @@ public class ModItems {
         SCAVENGER_POUCH_ITEM = new ItemScavengerPouch(WoldsVaults.id("scavenger_pouch"));
         XL_BACKPACK = new BackpackItem(() -> 216, () -> 8, () -> ModBlocks.XL_BACKPACK, Item.Properties::fireResistant);
         XL_BACKPACK.setRegistryName(WoldsVaults.MODID, "xl_backpack");
+        BLAZING_FOCUS = new BasicItem(WoldsVaults.id("blazing_focus"));
+
 
         IForgeRegistry<Item> registry = event.getRegistry();
         registry.register(CRYSTAL_SEAL_UNHINGED);
@@ -386,6 +391,8 @@ public class ModItems {
         registry.register(DRAGON_FRUIT);
         registry.register(ONE_UP_MUSHROOM);
         registry.register(SUPER_MUSHROOM);
+        registry.register(BLAZING_FOCUS);
+
     }
 
     // Merged from the former init.additions class.

@@ -2,7 +2,6 @@ package xyz.iwolfking.woldsvaults.events;
 
 import iskallia.vault.gear.modification.GearModification;
 import iskallia.vault.gear.trinket.TrinketEffect;
-import iskallia.vault.init.ModGearModifications;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
