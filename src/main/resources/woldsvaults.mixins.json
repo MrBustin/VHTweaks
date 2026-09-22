@@ -161,6 +161,7 @@
     "the_vault.custom.artisan.MixinArtisanStationContainer",
     "the_vault.custom.artisan.MixinArtisanStationTileEntity",
     "the_vault.custom.artisan.enum_extension.VaultArtisanTabEnumExtension",
+    "the_vault.custom.enum_extension.MixinToolMaterial",
     "the_vault.fixes.MixinBingoObjective",
     "the_vault.fixes.MixinDamageImmunityTrinket",
     "the_vault.fixes.MixinVaultUtils",

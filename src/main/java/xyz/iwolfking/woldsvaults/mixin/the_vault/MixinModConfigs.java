@@ -9,12 +9,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import iskallia.vault.VaultMod;
 import iskallia.vault.config.entry.IntRangeEntry;
+import iskallia.vault.config.entry.recipe.ConfigToolRecipe;
 import iskallia.vault.config.gear.VaultGearTierConfig;
 import iskallia.vault.config.gear.VaultGearTypeConfig;
 import iskallia.vault.gear.VaultGearRarity;
+import iskallia.vault.init.ModBlocks;
 import iskallia.vault.init.ModConfigs;
+import iskallia.vault.item.tool.ToolItem;
+import iskallia.vault.item.tool.ToolMaterial;
+import iskallia.vault.item.tool.ToolType;
 import iskallia.vault.util.data.WeightedList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.iwolfking.woldsvaults.api.data.gear.UnusualModifiers;
+import xyz.iwolfking.woldsvaults.init.ModItems;
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearCommonConfigAccessor;
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearRollTypeConfigAccessor;
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearRollTypeConfigRollTypeAccessor;
@@ -35,10 +42,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Mixin(value = ModConfigs.class, remap = false)
@@ -93,6 +97,29 @@ public class MixinModConfigs {
                 ((VaultGearTierConfigAccessor)ModConfigs.VAULT_GEAR_CONFIG.get(config)).getModifierGroup().put(VaultGearTierConfig.ModifierAffixTagGroup.valueOf("UNUSUAL_SUFFIX"), UnusualModifiers.UNUSUAL_MODIFIERS_MAP_SUFFIX.get(config));
             }
         }
+
+        // Resolve issues with ToolRecipes being missing
+        ToolType[] basicTypes = new ToolType[]{ToolType.PICK, ToolType.AXE, ToolType.SHOVEL, ToolType.HAMMER, ToolType.SICKLE};
+        ToolMaterial toolMaterial = ToolMaterial.valueOf("NULLITE");
+        List<ItemStack> ingredients = List.of(
+                new ItemStack(iskallia.vault.init.ModItems.ECHOING_INGOT, 36),
+                new ItemStack(ModBlocks.VAULT_BRONZE, 4096),
+                new ItemStack(ModItems.WOLD_STAR_CHUNK, 3)
+//                new ItemStack(ModItems.NULLITE_CRYSTAL, 32)
+        );
+
+        for(ToolType toolType : basicTypes) {
+
+            ItemStack out = ToolItem.create(toolMaterial, toolType);
+            ConfigToolRecipe recipe = new ConfigToolRecipe(out, toolType, toolMaterial);
+
+
+            for (ItemStack i : ingredients) {
+                recipe.addInput(i);
+            }
+            ModConfigs.TOOL_RECIPES.getConfigRecipes().add(recipe);
+        }
+
     }
 
     private static void mergeObjectiveSealsIntoVaultCrystal(Path vaultCrystalFile) throws IOException {

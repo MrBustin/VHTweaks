@@ -389,6 +389,7 @@
     "key.woldsvaults.open_Woldsvault_gui":  "Woldsvault GUI",
     "screen.woldsvaults.Woldsvault_gui":  "Woldsvault GUI",
     "button.woldsvaults.refresh":  "Refresh",
+    "item.the_vault.tool.material.nullite": "Nullite",
     "the_vault.gear_modification.tab.mythical": "Mythical",
     "the_vault.gear_modification.unfreeze_all.description": "Unfreeze all Frozen modifiers",
     "the_vault.gear_modification.unfreeze_all.no_modifiers": "There are no frozen modifiers to unfreeze",
