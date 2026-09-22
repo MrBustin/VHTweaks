@@ -172,6 +172,7 @@ public class ModItems {
 
     //Focus
     public static BasicItem BLAZING_FOCUS;
+    public static BasicItem ECCENTRIC_FOCUS;
 
 
 
@@ -284,6 +285,7 @@ public class ModItems {
         XL_BACKPACK = new BackpackItem(() -> 216, () -> 8, () -> ModBlocks.XL_BACKPACK, Item.Properties::fireResistant);
         XL_BACKPACK.setRegistryName(WoldsVaults.MODID, "xl_backpack");
         BLAZING_FOCUS = new BasicItem(WoldsVaults.id("blazing_focus"));
+        ECCENTRIC_FOCUS = new BasicItem(WoldsVaults.id("eccentric_focus"));
 
 
         IForgeRegistry<Item> registry = event.getRegistry();
@@ -392,6 +394,7 @@ public class ModItems {
         registry.register(ONE_UP_MUSHROOM);
         registry.register(SUPER_MUSHROOM);
         registry.register(BLAZING_FOCUS);
+        registry.register(ECCENTRIC_FOCUS);
 
     }
 

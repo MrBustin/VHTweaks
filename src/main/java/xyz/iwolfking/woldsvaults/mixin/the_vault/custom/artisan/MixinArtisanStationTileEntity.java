@@ -33,9 +33,9 @@ public abstract class MixinArtisanStationTileEntity extends BlockEntity {
         if(slot == 17) {
             cir.setReturnValue(stack.is(ModItems.BLAZING_FOCUS));
         }
-//        if(slot == 18) {
-//            cir.setReturnValue(stack.is(ModItems.BLAZING_FOCUS));
-//        }
+        if(slot == 18) {
+            cir.setReturnValue(stack.is(ModItems.ECCENTRIC_FOCUS));
+        }
 //        if(slot == 19) {
 //            cir.setReturnValue(stack.is(ModItems.SUSPENSION_FOCUS));
 //        }

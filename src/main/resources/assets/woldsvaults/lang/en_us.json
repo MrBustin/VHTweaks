@@ -161,6 +161,7 @@
     "item.woldsvaults.catalyst_temporal":  "Catalyst of Haste",
     "item.woldsvaults.catalyst_unstable":  "Catalyst of Instability",
     "item.woldsvaults.blazing_focus":  "Blazing Focus",
+    "item.woldsvaults.eccentric_focus":  "Eccentric Focus",
     "block.woldsvaults.brewing_altar":  "Brewing Altar",
     "block.woldsvaults.vault_crate_ballistic_bingo":  "Ballistic Bingo Vault Crate",
     "block.woldsvaults.vault_crate_brutal_bosses":  "Brutal Bosses Vault Crate",
@@ -389,5 +390,8 @@
     "button.woldsvaults.refresh":  "Refresh",
     "the_vault.gear_modification.tab.mythical": "Mythical",
     "the_vault.gear_modification.unfreeze_all.description": "Unfreeze all Frozen modifiers",
-    "the_vault.gear_modification.unfreeze_all.no_modifiers": "There are no frozen modifiers to unfreeze"
+    "the_vault.gear_modification.unfreeze_all.no_modifiers": "There are no frozen modifiers to unfreeze",
+    "the_vault.gear_modification.add_unusual_modifier.description": "Add unusual modifier",
+    "the_vault.gear_modification.add_unusual_modifier.full": "You cannot add more unusual modifiers to this gear piece",
+    "the_vault.gear_modification.add_unusual_modifier.no_modifiers": "No additional modifiers available"
 }
