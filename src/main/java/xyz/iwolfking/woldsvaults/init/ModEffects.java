@@ -30,10 +30,25 @@ public class ModEffects {
     public static final ToggleAbilityEffect LEGACY_MANA_SHIELD = new LegacyManaShieldAbility.LegacyManaShieldEffect(Color.CYAN.getRGB(), WoldsVaults.id("legacy_mana_shield"));
     public static final ThresholdEffect MOMENTUM_ENGINE = new ThresholdEffect(0xceffff, WoldsVaults.id("momentum_engine"));
     public static final MobEffect BURN = new PercentBurnEffect();
+    public static final ThresholdEffect BLOOD_CHAKRA = new ThresholdEffect(0xa83262, WoldsVaults.id("blood_chakra"));
 
 
 
     public static void register(RegistryEvent.Register<MobEffect> event) {
-        event.getRegistry().registerAll(SHRINKING, GROWING, REAVING, COLOSSUS, SNEAKY_GETAWAY, SAFER_SPACE, LEVITATEII, HEMORRHAGED, ECHOING, SHIELD_WALL, LEGACY_MANA_SHIELD, MOMENTUM_ENGINE, BURN);
+        event.getRegistry().registerAll(
+                SHRINKING,
+                GROWING,
+                REAVING,
+                COLOSSUS,
+                SNEAKY_GETAWAY,
+                SAFER_SPACE,
+                LEVITATEII,
+                HEMORRHAGED,
+                ECHOING,
+                SHIELD_WALL,
+                LEGACY_MANA_SHIELD,
+                MOMENTUM_ENGINE,
+                BURN,
+                BLOOD_CHAKRA);
     }
 }
