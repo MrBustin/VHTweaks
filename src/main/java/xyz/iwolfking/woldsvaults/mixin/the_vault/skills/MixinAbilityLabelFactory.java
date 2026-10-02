@@ -57,5 +57,9 @@ public abstract class MixinAbilityLabelFactory {
                 "executeThreshold",
                 context -> label("\n Execute Threshhold: ",binding(context.config(), "executeThreshold"),"levelLo")
         );
+        FACTORY_MAP.put(
+                "percentageDamageAbsorbed",
+                context -> label("\n Percentage Damage Absorbed: ",binding(context.config(), "percentageDamageAbsorbed"),"absorb")
+        );
     }
 }

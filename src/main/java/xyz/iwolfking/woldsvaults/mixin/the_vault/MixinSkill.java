@@ -32,6 +32,8 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("vein_miner_chain", VeinMinerChainAbility.class, VeinMinerChainAbility::new);
         this.register("levitate", LevitateAbility.class,LevitateAbility::new);
         this.register("fangs", EvokerFangsAbility.class, EvokerFangsAbility::new);
+        this.register("fangs_maw", EvokerFangsMawAbility.class, EvokerFangsMawAbility::new);
+
 
 
         //Talents
