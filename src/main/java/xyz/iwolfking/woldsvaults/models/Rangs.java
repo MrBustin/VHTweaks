@@ -22,6 +22,8 @@ public class Rangs {
     public static final PlainItemModel GOLD;
     public static final PlainItemModel CHROMATIC_STEEL;
     public static final PlainItemModel KING_OF_DIAMONDS;
+    public static final PlainItemModel BRICK;
+    public static final PlainItemModel POISON_RANG;
 
     //epic
     public static final PlainItemModel AMETHYST;
@@ -63,6 +65,9 @@ public class Rangs {
         GOLD = REGISTRY.register(new PlainItemModel(VaultMod.id("gear/rang/gold"), "Golden Rang")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
         CHROMATIC_GOLD = REGISTRY.register(new PlainItemModel(VaultMod.id("gear/rang/gold_chroma"), "Chromatic Gold Rang")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
         KING_OF_DIAMONDS = REGISTRY.register(new PlainItemModel(VaultMod.id("gear/rang/king_of_diamonds"), "King of Diamonds")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+        BRICK = REGISTRY.register(new PlainItemModel(VaultMod.id("gear/rang/brick"), "Brick")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+        POISON_RANG = REGISTRY.register(new PlainItemModel(VaultMod.id("gear/rang/poison_potato"), "Poisonous Potato Rang")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+
 
         //epic
         AMETHYST = REGISTRY.register(new PlainItemModel(VaultMod.id("gear/rang/amethyst"), "Amethyst Rang")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());

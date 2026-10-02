@@ -94,7 +94,6 @@ public class Tridents {
         ROYAL = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/royal"), "Royal Trident")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         PINK = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/pink"), "Pink Trident")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         VOID = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/void"), "Void Trident")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
-        FORK = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/fork"), "Fork")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
 
         //omega
         CRYSTAL = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/crystal"), "Crystal Lance")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
@@ -108,6 +107,7 @@ public class Tridents {
         MARLIN = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/marlin"), "Marlin Trident")).properties(new DynamicModelProperties()));
         //SWORDFISH = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/swordfish"), "Swordfish Trident")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         MJOLNIR = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/mjolnir"), "Mjolnir")).properties(new DynamicModelProperties()));
+        FORK = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/trident/fork"), "Fork")).properties(new DynamicModelProperties()));
 
 
         //ascension forge

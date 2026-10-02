@@ -89,6 +89,7 @@ public class Plushies {
     public static final HandHeldModel BATTY;
     public static final HandHeldModel PENNY_RAE;
     public static final HandHeldModel SAFER_SPACES;
+    public static final HandHeldModel POCKET_PENGUIN;
 
 
     public Plushies() {
@@ -99,6 +100,7 @@ public class Plushies {
         ARTIC_FOX = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/artic_fox"), "Snowflake the Artic Fox")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         AXOLOTL = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/axolotl"), "Aquee the Axolotl")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         BABOU = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/babou"), "Babou the Ocelot")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
+        BATTY = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/batty"), "Batty the Bat")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         BEE = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/bee"), "Billy the Bee")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         CAT = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/cat"), "Carl the Cat")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         COW = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/cow"), "Caroline the Cow")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
@@ -116,7 +118,6 @@ public class Plushies {
         //common
         KEVIN_BACON = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/kevin_bacon"), "Kevin Bacon the Killer Bunny")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         VINCENT = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/vincent"), "Vincent the Villager")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
-        WANDA = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/wanda"), "Wanda the Witch")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         WALTER_THEO = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/walter_theo"), "Walter Theo the Wandering Trader")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         MOLTEN = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/molten"), "Molten the Magma Cube")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         SHELLY = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/shelly"), "Shelly the Shulker")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
@@ -128,6 +129,7 @@ public class Plushies {
         ARMANI = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/armani"), "Armani the Armadillo")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         SLIME = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/slime"), "Stevey the Slime")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         TURTLE = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/turtle"), "Tim the Turtle")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
+
 
 
         //rare
@@ -144,6 +146,9 @@ public class Plushies {
         CAIGAN = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/caigan"), "Caigan the Mouse")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         SQUISH = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/dearliest"), "Dearliest the Squishiest")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         JACKAL = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/jackal"), "Jackal the Legend")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
+        PENNY_RAE = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/penny_rae"), "Penny Rae the Red Panda")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
+
+
 
         //epic
         DRAGON = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/dragon"), "Drew the Dragon")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
@@ -159,6 +164,7 @@ public class Plushies {
         JOSEPH = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/joseph"), "Joseph the Filterer")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
 
 
+
         //omega
         IWK = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/wolf"), "Wolf the Creator")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         JROWEZ = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/jrowez"), "Jawn the Tinkerer")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
@@ -171,9 +177,10 @@ public class Plushies {
         CYBER = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/cyber"), "Cyberwolf the Artist")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
 
         //unique
-        BATTY = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/batty"), "Batty the Bat")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
-        PENNY_RAE = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/penny_rae"), "Penny Rae the Red Panda")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         SAFER_SPACES = REGISTRY.register(new HandHeldModel(VaultMod.id("gear/plushie/safer_spaces"), "Terry the Tardigrade")).properties(new DynamicModelProperties());
+        WANDA = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/wanda"), "Wanda the Witch")).properties(new DynamicModelProperties()));
+        POCKET_PENGUIN = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/pocket_penguin"), "Pocket Penguin")).properties(new DynamicModelProperties()));
+
 
         //ascension forge
         BURNIE = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/burnie"), "Burnie the Blaze")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
