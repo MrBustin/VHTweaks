@@ -61,5 +61,9 @@ public abstract class MixinAbilityLabelFactory {
                 "percentageDamageAbsorbed",
                 context -> label("\n Percentage Damage Absorbed: ",binding(context.config(), "percentageDamageAbsorbed"),"absorb")
         );
+        FACTORY_MAP.put(
+                "effectAmplifier",
+                context -> label("\n Effect Amplifier: ",binding(context.config(), "effectAmplifier"),"radius")
+        );
     }
 }
