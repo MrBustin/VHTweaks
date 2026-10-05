@@ -58,6 +58,31 @@ public class OnPlayerLogInEvent {
         ModNetwork.sendToClient(new EventSyncMessage(data.globeExpanderRequired(), data.isEventActive()), player);
     }
 
+    @SubscribeEvent
+    public static void configuredTransmogUnlocks(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        List<DynamicModel<?>> models = Configs.TRANSMOG_UNLOCKS.getUnlocks(player);
+        if (models.isEmpty()) {
+            return;
+        }
+
+        DiscoveredModelsData data = DiscoveredModelsData.get(player.getLevel());
+        Set<ResourceLocation> discovered = data.getDiscoveredModels(player.getUUID());
+        for (DynamicModel<?> model : models) {
+            if (model instanceof ArmorModel armor) {
+                if (armor.getPieces().values().stream().anyMatch(piece -> !discovered.contains(piece.getId()))) {
+                    data.discoverAllArmorPieceAndBroadcast(player, armor);
+                }
+            } else if (!discovered.contains(model.getId())) {
+                ModDynamicModels.REGISTRIES.getModelAndAssociatedItem(model.getId())
+                        .ifPresent(pair -> data.discoverModelAndBroadcast(pair.getSecond(), model.getId(), player));
+            }
+        }
+    }
+
 //    @SubscribeEvent
 //    public static void transmogUnlocks(PlayerEvent.PlayerLoggedInEvent event) {
 //        if (!(event.getPlayer() instanceof ServerPlayer player)) {

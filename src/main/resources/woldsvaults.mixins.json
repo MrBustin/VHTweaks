@@ -179,6 +179,7 @@
   "client": [
     "MixinCombatStatsContainerElement",
     "MixinThrownTridentRenderer",
+    "patreon.MixinDiscoveredModelSelectorModel",
     "armor_effects.MixinElytraLayer",
     "armor_effects.sound.AccessorAbstractSoundInstance",
     "armor_effects.sound.MixinLocalPlayer",

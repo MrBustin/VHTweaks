@@ -95,3 +95,51 @@ import java.util.UUID;
 //        return "woldsvaults_transmog_unlocks";
 //    }
 //}
+
+public class TransmogUnlocksConfig extends Config {
+    @Expose
+    public Map<String, List<String>> unlocks = new HashMap<>();
+
+    private final Map<UUID, List<DynamicModel<?>>> transmogUnlocks = new HashMap<>();
+
+    public List<DynamicModel<?>> getUnlocks(Player player) {
+        return transmogUnlocks.getOrDefault(player.getUUID(), List.of());
+    }
+
+    public boolean hasAccess(Player player, ResourceLocation modelId) {
+        return getUnlocks(player).stream().anyMatch(model ->
+                model.getId().equals(modelId)
+                        || model instanceof iskallia.vault.dynamodel.model.armor.ArmorModel armor
+                        && armor.getPieces().values().stream().anyMatch(piece -> piece.getId().equals(modelId)));
+    }
+
+    @Override
+    protected void onLoad(@Nullable Config oldConfigInstance) {
+        transmogUnlocks.clear();
+        for (Map.Entry<String, List<String>> entry : unlocks.entrySet()) {
+            try {
+                UUID uuid = UUID.fromString(entry.getKey());
+                List<DynamicModel<?>> models = new ArrayList<>();
+                for (String modelId : entry.getValue()) {
+                    ModDynamicModels.REGISTRIES.getModelAndAssociatedItem(ResourceLocation.tryParse(modelId))
+                            .map(Pair::getFirst)
+                            .ifPresentOrElse(models::add,
+                                    () -> WoldsVaults.LOGGER.warn("[Transmog Unlocks Config] Invalid model {} under UUID {}, skipping", modelId, uuid));
+                }
+                transmogUnlocks.put(uuid, models);
+            } catch (IllegalArgumentException e) {
+                WoldsVaults.LOGGER.error("[Transmog Unlocks Config] Invalid UUID {}, skipping", entry.getKey());
+            }
+        }
+    }
+
+    @Override
+    protected void reset() {
+        // Add UUID-to-model assignments in woldsvaults_transmog_unlocks.json.
+    }
+
+    @Override
+    public String getName() {
+        return "woldsvaults_transmog_unlocks";
+    }
+}
