@@ -4,7 +4,7 @@ import iskallia.vault.core.vault.Vault;
 import iskallia.vault.core.vault.objective.Objectives;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.EnchantedElixirObjective;
+import xyz.iwolfking.woldsvaults.objectives.EnchantedElixirObjective;
 import xyz.iwolfking.woldsvaults.objectives.lib.BasicEnchantedEvent;
 
 public class CascadeModifierEnchantedEvent extends BasicEnchantedEvent {

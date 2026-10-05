@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.iwolfking.woldsvaults.init.ModObjectiveTemplates;
-import xyz.iwolfking.woldsvaults.objectives.alchemy.AlchemyObjective;
+import xyz.iwolfking.woldsvaults.objectives.AlchemyObjective;
 
 @Mixin(value = ObjectiveTemplateEvent.class, remap = false)
 public class MixinObjectiveTemplates {

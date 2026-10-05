@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.configs.Configs;
-import xyz.iwolfking.woldsvaults.configs.vault.entry.Fruit;
+import xyz.iwolfking.woldsvaults.configs.vault.entry.FruitEntry;
 import xyz.iwolfking.woldsvaults.configs.vault.entry.ModifierCounter;
 import xyz.iwolfking.woldsvaults.data.CakeWorldData;
 
@@ -76,8 +76,8 @@ public abstract class MixinCakeObjective {
     private String fruitCakeModifierDisplay(String value, @Local(argsOnly = true) VirtualWorld world) {
         if (value.equals("cake")) {
             CakeWorldData cakeData = CakeWorldData.get(world);
-            Fruit fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
-            return cakeData.isFruitCake() && fruit != null ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", fruit.displayName()) : value;
+            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
+            return cakeData.isFruitCake() && fruit != null ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", fruit.displayName) : value;
         }
         return value;
     }
@@ -86,8 +86,8 @@ public abstract class MixinCakeObjective {
     private TextComponent replaceSuffix(TextComponent suffix, @Local(argsOnly = true) VirtualWorld world) {
         CakeWorldData cakeData = CakeWorldData.get(world);
         if (cakeData.isFruitCake() && Configs.FRUIT_CAKE.isReplaceSliceWithTimeAdded()) {
-            Fruit fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
-            return fruit != null ? new TextComponent(Configs.FRUIT_CAKE.getTimeAddedFormat().replace("%seconds%", TIME_FORMAT.format(fruit.ticks() / 20.0))) : suffix;
+            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
+            return fruit != null ? new TextComponent(Configs.FRUIT_CAKE.getTimeAddedFormat().replace("%seconds%", TIME_FORMAT.format(fruit.ticks / 20.0))) : suffix;
         }
         return suffix;
     }
@@ -108,9 +108,9 @@ public abstract class MixinCakeObjective {
             return;
         }
 
-        Fruit fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
+        FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
         if (fruit != null) {
-            vault.ifPresent(Vault.CLOCK, clock -> clock.addModifier(new ModifierExtension(fruit.ticks())));
+            vault.ifPresent(Vault.CLOCK, clock -> clock.addModifier(new ModifierExtension(fruit.ticks)));
         }
     }
 
@@ -123,12 +123,12 @@ public abstract class MixinCakeObjective {
         }
 
         int memberCount = ServerVaults.get(world).flatMap(vault -> vault.getOptional(Vault.STATS)).map(stats -> stats.getMap().size()).orElse(0);
-        Map.Entry<Float, Fruit> floatFruitEntry = Configs.FRUIT_CAKE.getFruitChances(memberCount).higherEntry(random.nextFloat());
+        Map.Entry<Float, FruitEntry> floatFruitEntry = Configs.FRUIT_CAKE.getFruitChances(memberCount).higherEntry(random.nextFloat());
 
         if (floatFruitEntry != null) {
-            Fruit fruit = floatFruitEntry.getValue();
-            cakeData.setCakeType(fruit.id());
-            this.moreObjectives$spawnItemParticles(world, ((CakeObjective) (Object) this).get(CakeObjective.CAKE_POS), new ItemStack(fruit.icon(), 1));
+            FruitEntry fruit = floatFruitEntry.getValue();
+            cakeData.setCakeType(fruit.id);
+            this.moreObjectives$spawnItemParticles(world, ((CakeObjective) (Object) this).get(CakeObjective.CAKE_POS), new ItemStack(fruit.iconItem, 1));
             WoldsVaults.LOGGER.debug("Next cake {}", cakeData.getLastCakeType());
         } else {
             cakeData.setCakeType("");

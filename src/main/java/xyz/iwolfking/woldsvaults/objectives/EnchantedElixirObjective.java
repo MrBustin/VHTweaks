@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.enchanted_elixir;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,6 +24,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.iwolfking.woldsvaults.api.core.vault_events.lib.EventTag;
 import xyz.iwolfking.woldsvaults.api.util.ObjectiveHelper;
+import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirBreakpointMap;
+import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirCollectionMap;
 import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 import xyz.iwolfking.woldsvaults.init.ModConfigs;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirEventAmountModifier;

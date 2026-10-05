@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.alchemy;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import com.google.gson.JsonObject;
 import iskallia.vault.block.VaultCrateBlock;
@@ -11,7 +11,6 @@ import iskallia.vault.item.crystal.CrystalData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
-import xyz.iwolfking.woldsvaults.objectives.WoldCrystalObjective;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

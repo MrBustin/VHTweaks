@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.unhinged_scav;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import iskallia.vault.VaultMod;
 import iskallia.vault.block.DivineAltarBlock;

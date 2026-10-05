@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.infinite_raid;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;

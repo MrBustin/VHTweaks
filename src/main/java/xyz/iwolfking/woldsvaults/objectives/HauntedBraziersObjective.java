@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.haunted_braziers;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;

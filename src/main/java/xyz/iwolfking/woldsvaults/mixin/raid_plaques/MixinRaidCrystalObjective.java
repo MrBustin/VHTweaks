@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.mixin.raid_plaques;
 
-import xyz.iwolfking.woldsvaults.objectives.infinite_raid.InfiniteRaidObjective;
+import xyz.iwolfking.woldsvaults.objectives.InfiniteRaidObjective;
 import iskallia.vault.core.random.RandomSource;
 import iskallia.vault.core.vault.Vault;
 import iskallia.vault.item.crystal.objective.RaidCrystalObjective;

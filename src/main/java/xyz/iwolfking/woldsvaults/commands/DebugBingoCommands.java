@@ -20,7 +20,7 @@
 //import net.minecraftforge.fml.common.Mod;
 //import xyz.iwolfking.woldsvaults.mixin.accessors.BingoObjectiveAccessor;
 //import xyz.iwolfking.woldsvaults.mixin.accessors.BingoTaskAccessor;
-//import xyz.iwolfking.woldsvaults.objectives.ballistic_bingo.BallisticBingoObjective;
+//import xyz.iwolfking.woldsvaults.objectives.BallisticBingoObjective;
 //
 //import java.util.Arrays;
 //import java.util.UUID;

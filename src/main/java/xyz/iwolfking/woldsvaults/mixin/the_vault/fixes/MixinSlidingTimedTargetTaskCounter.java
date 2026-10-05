@@ -16,7 +16,7 @@
 //import xyz.iwolfking.woldsvaults.api.WoldVaultUtils;
 //import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.SlidingTimedTargetTaskCounterConfigAccessor;
 //import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.TaskCounterConfigAccessor;
-//import xyz.iwolfking.woldsvaults.objectives.ballistic_bingo.BallisticBingoObjective;
+//import xyz.iwolfking.woldsvaults.objectives.BallisticBingoObjective;
 //
 //import java.util.ArrayList;
 //import java.util.Map;

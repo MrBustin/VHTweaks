@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.unhinged_scav;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import com.google.gson.JsonObject;
 import iskallia.vault.VaultMod;
@@ -19,7 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.TooltipFlag;
 import xyz.iwolfking.woldsvaults.init.ModConfigs;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
-import xyz.iwolfking.woldsvaults.objectives.WoldCrystalObjective;
 
 import javax.annotation.Nullable;
 import java.util.List;

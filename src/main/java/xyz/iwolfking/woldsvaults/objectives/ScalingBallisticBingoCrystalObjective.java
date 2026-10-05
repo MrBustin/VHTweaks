@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.ballistic_bingo;
+package xyz.iwolfking.woldsvaults.objectives;
 
 import com.google.gson.JsonObject;
 import iskallia.vault.VaultMod;
