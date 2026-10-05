@@ -6,6 +6,7 @@ import iskallia.vault.dynamodel.model.armor.ArmorLayers;
 import iskallia.vault.dynamodel.model.armor.ArmorModel;
 import iskallia.vault.dynamodel.model.item.HandHeldModel;
 import iskallia.vault.dynamodel.model.item.PlainItemModel;
+import iskallia.vault.dynamodel.model.item.shield.ShieldModel;
 import iskallia.vault.init.ModDynamicModels;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -26,6 +27,7 @@ public class AdditionalModels {
     public static final HandHeldModel HYPER_CRYSTAL_SWORD;
     public static final HandHeldModel BRRYS_LUTE;
     public static final HandHeldModel CHEESEBLADE;
+    public static final HandHeldModel LAVA_CHICKEN_SWORD;
 
     //Axes
     public static final HandHeldModel LEVIATHAN_AXE;
@@ -38,12 +40,22 @@ public class AdditionalModels {
     public static final PlainItemModel CAT_WAND;
     public static final PlainItemModel MUSTARD;
 
+    //Shields
+    public static final ShieldModel NOKIA_SHIELD;
+    public static final ShieldModel END_CRYSTAL_SHIELD;
+    public static final ShieldModel CARDBOARD_SHIELD;
+
     //Magnets
     public static final PlainItemModel BLOODSEEKING_MAGNET;
     public static final PlainItemModel OTHERWORLDLY_MAGNET;
     public static final PlainItemModel HEART_MAGNET;
     public static final PlainItemModel TREASURE_MAGNET;
     public static final PlainItemModel CAKE_MAGNET;
+    public static final PlainItemModel AURIC_MAGNET;
+    public static final PlainItemModel ERROR_MAGNET;
+
+    //Focuses
+    public static final PlainItemModel CHROMA_BREW;
 
     static {
         //Swords
@@ -56,6 +68,7 @@ public class AdditionalModels {
         MYTHIC_ZEKE_SWORD = ModDynamicModels.Swords.REGISTRY.register(new HandHeldModel(VaultMod.id("gear/sword/mythic_zeke_sword"), "Mythical Blade")).properties(new DynamicModelProperties());
         SACRED_ZEKE_SWORD = ModDynamicModels.Swords.REGISTRY.register(new HandHeldModel(VaultMod.id("gear/sword/sacred_zeke_sword"), "Sacred Blade")).properties(new DynamicModelProperties());
         PRETTY_SCISSORS = ModDynamicModels.Swords.REGISTRY.register(new HandHeldModel(VaultMod.id("gear/sword/aurora_scissors"), "Aurora Scissors")).properties(new DynamicModelProperties());
+        LAVA_CHICKEN_SWORD = ModDynamicModels.Swords.REGISTRY.register(new HandHeldModel(VaultMod.id("gear/sword/lava_chicken"), "Lava Chicken Blade")).properties(new DynamicModelProperties());
 
         HOTDOG_BAT = ModDynamicModels.Swords.REGISTRY.register(new HandHeldModel(VaultMod.id("gear/sword/hotdog"), "Hotdog Bat")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
         HYPER_CRYSTAL_SWORD = ModDynamicModels.Swords.REGISTRY.register(new HandHeldModel(VaultMod.id("gear/sword/crystal"), "Hyper Crystal Sword")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
@@ -73,12 +86,24 @@ public class AdditionalModels {
         CAT_WAND = ModDynamicModels.Wands.REGISTRY.register(new PlainItemModel(VaultMod.id("gear/wand/cat"), "Cat Wand")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
         MUSTARD = ModDynamicModels.Wands.REGISTRY.register(new PlainItemModel(VaultMod.id("gear/wand/mustard"), "Mustard Bottle")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
 
+        //Focuses
+        CHROMA_BREW = ModDynamicModels.Focus.REGISTRY.register(new PlainItemModel(VaultMod.id("gear/focus/chroma_brew"), "Chroma Brew")).properties(new DynamicModelProperties().allowTransmogrification());
+
+        //Shields
+        NOKIA_SHIELD = ModDynamicModels.Shields.REGISTRY.register(new ShieldModel(VaultMod.id("gear/shield/nokia"), "Indestructible Shield")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+        END_CRYSTAL_SHIELD = ModDynamicModels.Shields.REGISTRY.register(new ShieldModel(VaultMod.id("gear/shield/end_crystal_shield"), "End Crystal Shield")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+        CARDBOARD_SHIELD = ModDynamicModels.Shields.REGISTRY.register(new ShieldModel(VaultMod.id("gear/shield/cardboard_shield"), "Cardboard Shield")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+
+
         //Magnets
         BLOODSEEKING_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/bloody_magnet"), "Bloodseeking Magnet")).properties(new DynamicModelProperties());
         OTHERWORLDLY_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/ender_magnet"), "Otherworldly Magnet")).properties(new DynamicModelProperties());
         HEART_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/heart_magnet"), "Heart Magnet")).properties(new DynamicModelProperties());
         TREASURE_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/treasure_magnet"), "Treasure Seeker's Magnet")).properties(new DynamicModelProperties());
         CAKE_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/cake_magnet"), "Cake Magnet")).properties(new DynamicModelProperties());
+        AURIC_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/auric_magnet"), "Auric Magnet")).properties(new DynamicModelProperties());
+        ERROR_MAGNET = ModDynamicModels.Magnets.REGISTRY.register(new PlainItemModel(VaultMod.id("magnets/magnet_error"), "Error Magnet")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll());
+
     }
 
 }

@@ -6,6 +6,7 @@ import iskallia.vault.gear.attribute.VaultGearAttribute;
 import iskallia.vault.gear.attribute.config.ConfigurableAttributeGenerator;
 import iskallia.vault.gear.attribute.custom.effect.EffectGearAttribute;
 import iskallia.vault.gear.attribute.custom.effect.EffectTrialAttribute;
+import iskallia.vault.gear.attribute.custom.loot.ManaPerLootAttribute;
 import iskallia.vault.gear.attribute.type.VaultGearAttributeType;
 import iskallia.vault.gear.comparator.VaultGearAttributeComparator;
 import iskallia.vault.gear.reader.VaultGearModifierReader;
@@ -17,6 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.HemorrhagedEffect;
+import xyz.iwolfking.woldsvaults.gear.attribute.PercentManaPerLootAttribute;
 import xyz.iwolfking.woldsvaults.gear.attribute.custom.PoisonTrailReader;
 import xyz.iwolfking.woldsvaults.util.UniqueEffectGearAttribute;
 
@@ -158,6 +160,21 @@ public class ModGearAttributes {
             null
     );
 
+    public static final VaultGearAttribute<Float> INCREASED_EFFECT_CLOUD_CHANCE = attr("effect_cloud_chance_additive", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Effect Cloud Chance", 3109217), VaultGearAttributeComparator.floatComparator());
+
+    public static final VaultGearAttribute<Boolean> IMPLODING_JAVELIN = attr("javelin_implode", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Imploding Javelin", 3085471), VaultGearAttributeComparator.booleanComparator());
+
+    public static final VaultGearAttribute<Float> PARRY = attr("parry", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Parry", 12186190), VaultGearAttributeComparator.floatComparator());
+
+    public static final VaultGearAttribute<Boolean> DRIPPING_LAVA = attr("dripping_lava", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Dripping Lava", 12976128), VaultGearAttributeComparator.booleanComparator());
+
+    public static final VaultGearAttribute<Float> BURNING_HIT_CHANCE = attr("burning_hit_chance", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Burning Hit Chance", 12976128), VaultGearAttributeComparator.floatComparator());
+
+
+    public static final VaultGearAttribute<PercentManaPerLootAttribute> PERCENT_MANA_PER_LOOTED_TILE = attr("percent_mana_per_looted_tile", PercentManaPerLootAttribute.type(), PercentManaPerLootAttribute.generator(), PercentManaPerLootAttribute.reader(), PercentManaPerLootAttribute.comparator());
+
+
+
     @SubscribeEvent
     public static void init(RegistryEvent.Register<VaultGearAttribute<?>> event) {
         IForgeRegistry<VaultGearAttribute<?>> registry = event.getRegistry();
@@ -197,6 +214,12 @@ public class ModGearAttributes {
                       registry.register(AIR_MOBILITY_SPEED);
                       registry.register(AIR_MOBILITY_CONTROL);
                       registry.register(AIR_MOBILITY);
+                      registry.register(INCREASED_EFFECT_CLOUD_CHANCE);
+                      registry.register(IMPLODING_JAVELIN);
+                      registry.register(PARRY);
+                      registry.register(DRIPPING_LAVA);
+                      registry.register(BURNING_HIT_CHANCE);
+                      registry.register(PERCENT_MANA_PER_LOOTED_TILE);
 
     }
 

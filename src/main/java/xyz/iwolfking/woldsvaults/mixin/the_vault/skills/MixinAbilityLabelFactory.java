@@ -41,5 +41,29 @@ public abstract class MixinAbilityLabelFactory {
                 "levitateSpeed",
                 context -> label("\n Float Speed: ",binding(context.config(), "levitateSpeed"),"amplifier")
         );
+        FACTORY_MAP.put(
+                "damageMultiplier",
+                context -> label("\n Attack Damage Percentage: ",binding(context.config(), "damageMultiplier"),"damageReduction")
+        );
+        FACTORY_MAP.put(
+                "baseDamage",
+                context -> label("\n Base Damage: ",binding(context.config(), "baseDamage"),"damage")
+        );
+        FACTORY_MAP.put(
+                "heartFragmentChance",
+                context -> label("\n Heart Fragment Chance: ",binding(context.config(), "heartFragmentChance"),"force")
+        );
+        FACTORY_MAP.put(
+                "executeThreshold",
+                context -> label("\n Execute Threshhold: ",binding(context.config(), "executeThreshold"),"levelLo")
+        );
+        FACTORY_MAP.put(
+                "percentageDamageAbsorbed",
+                context -> label("\n Percentage Damage Absorbed: ",binding(context.config(), "percentageDamageAbsorbed"),"absorb")
+        );
+        FACTORY_MAP.put(
+                "effectAmplifier",
+                context -> label("\n Effect Amplifier: ",binding(context.config(), "effectAmplifier"),"radius")
+        );
     }
 }

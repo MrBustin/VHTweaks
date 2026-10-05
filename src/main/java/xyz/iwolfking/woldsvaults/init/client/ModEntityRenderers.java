@@ -7,8 +7,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
+import xyz.iwolfking.woldsvaults.entities.client.CrystalVendorRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.JackBoxRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.VaultNecromancerRenderer;
+import xyz.iwolfking.woldsvaults.entities.client.WitchskallRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.WoldBossRenderer;
 import xyz.iwolfking.woldsvaults.entities.ghosts.lib.client.GenericWraithRenderer;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.client.renderer.CranberrySlimeRenderer;
@@ -26,6 +28,8 @@ public class ModEntityRenderers {
     public static void register(FMLClientSetupEvent event) {
         EntityRenderers.register(ModEntities.WOLD, ctx -> new WoldBossRenderer(ctx, ModModelLayers.FIGHTER));
         EntityRenderers.register(ModEntities.VAULT_NECROMANCER, VaultNecromancerRenderer::new);
+        EntityRenderers.register(ModEntities.CRYSTAL_VENDOR_ENTITY, CrystalVendorRenderer::new);
+        EntityRenderers.register(ModEntities.WITCHSKALL, WitchskallRenderer::new);
         EntityRenderers.register(ModEntities.GREEN_GHOST, ctx -> new GenericWraithRenderer(ctx, WoldsVaults.id("textures/entity/green_ghost.png")));
         EntityRenderers.register(ModEntities.BROWN_GHOST, ctx -> new GenericWraithRenderer(ctx, WoldsVaults.id("textures/entity/brown_ghost.png")));
         EntityRenderers.register(ModEntities.BLACK_GHOST, ctx -> new GenericWraithRenderer(ctx, WoldsVaults.id("textures/entity/black_ghost.png")));

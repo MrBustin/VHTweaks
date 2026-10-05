@@ -100,4 +100,21 @@ public class WoldGearModifierHelper {
             }
         }
     }
+
+    public static GearModification.Result unfreezeAll(ItemStack stack) {
+        VaultGearData data = VaultGearData.read(stack);
+        List<VaultGearModifier<?>> affixes = new ArrayList<>();
+        affixes.addAll(data.getModifiers(VaultGearModifier.AffixType.PREFIX));
+        affixes.addAll(data.getModifiers(VaultGearModifier.AffixType.SUFFIX));
+        affixes.removeIf(modifier -> !modifier.hasCategory(VaultGearModifier.AffixCategory.FROZEN));
+        if (affixes.isEmpty()) {
+            return GearModification.Result.makeActionError("no_modifiers");
+        } else {
+            for (VaultGearModifier<?> mod : affixes) {
+                mod.removeCategory(VaultGearModifier.AffixCategory.FROZEN);
+            }
+            data.write(stack);
+            return GearModification.Result.makeSuccess();
+        }
+    }
 }

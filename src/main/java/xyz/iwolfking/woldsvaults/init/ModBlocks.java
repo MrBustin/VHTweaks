@@ -351,6 +351,11 @@ public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(For
                     .strength(3.0F, 3.6E8F).noOcclusion().requiresCorrectToolForDrops()),
             true);
 
+    public static final RegistryObject<Block> CRYSTAL_TRADER_CONTROLLER = registerBlock("crystal_trader_controller",
+            () -> new CrystalTraderControllerBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .strength(-1, 3.6E8F).noOcclusion().noDrops()),
+            true);
+
     public static final RegistryObject<Block> EVENT_CONDITION_BLOCK = registerBlock("event_condition_block",
             () -> new EventConditionBlock(BlockBehaviour.Properties.of(Material.STONE)
                     .strength(-1, 3.6E8F).noOcclusion().requiresCorrectToolForDrops()),

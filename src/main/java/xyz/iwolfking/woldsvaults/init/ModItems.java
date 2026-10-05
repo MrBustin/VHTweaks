@@ -149,6 +149,8 @@ public class ModItems {
     public static BasicItem GEM_REAGENT_SPARKLETINE;
     public static BasicItem GEM_REAGENT_TUBIUM;
 
+    public static GreedTreeResetItem GREED_TREE_RESET_ITEM;
+
 
     //Zealot items
     public static BasicItem TOME_OF_TENOS;
@@ -169,6 +171,10 @@ public class ModItems {
     public static WisdomFruitItem WISDOM_FRUIT;
     public static OneUpMushroomItem ONE_UP_MUSHROOM;
     public static SuperMushroomItem SUPER_MUSHROOM;
+
+    //Focus
+    public static BasicItem BLAZING_FOCUS;
+    public static BasicItem ECCENTRIC_FOCUS;
 
 
 
@@ -280,6 +286,10 @@ public class ModItems {
         SCAVENGER_POUCH_ITEM = new ItemScavengerPouch(WoldsVaults.id("scavenger_pouch"));
         XL_BACKPACK = new BackpackItem(() -> 216, () -> 8, () -> ModBlocks.XL_BACKPACK, Item.Properties::fireResistant);
         XL_BACKPACK.setRegistryName(WoldsVaults.MODID, "xl_backpack");
+        BLAZING_FOCUS = new BasicItem(WoldsVaults.id("blazing_focus"));
+        ECCENTRIC_FOCUS = new BasicItem(WoldsVaults.id("eccentric_focus"));
+        GREED_TREE_RESET_ITEM = new GreedTreeResetItem(WoldsVaults.id("greed_neuralizer"));
+
 
         IForgeRegistry<Item> registry = event.getRegistry();
         registry.register(CRYSTAL_SEAL_UNHINGED);
@@ -386,6 +396,10 @@ public class ModItems {
         registry.register(DRAGON_FRUIT);
         registry.register(ONE_UP_MUSHROOM);
         registry.register(SUPER_MUSHROOM);
+        registry.register(BLAZING_FOCUS);
+        registry.register(ECCENTRIC_FOCUS);
+        registry.register(GREED_TREE_RESET_ITEM);
+
     }
 
     // Merged from the former init.additions class.

@@ -7,7 +7,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
+import xyz.iwolfking.woldsvaults.network.message.CapeAssignmentsMessage;
+import xyz.iwolfking.woldsvaults.network.message.DiscoveredCapesMessage;
 import xyz.iwolfking.woldsvaults.network.message.LuckyHitCooldownParticleMessage;
+import xyz.iwolfking.woldsvaults.network.message.SelectCapeMessage;
 
 public class ModNetwork {
     private static final String VERSION = "1.0.0";
@@ -17,18 +20,92 @@ public class ModNetwork {
 
 
     public static void initialize() {
-        CHANNEL.registerMessage(nextId(), ServerboundOpenPowersMessage.class, ServerboundOpenPowersMessage::encode, ServerboundOpenPowersMessage::decode, ServerboundOpenPowersMessage::handle);
-        CHANNEL.registerMessage(nextId(), KnownPowerMessage.class, KnownPowerMessage::encode, KnownPowerMessage::decode, KnownPowerMessage::handle);
-        CHANNEL.registerMessage(nextId(), PowerLevelMessage.class, PowerLevelMessage::encode, PowerLevelMessage::decode, PowerLevelMessage::handle);
-        CHANNEL.registerMessage(nextId(), PowerPointMessage.class, PowerPointMessage::encode, PowerPointMessage::decode, PowerPointMessage::handle);
-        CHANNEL.registerMessage(nextId(), StatueSelectItemMessage.class, StatueSelectItemMessage::encode, StatueSelectItemMessage::decode, StatueSelectItemMessage::handle);
-        CHANNEL.registerMessage(nextId(), RenameStatueMessage.class, RenameStatueMessage::encode, RenameStatueMessage::decode, RenameStatueMessage::handle);
-        CHANNEL.registerMessage(nextId(), LeaderboardRequestMessage.class, LeaderboardRequestMessage::encode, LeaderboardRequestMessage::decode, LeaderboardRequestMessage::handle);
-        CHANNEL.registerMessage(nextId(), LeaderboardDataMessage.class, LeaderboardDataMessage::encode, LeaderboardDataMessage::decode, LeaderboardDataMessage::handle);
-        CHANNEL.registerMessage(nextId(), BladeFrenzyParticleMessage.class, BladeFrenzyParticleMessage::encode, BladeFrenzyParticleMessage::decode, BladeFrenzyParticleMessage::handle);
-        CHANNEL.registerMessage(nextId(), EventSyncMessage.class, EventSyncMessage::encode, EventSyncMessage::decode, EventSyncMessage::handle);
-        CHANNEL.registerMessage(nextId(), UpdatePlayerTraderDataMessage.class, UpdatePlayerTraderDataMessage::encode, UpdatePlayerTraderDataMessage::decode, UpdatePlayerTraderDataMessage::handle);
-        CHANNEL.registerMessage(nextId(), LuckyHitCooldownParticleMessage.class, LuckyHitCooldownParticleMessage::encode, LuckyHitCooldownParticleMessage::decode, LuckyHitCooldownParticleMessage::handle);
+        CHANNEL.registerMessage(nextId(), ServerboundOpenPowersMessage.class,
+                ServerboundOpenPowersMessage::encode,
+                ServerboundOpenPowersMessage::decode,
+                ServerboundOpenPowersMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), KnownPowerMessage.class,
+                KnownPowerMessage::encode, KnownPowerMessage::decode,
+                KnownPowerMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), PowerLevelMessage.class,
+                PowerLevelMessage::encode, PowerLevelMessage::decode,
+                PowerLevelMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), PowerPointMessage.class,
+                PowerPointMessage::encode, PowerPointMessage::decode,
+                PowerPointMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), StatueSelectItemMessage.class,
+                StatueSelectItemMessage::encode,
+                StatueSelectItemMessage::decode,
+                StatueSelectItemMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), RenameStatueMessage.class,
+                RenameStatueMessage::encode,
+                RenameStatueMessage::decode,
+                RenameStatueMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), LeaderboardRequestMessage.class,
+                LeaderboardRequestMessage::encode,
+                LeaderboardRequestMessage::decode,
+                LeaderboardRequestMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), LeaderboardDataMessage.class,
+                LeaderboardDataMessage::encode,
+                LeaderboardDataMessage::decode,
+                LeaderboardDataMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), BladeFrenzyParticleMessage.class,
+                BladeFrenzyParticleMessage::encode,
+                BladeFrenzyParticleMessage::decode,
+                BladeFrenzyParticleMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), EventSyncMessage.class,
+                EventSyncMessage::encode,
+                EventSyncMessage::decode,
+                EventSyncMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), UpdatePlayerTraderDataMessage.class,
+                UpdatePlayerTraderDataMessage::encode,
+                UpdatePlayerTraderDataMessage::decode,
+                UpdatePlayerTraderDataMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), LuckyHitCooldownParticleMessage.class,
+                LuckyHitCooldownParticleMessage::encode,
+                LuckyHitCooldownParticleMessage::decode,
+                LuckyHitCooldownParticleMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), ClientboundCrystalTraderSyncMessage.class,
+                ClientboundCrystalTraderSyncMessage::encode,
+                ClientboundCrystalTraderSyncMessage::decode,
+                ClientboundCrystalTraderSyncMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), ServerboundCrystalTraderBuyMessage.class,
+                ServerboundCrystalTraderBuyMessage::encode,
+                ServerboundCrystalTraderBuyMessage::decode,
+                ServerboundCrystalTraderBuyMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), ServerboundCrystalTraderResetMessage.class,
+                ServerboundCrystalTraderResetMessage::encode,
+                ServerboundCrystalTraderResetMessage::decode,
+                ServerboundCrystalTraderResetMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), DiscoveredCapesMessage.class,
+                DiscoveredCapesMessage::encode,
+                DiscoveredCapesMessage::decode,
+                DiscoveredCapesMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), CapeAssignmentsMessage.class,
+                CapeAssignmentsMessage::encode,
+                CapeAssignmentsMessage::decode,
+                CapeAssignmentsMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), SelectCapeMessage.class,
+                SelectCapeMessage::encode,
+                SelectCapeMessage::decode,
+                SelectCapeMessage::handle);
     }
 
     public static int nextId() {

@@ -41,6 +41,7 @@ import xyz.iwolfking.woldsvaults.blocks.renderers.StatueCauldronRenderer;
 import xyz.iwolfking.woldsvaults.configs.ServerConfigs;
 import xyz.iwolfking.woldsvaults.configs.core.WoldsVaultsConfig;
 import xyz.iwolfking.woldsvaults.core.AddonLoader;
+import xyz.iwolfking.woldsvaults.api.util.DelayedExecutionHelper;
 import xyz.iwolfking.woldsvaults.client.overworld.OverworldVaultCompassHandler;
 import xyz.iwolfking.woldsvaults.client.overworld.OverworldVaultKeybinds;
 import xyz.iwolfking.woldsvaults.client.overworld.gui.OverworldVaultGuiUpdateManager;
@@ -135,6 +136,7 @@ public class WoldsVaults {
         ModVaultFilterAttributes.initAttributes();
 
         LivingEntityEvents.init();
+        DelayedExecutionHelper.init();
     }
 
     private void additionsCommonSetup(final FMLCommonSetupEvent event) {

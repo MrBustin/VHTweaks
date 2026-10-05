@@ -188,4 +188,14 @@ public class MixinGearAttributeEvents {
         float distanceIncrease = attacker instanceof Player player ? VoltaicDistanceTalent.getShockingDistanceIncrease(player) : 0.0F;
         EntityHelper.knockbackIgnoreResist(target, attacker, strength + distanceIncrease);
     }
+
+    @Redirect(method = "lambda$triggerEffectCloudsActive$17", at = @At(value = "INVOKE", target = "Liskallia/vault/util/Entropy;canExecute(Lnet/minecraft/world/entity/Entity;Liskallia/vault/util/Entropy$Stat;F)Z"))
+    private static boolean addEffectCloudChanceFromAttributeActive(Entity entity, Entropy.Stat stat, float chance) {
+        if(entity instanceof LivingEntity living && living instanceof Player) {
+            float increasedEffectCloudChance = AttributeSnapshotHelper.getInstance().getSnapshot(living).getAttributeValue(xyz.iwolfking.woldsvaults.init.ModGearAttributes.INCREASED_EFFECT_CLOUD_CHANCE, VaultGearAttributeTypeMerger.floatSum());
+            return Entropy.canExecute(entity, stat, chance + increasedEffectCloudChance);
+        }
+
+        return Entropy.canExecute(entity, stat, chance);
+    }
 }
