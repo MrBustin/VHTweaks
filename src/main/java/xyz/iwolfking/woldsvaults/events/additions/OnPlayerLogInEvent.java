@@ -58,50 +58,50 @@ public class OnPlayerLogInEvent {
         ModNetwork.sendToClient(new EventSyncMessage(data.globeExpanderRequired(), data.isEventActive()), player);
     }
 
-    @SubscribeEvent
-    public static void transmogUnlocks(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!(event.getPlayer() instanceof ServerPlayer player)) {
-            return;
-        }
-        ServerLevel level = player.getLevel();
-
-        LinkedHashSet<DynamicModel<?>> models = new LinkedHashSet<>();
-        List<DynamicModel<?>> manualUnlocks = Configs.TRANSMOG_UNLOCKS.getUnlocks(player);
-        if (manualUnlocks != null) {
-            models.addAll(manualUnlocks);
-        }
-        models.addAll(getLuckPermsUnlocks(player));
-
-        if (models.isEmpty()) {
-            return;
-        }
-
-        DiscoveredModelsData discoveredModelsData = DiscoveredModelsData.get(level);
-        Set<ResourceLocation> discoveredModels = discoveredModelsData.getDiscoveredModels(player.getUUID());
-        for (DynamicModel<?> model : models) {
-            ResourceLocation id = model.getId();
-            if (model instanceof ArmorModel armor) {
-                for (ArmorPieceModel piece : armor.getPieces().values()) {
-                    if (!discoveredModels.contains(piece.getId())) {
-                        discoveredModelsData.discoverAllArmorPieceAndBroadcast(player, armor);
-                        break;
-                    }
-                }
-            } else {
-                if (!discoveredModels.contains(id)) {
-                    ModDynamicModels.REGISTRIES.getModelAndAssociatedItem(id).ifPresent(pair -> {
-                        discoveredModelsData.discoverModelAndBroadcast(pair.getSecond(), id, player);
-                    });
-                }
-            }
-        }
-    }
-
-    private static List<DynamicModel<?>> getLuckPermsUnlocks(ServerPlayer player) {
-        try {
-            return Configs.TRANSMOG_ROLE_UNLOCKS.getUnlocks(LuckPermsHelper.getRoleNames(player));
-        } catch (IllegalStateException | NoClassDefFoundError ignored) {
-            return List.of();
-        }
-    }
+//    @SubscribeEvent
+//    public static void transmogUnlocks(PlayerEvent.PlayerLoggedInEvent event) {
+//        if (!(event.getPlayer() instanceof ServerPlayer player)) {
+//            return;
+//        }
+//        ServerLevel level = player.getLevel();
+//
+//        LinkedHashSet<DynamicModel<?>> models = new LinkedHashSet<>();
+//        List<DynamicModel<?>> manualUnlocks = Configs.TRANSMOG_UNLOCKS.getUnlocks(player);
+//        if (manualUnlocks != null) {
+//            models.addAll(manualUnlocks);
+//        }
+//        models.addAll(getLuckPermsUnlocks(player));
+//
+//        if (models.isEmpty()) {
+//            return;
+//        }
+//
+//        DiscoveredModelsData discoveredModelsData = DiscoveredModelsData.get(level);
+//        Set<ResourceLocation> discoveredModels = discoveredModelsData.getDiscoveredModels(player.getUUID());
+//        for (DynamicModel<?> model : models) {
+//            ResourceLocation id = model.getId();
+//            if (model instanceof ArmorModel armor) {
+//                for (ArmorPieceModel piece : armor.getPieces().values()) {
+//                    if (!discoveredModels.contains(piece.getId())) {
+//                        discoveredModelsData.discoverAllArmorPieceAndBroadcast(player, armor);
+//                        break;
+//                    }
+//                }
+//            } else {
+//                if (!discoveredModels.contains(id)) {
+//                    ModDynamicModels.REGISTRIES.getModelAndAssociatedItem(id).ifPresent(pair -> {
+//                        discoveredModelsData.discoverModelAndBroadcast(pair.getSecond(), id, player);
+//                    });
+//                }
+//            }
+//        }
+//    }
+//
+//    private static List<DynamicModel<?>> getLuckPermsUnlocks(ServerPlayer player) {
+//        try {
+//            return Configs.TRANSMOG_ROLE_UNLOCKS.getUnlocks(LuckPermsHelper.getRoleNames(player));
+//        } catch (IllegalStateException | NoClassDefFoundError ignored) {
+//            return List.of();
+//        }
+//    }
 }
