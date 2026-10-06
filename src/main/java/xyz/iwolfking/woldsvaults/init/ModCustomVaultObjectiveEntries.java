@@ -15,6 +15,7 @@ public class ModCustomVaultObjectiveEntries {
     public static final CustomObjectiveRegistryEntry BALLISTIC_BINGO = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("ballistic_bingo", "Ballistic Bingo", BallisticBingoCrystalObjective.class, BallisticBingoCrystalObjective::new, BallisticBingoObjective.KEY, BallisticBingoObjective.class).setCrateItem(xyz.iwolfking.woldsvaults.init.ModBlocks.VAULT_CRATE_BALLISTIC_BINGO).build();
     public static final CustomObjectiveRegistryEntry ZEALOT = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("zealot", "Zealot", ZealotCrystalObjective.class, ZealotCrystalObjective::new, ZealotObjective.KEY, ZealotObjective.class).setCrateItem(ModBlocks.VAULT_CRATE_ELIXIR).build();
     public static final CustomObjectiveRegistryEntry ALCHEMY = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("alchemy", "Alchemy", AlchemyCrystalObjective.class, AlchemyCrystalObjective::new, AlchemyObjective.KEY, AlchemyObjective.class).setCrateItem(xyz.iwolfking.woldsvaults.init.ModBlocks.VAULT_CRATE_ALCHEMY).build();
+    public static final CustomObjectiveRegistryEntry ELYTRA = new CustomObjectiveRegistryEntry.CustomObjectiveBuilder("elytra", "Elytra", ElytraCrystalObjective.class, ElytraCrystalObjective::new, ElytraObjective.KEY, ElytraObjective.class).setCrateItem(ModBlocks.VAULT_CRATE_ELIXIR).build();
 
 
     public static void registerCustomObjectives(RegistryEvent.Register<CustomObjectiveRegistryEntry> event) {
@@ -25,5 +26,6 @@ public class ModCustomVaultObjectiveEntries {
         event.getRegistry().register(BALLISTIC_BINGO);
         event.getRegistry().register(ZEALOT);
         event.getRegistry().register(ALCHEMY);
+        event.getRegistry().register(ELYTRA);
     }
 }

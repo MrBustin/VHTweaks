@@ -310,6 +310,8 @@ public class ModBlocks {
     // Merged from the former init.additions class.
 public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, WoldsVaults.MOD_ID);
 
+    public static final RegistryObject<Block> ELYTRA_OBJECTIVE_PILLAR = registerBlock("elytra_objective_pillar",
+            ElytraObjectivePillarBlock::new, true);
 
     public static final RegistryObject<Block> GLOBE_EXPANDER = registerBlock("globe_expander",
             () -> new GlobeExpanderBlock(BlockBehaviour.Properties.of(Material.METAL)

@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ModObjectiveTemplates {
     public static final DynamicTemplate ALCHEMY_OBJECTIVE_TEMPLATE = createDynamicTemplate(new BlockPos(0, 0, 0), ModBlocks.BREWING_ALTAR.defaultBlockState());
+    public static final DynamicTemplate ELYTRA_OBJECTIVE_TEMPLATE = createDynamicTemplate(new BlockPos(0, 0, 0), ModBlocks.ELYTRA_OBJECTIVE_PILLAR.get().defaultBlockState());
 
     private static DynamicTemplate createDynamicTemplate(BlockPos pos, BlockState state) {
         DynamicTemplate template = new DynamicTemplate();
