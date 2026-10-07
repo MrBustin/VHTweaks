@@ -1,7 +1,7 @@
 package xyz.iwolfking.woldsvaults.init;
 
 import iskallia.vault.item.crystal.CrystalData;
-import xyz.iwolfking.woldsvaults.objectives.layouts.ElytraCrystalLayout;
+import xyz.iwolfking.woldsvaults.world.vault.layout.ElytraCrystalLayout;
 import xyz.iwolfking.woldsvaults.objectives.ScalingBallisticBingoCrystalObjective;
 
 public class ModCrystalObjectives {

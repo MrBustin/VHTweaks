@@ -14,7 +14,7 @@ import iskallia.vault.item.crystal.CrystalData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
-import xyz.iwolfking.woldsvaults.objectives.layouts.ElytraCrystalLayout;
+import xyz.iwolfking.woldsvaults.world.vault.layout.ElytraCrystalLayout;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

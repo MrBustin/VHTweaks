@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.objectives.layouts;
+package xyz.iwolfking.woldsvaults.world.vault.layout;
 
 import com.google.gson.JsonObject;
 import iskallia.vault.core.random.RandomSource;
@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.TooltipFlag;
-import xyz.iwolfking.woldsvaults.world.vault.layout.ElytraVaultLayout;
 
 import java.util.List;
 import java.util.Optional;
