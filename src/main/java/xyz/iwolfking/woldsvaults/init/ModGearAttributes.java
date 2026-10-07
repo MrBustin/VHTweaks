@@ -6,7 +6,6 @@ import iskallia.vault.gear.attribute.VaultGearAttribute;
 import iskallia.vault.gear.attribute.config.ConfigurableAttributeGenerator;
 import iskallia.vault.gear.attribute.custom.effect.EffectGearAttribute;
 import iskallia.vault.gear.attribute.custom.effect.EffectTrialAttribute;
-import iskallia.vault.gear.attribute.custom.loot.ManaPerLootAttribute;
 import iskallia.vault.gear.attribute.type.VaultGearAttributeType;
 import iskallia.vault.gear.comparator.VaultGearAttributeComparator;
 import iskallia.vault.gear.reader.VaultGearModifierReader;
@@ -18,160 +17,275 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.HemorrhagedEffect;
-import xyz.iwolfking.woldsvaults.gear.attribute.PercentManaPerLootAttribute;
-import xyz.iwolfking.woldsvaults.gear.attribute.custom.PoisonTrailReader;
+import xyz.iwolfking.woldsvaults.gear.attribute.special.PercentManaPerLootAttribute;
+import xyz.iwolfking.woldsvaults.gear.attribute.readers.JavelinConductReader;
+import xyz.iwolfking.woldsvaults.gear.attribute.readers.PoisonTrailReader;
 import xyz.iwolfking.woldsvaults.util.UniqueEffectGearAttribute;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
 
+import static iskallia.vault.gear.comparator.VaultGearAttributeComparator.booleanComparator;
+
 @Mod.EventBusSubscriber(modid = "woldsvaults", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModGearAttributes {
-    public static final VaultGearAttribute<Boolean> ROTATING_TOOL = attr("rotating", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Stylish", 15378160), VaultGearAttributeComparator.booleanComparator());
+    public static final VaultGearAttribute<Boolean> ROTATING_TOOL = attr("rotating",
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Stylish", 15378160),
+            VaultGearAttributeComparator.booleanComparator());
+
     public static final VaultGearAttribute<Integer> TRIDENT_LOYALTY = attr("trident_loyalty",
-            VaultGearAttributeType.intType(), ModGearAttributeGenerators.intRange(), ModGearAttributeReaders.addedIntReader("Loyalty", 3114911), VaultGearAttributeComparator.intComparator());
+            VaultGearAttributeType.intType(),
+            ModGearAttributeGenerators.intRange(),
+            ModGearAttributeReaders.addedIntReader("Loyalty", 3114911),
+            VaultGearAttributeComparator.intComparator());
+
     public static final VaultGearAttribute<Integer> TRIDENT_RIPTIDE = attr("trident_riptide",
-            VaultGearAttributeType.intType(), ModGearAttributeGenerators.intRange(), ModGearAttributeReaders.addedIntReader("Riptide", 9514005), VaultGearAttributeComparator.intComparator());
+            VaultGearAttributeType.intType(),
+            ModGearAttributeGenerators.intRange(),
+            ModGearAttributeReaders.addedIntReader("Riptide", 9514005),
+            VaultGearAttributeComparator.intComparator());
+
     public static final VaultGearAttribute<Float> TRIDENT_WINDUP = attr("trident_wind_up_percent",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Windup Time Reduction", 12925717), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Windup Time Reduction", 12925717),
+            VaultGearAttributeComparator.floatComparator());
+
     public static final VaultGearAttribute<Boolean> TRIDENT_CHANNELING = attr("trident_channeling",
-            VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Channeling", 12925823), VaultGearAttributeComparator.booleanComparator());
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Channeling", 12925823),
+            VaultGearAttributeComparator.booleanComparator());
 
     public static final VaultGearAttribute<Float> CHANNELING_CHANCE = attr("trident_channeling_chance",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Channeling Chance", 12925893), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Channeling Chance", 12925893),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Boolean> DISCHARGE = attr("discharge",
-            VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Discharge", 16777037), VaultGearAttributeComparator.booleanComparator());
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Discharge", 16777037),
+            VaultGearAttributeComparator.booleanComparator());
 
     public static final VaultGearAttribute<Float> COIN_DOUBLE_CHANCE = attr("coin_double_chance",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Piggy Procc", 14922686), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Piggy Procc", 14922686),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Boolean> TREASURE_AFFINITY = attr("treasure_affinity",
-            VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Treasure Affinity", 16749824), VaultGearAttributeComparator.booleanComparator());
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Treasure Affinity", 16749824),
+            VaultGearAttributeComparator.booleanComparator());
 
     public static final VaultGearAttribute<Integer> PIERCING = attr("piercing",
-            VaultGearAttributeType.intType(), ModGearAttributeGenerators.intRange(), ModGearAttributeReaders.addedIntReader("Piercing", 8847359), VaultGearAttributeComparator.intComparator());
+            VaultGearAttributeType.intType(),
+            ModGearAttributeGenerators.intRange(),
+            ModGearAttributeReaders.addedIntReader("Piercing", 8847359),
+            VaultGearAttributeComparator.intComparator());
 
     public static final VaultGearAttribute<Float> RETURNING_DAMAGE = attr("returning_damage",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Returning Damage", 8833629), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Returning Damage", 8833629),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> HEXING_CHANCE = attr("hexing_chance",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Hexing Chance", 11468966), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Hexing Chance", 11468966),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> CHAINING_DAMAGE = attr("chaining_damage",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Reduced Chaining Falloff", 6119096), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Reduced Chaining Falloff", 6119096),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> EXECUTION_DAMAGE = attr("execution_damage",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Execution Damage", 10302464), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Execution Damage", 10302464),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> THORNS_ADAPTATION = attr("thorns_scaling_damage",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Thorns Adaptation", 3134464), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Thorns Adaptation", 3134464),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> AP_SCALING_DAMAGE = attr("ap_scaling_damage",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Ability Power Scaling", 11422101), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Ability Power Scaling", 11422101),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<EffectGearAttribute> UNIQUE_EFFECT = attr("unique_effect",
-            EffectGearAttribute.type(), EffectGearAttribute.generator(), UniqueEffectGearAttribute.reader());
+            EffectGearAttribute.type(),
+            EffectGearAttribute.generator(),
+            UniqueEffectGearAttribute.reader());
 
     public static final VaultGearAttribute<Boolean> HEMORRHAGING = attr("hemorrhaging",
-            VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Hemorrhaging", HemorrhagedEffect.COLOR), VaultGearAttributeComparator.booleanComparator());
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Hemorrhaging", HemorrhagedEffect.COLOR),
+            VaultGearAttributeComparator.booleanComparator());
 
     public static final VaultGearAttribute<Boolean> MAGNET_ENDERGIZED = attr("endergized",
-            VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Endergized", 46276), VaultGearAttributeComparator.booleanComparator());
-
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Endergized", 46276),
+            VaultGearAttributeComparator.booleanComparator());
 
     public static final VaultGearAttribute<Float> REAVING_DAMAGE = attr("reaving_damage",
-            VaultGearAttributeType.floatType(), (ConfigurableAttributeGenerator<Float, ?>)ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Bonus Reaving Damage", 12417954), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            (ConfigurableAttributeGenerator<Float, ?>)ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Bonus Reaving Damage", 12417954),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> STUNNING_BLOCK = attr("stunning_block",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Stunning Block Chance", 6970061), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Stunning Block Chance", 6970061),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<EffectTrialAttribute> POISON_TRAIL = attr("poison_trail",
-            EffectTrialAttribute.type(), EffectTrialAttribute.generator(), new PoisonTrailReader(), EffectTrialAttribute.comparator());
-
+            EffectTrialAttribute.type(),
+            EffectTrialAttribute.generator(),
+            new PoisonTrailReader(),
+            EffectTrialAttribute.comparator());
 
     public static final VaultGearAttribute<Float> ECHOING_CHANCE = attr("echoing_chance",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Echoing Chance", 6886199), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Echoing Chance", 6886199),
+            VaultGearAttributeComparator.floatComparator());
     public static final VaultGearAttribute<Float> ECHOING_DAMAGE = attr("echoing_damage",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Increased Echoing Damage", 6886199), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Increased Echoing Damage", 6886199),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> ECHOING_DAMAGE_CAP = attr("echoing_damage_cap",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Increased Echoing Damage Cap", 6886199), VaultGearAttributeComparator.floatComparator());
-
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Increased Echoing Damage Cap", 6886199),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> MANA_COST_REDUCTION = attr("mana_cost_reduction",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Mana Cost Reduction", 20220), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Mana Cost Reduction", 20220),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> MANA_COST_REDUCTION_CAP = attr("mana_cost_reduction_cap",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Mana Cost Reduction Cap", 20220), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Mana Cost Reduction Cap", 20220),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> SWIFT_SNEAK = attr("swift_sneak",
-            VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Swift Sneak", 8356289), VaultGearAttributeComparator.floatComparator());
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Swift Sneak", 8356289),
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Integer> RICOCHET = attr("ricochet",
-            VaultGearAttributeType.intType(), ModGearAttributeGenerators.intRange(), ModGearAttributeReaders.addedIntReader("Ricochet", 5930400), VaultGearAttributeComparator.intComparator());
+            VaultGearAttributeType.intType(),
+            ModGearAttributeGenerators.intRange(),
+            ModGearAttributeReaders.addedIntReader("Ricochet", 5930400),
+            VaultGearAttributeComparator.intComparator());
 
     public static final VaultGearAttribute<Boolean> BREACHING = attr("breaching",
-            VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(),
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
             ModGearAttributeReaders.booleanReader("Breaching", 10031431),
-            VaultGearAttributeComparator.booleanComparator()
-    );
+            VaultGearAttributeComparator.booleanComparator());
 
     public static final VaultGearAttribute<Float> SIZE_SCALE = attr("size_scale",
             VaultGearAttributeType.floatType(),
             ModGearAttributeGenerators.floatRange(),
             ModGearAttributeReaders.percentageReader("Size Scale", 0xb891c4),
-            VaultGearAttributeComparator.floatComparator()
-    );
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> KINETIC_DAMAGE_REDUCTION_PERCENT = attr("kinetic_damage_reduction_percent",
             VaultGearAttributeType.floatType(),
             ModGearAttributeGenerators.floatRange(),
             ModGearAttributeReaders.percentageReader("Kinetic Damage Reduction", 0xb891c4),
-            VaultGearAttributeComparator.floatComparator()
-    );
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> FALL_DAMAGE_REDUCTION_PERCENT = attr("fall_damage_reduction_percent",
             VaultGearAttributeType.floatType(),
             ModGearAttributeGenerators.floatRange(),
             ModGearAttributeReaders.percentageReader("Fall Damage Reduction", 0x00C7C7),
-            VaultGearAttributeComparator.floatComparator()
-    );
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> AIR_MOBILITY_SPEED = attr("air_mobility_speed",
             VaultGearAttributeType.floatType(),
             ModGearAttributeGenerators.floatRange(),
             ModGearAttributeReaders.percentageReader("Air Mobility Speed", 0x00C764),
-            VaultGearAttributeComparator.floatComparator()
-    );
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Float> AIR_MOBILITY_CONTROL = attr("air_mobility_control",
             VaultGearAttributeType.floatType(),
             ModGearAttributeGenerators.floatRange(),
             ModGearAttributeReaders.percentageReader("Air Mobility Control", 0x00C764),
-            VaultGearAttributeComparator.floatComparator()
-    );
+            VaultGearAttributeComparator.floatComparator());
 
     public static final VaultGearAttribute<Pair<Float, Float>> AIR_MOBILITY = attr("air_mobility",
             VaultGearAttributeType.pairType(VaultGearAttributeType.floatType(), VaultGearAttributeType.floatType()),
             ModGearAttributeGenerators.pairGenerator(ModGearAttributeGenerators.floatRange(), ModGearAttributeGenerators.floatRange()),
             ModGearAttributeReaders.pairReader("Air Mobility", 0x00C764,
                     (speed, airMovement) -> new TextComponent(String.format(Locale.ROOT, "+%.0f%% speed, +%.0f%% air", speed * 100.0F, airMovement * 100.0F))),
-            null
-    );
+            null);
 
-    public static final VaultGearAttribute<Float> INCREASED_EFFECT_CLOUD_CHANCE = attr("effect_cloud_chance_additive", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Effect Cloud Chance", 3109217), VaultGearAttributeComparator.floatComparator());
+    public static final VaultGearAttribute<Float> INCREASED_EFFECT_CLOUD_CHANCE = attr("effect_cloud_chance_additive",
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Effect Cloud Chance", 3109217),
+            VaultGearAttributeComparator.floatComparator());
 
-    public static final VaultGearAttribute<Boolean> IMPLODING_JAVELIN = attr("javelin_implode", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Imploding Javelin", 3085471), VaultGearAttributeComparator.booleanComparator());
+    public static final VaultGearAttribute<Boolean> IMPLODING_JAVELIN = attr("javelin_implode",
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Imploding Javelin", 3085471),
+            VaultGearAttributeComparator.booleanComparator());
 
-    public static final VaultGearAttribute<Float> PARRY = attr("parry", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Parry", 12186190), VaultGearAttributeComparator.floatComparator());
+    public static final VaultGearAttribute<Float> PARRY = attr("parry",
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Parry", 12186190),
+            VaultGearAttributeComparator.floatComparator());
 
-    public static final VaultGearAttribute<Boolean> DRIPPING_LAVA = attr("dripping_lava", VaultGearAttributeType.booleanType(), ModGearAttributeGenerators.booleanFlag(), ModGearAttributeReaders.booleanReader("Dripping Lava", 12976128), VaultGearAttributeComparator.booleanComparator());
+    public static final VaultGearAttribute<Boolean> DRIPPING_LAVA = attr("dripping_lava",
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            ModGearAttributeReaders.booleanReader("Dripping Lava", 12976128),
+            VaultGearAttributeComparator.booleanComparator());
 
-    public static final VaultGearAttribute<Float> BURNING_HIT_CHANCE = attr("burning_hit_chance", VaultGearAttributeType.floatType(), ModGearAttributeGenerators.floatRange(), ModGearAttributeReaders.percentageReader("Burning Hit Chance", 12976128), VaultGearAttributeComparator.floatComparator());
+    public static final VaultGearAttribute<Float> BURNING_HIT_CHANCE = attr("burning_hit_chance",
+            VaultGearAttributeType.floatType(),
+            ModGearAttributeGenerators.floatRange(),
+            ModGearAttributeReaders.percentageReader("Burning Hit Chance", 12976128),
+            VaultGearAttributeComparator.floatComparator());
 
 
-    public static final VaultGearAttribute<PercentManaPerLootAttribute> PERCENT_MANA_PER_LOOTED_TILE = attr("percent_mana_per_looted_tile", PercentManaPerLootAttribute.type(), PercentManaPerLootAttribute.generator(), PercentManaPerLootAttribute.reader(), PercentManaPerLootAttribute.comparator());
+    public static final VaultGearAttribute<PercentManaPerLootAttribute> PERCENT_MANA_PER_LOOTED_TILE = attr("percent_mana_per_looted_tile",
+            PercentManaPerLootAttribute.type(),
+            PercentManaPerLootAttribute.generator(),
+            PercentManaPerLootAttribute.reader(),
+            PercentManaPerLootAttribute.comparator());
+
+    public static final VaultGearAttribute<Boolean> JAVELIN_CONDUCT = attr("javelin_conduct",
+            VaultGearAttributeType.booleanType(),
+            ModGearAttributeGenerators.booleanFlag(),
+            new JavelinConductReader("Javelin Conduct", 0xE35F12),
+            booleanComparator());
 
 
 
@@ -220,6 +334,7 @@ public class ModGearAttributes {
                       registry.register(DRIPPING_LAVA);
                       registry.register(BURNING_HIT_CHANCE);
                       registry.register(PERCENT_MANA_PER_LOOTED_TILE);
+                      registry.register(JAVELIN_CONDUCT);
 
     }
 

@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.gear.attribute;
+package xyz.iwolfking.woldsvaults.gear.attribute.special;
 
 import com.google.gson.JsonArray;
 import com.google.gson.annotations.Expose;

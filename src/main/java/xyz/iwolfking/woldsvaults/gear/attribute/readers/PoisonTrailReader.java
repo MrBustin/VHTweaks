@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.gear.attribute.custom;
+package xyz.iwolfking.woldsvaults.gear.attribute.readers;
 
 import com.google.gson.JsonArray;
 import iskallia.vault.gear.attribute.VaultGearAttributeInstance;

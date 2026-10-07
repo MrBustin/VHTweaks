@@ -431,6 +431,8 @@ public class LivingEntityEvents {
 
     }
 
+
+
     /**
      * Handles the reduction/cancellation of fall damage for players with the Feather Trinket equipped.
      * <p>

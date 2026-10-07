@@ -138,6 +138,7 @@
     "the_vault.custom.MixinGrantedEffectHelper",
     "the_vault.custom.MixinInventoryUtil",
     "the_vault.custom.MixinJavelinAbility",
+    "the_vault.custom.MixinSkillConduct",
     "the_vault.custom.MixinJewelItem",
     "the_vault.custom.MixinModDynamicModels",
     "the_vault.custom.MixinModDynamicModels$Armor",
