@@ -2,6 +2,7 @@ package xyz.iwolfking.woldsvaults.init;
 
 import com.mojang.datafixers.types.Type;
 import iskallia.vault.VaultMod;
+import iskallia.vault.block.BreakableCrateBlock;
 import iskallia.vault.block.CoinPileDecorBlock;
 import iskallia.vault.block.VaultCrateBlock;
 import iskallia.vault.block.render.ScavengerAltarRenderer;
@@ -73,6 +74,7 @@ public class ModBlocks {
     public static final VaultCrateBlock VAULT_CRATE_HAUNTED_BRAZIERS;
     public static final VaultCrateBlock VAULT_CRATE_BALLISTIC_BINGO;
     public static final VaultCrateBlock VAULT_CRATE_UNHINGED_SCAVENGER;
+    public static final BreakableCrateBlock CRYSTALLIZED_STONE;
     public static BlockItem VAULT_PALLADIUM;
     public static BlockItem VAULT_IRIDIUM;
 
@@ -110,6 +112,7 @@ public class ModBlocks {
         VAULT_CRATE_HAUNTED_BRAZIERS = new VaultCrateBlock();
         VAULT_CRATE_BALLISTIC_BINGO = new VaultCrateBlock();
         VAULT_CRATE_UNHINGED_SCAVENGER = new VaultCrateBlock();
+        CRYSTALLIZED_STONE = new BreakableCrateBlock();
         VAULT_PALLADIUM  = new CoinBlockItem(VAULT_PALLADIUM_PILE, new Item.Properties().tab(iskallia.vault.init.ModItems.VAULT_MOD_GROUP));
         VAULT_IRIDIUM  = new CoinBlockItem(VAULT_IRIDIUM_PILE, new Item.Properties().tab(iskallia.vault.init.ModItems.VAULT_MOD_GROUP));
         VAULT_SALVAGER_BLOCK = new VaultSalvagerBlock();
@@ -180,6 +183,7 @@ public class ModBlocks {
         registerBlock(event, VAULT_CRATE_HAUNTED_BRAZIERS, WoldsVaults.id("vault_crate_haunted_braziers"));
         registerBlock(event, VAULT_CRATE_BALLISTIC_BINGO, WoldsVaults.id("vault_crate_ballistic_bingo"));
         registerBlock(event, VAULT_CRATE_UNHINGED_SCAVENGER, WoldsVaults.id("vault_crate_unhinged_scavenger"));
+        registerBlock(event, CRYSTALLIZED_STONE, WoldsVaults.id("crystallized_stone"));
         registerBlock(event, CHROMATIC_GOLD_BLOCK, WoldsVaults.id("chromatic_gold_block"));
         registerBlock(event, OMEGA_POG_BLOCK, WoldsVaults.id("omega_pog_block"));
         registerBlock(event, ECHO_POG_BLOCK, WoldsVaults.id("echo_pog_block"));
@@ -244,6 +248,7 @@ public class ModBlocks {
         registerBlockItem(event, VAULT_CRATE_HAUNTED_BRAZIERS);
         registerBlockItem(event, VAULT_CRATE_BALLISTIC_BINGO);
         registerBlockItem(event, VAULT_CRATE_UNHINGED_SCAVENGER);
+        registerBlockItem(event, CRYSTALLIZED_STONE);
 
     }
 
