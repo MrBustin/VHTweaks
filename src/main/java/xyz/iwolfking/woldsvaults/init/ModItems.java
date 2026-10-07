@@ -175,6 +175,7 @@ public class ModItems {
     //Focus
     public static BasicItem BLAZING_FOCUS;
     public static BasicItem ECCENTRIC_FOCUS;
+    public static BasicItem EMPOWERED_FUNDAMENTAL_FOCUS;
 
 
 
@@ -288,6 +289,7 @@ public class ModItems {
         XL_BACKPACK.setRegistryName(WoldsVaults.MODID, "xl_backpack");
         BLAZING_FOCUS = new BasicItem(WoldsVaults.id("blazing_focus"));
         ECCENTRIC_FOCUS = new BasicItem(WoldsVaults.id("eccentric_focus"));
+        EMPOWERED_FUNDAMENTAL_FOCUS = new BasicItem(WoldsVaults.id("empowered_fundamental_focus"));
         GREED_TREE_RESET_ITEM = new GreedTreeResetItem(WoldsVaults.id("greed_neuralizer"));
 
 
@@ -398,6 +400,7 @@ public class ModItems {
         registry.register(SUPER_MUSHROOM);
         registry.register(BLAZING_FOCUS);
         registry.register(ECCENTRIC_FOCUS);
+        registry.register(EMPOWERED_FUNDAMENTAL_FOCUS);
         registry.register(GREED_TREE_RESET_ITEM);
 
     }

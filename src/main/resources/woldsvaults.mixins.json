@@ -112,6 +112,7 @@
     "the_vault.accessors.VanillaAttributeTalentAccessor",
     "the_vault.accessors.VaultGearCommonConfigAccessor",
     "the_vault.accessors.VaultGearModifierHelperAccessor",
+    "the_vault.accessors.VaultGearModificationConfigAccessor",
     "the_vault.accessors.VaultGearRollTypeConfigAccessor",
     "the_vault.accessors.VaultGearRollTypeConfigRollTypeAccessor",
     "the_vault.accessors.VaultGearTierConfigAccessor",

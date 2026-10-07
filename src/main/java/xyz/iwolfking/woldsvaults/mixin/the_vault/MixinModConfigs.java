@@ -11,6 +11,7 @@ import iskallia.vault.VaultMod;
 import iskallia.vault.config.entry.IntRangeEntry;
 import iskallia.vault.config.entry.recipe.ConfigToolRecipe;
 import iskallia.vault.config.gear.VaultGearTierConfig;
+import iskallia.vault.config.gear.VaultGearModificationConfig;
 import iskallia.vault.config.gear.VaultGearTypeConfig;
 import iskallia.vault.gear.VaultGearRarity;
 import iskallia.vault.init.ModBlocks;
@@ -33,6 +34,8 @@ import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearCommonConfig
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearRollTypeConfigAccessor;
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearRollTypeConfigRollTypeAccessor;
 import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearTierConfigAccessor;
+import xyz.iwolfking.woldsvaults.mixin.the_vault.accessors.VaultGearModificationConfigAccessor;
+import xyz.iwolfking.woldsvaults.init.ModGearModifications;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,6 +69,11 @@ public class MixinModConfigs {
     @Inject(method = "register", at = @At("TAIL"), remap = false)
     private static void onReloadConfigs(CallbackInfo ci) {
         xyz.iwolfking.woldsvaults.init.ModConfigs.register();
+
+        ((VaultGearModificationConfigAccessor) ModConfigs.VAULT_GEAR_MODIFICATION_CONFIG)
+                .woldsvaults$getOperationConfiguration()
+                .put(ModGearModifications.EMPOWERED_FUNDAMENTAL_GEAR_MODIFICATION.getRegistryName(),
+                        new VaultGearModificationConfig.OperationConfig(24, 24, 8.0F, 2.0F, 3.5F, 0.5F));
 
         Set<ResourceLocation> CURRENT_GEAR_CONFIGS =new HashSet<>(ModConfigs.VAULT_GEAR_CONFIG.keySet());
 

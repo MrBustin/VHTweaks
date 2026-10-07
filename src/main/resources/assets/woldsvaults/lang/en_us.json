@@ -396,5 +396,8 @@
     "the_vault.gear_modification.unfreeze_all.no_modifiers": "There are no frozen modifiers to unfreeze",
     "the_vault.gear_modification.add_unusual_modifier.description": "Add unusual modifier",
     "the_vault.gear_modification.add_unusual_modifier.full": "You cannot add more unusual modifiers to this gear piece",
-    "the_vault.gear_modification.add_unusual_modifier.no_modifiers": "No additional modifiers available"
+    "the_vault.gear_modification.add_unusual_modifier.no_modifiers": "No additional modifiers available",
+    "item.woldsvaults.empowered_fundamental_focus": "Empowered Fundamental Focus",
+    "the_vault.gear_modification.improve_implicit.description": "Improve a random implicit modifier",
+    "the_vault.gear_modification.improve_implicit.all_max": "All implicit modifiers are already at their maximum value"
 }
