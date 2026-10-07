@@ -77,6 +77,7 @@ import xyz.iwolfking.woldsvaults.objectives.InfiniteRaidObjective;
 import xyz.iwolfking.woldsvaults.objectives.data.BrutalBossesRegistry;
 import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
 import xyz.iwolfking.woldsvaults.world.overworld.structure.OverworldVaultStructures;
+import xyz.iwolfking.woldsvaults.world.vault.layout.ElytraVaultLayout;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("woldsvaults")
@@ -143,6 +144,7 @@ public class WoldsVaults {
         ModModels.register();
         ModNetwork.initialize();
         VaultRegistry.OBJECTIVE.add(InfiniteRaidObjective.KEY);
+        VaultRegistry.GRID_LAYOUT.add(ElytraVaultLayout.KEY);
     }
 
     private void additionsClientSetup(final FMLClientSetupEvent event) {

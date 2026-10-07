@@ -14,6 +14,7 @@ import iskallia.vault.item.crystal.CrystalData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import xyz.iwolfking.woldsvaults.init.ModCustomVaultObjectiveEntries;
+import xyz.iwolfking.woldsvaults.objectives.layouts.ElytraCrystalLayout;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -24,6 +25,10 @@ public class ElytraCrystalObjective extends WoldCrystalObjective {
     @Override
     public void configure(Vault vault, RandomSource random, @Nullable String sigil) {
         int level = vault.get(Vault.LEVEL).get();
+
+        // Elytra objectives always use their branch-free course, including when
+        // the objective was assigned with a command rather than a seal.
+        new ElytraCrystalLayout().configure(vault, random, sigil);
 
         vault.ifPresent(Vault.OBJECTIVES, objectives -> {
             objectives.add(ElytraObjective.of(PILLAR_PROBABILITY)
