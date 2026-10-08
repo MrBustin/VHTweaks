@@ -53,6 +53,10 @@ public class ModBlocks {
     public static final Block COMPRESSED_VAULT_ESSENCE_2;
     public static final Block COMPRESSED_VAULT_CARBON;
     public static final Block KNOWLEDGE_STAR_BLOCK;
+    public static final Block WENDARR_SAND;
+    public static final Block TENOS_SAND;
+    public static final Block VELARA_SAND;
+    public static final Block IDONA_SAND;
 
 
     public static final VaultSalvagerBlock VAULT_SALVAGER_BLOCK;
@@ -140,6 +144,10 @@ public class ModBlocks {
         COMPRESSED_VAULT_ESSENCE = new Block(BlockBehaviour.Properties.copy(Blocks.SAND).strength(8.0F, 200.0F));
         COMPRESSED_VAULT_ESSENCE_2 = new Block(BlockBehaviour.Properties.copy(Blocks.SAND).strength(10.0F, 200.0F));
         KNOWLEDGE_STAR_BLOCK = new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).strength(3.0F, 6.0F));
+        WENDARR_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
+        TENOS_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
+        VELARA_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
+        IDONA_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
         VAULT_SALVAGER_ENTITY = BlockEntityType.Builder.of(VaultSalvagerTileEntity::new, new Block[]{VAULT_SALVAGER_BLOCK}).build((Type)null);
         ISKALLIAN_LEAVES_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(IskallianLeavesTileEntity::new, new Block[]{ISKALLIAN_LEAVES_BLOCK}).build((Type)null);
         HELLISH_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(HellishSandTileEntity::new, new Block[]{HELLISH_SAND_BLOCK}).build((Type)null);
@@ -193,6 +201,10 @@ public class ModBlocks {
         registerBlock(event, COMPRESSED_VAULT_ESSENCE_2, WoldsVaults.id("compressed_vault_essence_2"));
         registerBlock(event, COMPRESSED_VAULT_CARBON, WoldsVaults.id("compressed_vault_carbon"));
         registerBlock(event, KNOWLEDGE_STAR_BLOCK, WoldsVaults.id("knowledge_star_block"));
+        registerBlock(event, WENDARR_SAND, WoldsVaults.id("wendarr_sand"));
+        registerBlock(event, TENOS_SAND, WoldsVaults.id("tenos_sand"));
+        registerBlock(event, VELARA_SAND, WoldsVaults.id("velara_sand"));
+        registerBlock(event, IDONA_SAND, WoldsVaults.id("idona_sand"));
         registerBlock(event, XL_BACKPACK, WoldsVaults.id("xl_backpack"));
 
     }
@@ -240,6 +252,10 @@ public class ModBlocks {
         registerBlockItem(event, COMPRESSED_VAULT_ESSENCE_2);
         registerBlockItem(event, COMPRESSED_VAULT_CARBON);
         registerBlockItem(event, KNOWLEDGE_STAR_BLOCK);
+        registerBlockItem(event, WENDARR_SAND);
+        registerBlockItem(event, TENOS_SAND);
+        registerBlockItem(event, VELARA_SAND);
+        registerBlockItem(event, IDONA_SAND);
         registerBlockItem(event, VAULT_PALLADIUM_PILE, VAULT_PALLADIUM);
         registerBlockItem(event, VAULT_IRIDIUM_PILE, VAULT_IRIDIUM);
         registerBlockItem(event, BREWING_ALTAR);
