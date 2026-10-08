@@ -10,12 +10,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.iwolfking.woldsvaults.init.ModBlocks;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +26,11 @@ public class HellishSandTileEntity extends LootableTileEntity implements Templat
     private final List<String> templateTags = new ArrayList();
 
     public HellishSandTileEntity(BlockPos pos, BlockState state) {
-        super(ModBlocks.HELLISH_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, pos, state);
+        this(ModBlocks.HELLISH_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, pos, state);
+    }
+
+    protected HellishSandTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, HellishSandTileEntity tile) {
@@ -55,15 +59,26 @@ public class HellishSandTileEntity extends LootableTileEntity implements Templat
 
             if (hasEmptyBlockAround) {
                 ParticleEngine engine = Minecraft.getInstance().particleEngine;
-                float hueGold = 0.125F;
-                color = Color.HSBtoRGB(hueGold, 0.2F + rand.nextFloat() * 0.6F, 1.0F);
-                float r = 128;
-                float g = 0;
-                float b = 0;
                 SimpleAnimatedParticle particle = (SimpleAnimatedParticle)engine.createParticle(ParticleTypes.FIREWORK.getType(), (double)pos.getX() + 0.5 + (double)(rand.nextFloat() * (float)(rand.nextBoolean() ? 1 : -1)), (double)pos.getY() + 0.5 + (double)(rand.nextFloat() * (float)(rand.nextBoolean() ? 1 : -1)), (double)pos.getZ() + 0.5 + (double)(rand.nextFloat() * (float)(rand.nextBoolean() ? 1 : -1)), 0.0, (double)(rand.nextFloat() * 0.01F), 0.0);
-                particle.setColor(r, g, b);
+                particle.setColor(
+                        tile.getParticleRed() / 255.0F,
+                        tile.getParticleGreen() / 255.0F,
+                        tile.getParticleBlue() / 255.0F
+                );
             }
         }
+    }
+
+    protected int getParticleRed() {
+        return 255;
+    }
+
+    protected int getParticleGreen() {
+        return 0;
+    }
+
+    protected int getParticleBlue() {
+        return 0;
     }
 
     public List<String> getTemplateTags() {

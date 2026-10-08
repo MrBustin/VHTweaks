@@ -53,10 +53,12 @@ public class ModBlocks {
     public static final Block COMPRESSED_VAULT_ESSENCE_2;
     public static final Block COMPRESSED_VAULT_CARBON;
     public static final Block KNOWLEDGE_STAR_BLOCK;
-    public static final Block WENDARR_SAND;
-    public static final Block TENOS_SAND;
-    public static final Block VELARA_SAND;
-    public static final Block IDONA_SAND;
+
+
+    public static final HellishSandBlock WENDARR_SAND;
+    public static final HellishSandBlock TENOS_SAND;
+    public static final HellishSandBlock VELARA_SAND;
+    public static final HellishSandBlock IDONA_SAND;
 
 
     public static final VaultSalvagerBlock VAULT_SALVAGER_BLOCK;
@@ -90,6 +92,10 @@ public class ModBlocks {
     public static final BlockEntityType<VaultSalvagerTileEntity> VAULT_SALVAGER_ENTITY;
     public static final BlockEntityType<IskallianLeavesTileEntity> ISKALLIAN_LEAVES_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     public static final BlockEntityType<HellishSandTileEntity> HELLISH_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    public static final BlockEntityType<WendarrSandTileEntity> WENDARR_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    public static final BlockEntityType<TenosSandTileEntity> TENOS_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    public static final BlockEntityType<VelaraSandTileEntity> VELARA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    public static final BlockEntityType<IdonaSandTileEntity> IDONA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     public static final BlockEntityType<DungeonPedestalTileEntity> DUNGEON_PEDESTAL_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     public static final BlockEntityType<DecoScavengerAltarEntity> DECO_SCAVENGER_ALTAR_ENTITY_BLOCK_ENTITY_TYPE;
     public static final BlockEntityType<DecoBossRunePillarEntity> DECO_BOSS_RUNE_PILLAR_ENTITY_BLOCK_ENTITY_TYPE;
@@ -122,6 +128,10 @@ public class ModBlocks {
         VAULT_SALVAGER_BLOCK = new VaultSalvagerBlock();
         ISKALLIAN_LEAVES_BLOCK = new IskallianLeavesBlock();
         HELLISH_SAND_BLOCK = new HellishSandBlock();
+        WENDARR_SAND = new HellishSandBlock(ModBlocks::getWendarrSandTileEntityType);
+        TENOS_SAND = new HellishSandBlock(ModBlocks::getTenosSandTileEntityType);
+        VELARA_SAND = new HellishSandBlock(ModBlocks::getVelaraSandTileEntityType);
+        IDONA_SAND = new HellishSandBlock(ModBlocks::getIdonaSandTileEntityType);
         DUNGEON_PEDESTAL_BLOCK = new DungeonPedestalBlock();
         DECO_SCAVENGER_ALTAR_BLOCK = new DecoScavengerAltarBlock();
         DECO_BOSS_RUNE_PILLAR_BLOCK = new DecoBossRunePillarBlock();
@@ -144,13 +154,13 @@ public class ModBlocks {
         COMPRESSED_VAULT_ESSENCE = new Block(BlockBehaviour.Properties.copy(Blocks.SAND).strength(8.0F, 200.0F));
         COMPRESSED_VAULT_ESSENCE_2 = new Block(BlockBehaviour.Properties.copy(Blocks.SAND).strength(10.0F, 200.0F));
         KNOWLEDGE_STAR_BLOCK = new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).strength(3.0F, 6.0F));
-        WENDARR_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
-        TENOS_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
-        VELARA_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
-        IDONA_SAND = new Block(BlockBehaviour.Properties.copy(Blocks.SAND));
         VAULT_SALVAGER_ENTITY = BlockEntityType.Builder.of(VaultSalvagerTileEntity::new, new Block[]{VAULT_SALVAGER_BLOCK}).build((Type)null);
         ISKALLIAN_LEAVES_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(IskallianLeavesTileEntity::new, new Block[]{ISKALLIAN_LEAVES_BLOCK}).build((Type)null);
         HELLISH_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(HellishSandTileEntity::new, new Block[]{HELLISH_SAND_BLOCK}).build((Type)null);
+        WENDARR_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(WendarrSandTileEntity::new, new Block[]{WENDARR_SAND}).build((Type)null);
+        TENOS_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(TenosSandTileEntity::new, new Block[]{TENOS_SAND}).build((Type)null);
+        VELARA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(VelaraSandTileEntity::new, new Block[]{VELARA_SAND}).build((Type)null);
+        IDONA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(IdonaSandTileEntity::new, new Block[]{IDONA_SAND}).build((Type)null);
         DUNGEON_PEDESTAL_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(DungeonPedestalTileEntity::new, new Block[]{DUNGEON_PEDESTAL_BLOCK}).build((Type)null);
         DECO_SCAVENGER_ALTAR_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(DecoScavengerAltarEntity::new, new Block[]{DECO_SCAVENGER_ALTAR_BLOCK}).build((Type)null);
         DECO_BOSS_RUNE_PILLAR_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(DecoBossRunePillarEntity::new, new Block[]{DECO_BOSS_RUNE_PILLAR_BLOCK}).build((Type)null);
@@ -212,6 +222,10 @@ public class ModBlocks {
         registerTileEntity(event, VAULT_SALVAGER_ENTITY, VaultMod.id("vault_salvager_tile_entity"));
         registerTileEntity(event, ISKALLIAN_LEAVES_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("iskallian_leaves_tile_entity"));
         registerTileEntity(event, HELLISH_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("hellish_sand_tile_entity"));
+        registerTileEntity(event, WENDARR_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("wendarr_sand_tile_entity"));
+        registerTileEntity(event, TENOS_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("tenos_sand_tile_entity"));
+        registerTileEntity(event, VELARA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("velara_sand_tile_entity"));
+        registerTileEntity(event, IDONA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("idona_sand_tile_entity"));
         registerTileEntity(event, DUNGEON_PEDESTAL_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("dungeon_pedestal_tile_entity"));
         registerTileEntity(event, DECO_SCAVENGER_ALTAR_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("scavenger_altar_deco_tile_entity"));
         registerTileEntity(event, DECO_BOSS_RUNE_PILLAR_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("boss_rune_pillar_deco_tile_entity"));
@@ -281,6 +295,22 @@ public class ModBlocks {
     private static void registerBlock(RegistryEvent.Register<Block> event, Block block, ResourceLocation id) {
         block.setRegistryName(id);
         event.getRegistry().register(block);
+    }
+
+    private static BlockEntityType<WendarrSandTileEntity> getWendarrSandTileEntityType() {
+        return WENDARR_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    }
+
+    private static BlockEntityType<TenosSandTileEntity> getTenosSandTileEntityType() {
+        return TENOS_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    }
+
+    private static BlockEntityType<VelaraSandTileEntity> getVelaraSandTileEntityType() {
+        return VELARA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
+    }
+
+    private static BlockEntityType<IdonaSandTileEntity> getIdonaSandTileEntityType() {
+        return IDONA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     }
 
 
