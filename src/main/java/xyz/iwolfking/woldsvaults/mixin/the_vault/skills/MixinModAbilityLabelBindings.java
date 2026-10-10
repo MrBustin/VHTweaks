@@ -92,5 +92,14 @@ public abstract class MixinModAbilityLabelBindings {
                 "manaCost",
                 ability -> AbilityLabelFormatters.integer((int) ability.getManaCost())
         ));
+
+        ModAbilityLabelBindings.register(EmpowerFireAuraAbility.class, Map.of(
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
+                "manaCostPerSecond",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCostPerSecond()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+        ));
     }
 }
