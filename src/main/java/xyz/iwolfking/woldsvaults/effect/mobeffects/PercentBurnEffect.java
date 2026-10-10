@@ -90,22 +90,21 @@ public class PercentBurnEffect extends MobEffect {
         );
     }
 
-    public static void applyBurnEffect(LivingEntity target, int durationTicks, float snapshotValue, @Nullable LivingEntity attacker) {
-        target.addEffect(new MobEffectInstance(
-                ModEffects.BURN,
-                durationTicks,
-                0,
-                false,
-                true,
-                true
-        ));
-
+    public static void applyBurnEffect(LivingEntity target, int durationTicks, int amplifier, float snapshotValue, @Nullable LivingEntity attacker) {
         CompoundTag data = target.getPersistentData();
         data.putFloat(BURN_ATTACK_SNAPSHOT, snapshotValue);
 
         if (attacker != null) {
             data.putUUID(BURN_SOURCE_UUID, attacker.getUUID());
+        } else {
+            data.remove(BURN_SOURCE_UUID);
         }
+
+        target.addEffect(new MobEffectInstance(ModEffects.BURN, durationTicks, amplifier, false, true, true));
+    }
+
+    public static void applyBurnEffect(LivingEntity target, int durationTicks, float snapshotValue, @Nullable LivingEntity attacker) {
+        applyBurnEffect(target, durationTicks, 0, snapshotValue, attacker);
     }
 
     public static void applyPercentBurn(LivingEntity target, LivingEntity attacker, int durationTicks, double snapshotValue) {
