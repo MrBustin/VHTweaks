@@ -56,9 +56,10 @@ public class TooltipEvent extends ForgeEvent<TooltipEvent, ItemTooltipEvent> {
         DynamicModel<?> model = ModelUtil.getDynamicModel(itemStack, false);
         addEffectTooltip(toolTip, "Model Bonus:", Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(model));
 
-        if (model instanceof ArmorPieceModel piece) {
-            addEffectTooltip(toolTip, "Full Set Bonus:", Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(piece.getArmorModel()));
-        }
+        // Full-set transmog bonuses are disabled.
+        // if (model instanceof ArmorPieceModel piece) {
+        //     addEffectTooltip(toolTip, "Full Set Bonus:", Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(piece.getArmorModel()));
+        // }
     }
 
     private static void addEffectTooltip(List<Component> toolTip, String type, List<TransmogEffect> effects) {
