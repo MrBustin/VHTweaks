@@ -10,12 +10,11 @@ import iskallia.vault.skill.base.Skill;
 import iskallia.vault.skill.base.SkillContext;
 import iskallia.vault.skill.tree.AbilityTree;
 import iskallia.vault.util.AABBHelper;
+import iskallia.vault.util.calc.AbilityPowerHelper;
 import iskallia.vault.util.calc.AreaOfEffectHelper;
 import iskallia.vault.world.data.PlayerAbilitiesData;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,13 +40,13 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     private static final int FIRE_TICKS_DURATION = 40;
 
     private float radius;
-    private int fireAmplifier;
+    private float percentAbilityPowerDealt;
 
     public EmpowerFireAuraAbility(int unlockLevel, int learnPointCost, int regretPointCost, int cooldownTicks,
-                                      float manaCostPerSecond, int durationTicks, float radius, int fireAmplifier) {
+                                      float manaCostPerSecond, int durationTicks, float radius, float percentAbilityPowerDealt) {
         super(unlockLevel, learnPointCost, regretPointCost, cooldownTicks, manaCostPerSecond, durationTicks);
         this.radius = radius;
-        this.fireAmplifier = fireAmplifier;
+        this.percentAbilityPowerDealt = percentAbilityPowerDealt;
     }
 
     public EmpowerFireAuraAbility() {
@@ -69,15 +67,15 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
         return realRadius;
     }
 
-    public int getFireAmplifier() {
-        return this.fireAmplifier;
+    public float getPercentAbilityPowerDealt() {
+        return this.percentAbilityPowerDealt;
     }
 
     @Override
     protected ActionResult doToggle(SkillContext context) {
         return context.getSource().as(ServerPlayer.class).map(player -> {
             if (this.isActive()) {
-                int amplifier = Mth.clamp(this.getFireAmplifier() * 100, 0, 100);
+                int amplifier = Mth.clamp(Mth.floor(this.getPercentAbilityPowerDealt() * 100), 0, 100);
                 ModEffects.EMPOWER_FIRE_AURA.addTo(player, amplifier);
                 return ActionResult.successCooldownDeferred();
 
@@ -142,31 +140,17 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
             );
 
             nearbyMobs.forEach(mob -> {
-                        if (!mob.hasEffect(ModEffects.BURN) || mob.getEffect(ModEffects.BURN).getAmplifier() < ability.getFireAmplifier()) {
-                            PercentBurnEffect.applyBurnEffect(mob, FIRE_TICKS_DURATION, ability.getFireAmplifier(), (float)player.getAttributeValue(Attributes.ATTACK_DAMAGE), player
+                        if (!mob.hasEffect(ModEffects.BURN)) {
+                            float damagePerTick = AbilityPowerHelper.getAbilityPower(player)
+                                    * ability.getPercentAbilityPowerDealt();
+                            PercentBurnEffect.applyAbilityPowerBurn(
+                                    mob, FIRE_TICKS_DURATION, damagePerTick, player
                             );
                         }
                     }
             );
         }
     }
-
-//    private static void spawnAuraParticles(ServerPlayer player, float radius) {
-//        if (!(player.level instanceof ServerLevel level) || level.getGameTime() % 4 != 0) {
-//            return;
-//        }
-//
-//        int particleCount = Mth.clamp(Mth.ceil(radius * 4.0F), 12, 32);
-//        double rotation = level.getGameTime() * 0.08;
-//
-//        for (int i = 0; i < particleCount; i++) {
-//            double angle = rotation + Math.PI * 2.0 * i / particleCount;
-//            double x = player.getX() + Math.cos(angle) * radius;
-//            double z = player.getZ() + Math.sin(angle) * radius;
-//
-//            level.sendParticles(ParticleTypes.FLAME, x, player.getY() + 0.15, z, 1, 0.0, 0.05, 0.0, 0.01);
-//        }
-//    }
 
     public static class EmpowerFireAuraEffect extends EmpowerAbility.EmpowerEffect {
 
@@ -183,21 +167,21 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     public void writeBits(BitBuffer buffer) {
         super.writeBits(buffer);
         Adapters.FLOAT.writeBits(this.radius, buffer);
-        Adapters.INT_SEGMENTED_3.writeBits(this.fireAmplifier, buffer);
+        Adapters.FLOAT.writeBits(this.percentAbilityPowerDealt, buffer);
     }
 
     @Override
     public void readBits(BitBuffer buffer) {
         super.readBits(buffer);
         this.radius = Adapters.FLOAT.readBits(buffer).orElseThrow();
-        this.fireAmplifier = Adapters.INT_SEGMENTED_3.readBits(buffer).orElseThrow();
+        this.percentAbilityPowerDealt = Adapters.FLOAT.readBits(buffer).orElseThrow();
     }
 
     @Override
     public Optional<CompoundTag> writeNbt() {
         return super.writeNbt().map(nbt -> {
             Adapters.FLOAT.writeNbt(this.radius).ifPresent(tag -> nbt.put("radius", tag));
-            Adapters.INT.writeNbt(this.fireAmplifier).ifPresent(tag -> nbt.put("fireAmplifier", tag));
+            Adapters.FLOAT.writeNbt(this.percentAbilityPowerDealt).ifPresent(tag -> nbt.put("percentAbilityPowerDealt", tag));
             return nbt;
         });
     }
@@ -206,14 +190,14 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     public void readNbt(CompoundTag nbt) {
         super.readNbt(nbt);
         this.radius = Adapters.FLOAT.readNbt(nbt.get("radius")).orElse(0.0F);
-        this.fireAmplifier = Adapters.INT.readNbt(nbt.get("fireAmplifier")).orElse(0);
+        this.percentAbilityPowerDealt = Adapters.FLOAT.readNbt(nbt.get("percentAbilityPowerDealt")).orElse(0.0F);
     }
 
     @Override
     public Optional<JsonObject> writeJson() {
         return super.writeJson().map(json -> {
             Adapters.FLOAT.writeJson(this.radius).ifPresent(element -> json.add("radius", element));
-            Adapters.INT.writeJson(this.fireAmplifier).ifPresent(element -> json.add("fireAmplifier", element));
+            Adapters.FLOAT.writeJson(this.percentAbilityPowerDealt).ifPresent(element -> json.add("percentAbilityPowerDealt", element));
             return json;
         });
     }
@@ -222,6 +206,6 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     public void readJson(JsonObject json) {
         super.readJson(json);
         this.radius = Adapters.FLOAT.readJson(json.get("radius")).orElse(0.0F);
-        this.fireAmplifier = Adapters.INT.readJson(json.get("fireAmplifier")).orElse(0);
+        this.percentAbilityPowerDealt = Adapters.FLOAT.readJson(json.get("percentAbilityPowerDealt")).orElse(0.0F);
     }
 }

@@ -65,5 +65,9 @@ public abstract class MixinAbilityLabelFactory {
                 "effectAmplifier",
                 context -> label("\n Effect Amplifier: ",binding(context.config(), "effectAmplifier"),"radius")
         );
+        FACTORY_MAP.put(
+                "percentAbilityPowerDealt",
+                context -> label("\n Percent Ability Power Dealt: ",binding(context.config(), "percentAbilityPowerDealt"),"ability_power")
+        );
     }
 }

@@ -24,6 +24,8 @@ public class PercentBurnEffect extends MobEffect {
 
     public static final String BURN_ATTACK_SNAPSHOT = "PercentBurnAttackDamage";
     public static final String BURN_SOURCE_UUID = "PercentBurnSourceUUID";
+    public static final String BURN_DAMAGE_IS_FINAL = "PercentBurnDamageIsFinal";
+    public static final String BURN_IS_ABILITY_POWER = "PercentBurnIsAbilityPower";
 
     public PercentBurnEffect() {
         super(MobEffectCategory.HARMFUL, 0xFF4500);
@@ -51,8 +53,9 @@ public class PercentBurnEffect extends MobEffect {
             return;
         }
 
-        float percentPerSecond = 0.10f + (0.10f * amplifier);
-        float damage = attackSnapshot * percentPerSecond;
+        float damage = data.getBoolean(BURN_DAMAGE_IS_FINAL)
+                ? attackSnapshot
+                : attackSnapshot * (0.10f + (0.10f * amplifier));
 
         DamageSource source;
 
@@ -71,7 +74,15 @@ public class PercentBurnEffect extends MobEffect {
             source = DamageSource.MAGIC;
         }
 
-        ActiveFlags.IS_DOT_ATTACKING.runIfNotSet(() -> target.hurt(source, damage));
+        Runnable dealDamage = () -> ActiveFlags.IS_DOT_ATTACKING.runIfNotSet(
+                () -> target.hurt(source, damage)
+        );
+
+        if (data.getBoolean(BURN_IS_ABILITY_POWER)) {
+            ActiveFlags.IS_AP_ATTACKING.runIfNotSet(dealDamage);
+        } else {
+            dealDamage.run();
+        }
 
         spawnFireParticles(target);
     }
@@ -93,6 +104,8 @@ public class PercentBurnEffect extends MobEffect {
     public static void applyBurnEffect(LivingEntity target, int durationTicks, int amplifier, float snapshotValue, @Nullable LivingEntity attacker) {
         CompoundTag data = target.getPersistentData();
         data.putFloat(BURN_ATTACK_SNAPSHOT, snapshotValue);
+        data.putBoolean(BURN_DAMAGE_IS_FINAL, false);
+        data.putBoolean(BURN_IS_ABILITY_POWER, false);
 
         if (attacker != null) {
             data.putUUID(BURN_SOURCE_UUID, attacker.getUUID());
@@ -101,6 +114,22 @@ public class PercentBurnEffect extends MobEffect {
         }
 
         target.addEffect(new MobEffectInstance(ModEffects.BURN, durationTicks, amplifier, false, true, true));
+    }
+
+    public static void applyAbilityPowerBurn(LivingEntity target, int durationTicks, float damagePerTick,
+                                             @Nullable LivingEntity attacker) {
+        CompoundTag data = target.getPersistentData();
+        data.putFloat(BURN_ATTACK_SNAPSHOT, damagePerTick);
+        data.putBoolean(BURN_DAMAGE_IS_FINAL, true);
+        data.putBoolean(BURN_IS_ABILITY_POWER, true);
+
+        if (attacker != null) {
+            data.putUUID(BURN_SOURCE_UUID, attacker.getUUID());
+        } else {
+            data.remove(BURN_SOURCE_UUID);
+        }
+
+        target.addEffect(new MobEffectInstance(ModEffects.BURN, durationTicks, 0, false, true, true));
     }
 
     public static void applyBurnEffect(LivingEntity target, int durationTicks, float snapshotValue, @Nullable LivingEntity attacker) {
@@ -126,5 +155,7 @@ public class PercentBurnEffect extends MobEffect {
         CompoundTag data = entity.getPersistentData();
         data.remove(BURN_ATTACK_SNAPSHOT);
         data.remove(BURN_SOURCE_UUID);
+        data.remove(BURN_DAMAGE_IS_FINAL);
+        data.remove(BURN_IS_ABILITY_POWER);
     }
 }
