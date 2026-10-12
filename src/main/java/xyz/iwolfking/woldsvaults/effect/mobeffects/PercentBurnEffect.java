@@ -41,6 +41,8 @@ public class PercentBurnEffect extends MobEffect {
     public void applyEffectTick(LivingEntity target, int amplifier) {
         if (target.level.isClientSide) return;
 
+        spawnFireParticles(target);
+
         CompoundTag data = target.getPersistentData();
         if (!data.contains(BURN_ATTACK_SNAPSHOT)) {
             WoldsVaults.LOGGER.info("No burn snapshot");
@@ -83,8 +85,6 @@ public class PercentBurnEffect extends MobEffect {
         } else {
             dealDamage.run();
         }
-
-        spawnFireParticles(target);
     }
 
     private void spawnFireParticles(LivingEntity entity) {
