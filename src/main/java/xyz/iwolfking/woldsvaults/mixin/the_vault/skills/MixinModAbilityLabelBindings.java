@@ -104,6 +104,19 @@ public abstract class MixinModAbilityLabelBindings {
                 ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
         ));
 
+        ModAbilityLabelBindings.register(NovaBurnAbility.class, Map.of(
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
+                "ability_power",
+                ability -> AbilityLabelFormatters.percentRounded(ability.getPercentAbilityPowerDealt()),
+                "adjustedDuration",
+                ability -> AbilityLabelFormatters.seconds(ability.getDurationSecondsUnmodified()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+        ));
+
         ModAbilityLabelBindings.register(MeteorStormAbility.class, Map.of(
                 "percentAbilityPowerDealtMin",
                 ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAbilityPowerPercentMin()),

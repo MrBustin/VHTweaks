@@ -69,5 +69,10 @@ public abstract class MixinAbilityLabelFactory {
                 "percentAbilityPowerDealt",
                 context -> label("\n Percent Ability Power Dealt: ",binding(context.config(), "percentAbilityPowerDealt"),"ability_power")
         );
+        FACTORY_MAP.put(
+                "burnDuration",
+                context -> label("\n Burn Duration: ",binding(context.config(), "burnDuration"),"damageInterval")
+
+        );
     }
 }
