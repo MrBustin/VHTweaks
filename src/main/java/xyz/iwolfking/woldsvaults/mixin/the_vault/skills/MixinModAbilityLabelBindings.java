@@ -103,5 +103,26 @@ public abstract class MixinModAbilityLabelBindings {
                 "cooldown",
                 ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
         ));
+
+        ModAbilityLabelBindings.register(MeteorStormAbility.class, Map.of(
+                "percentAbilityPowerDealtMin",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAbilityPowerPercentMin()),
+                "percentAbilityPowerDealtMax",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAbilityPowerPercentMax()),
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
+                "adjustedDuration",
+                ability -> AbilityLabelFormatters.ticks(ability.getUnmodifiedDuration()),
+                "amplifier",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAmplifier()),
+                "stormInterval",
+                ability -> AbilityLabelFormatters.ticks(ability.getIntervalTicks()),
+                "burnDuration",
+                ability -> AbilityLabelFormatters.integer(ability.getUnmodifiedBurnDuration()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+        ));
     }
 }

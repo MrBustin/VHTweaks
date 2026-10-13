@@ -19,6 +19,9 @@ import xyz.iwolfking.woldsvaults.entities.barnyard.HostilePigEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileSheepEntity;
 import xyz.iwolfking.woldsvaults.entities.ghosts.*;
 import xyz.iwolfking.woldsvaults.entities.msc.CustomFangEntity;
+import xyz.iwolfking.woldsvaults.entities.msc.VaultMeteorArrow;
+import xyz.iwolfking.woldsvaults.entities.msc.VaultMeteor;
+import xyz.iwolfking.woldsvaults.entities.msc.VaultMeteorStormEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.CranberrySlimeEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.HaturkeyEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.HostileTurkeyEntity;
@@ -61,6 +64,10 @@ public class ModEntities {
     public static EntityType<StarDevourerEntity> STAR_DEVOURER_ENTITY;
     public static EntityType<CrystalVendorEntity> CRYSTAL_VENDOR_ENTITY;
     public static EntityType<WitchskallEntity> WITCHSKALL;
+
+    public static EntityType<VaultMeteor> VAULT_METEOR;
+    public static EntityType<VaultMeteorArrow> METEOR_ARROW;
+    public static EntityType<VaultMeteorStormEntity> STORM;
 
 
 
@@ -128,6 +135,17 @@ public class ModEntities {
                 .clientTrackingRange(8)
                 .setCustomClientFactory((spawnEntity, level) -> new WitchskallEntity(WITCHSKALL, level)), Evoker::createAttributes, event);
 
+        VAULT_METEOR = registerWV("vault_meteor", EntityType.Builder.<VaultMeteor>of(VaultMeteor::new, MobCategory.MISC)
+                .sized(1.0F, 1.0F)
+                .clientTrackingRange(16)
+                .fireImmune()
+                .setCustomClientFactory(((spawnEntity, level) -> new VaultMeteor(VAULT_METEOR, level))), event);
+
+        METEOR_ARROW = registerWV("meteor_arrow", EntityType.Builder.<VaultMeteorArrow>of(VaultMeteorArrow::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(5),event);
+
+        STORM = registerWV("storm", EntityType.Builder.<VaultMeteorStormEntity>of(VaultMeteorStormEntity::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(5), event);
     }
 
 
