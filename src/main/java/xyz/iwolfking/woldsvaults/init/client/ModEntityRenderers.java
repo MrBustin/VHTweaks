@@ -2,6 +2,7 @@ package xyz.iwolfking.woldsvaults.init.client;
 
 
 import iskallia.vault.entity.model.ModModelLayers;
+import iskallia.vault.entity.renderer.NagaRenderer;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -55,5 +56,6 @@ public class ModEntityRenderers {
         EntityRenderers.register(ModEntities.VAULT_METEOR, VaultMeteorRenderer::new);
         EntityRenderers.register(ModEntities.METEOR_ARROW, MeteorArrowRenderer::new);
         EntityRenderers.register(ModEntities.STORM, StormRenderer::new);
+        EntityRenderers.register(ModEntities.APEX_PREDATOR, NagaRenderer::new);
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.monster.Evoker;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -18,10 +19,7 @@ import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostilePigEntity;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileSheepEntity;
 import xyz.iwolfking.woldsvaults.entities.ghosts.*;
-import xyz.iwolfking.woldsvaults.entities.msc.CustomFangEntity;
-import xyz.iwolfking.woldsvaults.entities.msc.VaultMeteorArrow;
-import xyz.iwolfking.woldsvaults.entities.msc.VaultMeteor;
-import xyz.iwolfking.woldsvaults.entities.msc.VaultMeteorStormEntity;
+import xyz.iwolfking.woldsvaults.entities.msc.*;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.CranberrySlimeEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.HaturkeyEntity;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.HostileTurkeyEntity;
@@ -68,6 +66,7 @@ public class ModEntities {
     public static EntityType<VaultMeteor> VAULT_METEOR;
     public static EntityType<VaultMeteorArrow> METEOR_ARROW;
     public static EntityType<VaultMeteorStormEntity> STORM;
+    public static EntityType<ApexPredatorEntity> APEX_PREDATOR;
 
 
 
@@ -146,6 +145,13 @@ public class ModEntities {
 
         STORM = registerWV("storm", EntityType.Builder.<VaultMeteorStormEntity>of(VaultMeteorStormEntity::new, MobCategory.MISC)
                 .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(5), event);
+
+        APEX_PREDATOR = registerLivingWV("apex_predator", EntityType.Builder.of(ApexPredatorEntity::new, MobCategory.MONSTER)
+                .sized(1.2F, 3.9F)
+                .clientTrackingRange(16)
+                .updateInterval(1)
+                .setCustomClientFactory((spawnEntity, level) -> new ApexPredatorEntity(APEX_PREDATOR, level)),
+                Monster::createMonsterAttributes, event);
     }
 
 
