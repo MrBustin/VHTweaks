@@ -264,6 +264,7 @@ public class ApexPredatorEntity extends NagaEntity {
 
         finishing = true;
         List<Entity> carried = List.copyOf(getPassengers());
+        double releaseY = getY();
         ejectPassengers();
 
         LivingEntity owner = getOwner();
@@ -284,8 +285,12 @@ public class ApexPredatorEntity extends NagaEntity {
                 }
             }
 
-            Vec3 knockback = chargeDirection.scale(1.5D).add(0, 0.45D, 0);
-            living.setDeltaMovement(knockback);
+            // Vanilla dismounting can place passengers on top of the vehicle. Put
+            // them back at the Naga's endpoint height, keeping their spread-out X/Z
+            // positions, then clear all motion after every impact-side effect.
+            living.teleportTo(living.getX(), releaseY, living.getZ());
+            living.setDeltaMovement(Vec3.ZERO);
+            living.hasImpulse = true;
             living.hurtMarked = true;
         }
 
