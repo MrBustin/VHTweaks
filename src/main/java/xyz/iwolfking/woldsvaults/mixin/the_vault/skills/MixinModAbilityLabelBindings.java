@@ -137,5 +137,23 @@ public abstract class MixinModAbilityLabelBindings {
                 "cooldown",
                 ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
         ));
+
+        ModAbilityLabelBindings.register(ApexPredatorAbility.class, Map.of(
+                "radius",
+                ability -> AbilityLabelFormatters.decimal(ability.getRadius()),
+                "percentAttackDamageDealt",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getPercentAttackDamageDealt()),
+                "travelSpeed",
+                ability -> AbilityLabelFormatters.decimal(ability.getTravelSpeed()),
+                "stunDuration",
+                ability -> AbilityLabelFormatters.integer(ability.getUnmodifiedStunDuration()),
+                "maxRange",
+                ability -> AbilityLabelFormatters.integer(ability.getMaxRange()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+
+        ));
     }
 }

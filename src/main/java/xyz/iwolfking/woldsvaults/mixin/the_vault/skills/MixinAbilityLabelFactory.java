@@ -74,5 +74,17 @@ public abstract class MixinAbilityLabelFactory {
                 context -> label("\n Burn Duration: ",binding(context.config(), "burnDuration"),"damageInterval")
 
         );
+        FACTORY_MAP.put(
+                "percentAttackDamageDealt",
+                context -> label("\n Attack Damage: ", binding(context.config(), "percentAttackDamageDealt"), "damage")
+        );
+        FACTORY_MAP.put(
+                "travelSpeed",
+                context -> label("\n Travel Speed: ", binding(context.config(), "travelSpeed"), "speed")
+        );
+        FACTORY_MAP.put(
+                "maxRange",
+                context -> label("\n Max Range: ", binding(context.config(), "maxRange"), "radius")
+        );
     }
 }

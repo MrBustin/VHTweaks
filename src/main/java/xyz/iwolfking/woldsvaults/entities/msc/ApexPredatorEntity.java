@@ -3,8 +3,16 @@ package xyz.iwolfking.woldsvaults.entities.msc;
 import iskallia.vault.entity.entity.NagaEntity;
 import iskallia.vault.core.event.CommonEvents;
 import iskallia.vault.core.event.common.EntityStunnedEvent;
+import iskallia.vault.init.ModParticles;
 import iskallia.vault.util.EffectInstances;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -34,6 +42,9 @@ import javax.annotation.Nullable;
 
 public class ApexPredatorEntity extends NagaEntity {
     private static final double NAGA_WALK_ANIMATION_BASE_SPEED = 0.2D;
+    private static final int SLAM_ANIMATION_TICKS = 12;
+    private static final EntityDataAccessor<Boolean> DATA_FINISHING =
+            SynchedEntityData.defineId(ApexPredatorEntity.class, EntityDataSerializers.BOOLEAN);
     private UUID ownerId;
     @Nullable
     private LivingEntity cachedOwner;
@@ -43,7 +54,7 @@ public class ApexPredatorEntity extends NagaEntity {
     private int stunDuration;
     private double chargeSpeed = 0.8D;
     private int remainingTicks = 100;
-    private boolean finishing;
+    private int finishingTicks;
 
     public ApexPredatorEntity(EntityType<? extends ApexPredatorEntity> type, Level level) {
         super(type, level);
@@ -72,8 +83,21 @@ public class ApexPredatorEntity extends NagaEntity {
         this.setDeltaMovement(chargeDirection.scale(speed));
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(DATA_FINISHING, false);
+    }
+
     private <E extends IAnimatable> PlayState animationPredicate(AnimationEvent<E> event) {
         AnimationController<E> controller = event.getController();
+
+        if (isFinishing()) {
+            controller.setAnimationSpeed(2.0D);
+            controller.setAnimation(new AnimationBuilder().playOnce("animation.champion.death"));
+            return PlayState.CONTINUE;
+        }
+
         double horizontalSpeed = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).length();
 
         if (event.isMoving() || horizontalSpeed > 1.0E-4D) {
@@ -106,7 +130,15 @@ public class ApexPredatorEntity extends NagaEntity {
     public void tick() {
         super.tick();
 
-        if (level.isClientSide || finishing) {
+        if (isFinishing()) {
+            setDeltaMovement(Vec3.ZERO);
+            if (!level.isClientSide && ++finishingTicks >= SLAM_ANIMATION_TICKS) {
+                discard();
+            }
+            return;
+        }
+
+        if (level.isClientSide) {
             return;
         }
 
@@ -140,7 +172,7 @@ public class ApexPredatorEntity extends NagaEntity {
     }
 
     private boolean hasTwoBlockHighObstacle() {
-        double checkDistance = chargeSpeed + 0.35D;
+        double checkDistance = chargeSpeed + 1.35D;
 
         Vec3 feetStart = position().add(0, 0.15D, 0);
         Vec3 headStart = position().add(0, 1.15D, 0);
@@ -263,12 +295,24 @@ public class ApexPredatorEntity extends NagaEntity {
     }
 
     private void finishCharge() {
-        if (finishing) {
+        if (isFinishing()) {
             return;
         }
 
-        finishing = true;
+        entityData.set(DATA_FINISHING, true);
+        setDeltaMovement(Vec3.ZERO);
         level.playSound(null, blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1.0F, 1.0F);
+
+        if (level instanceof ServerLevel serverLevel) {
+            double effectY = getY() + 0.5D;
+            serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER,
+                    getX(), effectY, getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+            serverLevel.sendParticles(ParticleTypes.CLOUD,
+                    getX(), effectY, getZ(), 35, 1.4D, 0.35D, 1.4D, 0.08D);
+            serverLevel.sendParticles(ParticleTypes.POOF,
+                    getX(), effectY, getZ(), 20, 1.0D, 0.5D, 1.0D, 0.15D);
+        }
+
         List<Entity> carried = List.copyOf(getPassengers());
         double releaseY = getY();
         ejectPassengers();
@@ -299,7 +343,9 @@ public class ApexPredatorEntity extends NagaEntity {
             living.hasImpulse = true;
             living.hurtMarked = true;
         }
+    }
 
-        discard();
+    private boolean isFinishing() {
+        return entityData.get(DATA_FINISHING);
     }
 }
