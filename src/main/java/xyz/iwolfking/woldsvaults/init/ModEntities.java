@@ -147,7 +147,7 @@ public class ModEntities {
                 .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(5), event);
 
         APEX_PREDATOR = registerLivingWV("apex_predator", EntityType.Builder.of(ApexPredatorEntity::new, MobCategory.MONSTER)
-                .sized(1.2F, 3.9F)
+                .sized(2.2F, 3.9F)
                 .clientTrackingRange(16)
                 .updateInterval(1)
                 .setCustomClientFactory((spawnEntity, level) -> new ApexPredatorEntity(APEX_PREDATOR, level)),

@@ -13,6 +13,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 import xyz.iwolfking.woldsvaults.entities.msc.ApexPredatorEntity;
@@ -78,6 +80,14 @@ public class ApexPredatorAbility extends InstantManaAbility {
             }
 
         }).orElse(ActionResult.fail());
+    }
+
+    protected void doSound(SkillContext context) {
+        context.getSource().as(ServerPlayer.class).ifPresent((player) -> {
+            Vec3 pos = (Vec3)context.getSource().getPos().orElse(player.position());
+            player.level.playSound(player, pos.x, pos.y, pos.z, SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 0.2F, 1.0F);
+            player.playNotifySound(SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 0.2F, 1.0F);
+        });
     }
 
     // Getters

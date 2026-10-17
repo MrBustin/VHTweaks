@@ -7,6 +7,8 @@ import iskallia.vault.util.EffectInstances;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -204,18 +206,21 @@ public class ApexPredatorEntity extends NagaEntity {
 
     @Override
     public void positionRider(Entity passenger) {
-        int index = getPassengers().indexOf(passenger);
-        double side = (index % 2 == 0 ? -1 : 1) * (0.45D + index * 0.08D);
-        double behind = 0.3D + (index / 2) * 0.45D;
+        if (!hasPassenger(passenger)) {
+            return;
+        }
 
-        Vec3 sideways = new Vec3(-chargeDirection.z, 0, chargeDirection.x)
-                .scale(side);
-        Vec3 backwards = chargeDirection.scale(-behind);
+        float yaw = getYRot() * Mth.DEG_TO_RAD;
+
+        double forwardX = -Mth.sin(yaw);
+        double forwardZ = Mth.cos(yaw);
+
+        double distance = 1.5D;
 
         passenger.setPos(
-                getX() + sideways.x + backwards.x,
-                getY() + 0.8D,
-                getZ() + sideways.z + backwards.z
+                getX() + forwardX * distance,
+                getY() + 0.5D,
+                getZ() + forwardZ * distance
         );
     }
 
@@ -263,6 +268,7 @@ public class ApexPredatorEntity extends NagaEntity {
         }
 
         finishing = true;
+        level.playSound(null, blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1.0F, 1.0F);
         List<Entity> carried = List.copyOf(getPassengers());
         double releaseY = getY();
         ejectPassengers();
