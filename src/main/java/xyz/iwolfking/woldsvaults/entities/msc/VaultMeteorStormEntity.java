@@ -222,7 +222,7 @@ public class VaultMeteorStormEntity extends Entity {
                     ArrayList<LivingEntity> result = new ArrayList<>();
                     getEntitiesInRange(player.level, this.position(), radius, createEntityPredicate(this.allowsPvP(), player), result, 14);
 
-                    result.removeIf(entity -> entity instanceof EternalEntity || entity instanceof PetEntity);
+                    result.removeIf(entity -> entity instanceof PetEntity);
                     if (!result.isEmpty()) {
                         LivingEntity livingEntity = result.get(player.level.random.nextInt(result.size()));
                         VaultMeteor meteor = ModEntities.VAULT_METEOR.create(player.level);

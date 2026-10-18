@@ -2,7 +2,6 @@ package xyz.iwolfking.woldsvaults.abilities.flexible;
 
 import com.mojang.math.Vector3f;
 import iskallia.vault.client.particles.SphericalParticleOptions;
-import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.init.ModParticles;
 import iskallia.vault.init.ModSounds;
@@ -26,7 +25,7 @@ public class FlexibleImplode extends ImplodeAbility {
         ManaPlayer manaPlayer = (ManaPlayer) player;
 
         float radius = ability.getRadius(player);
-        List<LivingEntity> targetEntities = player.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forCombat().range(radius).selector((entity) -> !(entity instanceof Player) && !(entity instanceof EternalEntity)), player, AABBHelper.create(pos, radius));;
+        List<LivingEntity> targetEntities = player.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forCombat().range(radius).selector((entity) -> !(entity instanceof Player)), player, AABBHelper.create(pos, radius));;
         DamageSource damageSource = DamageSource.playerAttack(player);
 
         for (LivingEntity entity : targetEntities) {

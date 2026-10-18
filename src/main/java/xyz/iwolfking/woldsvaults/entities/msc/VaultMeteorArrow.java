@@ -1,7 +1,6 @@
 package xyz.iwolfking.woldsvaults.entities.msc;
 
 import iskallia.vault.entity.IPlayerAttackIgnore;
-import iskallia.vault.entity.entity.EternalEntity;
 import iskallia.vault.entity.entity.PetEntity;
 import iskallia.vault.entity.entity.VaultStormArrow;
 import iskallia.vault.entity.entity.VaultStormEntity;
@@ -370,7 +369,7 @@ public class VaultMeteorArrow extends AbstractArrow {
             return false;
         } else {
             boolean allowPvP = this.allowsPvP();
-            return super.canHitEntity(entity) && (!(entity instanceof Player) || allowPvP) && !(entity instanceof PetEntity) && !(entity instanceof EternalEntity) && !IPlayerAttackIgnore.isIgnoredByPlayerAttack(this.getOwner(), entity);
+            return super.canHitEntity(entity) && (!(entity instanceof Player) || allowPvP) && !(entity instanceof PetEntity) && !IPlayerAttackIgnore.isIgnoredByPlayerAttack(this.getOwner(), entity);
         }
     }
 
