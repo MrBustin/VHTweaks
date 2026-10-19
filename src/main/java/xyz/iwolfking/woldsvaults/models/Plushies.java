@@ -168,7 +168,7 @@ public class Plushies {
 
         //omega
         IWK = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/wolf"), "Wolf the Creator")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
-        JROWEZ = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/jrowez"), "Jawnfin the Tinkerer")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
+        JROWEZ = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/jrowez"), "Jawfinn the Tinkerer")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         ATTACK8 = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/attack8"), "Attack8 the Developer")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         JUSTA = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/justa"), "JustAHuman the Developer")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
         AQUA = (HandHeldModel)REGISTRY.register((HandHeldModel)(new HandHeldModel(VaultMod.id("gear/plushie/aqua"), "Aqua the Slave")).properties(new DynamicModelProperties().allowTransmogrification().discoverOnRoll()));
