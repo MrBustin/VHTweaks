@@ -202,6 +202,10 @@ dependencies {
     implementation fg.deobf('curse.maven:pehkui-319596:4823461') // scale abilities
     implementation fg.deobf('curse.maven:applied-energistics-2-223794:4136407') // Vault Filters
 
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 

@@ -177,6 +177,8 @@
     "the_vault.skills.MixinResistanceHelper",
     "the_vault.skills.modifications.MixinFireballAbility",
     "the_vault.skills.modifications.MixinIceBoltChunkAbility",
+    "the_vault.temple.MixinTempleChallengeManager",
+    "the_vault.temple.MixinTempleControllerTileEntity",
     "wither_sound.MixinServerLevel"
   ],
   "client": [
