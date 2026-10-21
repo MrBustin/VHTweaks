@@ -168,6 +168,7 @@
     "the_vault.custom.enum_extension.MixinToolMaterial",
     "the_vault.fixes.MixinBingoObjective",
     "the_vault.fixes.MixinDamageImmunityTrinket",
+    "the_vault.fixes.MixinTreasureContainer",
     "the_vault.fixes.MixinVaultUtils",
     "the_vault.optimization.MixinGearStackingTalent",
     "the_vault.recipes.MixinAnvilRecipes",
