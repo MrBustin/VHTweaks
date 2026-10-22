@@ -3,7 +3,7 @@ package xyz.iwolfking.woldsvaults.mixin;
 //import com.github.alexthe666.iceandfire.entity.EntityDragonBase;
 //import com.github.alexthe666.iceandfire.entity.IafDragonAttacks;
 import iskallia.vault.core.vault.modifier.spi.predicate.ModifierPredicate;
-import iskallia.vault.entity.entity.elite.EliteModifierImmunity;
+//import iskallia.vault.entity.entity.elite.EliteModifierImmunity;
 import iskallia.vault.world.data.ServerVaults;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

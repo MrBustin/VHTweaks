@@ -2,16 +2,20 @@ package xyz.iwolfking.woldsvaults.init.client;
 
 
 import iskallia.vault.entity.model.ModModelLayers;
+import iskallia.vault.entity.renderer.NagaRenderer;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
+import xyz.iwolfking.woldsvaults.client.renderers.MeteorArrowRenderer;
+import xyz.iwolfking.woldsvaults.client.renderers.StormRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.CrystalVendorRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.JackBoxRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.VaultNecromancerRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.WitchskallRenderer;
 import xyz.iwolfking.woldsvaults.entities.client.WoldBossRenderer;
+import xyz.iwolfking.woldsvaults.entities.client.VaultMeteorRenderer;
 import xyz.iwolfking.woldsvaults.entities.ghosts.lib.client.GenericWraithRenderer;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.client.renderer.CranberrySlimeRenderer;
 import xyz.iwolfking.woldsvaults.entities.thanksgiving.client.renderer.HaturkeyRenderer;
@@ -49,5 +53,9 @@ public class ModEntityRenderers {
         EntityRenderers.register(ModEntities.HATURKIN, HaturkeyRenderer::new);
         EntityRenderers.register(ModEntities.JACK_BOX, JackBoxRenderer::new);
         EntityRenderers.register(ModEntities.CUSTOM_FANGS, EvokerFangsRenderer::new);
+        EntityRenderers.register(ModEntities.VAULT_METEOR, VaultMeteorRenderer::new);
+        EntityRenderers.register(ModEntities.METEOR_ARROW, MeteorArrowRenderer::new);
+        EntityRenderers.register(ModEntities.STORM, StormRenderer::new);
+        EntityRenderers.register(ModEntities.APEX_PREDATOR, NagaRenderer::new);
     }
 }

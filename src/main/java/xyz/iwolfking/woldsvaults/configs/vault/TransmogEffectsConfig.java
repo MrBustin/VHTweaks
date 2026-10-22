@@ -60,7 +60,9 @@ public class TransmogEffectsConfig extends Config {
                 return true;
             }
         }
-        return hasEffect(ModelUtil.getWornSet(player), effect);
+        // Full-set transmog bonuses are disabled.
+        // return hasEffect(ModelUtil.getWornSet(player), effect);
+        return false;
     }
 
     public boolean hasEffect(ItemStack itemStack, TransmogEffect effect) {
@@ -82,7 +84,9 @@ public class TransmogEffectsConfig extends Config {
                 return effect;
             }
         }
-        return getEffect(ModelUtil.getWornSet(player), type);
+        // Full-set transmog bonuses are disabled.
+        // return getEffect(ModelUtil.getWornSet(player), type);
+        return null;
     }
 
     public <E extends TransmogEffect> E getEffect(ItemStack itemStack, Class<E> type) {
@@ -95,8 +99,10 @@ public class TransmogEffectsConfig extends Config {
     }
 
     public <T extends TransmogEffect> List<T> getEffects(Player player, Class<T> type) {
-        ArmorModel wornModel = ModelUtil.getWornSet(player);
-        List<T> effects = new ArrayList<>(getEffects(wornModel, type));
+        // Full-set transmog bonuses are disabled.
+        // ArmorModel wornModel = ModelUtil.getWornSet(player);
+        // List<T> effects = new ArrayList<>(getEffects(wornModel, type));
+        List<T> effects = new ArrayList<>();
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             effects.addAll(getEffects(player.getItemBySlot(slot), type));
         }
@@ -126,8 +132,10 @@ public class TransmogEffectsConfig extends Config {
     }
 
     public List<TransmogEffect> getEffects(Player player) {
-        ArmorModel wornModel = ModelUtil.getWornSet(player);
-        List<TransmogEffect> effects = new ArrayList<>(getEffects(wornModel));
+        // Full-set transmog bonuses are disabled.
+        // ArmorModel wornModel = ModelUtil.getWornSet(player);
+        // List<TransmogEffect> effects = new ArrayList<>(getEffects(wornModel));
+        List<TransmogEffect> effects = new ArrayList<>();
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             effects.addAll(getEffects(player.getItemBySlot(slot)));
         }
@@ -176,22 +184,22 @@ public class TransmogEffectsConfig extends Config {
             }
         }
 
-        migrateAirMobilityBonuses(ModModels.HOKAGE_ARMOR, 0.2F, 0.1F, 0.05F, 0.05F);
-        migrateAirMobilityBonuses(ModModels.HOY_ARMOR, 0.1F, 0.1F, 0.05F, 0.05F);
-        migrateAirMobilityBonus(ModModels.Armor.CELESTIAL.getModel(), 0.1F, 0.1F, 0.05F, 0.1F);
-        migrateHokageMovementSpeedBonuses(0.1F, 0.2F);
-        migrateHoyManaCostBonuses(-0.25F, -0.35F);
-        migrateKineticDamageReductionBonuses(ModModels.HOKAGE_ARMOR, 0.25F);
-        migrateKineticDamageReductionBonuses(ModModels.HOY_ARMOR, 0.25F);
-        migrateKineticDamageReductionBonus(ModModels.Armor.VIKING.getModel(), 0.25F);
-        migrateKineticDamageReductionBonus(ModModels.Armor.CELESTIAL.getModel(), 0.25F);
-        migrateFallDamageReductionBonuses(ModModels.HOKAGE_ARMOR, 0.25F);
-        migrateFallDamageReductionBonuses(ModModels.HOY_ARMOR, 0.25F);
-        migrateFallDamageReductionBonus(ModModels.Armor.VIKING.getModel(), 0.25F);
-        migrateFallDamageReductionBonus(ModModels.Armor.CELESTIAL.getModel(), 0.25F);
-        migrateFallDamageReductionBonus(ModModels.Armor.SPACE_MARINE.getModel(), 0.25F);
-        migrateVikingBonuses();
-        migrateSpaceMarineBonuses();
+//        migrateAirMobilityBonuses(ModModels.HOKAGE_ARMOR, 0.2F, 0.1F, 0.05F, 0.05F);
+//        migrateAirMobilityBonuses(ModModels.HOY_ARMOR, 0.1F, 0.1F, 0.05F, 0.05F);
+//        migrateAirMobilityBonus(ModModels.Armor.CELESTIAL.getModel(), 0.1F, 0.1F, 0.05F, 0.1F);
+//        migrateHokageMovementSpeedBonuses(0.1F, 0.2F);
+//        migrateHoyManaCostBonuses(-0.25F, -0.35F);
+//        migrateKineticDamageReductionBonuses(ModModels.HOKAGE_ARMOR, 0.25F);
+//        migrateKineticDamageReductionBonuses(ModModels.HOY_ARMOR, 0.25F);
+//        migrateKineticDamageReductionBonus(ModModels.Armor.VIKING.getModel(), 0.25F);
+//        migrateKineticDamageReductionBonus(ModModels.Armor.CELESTIAL.getModel(), 0.25F);
+//        migrateFallDamageReductionBonuses(ModModels.HOKAGE_ARMOR, 0.25F);
+//        migrateFallDamageReductionBonuses(ModModels.HOY_ARMOR, 0.25F);
+//        migrateFallDamageReductionBonus(ModModels.Armor.VIKING.getModel(), 0.25F);
+//        migrateFallDamageReductionBonus(ModModels.Armor.CELESTIAL.getModel(), 0.25F);
+//        migrateFallDamageReductionBonus(ModModels.Armor.SPACE_MARINE.getModel(), 0.25F);
+//        migrateVikingBonuses();
+//        migrateSpaceMarineBonuses();
     }
 
     private void migrateAirMobilityBonuses(Iterable<ArmorModel> models, float legacyPairSpeed, float legacyControl, float playerBaseSpeed, float playerBaseAirMovement) {

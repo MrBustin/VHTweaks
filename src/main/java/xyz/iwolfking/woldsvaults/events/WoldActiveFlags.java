@@ -4,7 +4,8 @@ public enum WoldActiveFlags {
     IS_REAVING_ATTACKING,
     IS_ECHOING_ATTACKING,
     IS_USING_SAFER_SPACE,
-    IS_FANG_ATTACKING;
+    IS_FANG_ATTACKING,
+    IS_GEAR_CONDUCTING_JAVELIN;
 
     private final ThreadLocal<Integer> activeReferences = ThreadLocal.withInitial(() -> 0);
 

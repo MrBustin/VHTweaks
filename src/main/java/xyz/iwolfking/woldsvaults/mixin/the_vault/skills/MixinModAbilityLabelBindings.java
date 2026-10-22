@@ -92,5 +92,68 @@ public abstract class MixinModAbilityLabelBindings {
                 "manaCost",
                 ability -> AbilityLabelFormatters.integer((int) ability.getManaCost())
         ));
+
+        ModAbilityLabelBindings.register(EmpowerFireAuraAbility.class, Map.of(
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
+                "manaCostPerSecond",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCostPerSecond()),
+                "percentAbilityPowerDealt",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getPercentAbilityPowerDealt()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+        ));
+
+        ModAbilityLabelBindings.register(NovaBurnAbility.class, Map.of(
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
+                "ability_power",
+                ability -> AbilityLabelFormatters.percentRounded(ability.getPercentAbilityPowerDealt()),
+                "adjustedDuration",
+                ability -> AbilityLabelFormatters.seconds(ability.getDurationSecondsUnmodified()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+        ));
+
+        ModAbilityLabelBindings.register(MeteorStormAbility.class, Map.of(
+                "percentAbilityPowerDealtMin",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAbilityPowerPercentMin()),
+                "percentAbilityPowerDealtMax",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAbilityPowerPercentMax()),
+                "adjustedRadius",
+                ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
+                "adjustedDuration",
+                ability -> AbilityLabelFormatters.ticks(ability.getUnmodifiedDuration()),
+                "amplifier",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getAmplifier()),
+                "stormInterval",
+                ability -> AbilityLabelFormatters.ticks(ability.getIntervalTicks()),
+                "burnDuration",
+                ability -> AbilityLabelFormatters.integer(ability.getUnmodifiedBurnDuration()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+        ));
+
+        ModAbilityLabelBindings.register(ApexPredatorAbility.class, Map.of(
+                "radius",
+                ability -> AbilityLabelFormatters.decimal(ability.getRadius()),
+                "percentAttackDamageDealt",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getPercentAttackDamageDealt()),
+                "travelSpeed",
+                ability -> AbilityLabelFormatters.decimal(ability.getTravelSpeed()),
+                "stunDuration",
+                ability -> AbilityLabelFormatters.integer(ability.getUnmodifiedStunDuration()),
+                "maxRange",
+                ability -> AbilityLabelFormatters.integer(ability.getMaxRange()),
+                "manaCost",
+                ability -> AbilityLabelFormatters.integer((int) ability.getManaCost()),
+                "cooldown",
+                ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
+
+        ));
     }
 }

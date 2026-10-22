@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "woldsvaults:block/crystallized_stone",
+    "particle": "woldsvaults:block/crystallized_stone"
+  }
+}

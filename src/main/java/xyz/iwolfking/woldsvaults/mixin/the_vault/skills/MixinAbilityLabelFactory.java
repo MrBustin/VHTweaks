@@ -65,5 +65,26 @@ public abstract class MixinAbilityLabelFactory {
                 "effectAmplifier",
                 context -> label("\n Effect Amplifier: ",binding(context.config(), "effectAmplifier"),"radius")
         );
+        FACTORY_MAP.put(
+                "percentAbilityPowerDealt",
+                context -> label("\n Percent Ability Power Dealt: ",binding(context.config(), "percentAbilityPowerDealt"),"ability_power")
+        );
+        FACTORY_MAP.put(
+                "burnDuration",
+                context -> label("\n Burn Duration: ",binding(context.config(), "burnDuration"),"damageInterval")
+
+        );
+        FACTORY_MAP.put(
+                "percentAttackDamageDealt",
+                context -> label("\n Attack Damage: ", binding(context.config(), "percentAttackDamageDealt"), "damage")
+        );
+        FACTORY_MAP.put(
+                "travelSpeed",
+                context -> label("\n Travel Speed: ", binding(context.config(), "travelSpeed"), "speed")
+        );
+        FACTORY_MAP.put(
+                "maxRange",
+                context -> label("\n Max Range: ", binding(context.config(), "maxRange"), "radius")
+        );
     }
 }

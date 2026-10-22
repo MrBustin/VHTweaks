@@ -1,5 +1,6 @@
 package xyz.iwolfking.woldsvaults.init;
 
+import iskallia.vault.VaultMod;
 import iskallia.vault.effect.ThresholdEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -7,10 +8,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.RegistryEvent;
 import iskallia.vault.skill.ability.effect.spi.core.ToggleAbilityEffect;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
-import xyz.iwolfking.woldsvaults.abilities.ColossusAbility;
-import xyz.iwolfking.woldsvaults.abilities.LegacyManaShieldAbility;
-import xyz.iwolfking.woldsvaults.abilities.ShieldWallAbility;
-import xyz.iwolfking.woldsvaults.abilities.SneakyGetawayAbility;
+import xyz.iwolfking.woldsvaults.abilities.*;
 import xyz.iwolfking.woldsvaults.api.pehkui.CustomScaleTypes;
 import xyz.iwolfking.woldsvaults.effect.mobeffects.*;
 
@@ -32,6 +30,8 @@ public class ModEffects {
     public static final MobEffect BURN = new PercentBurnEffect();
     public static final ThresholdEffect BLOOD_CHAKRA = new ThresholdEffect(0xa83262, WoldsVaults.id("blood_chakra"));
 
+    public static final ToggleAbilityEffect EMPOWER_FIRE_AURA = new EmpowerFireAuraAbility.EmpowerFireAuraEffect(Color.WHITE.getRGB(), WoldsVaults.id("empower_fire_aura"));
+
 
 
     public static void register(RegistryEvent.Register<MobEffect> event) {
@@ -49,6 +49,7 @@ public class ModEffects {
                 LEGACY_MANA_SHIELD,
                 MOMENTUM_ENGINE,
                 BURN,
-                BLOOD_CHAKRA);
+                BLOOD_CHAKRA,
+                EMPOWER_FIRE_AURA);
     }
 }

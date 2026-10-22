@@ -33,6 +33,10 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("levitate", LevitateAbility.class,LevitateAbility::new);
         this.register("fangs", EvokerFangsAbility.class, EvokerFangsAbility::new);
         this.register("fangs_maw", EvokerFangsMawAbility.class, EvokerFangsMawAbility::new);
+        this.register("nova_burn", NovaBurnAbility.class, NovaBurnAbility::new);
+        this.register("empower_fire_aura", EmpowerFireAuraAbility.class, EmpowerFireAuraAbility::new);
+        this.register("meteor_storm", MeteorStormAbility.class, MeteorStormAbility::new);
+        this.register("apex_predator", ApexPredatorAbility.class, ApexPredatorAbility::new);
 
 
 

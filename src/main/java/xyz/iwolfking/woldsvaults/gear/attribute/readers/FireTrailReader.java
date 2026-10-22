@@ -1,4 +1,4 @@
-package xyz.iwolfking.woldsvaults.gear.attribute.custom;
+package xyz.iwolfking.woldsvaults.gear.attribute.readers;
 
 import com.google.gson.JsonArray;
 import iskallia.vault.gear.attribute.VaultGearAttributeInstance;
@@ -9,28 +9,26 @@ import iskallia.vault.init.ModConfigs;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 
-
-public class PoisonTrailReader extends VaultGearModifierReader<EffectTrialAttribute> {
+public class FireTrailReader extends VaultGearModifierReader<EffectTrialAttribute> {
 
     private static final DecimalFormat FORMAT = new DecimalFormat("0.##");
 
-    public PoisonTrailReader() {
+    public FireTrailReader() {
         super("", 14901010);
     }
 
     @Nullable
     @Override
-    public MutableComponent getDisplay(VaultGearAttributeInstance<EffectTrialAttribute> instance,
-                                       VaultGearModifier.AffixType type) {
+    public MutableComponent getDisplay(VaultGearAttributeInstance<EffectTrialAttribute> instance, VaultGearModifier.AffixType type) {
         EffectTrialAttribute value = instance.getValue();
 
         MutableComponent base = type.getAffixPrefixComponent(true)
                 .append(new TextComponent("Leaves a trail of "))
-                .append(new TextComponent("Poison")
+                .append(new TextComponent("Fire")
                         .withStyle(Style.EMPTY.withColor(ModConfigs.COLORS.getColor("uniqueHighlight"))))
                 .append(new TextComponent(" for "));
 
@@ -49,18 +47,12 @@ public class PoisonTrailReader extends VaultGearModifierReader<EffectTrialAttrib
     }
 
     @Override
-    protected void serializeTextElements(JsonArray out,
-                                         VaultGearAttributeInstance<EffectTrialAttribute> instance,
-                                         VaultGearModifier.AffixType type) {
+    protected void serializeTextElements(JsonArray out, VaultGearAttributeInstance<EffectTrialAttribute> instance, VaultGearModifier.AffixType type) {
         EffectTrialAttribute value = instance.getValue();
         out.add(type.getAffixPrefix(true));
         out.add("Leaves a trail of ");
-        out.add("Poison");
+        out.add("Fire");
         out.add(" for ");
         out.add(FORMAT.format(value.getDurationTicks() / 20.0D) + "s");
     }
 }
-
-
-
-

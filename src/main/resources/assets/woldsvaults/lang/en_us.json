@@ -5,7 +5,7 @@
     "item.woldsvaults.crystal_seal_enchanter":  "Seal of the Enchanter",
     "item.woldsvaults.crystal_seal_titan":  "Seal of the Titan",
     "item.woldsvaults.crystal_seal_monolith":  "Seal of the Searcher",
-    "item.the_vault.battlestaff":  "Vault Battlestaff",
+    "item.the_vault.battlestaff":  "Vault Magestaff",
     "item.the_vault.trident":  "Vault Trident",
     "item.the_vault.plushie":  "Vault Plushie",
     "item.the_vault.loot_sack":  "Vault Sack",
@@ -32,6 +32,11 @@
     "block.woldsvaults.dungeon_pedestal":  "Dungeon Pedestal",
     "block.woldsvaults.iskallian_leaves":  "Iskallian Leaves",
     "block.woldsvaults.hellish_sand":  "Hellish Sand",
+    "block.woldsvaults.wendarr_sand":  "Wendarr Sand",
+    "block.woldsvaults.tenos_sand":  "Tenos Sand",
+    "block.woldsvaults.velara_sand":  "Velara Sand",
+    "block.woldsvaults.idona_sand":  "Idona Sand",
+    "block.woldsvaults.crystallized_stone":  "Crystallized Stone",
     "item.woldsvaults.gem_box":  "Gem Box",
     "item.woldsvaults.supply_box":  "Supply Box",
     "item.woldsvaults.augment_box":  "Augment Box",
@@ -396,5 +401,8 @@
     "the_vault.gear_modification.unfreeze_all.no_modifiers": "There are no frozen modifiers to unfreeze",
     "the_vault.gear_modification.add_unusual_modifier.description": "Add unusual modifier",
     "the_vault.gear_modification.add_unusual_modifier.full": "You cannot add more unusual modifiers to this gear piece",
-    "the_vault.gear_modification.add_unusual_modifier.no_modifiers": "No additional modifiers available"
+    "the_vault.gear_modification.add_unusual_modifier.no_modifiers": "No additional modifiers available",
+    "item.woldsvaults.empowered_fundamental_focus": "Empowered Fundamental Focus",
+    "the_vault.gear_modification.improve_implicit.description": "Improve a random implicit modifier",
+    "the_vault.gear_modification.improve_implicit.all_max": "All implicit modifiers are already at their maximum value"
 }

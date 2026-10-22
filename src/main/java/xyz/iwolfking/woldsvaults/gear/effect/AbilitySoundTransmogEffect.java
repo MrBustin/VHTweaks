@@ -59,15 +59,16 @@ public class AbilitySoundTransmogEffect extends TransmogEffect {
     }
 
     public static SoundChoice getSound(ServerPlayer player, String ability, int index, SoundChoice def) {
-        ArmorModel wornModel = ModelUtil.getWornSet(player);
-        List<AbilitySoundTransmogEffect> effects = Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(wornModel, AbilitySoundTransmogEffect.class);
-        effects.removeIf(effect -> !effect.ability.equals(ability));
-        if (effects.size() > index) {
-            return effects.get(index).sound.extend(def);
-        }
+        // Full-set transmog sound bonuses are disabled.
+        // ArmorModel wornModel = ModelUtil.getWornSet(player);
+        // List<AbilitySoundTransmogEffect> effects = Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(wornModel, AbilitySoundTransmogEffect.class);
+        // effects.removeIf(effect -> !effect.ability.equals(ability));
+        // if (effects.size() > index) {
+        //     return effects.get(index).sound.extend(def);
+        // }
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            effects = Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(player.getItemBySlot(slot), AbilitySoundTransmogEffect.class);
+            List<AbilitySoundTransmogEffect> effects = Configs.TRANSMOG_EFFECTS_CONFIG.getEffects(player.getItemBySlot(slot), AbilitySoundTransmogEffect.class);
             effects.removeIf(effect -> !effect.ability.equals(ability));
             if (effects.size() > index) {
                 return effects.get(index).sound.extend(def);
