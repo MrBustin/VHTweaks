@@ -2,10 +2,10 @@
   "gearRecipes": [
     {
       "proficiencyType": "SWORD",
-      "id": "the_vault:magestaff",
+      "id": "the_vault:battlestaff",
       "output": {
         "AMOUNT": 1,
-        "ITEM": "the_vault:magestaff",
+        "ITEM": "the_vault:battlestaff",
         "NBT": "{Damage:0}"
       },
       "inputs": [

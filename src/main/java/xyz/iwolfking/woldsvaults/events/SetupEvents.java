@@ -30,7 +30,7 @@ public class SetupEvents {
     public static void registerCustomModelRolls(VaultConfigEvent.End event) {
         VHAPILoggerUtils.info(CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.toString());
         if(!CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.isEmpty()) {
-            CustomVaultGearModelRollRaritiesConfig.MAGESTAFF_MODEL_ROLLS = CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.get(ModItems.MAGESTAFF.getRegistryName());
+            CustomVaultGearModelRollRaritiesConfig.BATTLESTAFF_MODEL_ROLLS = CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.get(ModItems.BATTLESTAFF.getRegistryName());
             CustomVaultGearModelRollRaritiesConfig.TRIDENT_MODEL_ROLLS = CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.get(ModItems.TRIDENT.getRegistryName());
             CustomVaultGearModelRollRaritiesConfig.LOOT_SACKS_MODEL_ROLLS = CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.get(ModItems.LOOT_SACK.getRegistryName());
             CustomVaultGearModelRollRaritiesConfig.PLUSHIE_MODEL_ROLLS = CustomGearModelRolls.CUSTOM_MODEL_ROLLS_MAP.get(ModItems.PLUSHIE.getRegistryName());
@@ -52,21 +52,21 @@ public class SetupEvents {
         registerManualConfigFile("/vhapi_configs/wold_mobs.json", WoldsVaults.id("vault/mobs/wold_mobs"));
 
         //Gear Model Rolls
-        registerManualConfigFile("/vhapi_configs/custom_model_rolls/magestaff.json", VHAPI.of("gear/custom/model_rolls/magestaff"));
+        registerManualConfigFile("/vhapi_configs/custom_model_rolls/battlestaff.json", VHAPI.of("gear/custom/model_rolls/battlestaff"));
         registerManualConfigFile("/vhapi_configs/custom_model_rolls/loot_sack.json", VHAPI.of("gear/custom/model_rolls/loot_sack"));
         registerManualConfigFile("/vhapi_configs/custom_model_rolls/plushie.json", VHAPI.of("gear/custom/model_rolls/plushie"));
         registerManualConfigFile("/vhapi_configs/custom_model_rolls/trident.json", VHAPI.of("gear/custom/model_rolls/trident"));
         registerManualConfigFile("/vhapi_configs/custom_model_rolls/rang.json", VHAPI.of("gear/custom/model_rolls/rang"));
 
         //Gear Modifiers
-        registerManualConfigFile("/vhapi_configs/gear_modifiers/overwrite/magestaff.json", VHAPI.of("gear/gear_modifiers/overwrite/magestaff"));
+        registerManualConfigFile("/vhapi_configs/gear_modifiers/overwrite/battlestaff.json", VHAPI.of("gear/gear_modifiers/overwrite/battlestaff"));
         registerManualConfigFile("/vhapi_configs/gear_modifiers/overwrite/loot_sack.json", VHAPI.of("gear/gear_modifiers/overwrite/loot_sack"));
         registerManualConfigFile("/vhapi_configs/gear_modifiers/overwrite/plushie.json", VHAPI.of("gear/gear_modifiers/overwrite/plushie"));
         registerManualConfigFile("/vhapi_configs/gear_modifiers/overwrite/trident.json", VHAPI.of("gear/gear_modifiers/overwrite/trident"));
         registerManualConfigFile("/vhapi_configs/gear_modifiers/overwrite/rang.json", VHAPI.of("gear/gear_modifiers/overwrite/rang"));
 
         //Gear Workbench
-//        registerManualConfigFile("/vhapi_configs/gear_workbench/magestaff.json", VHAPI.of("gear/gear_workbench/magestaff"));
+//        registerManualConfigFile("/vhapi_configs/gear_workbench/battlestaff.json", VHAPI.of("gear/gear_workbench/battlestaff"));
 //        registerManualConfigFile("/vhapi_configs/gear_workbench/loot_sack.json", VHAPI.of("gear/gear_workbench/loot_sack"));
 //        registerManualConfigFile("/vhapi_configs/gear_workbench/trident.json", VHAPI.of("gear/gear_workbench/trident"));
 //        registerManualConfigFile("/vhapi_configs/gear_workbench/plushie.json", VHAPI.of("gear/gear_workbench/plushie"));

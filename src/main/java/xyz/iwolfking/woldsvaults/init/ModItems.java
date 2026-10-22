@@ -47,7 +47,7 @@ public class ModItems {
     public static ItemVaultCrystalSeal CRYSTAL_SEAL_TITAN;
     public static ItemVaultCrystalSeal CRYSTAL_SEAL_DOOMSAYER;
     public static ItemVaultCrystalSeal CRYSTAL_SEAL_ZEALOT;
-    public static VaultMageStaffItem MAGESTAFF;
+    public static VaultBattleStaffItem BATTLESTAFF;
     //public static VaultBowItem BOW;
 
     public static VaultTridentItem TRIDENT;
@@ -188,7 +188,7 @@ public class ModItems {
         CRYSTAL_SEAL_TITAN = new ItemVaultCrystalSeal(WoldsVaults.id("crystal_seal_titan"));
         CRYSTAL_SEAL_DOOMSAYER = new ItemVaultCrystalSeal(WoldsVaults.id("crystal_seal_doomsayer"));
         CRYSTAL_SEAL_ZEALOT = new ItemVaultCrystalSeal(WoldsVaults.id("crystal_seal_zealot"));
-        MAGESTAFF =  new VaultMageStaffItem(VaultMod.id("magestaff"), (new Item.Properties()).tab(GEAR_GROUP).stacksTo(1));
+        BATTLESTAFF =  new VaultBattleStaffItem(VaultMod.id("battlestaff"), (new Item.Properties()).tab(GEAR_GROUP).stacksTo(1));
         TRIDENT = new VaultTridentItem(VaultMod.id("trident"), (new Item.Properties()).tab(GEAR_GROUP).stacksTo(1));
         PLUSHIE = new VaultPlushieItem(VaultMod.id("plushie"), (new Item.Properties()).tab(GEAR_GROUP).stacksTo(1));
         LOOT_SACK = new VaultLootSackItem(VaultMod.id("loot_sack"), (new Item.Properties()).tab(GEAR_GROUP).stacksTo(1));
@@ -300,7 +300,7 @@ public class ModItems {
         registry.register(CRYSTAL_SEAL_ENCHANTER);
         registry.register(CRYSTAL_SEAL_TITAN);
         registry.register(CRYSTAL_SEAL_DOOMSAYER);
-        registry.register(MAGESTAFF);
+        registry.register(BATTLESTAFF);
         registry.register(TRIDENT);
         registry.register(PLUSHIE);
         registry.register(LOOT_SACK);
