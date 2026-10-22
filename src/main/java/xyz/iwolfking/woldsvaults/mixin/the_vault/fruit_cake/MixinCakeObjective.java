@@ -16,18 +16,14 @@ import iskallia.vault.core.vault.player.ClassicListenersLogic;
 import iskallia.vault.core.vault.player.Listeners;
 import iskallia.vault.core.vault.time.modifier.ModifierExtension;
 import iskallia.vault.core.world.storage.VirtualWorld;
-import iskallia.vault.world.data.ServerVaults;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -80,7 +76,7 @@ public abstract class MixinCakeObjective {
     private String fruitCakeModifierDisplay(String value, @Local(argsOnly = true) VirtualWorld world) {
         if (value.equals("cake")) {
             CakeWorldData cakeData = CakeWorldData.get(world);
-            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
+            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getCakeType());
             String localizedName = new TranslatableComponent(fruit.displayName).getString();
             return cakeData.isFruitCake() ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", localizedName) : value;
         }
@@ -91,7 +87,7 @@ public abstract class MixinCakeObjective {
     private TextComponent replaceSuffix(TextComponent suffix, @Local(argsOnly = true) VirtualWorld world) {
         CakeWorldData cakeData = CakeWorldData.get(world);
         if (cakeData.isFruitCake() && Configs.FRUIT_CAKE.isReplaceSliceWithTimeAdded()) {
-            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
+            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getCakeType());
             return fruit != null ? new TextComponent(Configs.FRUIT_CAKE.getTimeAddedFormat().replace("%seconds%", TIME_FORMAT.format(fruit.ticks / 20.0))) : suffix;
         }
         return suffix;
@@ -100,7 +96,7 @@ public abstract class MixinCakeObjective {
     @Redirect(method = "addModifier", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectIterator;hasNext()Z"))
     private boolean cancelNormalSuffix(ObjectIterator<?> instance, @Local(argsOnly = true) VirtualWorld world) {
         CakeWorldData cakeData = CakeWorldData.get(world);
-        if (cakeData.isFruitCake() && Configs.FRUIT_CAKE.isReplaceSliceWithTimeAdded() && Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType()) != null) {
+        if (cakeData.isFruitCake() && Configs.FRUIT_CAKE.isReplaceSliceWithTimeAdded() && Configs.FRUIT_CAKE.getFruit(cakeData.getCakeType()) != null) {
             return false;
         }
         return instance.hasNext();
@@ -113,7 +109,7 @@ public abstract class MixinCakeObjective {
             return;
         }
 
-        FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
+        FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getCakeType());
         if (fruit != null) {
             vault.ifPresent(Vault.CLOCK, clock -> clock.addModifier(new ModifierExtension(fruit.ticks)));
         }
@@ -127,14 +123,13 @@ public abstract class MixinCakeObjective {
             return;
         }
 
-        int memberCount = ServerVaults.get(world).flatMap(vault -> vault.getOptional(Vault.STATS)).map(stats -> stats.getMap().size()).orElse(0);
         Map.Entry<Float, FruitEntry> floatFruitEntry = Configs.FRUIT_CAKE.getFruitChances().higherEntry(random.nextFloat());
 
         if (floatFruitEntry != null) {
             FruitEntry fruit = floatFruitEntry.getValue();
             cakeData.setCakeType(fruit.id);
             this.moreObjectives$spawnItemParticles(world, ((CakeObjective) (Object) this).get(CakeObjective.CAKE_POS), new ItemStack(fruit.iconItem, 1));
-            WoldsVaults.LOGGER.debug("Next cake {}", cakeData.getLastCakeType());
+            WoldsVaults.LOGGER.debug("Next cake {}", cakeData.getCakeType());
         } else {
             cakeData.setCakeType("");
             WoldsVaults.LOGGER.debug("Failed to get next cake. Check your fruit list.");

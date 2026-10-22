@@ -10,7 +10,6 @@ public class CakeWorldData extends SavedData {
     private static final String DATA_NAME = "woldsvaults_cake_data";
     private boolean fruitCake = false;
     private String cakeType = "";
-    private String lastCakeType = "";
 
     public CakeWorldData() {
         WoldsVaults.LOGGER.debug("Creating new cake world data");
@@ -22,7 +21,6 @@ public class CakeWorldData extends SavedData {
     }
 
     public void setCakeType(String cakeType) {
-        this.lastCakeType = this.cakeType;
         this.cakeType = cakeType;
         this.setDirty();
     }
@@ -31,8 +29,8 @@ public class CakeWorldData extends SavedData {
         return this.fruitCake;
     }
 
-    public String getLastCakeType() {
-        return this.lastCakeType;
+    public String getCakeType() {
+        return this.cakeType;
     }
 
     @Override
@@ -40,7 +38,6 @@ public class CakeWorldData extends SavedData {
         WoldsVaults.LOGGER.debug("Saving cake world data");
         compoundTag.putBoolean("fruit_cake", this.fruitCake);
         compoundTag.putString("cake_type", this.cakeType);
-        compoundTag.putString("last_cake_type", this.lastCakeType);
         return compoundTag;
     }
 
@@ -49,7 +46,6 @@ public class CakeWorldData extends SavedData {
         CakeWorldData data = new CakeWorldData();
         data.fruitCake = tag.getBoolean("fruit_cake");
         data.cakeType = tag.getString("cake_type");
-        data.lastCakeType = tag.getString("last_cake_type");
         return data;
     }
 
