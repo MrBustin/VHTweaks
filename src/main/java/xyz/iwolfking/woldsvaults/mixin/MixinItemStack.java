@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Slice;
-import xyz.iwolfking.woldsvaults.items.gear.VaultBattleStaffItem;
+import xyz.iwolfking.woldsvaults.items.gear.VaultMageStaffItem;
 import xyz.iwolfking.woldsvaults.items.gear.VaultLootSackItem;
 import xyz.iwolfking.woldsvaults.items.gear.VaultPlushieItem;
 import xyz.iwolfking.woldsvaults.items.gear.VaultRangItem;
@@ -33,7 +33,7 @@ public abstract class MixinItemStack extends net.minecraftforge.common.capabilit
     )
     public Item gearDurabilityPrestigeForWoldItems(ItemStack instance, Operation<Item> original) {
         Item item = original.call(instance);
-        if (item instanceof VaultBattleStaffItem
+        if (item instanceof VaultMageStaffItem
                 || item instanceof VaultTridentItem
                 || item instanceof VaultPlushieItem
                 || item instanceof VaultLootSackItem

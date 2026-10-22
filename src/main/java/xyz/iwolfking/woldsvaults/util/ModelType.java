@@ -12,13 +12,13 @@ import iskallia.vault.dynamodel.model.item.shield.ShieldModel;
 import iskallia.vault.dynamodel.registry.DynamicModelRegistry;
 import iskallia.vault.init.ModDynamicModels;
 import net.minecraft.resources.ResourceLocation;
-import xyz.iwolfking.woldsvaults.models.Battlestaffs;
+import xyz.iwolfking.woldsvaults.models.Magestaffs;
 import xyz.iwolfking.woldsvaults.models.Tridents;
 
 public enum ModelType {
     SWORD(ModDynamicModels.Swords.REGISTRY, HandHeldModel::new, GeckoHandHeldModel::new),
     AXE(ModDynamicModels.Axes.REGISTRY, HandHeldModel::new, GeckoHandHeldModel::new),
-    BATTLESTAFF(Battlestaffs.REGISTRY, HandHeldModel::new, GeckoHandHeldModel::new),
+    MAGESTAFF(Magestaffs.REGISTRY, HandHeldModel::new, GeckoHandHeldModel::new),
     TRIDENT(Tridents.REGISTRY, HandHeldModel::new, GeckoHandHeldModel::new),
     SHIELD(ModDynamicModels.Shields.REGISTRY, ShieldModel::new, GeckoShieldModel::new),
     FOCUS(ModDynamicModels.Focus.REGISTRY, PlainItemModel::new, GeckoPlainModel::new),
@@ -73,7 +73,7 @@ public enum ModelType {
             return switch (value) {
                 case "sword", "swords" -> SWORD;
                 case "axe", "axes" -> AXE;
-                case "battlestaff", "battlestaffs" -> BATTLESTAFF;
+                case "magestaff", "magestaffs" -> MAGESTAFF;
                 case "trident", "tridents" -> TRIDENT;
                 case "shield", "shields" -> SHIELD;
                 case "focus", "focuses" -> FOCUS;

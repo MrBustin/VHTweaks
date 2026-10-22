@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "the_vault:item/gear/battlestaff/unidentified",
-        "layer1": "the_vault:item/gear/battlestaff/unidentified_overlay"
-    }
-}

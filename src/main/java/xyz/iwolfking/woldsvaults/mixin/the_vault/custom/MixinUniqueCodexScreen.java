@@ -76,8 +76,8 @@ public class MixinUniqueCodexScreen extends AbstractElementScreen {
 //                } else if (((UniqueGearConfig.Entry) location.get()).getModel().toString().contains("boots")) {
 //                    stack = new ItemStack(ModItems.BOOTS);
 //                }
-//                else if(location.get().getModel().toString().contains("battlestaff")) {
-//                    stack = new ItemStack(xyz.iwolfking.woldsvaults.init.ModItems.BATTLESTAFF);
+//                else if(location.get().getModel().toString().contains("magestaff")) {
+//                    stack = new ItemStack(xyz.iwolfking.woldsvaults.init.ModItems.MAGESTAFF);
 //                }
 //                else if(location.get().getModel().toString().contains("magnet")) {
 //                    stack = new ItemStack(ModItems.MAGNET);

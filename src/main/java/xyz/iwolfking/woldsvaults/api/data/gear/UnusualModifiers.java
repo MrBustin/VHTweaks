@@ -81,8 +81,8 @@ public class UnusualModifiers {
         SWORD_MODIFIERS_SUFFIX.add(UnusualModifierLib.HEXING_HIT);
         UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("sword"), SWORD_MODIFIERS_PREFIX);
         UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("sword"), SWORD_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("battlestaff"), SWORD_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("battlestaff"), SWORD_MODIFIERS_SUFFIX);
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("magestaff"), SWORD_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("magestaff"), SWORD_MODIFIERS_SUFFIX);
         UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("trident"), SWORD_MODIFIERS_PREFIX);
         UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("trident"), SWORD_MODIFIERS_SUFFIX);
         UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("rang"), SWORD_MODIFIERS_PREFIX);

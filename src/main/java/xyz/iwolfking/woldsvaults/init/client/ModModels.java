@@ -188,12 +188,12 @@ private static boolean registered = false;
     }
 
     public enum Item {
-        DARKSABER("darksaber", "The Darksaber", ModelType.BATTLESTAFF),
+        DARKSABER("darksaber", "The Darksaber", ModelType.MAGESTAFF),
         SIDEARM("sidearm", "Sidearm", ModelType.WAND),
         RELIC_SHIELD("relicshield", "Relic Shield", ModelType.SHIELD),
         CHAIN_SWORD("chain_sword", "Chain-Sword", ModelType.SWORD),
-        DARKSABER2("darksaber2", "The Darksaber", ModelType.BATTLESTAFF),
-        ELDRITCH_STAFF("eldritch_staff", "Eldritch Staff", ModelType.BATTLESTAFF),
+        DARKSABER2("darksaber2", "The Darksaber", ModelType.MAGESTAFF),
+        ELDRITCH_STAFF("eldritch_staff", "Eldritch Staff", ModelType.MAGESTAFF),
         ELDRITCH_SHIELD("eldritch_shield", "Eldritch Shield", ModelType.WAND),
         EXECUTIONER("executioner", "Kubikiribōchō", ModelType.SWORD);
 
@@ -224,7 +224,7 @@ private static boolean registered = false;
 
     public enum GeckoItem {
         MADNESS("madness", "Madness Focus", "balls", 20, ModelType.FOCUS),
-        DARKSABER2("darksaber2", "The Darksaber 2", "blade", 20, ModelType.BATTLESTAFF);
+        DARKSABER2("darksaber2", "The Darksaber 2", "blade", 20, ModelType.MAGESTAFF);
         private final DynamicModel<?> model;
         private final ModelType type;
 
