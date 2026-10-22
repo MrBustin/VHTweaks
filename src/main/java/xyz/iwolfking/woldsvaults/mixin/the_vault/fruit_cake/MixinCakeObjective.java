@@ -19,11 +19,15 @@ import iskallia.vault.core.world.storage.VirtualWorld;
 import iskallia.vault.world.data.ServerVaults;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -77,7 +81,8 @@ public abstract class MixinCakeObjective {
         if (value.equals("cake")) {
             CakeWorldData cakeData = CakeWorldData.get(world);
             FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getLastCakeType());
-            return cakeData.isFruitCake() && fruit != null ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", fruit.displayName) : value;
+            String localizedName = new TranslatableComponent(fruit.displayName).getString();
+            return cakeData.isFruitCake() ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", localizedName) : value;
         }
         return value;
     }
@@ -114,7 +119,7 @@ public abstract class MixinCakeObjective {
         }
     }
 
-    @Inject(method = "generateCake", at = @At(value = "TAIL"))
+    @Inject(method = "generateCake", at = @At(value = "RETURN"))
     private void injectItemSpawning(VirtualWorld world, RegionPos region, RandomSource random, CallbackInfoReturnable<Boolean> cir) {
         CakeWorldData cakeData = CakeWorldData.get(world);
         if (!cakeData.isFruitCake()) {
@@ -123,7 +128,7 @@ public abstract class MixinCakeObjective {
         }
 
         int memberCount = ServerVaults.get(world).flatMap(vault -> vault.getOptional(Vault.STATS)).map(stats -> stats.getMap().size()).orElse(0);
-        Map.Entry<Float, FruitEntry> floatFruitEntry = Configs.FRUIT_CAKE.getFruitChances(memberCount).higherEntry(random.nextFloat());
+        Map.Entry<Float, FruitEntry> floatFruitEntry = Configs.FRUIT_CAKE.getFruitChances().higherEntry(random.nextFloat());
 
         if (floatFruitEntry != null) {
             FruitEntry fruit = floatFruitEntry.getValue();

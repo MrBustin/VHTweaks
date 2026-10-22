@@ -6,46 +6,43 @@
 
 package xyz.iwolfking.woldsvaults.configs;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import iskallia.vault.VaultMod;
 import iskallia.vault.config.Config;
 import iskallia.vault.core.vault.modifier.registry.VaultModifierRegistry;
 import iskallia.vault.init.ModItems;
-import iskallia.vault.item.ItemVaultFruit;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.configs.vault.entry.FruitEntry;
 import xyz.iwolfking.woldsvaults.configs.vault.entry.ModifierCounter;
-import xyz.iwolfking.woldsvaults.mixin.the_vault.fruit_cake.AccessorItemVaultFruit;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FruitCakeConfig extends Config {
     @Expose
+    @SerializedName("chance")
     private float chance = 0.1f;
     @Expose
+    @SerializedName("start_modifiers")
     private Map<ResourceLocation, Integer> startModifiers = new HashMap<>();
     @Expose
+    @SerializedName("fruits")
     private Map<String, FruitEntry> fruits = new HashMap<>();
     @Expose
-    private Map<Integer, List<String>> fruitScaling = new HashMap<>();
-    @Expose
+    @SerializedName("fruit_cake_format")
     private String fruitCakeFormat = "%fruit% Cake";
     @Expose
+    @SerializedName("time_added_format")
     private String timeAddedFormat = "%seconds% seconds to the Vault Timer";
     @Expose
+    @SerializedName("replace_slice_with_time_added")
     private boolean replaceSliceWithTimeAdded = true;
 
     private List<ModifierCounter> modifiers = new ArrayList<>();
 
-    private final Map<String, FruitEntry> fruitMap = new HashMap<>();
-    private final TreeMap<Integer, List<FruitEntry>> scaling = new TreeMap<>();
     private final Map<Integer, TreeMap<Float, FruitEntry>> fruitChances = new ConcurrentHashMap<>();
 
     @Override
@@ -63,58 +60,6 @@ public class FruitCakeConfig extends Config {
             this.modifiers.add(new ModifierCounter(id, entry.getValue()));
         }
         this.modifiers = List.copyOf(this.modifiers);
-
-//        for (Map.Entry<String, JsonObject> entry : fruits.entrySet()) {
-//            String id = entry.getKey();
-//            String displayName = id;
-//            JsonObject json = entry.getValue();
-//
-//            if (json.get("displayName") instanceof JsonPrimitive displayNameJson && displayNameJson.isString()) {
-//                displayName = displayNameJson.getAsString();
-//            }
-//
-//            String iconId = id;
-//            if (json.get("icon") instanceof JsonPrimitive serializedIcon && serializedIcon.isString()) {
-//                iconId = serializedIcon.getAsString();
-//            }
-//            Item icon = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(iconId));
-//            if (icon == null) {
-//                WoldsVaults.LOGGER.warn("[FruitCakeConfig] Fruit '{}' has an invalid icon '{}', skipping", id, iconId);
-//                continue;
-//            }
-//
-//            if (!(icon instanceof ItemVaultFruit) && (!(json.get("ticks") instanceof JsonPrimitive ticksJson) || !ticksJson.isNumber())) {
-//                WoldsVaults.LOGGER.warn("[FruitCakeConfig] Fruit '{}' has an invalid ticks '{}', skipping", id, json.get("ticks"));
-//                continue;
-//            }
-//            int ticks = json.has("ticks") ? json.get("ticks").getAsInt() : ((AccessorItemVaultFruit) icon).getExtraVaultTicks();
-//
-//            if (!(json.get("weight") instanceof JsonPrimitive weightJson) || !weightJson.isNumber()) {
-//                WoldsVaults.LOGGER.warn("[FruitCakeConfig] Fruit '{}' has an invalid weight '{}', skipping", id, json.get("weight"));
-//                continue;
-//            }
-//            float weight = weightJson.getAsFloat();
-//            if (weight <= 0) {
-//                WoldsVaults.LOGGER.warn("[FruitCakeConfig] Fruit '{}' has a weight <= 0, skipping", id);
-//                continue;
-//            }
-//
-//            this.fruitMap.put(id, new Fruit(id, displayName, icon, ticks, weight));
-//        }
-
-        for (Map.Entry<Integer, List<String>> entry : fruitScaling.entrySet()) {
-            int memberCount = entry.getKey();
-            List<FruitEntry> fruits = new ArrayList<>();
-            for (String fruitId : entry.getValue()) {
-                FruitEntry fruit = this.fruits.get(fruitId);
-                if (fruit == null) {
-                    WoldsVaults.LOGGER.warn("[FruitCakeConfig] Scaling for '{}' players, fruit '{}' not found, skipping", memberCount, fruitId);
-                    continue;
-                }
-                fruits.add(fruit);
-            }
-            this.scaling.put(memberCount, fruits);
-        }
     }
 
     @Override
@@ -140,31 +85,9 @@ public class FruitCakeConfig extends Config {
         this.fruits.put(star.id, star);
         FruitEntry pear = new FruitEntry(ModItems.MYSTIC_PEAR, 0.0008f);
         this.fruits.put(pear.id, pear);
-
-        this.fruitScaling = new HashMap<>();
-        this.fruitScaling.put(30, List.of(star.id));
-        this.fruitScaling.put(32, List.of(star.id, mango.id));
     }
 
-    public TreeMap<Float, FruitEntry> getFruitChances(int memberCount) {
-        Map.Entry<Integer, List<FruitEntry>> punishment = this.scaling.floorEntry(memberCount);
-        if (punishment != null) {
-            return fruitChances.computeIfAbsent(memberCount, count -> {
-                TreeMap<Float, FruitEntry> withPunishment = new TreeMap<>();
-                float totalChance = (float) this.fruits.values().stream()
-                        .filter(fruit -> !punishment.getValue().contains(fruit))
-                        .mapToDouble(FruitEntry::getWeight).sum();
-                float fruitChance = 0;
-                for (FruitEntry fruit : this.fruits.values()) {
-                    if (!punishment.getValue().contains(fruit)) {
-                        fruitChance += (fruit.getWeight() / totalChance);
-                        withPunishment.put(fruitChance, fruit);
-                    }
-                }
-                return withPunishment;
-            });
-        }
-
+    public TreeMap<Float, FruitEntry> getFruitChances() {
         return this.fruitChances.computeIfAbsent(-1, dummy -> {
             TreeMap<Float, FruitEntry> fruitChances = new TreeMap<>();
             float totalChance = (float) this.fruits.values().stream().mapToDouble(FruitEntry::getWeight).sum();
