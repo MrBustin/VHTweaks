@@ -69,7 +69,9 @@ public class StructureCommands extends BaseCommand {
         PortalData data = new PortalData(rotation, centerPos, size, level.dimension(), false, -1);
         PortalSavedData.get(context.getSource().getServer()).addPortalData(data);
 
-        context.getSource().sendSuccess(new TextComponent("Added Portal to List"), false);
+        int index = PortalSavedData.get(context.getSource().getServer()).getPortalData().size() - 1;
+
+        context.getSource().sendSuccess(new TextComponent("Added Portal to List at Index " + index), false);
 
         return 0;
     }
