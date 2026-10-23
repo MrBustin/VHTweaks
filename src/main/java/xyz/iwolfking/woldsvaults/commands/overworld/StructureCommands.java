@@ -54,10 +54,10 @@ public class StructureCommands extends BaseCommand {
         builder.then(Commands.literal("instantlyRunModifierRemoval").executes(this::instantlyRunModifierRemoval));
         builder.then(Commands.literal("addStructure")
                 .then(Commands.argument("dimension", DimensionArgument.dimension())
-                .then(Commands.argument("pos", BlockPosArgument.blockPos()))
-                .then(Commands.argument("size", EnumArgument.enumArgument(StructureSize.class)))
-                .then(Commands.argument("rotation", EnumArgument.enumArgument(Rotation.class)))
-                        .executes(this::addStructure)));
+                .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                .then(Commands.argument("size", EnumArgument.enumArgument(StructureSize.class))
+                .then(Commands.argument("rotation", EnumArgument.enumArgument(Rotation.class))
+                        .executes(this::addStructure))))));
     }
 
     private int addStructure(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
