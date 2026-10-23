@@ -5,8 +5,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.datafixers.util.Pair;
-import xyz.iwolfking.woldsvaults.world.overworld.OverworldVaultConstants;
-import xyz.iwolfking.woldsvaults.WoldsVaults;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraftforge.server.command.EnumArgument;
 import xyz.iwolfking.woldsvaults.configs.overworld.VaultConfigRegistry;
 import xyz.iwolfking.woldsvaults.configs.overworld.vault.OverworldVaultsPortalConfig;
 import xyz.iwolfking.woldsvaults.configs.overworld.vault.entry.PortalEntry;
@@ -15,10 +16,7 @@ import xyz.iwolfking.woldsvaults.util.MiscUtil;
 import xyz.iwolfking.woldsvaults.util.overworld.OverworldVaultCrystalUtil;
 import xyz.iwolfking.woldsvaults.util.overworld.PortalUtil;
 import xyz.iwolfking.woldsvaults.util.TextUtil;
-import xyz.iwolfking.woldsvaults.world.overworld.ActiveCrystalSavedData;
-import xyz.iwolfking.woldsvaults.world.overworld.BlockEntityChunkSavedData;
-import xyz.iwolfking.woldsvaults.world.overworld.PortalData;
-import xyz.iwolfking.woldsvaults.world.overworld.PortalSavedData;
+import xyz.iwolfking.woldsvaults.world.overworld.*;
 import iskallia.vault.block.entity.VaultPortalTileEntity;
 import iskallia.vault.item.crystal.CrystalData;
 import net.minecraft.ChatFormatting;
@@ -30,7 +28,6 @@ import net.minecraft.network.chat.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.ArrayList;
@@ -55,6 +52,26 @@ public class StructureCommands extends BaseCommand {
         builder.then(Commands.literal("activateRandomPortal").executes(this::activateRandomPortal));
         builder.then(Commands.literal("deactivateActivePortal").executes(this::deactivateActivePortal));
         builder.then(Commands.literal("instantlyRunModifierRemoval").executes(this::instantlyRunModifierRemoval));
+        builder.then(Commands.literal("addStructure")
+                .then(Commands.argument("dimension", DimensionArgument.dimension())
+                .then(Commands.argument("pos", BlockPosArgument.blockPos()))
+                .then(Commands.argument("size", EnumArgument.enumArgument(StructureSize.class)))
+                .then(Commands.argument("rotation", EnumArgument.enumArgument(Rotation.class)))
+                        .executes(this::addStructure)));
+    }
+
+    private int addStructure(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ServerLevel level = DimensionArgument.getDimension(context, "dimension");
+        BlockPos centerPos = BlockPosArgument.getLoadedBlockPos(context, "pos");
+        StructureSize size = context.getArgument("size", StructureSize.class);
+        Rotation rotation = context.getArgument("rotation", Rotation.class);
+
+        PortalData data = new PortalData(rotation, centerPos, size, level.dimension(), false, -1);
+        PortalSavedData.get(context.getSource().getServer()).addPortalData(data);
+
+        context.getSource().sendSuccess(new TextComponent("Added Portal to List"), false);
+
+        return 0;
     }
 
     private int getStructureList(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
