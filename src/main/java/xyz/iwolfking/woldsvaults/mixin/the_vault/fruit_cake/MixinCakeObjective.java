@@ -12,6 +12,7 @@ import iskallia.vault.core.random.RandomSource;
 import iskallia.vault.core.util.RegionPos;
 import iskallia.vault.core.vault.Vault;
 import iskallia.vault.core.vault.objective.CakeObjective;
+import iskallia.vault.core.vault.objective.Objective;
 import iskallia.vault.core.vault.player.ClassicListenersLogic;
 import iskallia.vault.core.vault.player.Listeners;
 import iskallia.vault.core.vault.time.modifier.ModifierExtension;
@@ -20,12 +21,15 @@ import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
@@ -42,7 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 @Mixin(value = CakeObjective.class, remap = false)
-public abstract class MixinCakeObjective {
+@SuppressWarnings("unused")
+public abstract class MixinCakeObjective extends Objective {
     @Unique
     private static final DecimalFormat TIME_FORMAT = new DecimalFormat("#.##");
 
@@ -74,13 +79,19 @@ public abstract class MixinCakeObjective {
 
     @ModifyArg(method = "addModifier", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/TextComponent;<init>(Ljava/lang/String;)V"))
     private String fruitCakeModifierDisplay(String value, @Local(argsOnly = true) VirtualWorld world) {
-        if (value.equals("cake")) {
-            CakeWorldData cakeData = CakeWorldData.get(world);
-            FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getCakeType());
-            String localizedName = new TranslatableComponent(fruit.displayName).getString();
-            return cakeData.isFruitCake() ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", localizedName) : value;
+        if (!value.equals("cake")) {
+            return value;
         }
-        return value;
+
+        CakeWorldData cakeData = CakeWorldData.get(world);
+        FruitEntry fruit = Configs.FRUIT_CAKE.getFruit(cakeData.getCakeType());
+
+        if (fruit == null) {
+            return value;
+        }
+
+        String localizedName = new TranslatableComponent(fruit.displayName).getString();
+        return cakeData.isFruitCake() ? Configs.FRUIT_CAKE.getFruitCakeFormat().replace("%fruit%", localizedName) : value;
     }
 
     @ModifyVariable(method = "addModifier", name = "suffix", at = @At(value = "STORE", ordinal = 0))
@@ -128,7 +139,8 @@ public abstract class MixinCakeObjective {
         if (floatFruitEntry != null) {
             FruitEntry fruit = floatFruitEntry.getValue();
             cakeData.setCakeType(fruit.id);
-            this.moreObjectives$spawnItemParticles(world, ((CakeObjective) (Object) this).get(CakeObjective.CAKE_POS), new ItemStack(fruit.iconItem, 1));
+            Item fruitItem = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(fruit.id));
+            this.moreObjectives$spawnItemParticles(world, this.get(CakeObjective.CAKE_POS), new ItemStack(fruitItem, 1));
             WoldsVaults.LOGGER.debug("Next cake {}", cakeData.getCakeType());
         } else {
             cakeData.setCakeType("");

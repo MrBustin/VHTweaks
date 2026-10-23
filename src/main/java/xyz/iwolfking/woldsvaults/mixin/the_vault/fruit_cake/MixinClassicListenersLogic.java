@@ -12,7 +12,6 @@ import iskallia.vault.core.vault.modifier.spi.VaultModifier;
 import iskallia.vault.core.vault.objective.Objectives;
 import iskallia.vault.core.vault.player.ClassicListenersLogic;
 import iskallia.vault.core.world.storage.VirtualWorld;
-import iskallia.vault.world.data.ServerVaults;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,14 +24,14 @@ import xyz.iwolfking.woldsvaults.data.CakeWorldData;
  */
 @Mixin(value = ClassicListenersLogic.class, remap = false)
 public class MixinClassicListenersLogic {
-    @Redirect(method = "printJoinMessage", at = @At(value = "INVOKE", target = "Liskallia/vault/core/vault/player/ClassicListenersLogic;getVaultObjective(Ljava/lang/String;)Ljava/lang/String;"))
-    private String replaceEnterCakeText(ClassicListenersLogic instance, String key, @Local(argsOnly = true) VirtualWorld world) {
-        return CakeWorldData.isFruitCake(world) ? "Fruit Cake" : instance.getVaultObjective(key);
+    @Redirect(method = "printJoinMessage", at = @At(value = "INVOKE", target = "Liskallia/vault/core/vault/player/ClassicListenersLogic;getVaultObjective(Liskallia/vault/core/vault/Vault;)Ljava/lang/String;"))
+    private String replaceEnterCakeText(ClassicListenersLogic instance, Vault vault, @Local(argsOnly = true) VirtualWorld world) {
+        return CakeWorldData.isFruitCake(world) ? "Fruit Cake" : instance.getVaultObjective(vault);
     }
 
-    @Redirect(method = "lambda$initServer$2", at = @At(value = "INVOKE", target = "Liskallia/vault/core/vault/player/ClassicListenersLogic;getVaultObjective(Ljava/lang/String;)Ljava/lang/String;"))
-    private String replaceExitCakeText(ClassicListenersLogic instance, String key, @Local(argsOnly = true) Vault vault) {
-        return CakeWorldData.isFruitCake(ServerVaults.getWorld(vault).orElse(null)) ? "Fruit Cake" : instance.getVaultObjective(key);
+    @Redirect(method = "lambda$initServer$2", at = @At(value = "INVOKE", target = "Liskallia/vault/core/vault/player/ClassicListenersLogic;getVaultObjective(Liskallia/vault/core/vault/Vault;)Ljava/lang/String;"))
+    private String replaceExitCakeText(ClassicListenersLogic instance, Vault vault, @Local(argsOnly = true) VirtualWorld world) {
+        return CakeWorldData.isFruitCake(world) ? "Fruit Cake" : instance.getVaultObjective(vault);
     }
 
     @Redirect(method = "printJoinMessage", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectIterator;hasNext()Z", ordinal = 0))
