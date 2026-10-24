@@ -106,6 +106,11 @@ public class ModNetwork {
                 SelectCapeMessage::encode,
                 SelectCapeMessage::decode,
                 SelectCapeMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), ServerboundClaimSlotMachineMessage.class,
+                ServerboundClaimSlotMachineMessage::encode,
+                ServerboundClaimSlotMachineMessage::decode,
+                ServerboundClaimSlotMachineMessage::handle);
     }
 
     public static int nextId() {

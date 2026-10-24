@@ -12,6 +12,7 @@ import xyz.iwolfking.woldsvaults.client.menu.PlayerTraderMenu;
 import xyz.iwolfking.woldsvaults.client.menu.RenameMenu;
 import xyz.iwolfking.woldsvaults.client.menu.PowerElementContainerScreen;
 import xyz.iwolfking.woldsvaults.container.screen.CrystalTraderScreen;
+import xyz.iwolfking.woldsvaults.container.screen.SlotMachineScreen;
 
 @OnlyIn(Dist.CLIENT)
 public class ModScreens {
@@ -23,5 +24,6 @@ public class ModScreens {
         MenuScreens.register(ModContainers.RENAMING_CONTAINER, RenameMenu::new);
         MenuScreens.register(ModContainers.PLAYER_TRADER_CONTAINER, PlayerTraderMenu::new);
         MenuScreens.register(ModContainers.CRYSTAL_TRADER_CONTAINER, CrystalTraderScreen.Shop::new);
+        MenuScreens.register(ModContainers.SLOT_MACHINE_CONTAINER, SlotMachineScreen::new);
     }
 }

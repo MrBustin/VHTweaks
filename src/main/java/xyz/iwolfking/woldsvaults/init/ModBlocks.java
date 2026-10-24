@@ -361,6 +361,9 @@ public class ModBlocks {
     // Merged from the former init.additions class.
 public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, WoldsVaults.MOD_ID);
 
+    public static final RegistryObject<SlotMachineChestBlock> SLOT_MACHINE_CHEST = registerBlock("slot_machine_chest",
+            () -> new SlotMachineChestBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK)), true);
+
 
     public static final RegistryObject<Block> GLOBE_EXPANDER = registerBlock("globe_expander",
             () -> new GlobeExpanderBlock(BlockBehaviour.Properties.of(Material.METAL)
