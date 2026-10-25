@@ -24,5 +24,6 @@ public class MixinVaultModifierTypeRegistry {
         MODIFIER_TYPE_REGISTRY.put(WoldsVaults.id("modifier_type/difficulty_lock"), VaultModifierType.of(DifficultyLockModifier.class, DifficultyLockModifier.Properties.class, DifficultyLockModifier::new));
         MODIFIER_TYPE_REGISTRY.put(WoldsVaults.id("modifier_type/enchanted_elixir_tags"), VaultModifierType.of(EnchantedElixirPoolModifier.class, EnchantedElixirPoolModifier.Properties.class, EnchantedElixirPoolModifier::new));
         MODIFIER_TYPE_REGISTRY.put(WoldsVaults.id("modifier_type/enchanted_elixir_event_count"), VaultModifierType.of(EnchantedElixirEventAmountModifier.class, EnchantedElixirEventAmountModifier.Properties.class, EnchantedElixirEventAmountModifier::new));
+        MODIFIER_TYPE_REGISTRY.put(WoldsVaults.id("modifier_type/mythical"), VaultModifierType.of(MythicalModifier.class, MythicalModifier.Properties.class, MythicalModifier::new));
     }
 }

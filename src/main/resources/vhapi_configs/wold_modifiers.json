@@ -1102,6 +1102,20 @@
     "the_vault:modifier_type/experience": {
 
     },
+    "woldsvaults:modifier_type/mythical": {
+      "woldsvaults:mythical": {
+        "properties": {
+          "chance": 0.01
+        },
+        "display": {
+          "name": "Mythical",
+          "color": "#B71C1C",
+          "description": "Ornate chests have a chance to contain Mythic gear",
+          "descriptionFormatted": "Mythic Gear can appear in Ornate chests",
+          "icon": "woldsvaults:gui/modifiers/mythic_gear_modifier"
+        }
+      }
+    },
     "woldsvaults:modifier_type/experience_multiplier": {
       "woldsvaults:true_noxp": {
         "properties": {

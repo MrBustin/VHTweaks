@@ -37,6 +37,7 @@ public abstract class MixinAnvilRecipes {
         woldsVaults$register(new ToolModifierNullifierRecipe());
         woldsVaults$register(new ToolStylishAdderRecipe());
         woldsVaults$register(new LayoutModificationRecipe());
+        woldsVaults$register(new MythicCapstoneRecipe());
     }
 
     @Unique

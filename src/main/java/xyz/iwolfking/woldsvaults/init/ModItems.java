@@ -102,6 +102,7 @@ public class ModItems {
     public static BasicItem PROSPEROUS_CAPSTONE;
     public static BasicItem ALL_SEEING_EYE_CAPSTONE;
     public static BasicItem ENCHANTED_CAPSTONE;
+    public static BasicItem MYTHIC_CAPSTONE;
 
     public static BasicItem VENDOOR_CAPSTONE;
     public static BasicItem REPAIR_AUGMENTER;
@@ -232,6 +233,7 @@ public class ModItems {
         ALL_SEEING_EYE_CAPSTONE = new BasicItem(WoldsVaults.id("capstone_all_seeing_eye"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         ENCHANTED_CAPSTONE = new BasicItem(WoldsVaults.id("capstone_enchanted"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         VENDOOR_CAPSTONE = new BasicItem(WoldsVaults.id("capstone_vendoors"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
+        MYTHIC_CAPSTONE = new BasicItem(WoldsVaults.id("capstone_mythic"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         REPAIR_AUGMENTER = new BasicItem(WoldsVaults.id("repair_augmenter"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         CRYSTAL_REINFORCEMENT = new BasicItem(WoldsVaults.id("crystal_reinforcement"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
         RESONATING_REINFORCEMENT = new BasicItem(WoldsVaults.id("resonating_reinforcement"), (new Item.Properties()).tab(VAULT_MOD_GROUP));
@@ -338,6 +340,7 @@ public class ModItems {
         registry.register(PROSPEROUS_CAPSTONE);
         registry.register(ALL_SEEING_EYE_CAPSTONE);
         registry.register(ENCHANTED_CAPSTONE);
+        registry.register(MYTHIC_CAPSTONE);
         registry.register(VENDOOR_CAPSTONE);
         registry.register(REPAIR_AUGMENTER);
         registry.register(CRYSTAL_REINFORCEMENT);
