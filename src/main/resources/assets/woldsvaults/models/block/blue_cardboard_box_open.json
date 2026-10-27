@@ -1,0 +1,7 @@
+{
+  "parent": "the_vault:block/cardboard_box_open_1",
+  "textures": {
+    "0": "woldsvaults:block/cardboard_box_blue",
+    "particle": "woldsvaults:block/cardboard_box_blue"
+  }
+}

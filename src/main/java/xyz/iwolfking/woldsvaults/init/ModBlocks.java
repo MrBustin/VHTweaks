@@ -2,9 +2,8 @@ package xyz.iwolfking.woldsvaults.init;
 
 import com.mojang.datafixers.types.Type;
 import iskallia.vault.VaultMod;
-import iskallia.vault.block.BreakableCrateBlock;
-import iskallia.vault.block.CoinPileDecorBlock;
-import iskallia.vault.block.VaultCrateBlock;
+import iskallia.vault.block.*;
+import iskallia.vault.block.entity.CardboardBoxTileEntity;
 import iskallia.vault.block.render.ScavengerAltarRenderer;
 import iskallia.vault.item.CoinBlockItem;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +22,7 @@ import net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackBlock;
 import net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackBlockEntity;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.blocks.*;
+import xyz.iwolfking.woldsvaults.blocks.LootStatueBlock;
 import xyz.iwolfking.woldsvaults.client.renderers.BrewingAltarRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.DecoGridGatewayRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.DungeonPedestalRenderer;
@@ -30,7 +30,7 @@ import xyz.iwolfking.woldsvaults.blocks.renderers.SurvivalMobBarrierRenderer;
 import xyz.iwolfking.woldsvaults.blocks.tiles.*;
 
 import java.util.function.Consumer;
-import iskallia.vault.block.PillarBlock;
+
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.*;
@@ -59,6 +59,11 @@ public class ModBlocks {
     public static final HellishSandBlock TENOS_SAND;
     public static final HellishSandBlock VELARA_SAND;
     public static final HellishSandBlock IDONA_SAND;
+
+    public static final CardboardBoxBlock RED_CARDBOARD_BOX;
+    public static final CardboardBoxBlock YELLOW_CARDBOARD_BOX;
+    public static final CardboardBoxBlock GREEN_CARDBOARD_BOX;
+    public static final CardboardBoxBlock BLUE_CARDBOARD_BOX;
 
 
     public static final VaultSalvagerBlock VAULT_SALVAGER_BLOCK;
@@ -110,6 +115,10 @@ public class ModBlocks {
     public static final BlockEntityType<DecoVelaraAltarTileEntity> DECO_VELARA_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     public static final BlockEntityType<BrewingAltarTileEntity> BREWING_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     public static final BlockEntityType<BackpackBlockEntity> SOPHISTICATED_BACKPACK;
+    public static final BlockEntityType<CardboardBoxTileEntity> RED_CARDBOARD_BOX_TILE_ENTITY;
+    public static final BlockEntityType<CardboardBoxTileEntity> YELLOW_CARDBOARD_BOX_TILE_ENTITY;
+    public static final BlockEntityType<CardboardBoxTileEntity> GREEN_CARDBOARD_BOX_TILE_ENTITY;
+    public static final BlockEntityType<CardboardBoxTileEntity> BLUE_CARDBOARD_BOX_TILE_ENTITY;
 
     public static final BackpackBlock XL_BACKPACK;
 
@@ -175,6 +184,16 @@ public class ModBlocks {
         DECO_VELARA_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(DecoVelaraAltarTileEntity::new, new Block[]{DECO_VELARA_ALTAR_BLOCK}).build((Type)null);
         BREWING_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(BrewingAltarTileEntity::new, new Block[]{BREWING_ALTAR}).build((Type)null);
         SOPHISTICATED_BACKPACK = BlockEntityType.Builder.of(BackpackBlockEntity::new, new Block[]{XL_BACKPACK}).build((Type)null);
+
+        RED_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.RED_CARDBOARD_BOX_TILE_ENTITY);
+        YELLOW_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.YELLOW_CARDBOARD_BOX_TILE_ENTITY);
+        GREEN_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.GREEN_CARDBOARD_BOX_TILE_ENTITY);
+        BLUE_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.BLUE_CARDBOARD_BOX_TILE_ENTITY);
+
+        RED_CARDBOARD_BOX_TILE_ENTITY = BlockEntityType.Builder.<CardboardBoxTileEntity>of(ColoredCardboardBoxTileEntity::new, RED_CARDBOARD_BOX).build(null);
+        YELLOW_CARDBOARD_BOX_TILE_ENTITY = BlockEntityType.Builder.<CardboardBoxTileEntity>of(ColoredCardboardBoxTileEntity::new, YELLOW_CARDBOARD_BOX).build(null);
+        GREEN_CARDBOARD_BOX_TILE_ENTITY = BlockEntityType.Builder.<CardboardBoxTileEntity>of(ColoredCardboardBoxTileEntity::new, GREEN_CARDBOARD_BOX).build(null);
+        BLUE_CARDBOARD_BOX_TILE_ENTITY = BlockEntityType.Builder.<CardboardBoxTileEntity>of(ColoredCardboardBoxTileEntity::new, BLUE_CARDBOARD_BOX).build(null);
     }
 
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -216,6 +235,10 @@ public class ModBlocks {
         registerBlock(event, VELARA_SAND, WoldsVaults.id("velara_sand"));
         registerBlock(event, IDONA_SAND, WoldsVaults.id("idona_sand"));
         registerBlock(event, XL_BACKPACK, WoldsVaults.id("xl_backpack"));
+        registerBlock(event, RED_CARDBOARD_BOX, WoldsVaults.id("red_cardboard_box"));
+        registerBlock(event, YELLOW_CARDBOARD_BOX, WoldsVaults.id("yellow_cardboard_box"));
+        registerBlock(event, GREEN_CARDBOARD_BOX, WoldsVaults.id("green_cardboard_box"));
+        registerBlock(event, BLUE_CARDBOARD_BOX, WoldsVaults.id("blue_cardboard_box"));
 
     }
     public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> event) {
@@ -239,6 +262,10 @@ public class ModBlocks {
         registerTileEntity(event, DECO_WENDARR_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("god_altar.wendarr_deco_tile_entity"));
         registerTileEntity(event, DECO_VELARA_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("god_altar.velara_deco_tile_entity"));
         registerTileEntity(event, BREWING_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE, WoldsVaults.id("brewing_altar_tile_entity"));
+        registerTileEntity(event, RED_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("red_cardboard_box_tile_entity"));
+        registerTileEntity(event, YELLOW_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("yellow_cardboard_box_tile_entity"));
+        registerTileEntity(event, GREEN_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("green_cardboard_box_tile_entity"));
+        registerTileEntity(event, BLUE_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("blue_cardboard_box_tile_entity"));
     }
 
     public static void registerBlockItems(RegistryEvent.Register<Item> event) {
@@ -279,6 +306,10 @@ public class ModBlocks {
         registerBlockItem(event, VAULT_CRATE_BALLISTIC_BINGO);
         registerBlockItem(event, VAULT_CRATE_UNHINGED_SCAVENGER);
         registerBlockItem(event, CRYSTALLIZED_STONE);
+        registerBlockItem(event, RED_CARDBOARD_BOX);
+        registerBlockItem(event, YELLOW_CARDBOARD_BOX);
+        registerBlockItem(event, GREEN_CARDBOARD_BOX);
+        registerBlockItem(event, BLUE_CARDBOARD_BOX);
 
     }
 
