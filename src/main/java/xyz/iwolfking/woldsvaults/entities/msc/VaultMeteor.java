@@ -24,6 +24,7 @@ public class VaultMeteor extends AbstractArrow {
             SynchedEntityData.defineId(VaultMeteor.class, EntityDataSerializers.BOOLEAN);
 
     private LivingEntity entityLocked;
+    private boolean escapingSpawnBlocks = true;
     private int burnDuration;
     private int amplifier;
     private float damage;
@@ -89,6 +90,18 @@ public class VaultMeteor extends AbstractArrow {
             }
 
             this.setDeltaMovement(direction.normalize().scale(HOMING_SPEED));
+        }
+
+        if (!this.level.isClientSide && this.escapingSpawnBlocks) {
+            // Clouds can spawn inside ceilings. Let the meteor leave the initial
+            // collision shapes before enabling the arrow's normal impact logic.
+            this.escapingSpawnBlocks = this.level.getBlockCollisions(this, this.getBoundingBox())
+                    .iterator().hasNext();
+            this.setNoPhysics(this.escapingSpawnBlocks);
+        }
+
+        if (this.isNoPhysics()) {
+            this.inGround = false;
         }
 
         super.tick();
