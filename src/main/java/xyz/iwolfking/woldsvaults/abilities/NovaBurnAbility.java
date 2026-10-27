@@ -6,7 +6,6 @@ import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.net.BitBuffer;
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.init.ModNetwork;
-import iskallia.vault.init.ModParticles;
 import iskallia.vault.network.message.NovaParticleMessage;
 import iskallia.vault.skill.ability.effect.spi.AbstractNovaAbility;
 import iskallia.vault.skill.ability.effect.spi.core.Ability;
@@ -14,9 +13,7 @@ import iskallia.vault.skill.base.SkillContext;
 import iskallia.vault.util.calc.EffectDurationHelper;
 import iskallia.vault.util.damage.DamageOverTimeHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,18 +23,16 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
+import xyz.iwolfking.woldsvaults.events.WoldActiveFlags;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 
 import java.util.List;
 import java.util.Optional;
 
 public class NovaBurnAbility extends AbstractNovaAbility {
-    private static final int PARTICLE_COLOR = TextColor.parseColor("#5e8a37").getValue();
     private int durationSeconds;
 
     public NovaBurnAbility(int unlockLevel, int learnPointCost, int regretPointCost, int cooldownTicks, float manaCost, float radius, float percentAbilityPowerDealt, float knockbackStrengthMultiplier, int durationSeconds) {
@@ -75,7 +70,7 @@ public class NovaBurnAbility extends AbstractNovaAbility {
                         ActiveFlags.IS_EFFECT_ATTACKING.push();
 
                         try {
-                            DamageOverTimeHelper.applyDamageOverTime(targetEntity, DamageSource.playerAttack(player), attackDamage, this.getDurationTicks(player), ActiveFlags.IS_POISON_NOVA_ATTACKING);
+                            DamageOverTimeHelper.applyDamageOverTime(targetEntity, DamageSource.playerAttack(player), attackDamage, this.getDurationTicks(player), WoldActiveFlags.IS_FIRE_NOVA_ATTACKING);
                         } finally {
                             ActiveFlags.IS_EFFECT_ATTACKING.pop();
                         }

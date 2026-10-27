@@ -1,11 +1,16 @@
 package xyz.iwolfking.woldsvaults.events;
 
+import iskallia.vault.event.ActiveFlags;
+
 public enum WoldActiveFlags {
     IS_REAVING_ATTACKING,
     IS_ECHOING_ATTACKING,
     IS_USING_SAFER_SPACE,
     IS_FANG_ATTACKING,
     IS_GEAR_CONDUCTING_JAVELIN;
+
+    // Use the native flag type so DamageOverTimeHelper restores it on every damage tick.
+    public static final ActiveFlags IS_FIRE_NOVA_ATTACKING = ActiveFlags.valueOf("IS_FIRE_NOVA_ATTACKING");
 
     private final ThreadLocal<Integer> activeReferences = ThreadLocal.withInitial(() -> 0);
 
