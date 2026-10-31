@@ -28,8 +28,12 @@ public class PercentBurnEffect extends MobEffect {
     public static final String BURN_IS_ABILITY_POWER = "PercentBurnIsAbilityPower";
 
     public PercentBurnEffect() {
+        this("burn");
+    }
+
+    protected PercentBurnEffect(String id) {
         super(MobEffectCategory.HARMFUL, 0xFF4500);
-        this.setRegistryName(WoldsVaults.id("burn"));
+        this.setRegistryName(WoldsVaults.id(id));
     }
 
     @Override
@@ -43,7 +47,7 @@ public class PercentBurnEffect extends MobEffect {
 
         spawnFireParticles(target);
 
-        CompoundTag data = target.getPersistentData();
+        CompoundTag data = getBurnData(target);
         if (!data.contains(BURN_ATTACK_SNAPSHOT)) {
             WoldsVaults.LOGGER.info("No burn snapshot");
             return;
@@ -55,9 +59,7 @@ public class PercentBurnEffect extends MobEffect {
             return;
         }
 
-        float damage = data.getBoolean(BURN_DAMAGE_IS_FINAL)
-                ? attackSnapshot
-                : attackSnapshot * (0.10f + (0.10f * amplifier));
+        float damage = getDamage(data, amplifier);
 
         DamageSource source;
 
@@ -114,6 +116,17 @@ public class PercentBurnEffect extends MobEffect {
         }
 
         target.addEffect(new MobEffectInstance(ModEffects.BURN, durationTicks, amplifier, false, true, true));
+    }
+
+    protected CompoundTag getBurnData(LivingEntity target) {
+        return target.getPersistentData();
+    }
+
+    protected float getDamage(CompoundTag data, int amplifier) {
+        float snapshot = data.getFloat(BURN_ATTACK_SNAPSHOT);
+        return data.getBoolean(BURN_DAMAGE_IS_FINAL)
+                ? snapshot
+                : snapshot * (0.10f + (0.10f * amplifier));
     }
 
     public static void applyAbilityPowerBurn(LivingEntity target, int durationTicks, float damagePerTick,

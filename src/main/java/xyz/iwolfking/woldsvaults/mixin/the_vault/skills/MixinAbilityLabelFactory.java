@@ -50,6 +50,10 @@ public abstract class MixinAbilityLabelFactory {
                 context -> label("\n Base Damage: ",binding(context.config(), "baseDamage"),"damage")
         );
         FACTORY_MAP.put(
+                "damagePerStack",
+                context -> label("\n Damage per Burning Stack: ", binding(context.config(), "damagePerStack"), "damage")
+        );
+        FACTORY_MAP.put(
                 "heartFragmentChance",
                 context -> label("\n Heart Fragment Chance: ",binding(context.config(), "heartFragmentChance"),"force")
         );
