@@ -161,6 +161,8 @@
     "the_vault.custom.MixinVaultDamageNumberType",
     "the_vault.custom.MixinVaultGearCraftingHelper",
     "the_vault.custom.MixinVaultGearTierConfig",
+    "the_vault.custom.MixinVaultJewelApplicationStationTileEntity",
+    "the_vault.custom.MixinVaultJewelApplicationStationMessage",
     "the_vault.custom.MixinVaultRarityEnum",
     "the_vault.custom.MixinVaultXPFoodItem",
     "the_vault.custom.MixinWildSpawnerTileEntity",

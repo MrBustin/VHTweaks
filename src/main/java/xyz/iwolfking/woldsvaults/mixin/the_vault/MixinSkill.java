@@ -11,6 +11,7 @@ import xyz.iwolfking.woldsvaults.expertises.*;
 import xyz.iwolfking.woldsvaults.prestige.CrystalSizePrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.GearSealerPrestigePower;
 import xyz.iwolfking.woldsvaults.prestige.ToolCapacityPrestigePower;
+import xyz.iwolfking.woldsvaults.prestige.JewelSizePrestigePower;
 import xyz.iwolfking.woldsvaults.talent.*;
 import xyz.iwolfking.woldsvaults.talent.lucky_hit.CooldownReductionLuckyHitTalent;
 import xyz.iwolfking.woldsvaults.talent.lucky_hit.ExecutionDamageLuckyHitTalent;
@@ -67,5 +68,6 @@ public abstract class MixinSkill extends TypeSupplierAdapter<Skill> {
         this.register("tool_capacity_power", ToolCapacityPrestigePower.class, ToolCapacityPrestigePower::new);
         this.register("gear_sealer_power", GearSealerPrestigePower.class, GearSealerPrestigePower::new);
         this.register("crystal_size_power", CrystalSizePrestigePower.class, CrystalSizePrestigePower::new);
+        this.register("jewel_size_power", JewelSizePrestigePower.class, JewelSizePrestigePower::new);
     }
 }
