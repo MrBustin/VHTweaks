@@ -10,6 +10,7 @@ import iskallia.vault.skill.base.Skill;
 import iskallia.vault.skill.base.SkillContext;
 import iskallia.vault.skill.tree.AbilityTree;
 import iskallia.vault.util.AABBHelper;
+import iskallia.vault.util.calc.AbilityPowerHelper;
 import iskallia.vault.util.calc.AreaOfEffectHelper;
 import iskallia.vault.world.data.PlayerAbilitiesData;
 import net.minecraft.nbt.CompoundTag;
@@ -37,13 +38,13 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     private static final Predicate<LivingEntity> MONSTER_PREDICATE = entity -> entity.getType().getCategory() == MobCategory.MONSTER;
 
     private float radius;
-    private float damagePerStack;
+    private float percentAbilityPowerPerStack;
 
     public EmpowerFireAuraAbility(int unlockLevel, int learnPointCost, int regretPointCost, int cooldownTicks,
-                                      float manaCostPerSecond, int durationTicks, float radius, float damagePerStack) {
+                                      float manaCostPerSecond, int durationTicks, float radius, float percentAbilityPowerPerStack) {
         super(unlockLevel, learnPointCost, regretPointCost, cooldownTicks, manaCostPerSecond, durationTicks);
         this.radius = radius;
-        this.damagePerStack = damagePerStack;
+        this.percentAbilityPowerPerStack = percentAbilityPowerPerStack;
     }
 
     public EmpowerFireAuraAbility() {
@@ -64,8 +65,8 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
         return realRadius;
     }
 
-    public float getDamagePerStack() {
-        return this.damagePerStack;
+    public float getPercentAbilityPowerPerStack() {
+        return this.percentAbilityPowerPerStack;
     }
 
     @Override
@@ -138,7 +139,8 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
                     AABBHelper.create(player.position(), radius)
             );
 
-            float damagePerStack = ability.getDamagePerStack();
+            float damagePerStack = AbilityPowerHelper.getAbilityPower(player)
+                    * ability.getPercentAbilityPowerPerStack();
             nearbyMobs.forEach(mob -> StackingBurnEffect.apply(mob, damagePerStack, player));
         }
     }
@@ -158,21 +160,21 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     public void writeBits(BitBuffer buffer) {
         super.writeBits(buffer);
         Adapters.FLOAT.writeBits(this.radius, buffer);
-        Adapters.FLOAT.writeBits(this.damagePerStack, buffer);
+        Adapters.FLOAT.writeBits(this.percentAbilityPowerPerStack, buffer);
     }
 
     @Override
     public void readBits(BitBuffer buffer) {
         super.readBits(buffer);
         this.radius = Adapters.FLOAT.readBits(buffer).orElseThrow();
-        this.damagePerStack = Adapters.FLOAT.readBits(buffer).orElseThrow();
+        this.percentAbilityPowerPerStack = Adapters.FLOAT.readBits(buffer).orElseThrow();
     }
 
     @Override
     public Optional<CompoundTag> writeNbt() {
         return super.writeNbt().map(nbt -> {
             Adapters.FLOAT.writeNbt(this.radius).ifPresent(tag -> nbt.put("radius", tag));
-            Adapters.FLOAT.writeNbt(this.damagePerStack).ifPresent(tag -> nbt.put("damagePerStack", tag));
+            Adapters.FLOAT.writeNbt(this.percentAbilityPowerPerStack).ifPresent(tag -> nbt.put("percentAbilityPowerPerStack", tag));
             return nbt;
         });
     }
@@ -181,16 +183,16 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     public void readNbt(CompoundTag nbt) {
         super.readNbt(nbt);
         this.radius = Adapters.FLOAT.readNbt(nbt.get("radius")).orElse(0.0F);
-        String damageKey = nbt.contains("damagePerStack") ? "damagePerStack"
-                : nbt.contains("percentAbilityPowerPerStack") ? "percentAbilityPowerPerStack" : "percentAbilityPowerDealt";
-        this.damagePerStack = Adapters.FLOAT.readNbt(nbt.get(damageKey)).orElse(0.0F);
+        String damageKey = nbt.contains("percentAbilityPowerPerStack") ? "percentAbilityPowerPerStack"
+                : nbt.contains("damagePerStack") ? "damagePerStack" : "percentAbilityPowerDealt";
+        this.percentAbilityPowerPerStack = Adapters.FLOAT.readNbt(nbt.get(damageKey)).orElse(0.0F);
     }
 
     @Override
     public Optional<JsonObject> writeJson() {
         return super.writeJson().map(json -> {
             Adapters.FLOAT.writeJson(this.radius).ifPresent(element -> json.add("radius", element));
-            Adapters.FLOAT.writeJson(this.damagePerStack).ifPresent(element -> json.add("damagePerStack", element));
+            Adapters.FLOAT.writeJson(this.percentAbilityPowerPerStack).ifPresent(element -> json.add("percentAbilityPowerPerStack", element));
             return json;
         });
     }
@@ -199,8 +201,8 @@ public class EmpowerFireAuraAbility extends AbstractEmpowerAbility {
     public void readJson(JsonObject json) {
         super.readJson(json);
         this.radius = Adapters.FLOAT.readJson(json.get("radius")).orElse(0.0F);
-        String damageKey = json.has("damagePerStack") ? "damagePerStack"
-                : json.has("percentAbilityPowerPerStack") ? "percentAbilityPowerPerStack" : "percentAbilityPowerDealt";
-        this.damagePerStack = Adapters.FLOAT.readJson(json.get(damageKey)).orElse(0.0F);
+        String damageKey = json.has("percentAbilityPowerPerStack") ? "percentAbilityPowerPerStack"
+                : json.has("damagePerStack") ? "damagePerStack" : "percentAbilityPowerDealt";
+        this.percentAbilityPowerPerStack = Adapters.FLOAT.readJson(json.get(damageKey)).orElse(0.0F);
     }
 }

@@ -98,8 +98,8 @@ public abstract class MixinModAbilityLabelBindings {
                 ability -> AbilityLabelFormatters.decimal(ability.getUnmodifiedRadius()),
                 "manaCostPerSecond",
                 ability -> AbilityLabelFormatters.integer((int) ability.getManaCostPerSecond()),
-                "damagePerStack",
-                ability -> AbilityLabelFormatters.decimal(ability.getDamagePerStack()),
+                "percentAbilityPowerPerStack",
+                ability -> AbilityLabelFormatters.percentTwoDecimalPlaces(ability.getPercentAbilityPowerPerStack()),
                 "cooldown",
                 ability -> AbilityLabelFormatters.ticks(ability.getCooldownTicks())
         ));
