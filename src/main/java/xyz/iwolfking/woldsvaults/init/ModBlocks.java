@@ -4,6 +4,7 @@ import com.mojang.datafixers.types.Type;
 import iskallia.vault.VaultMod;
 import iskallia.vault.block.*;
 import iskallia.vault.block.entity.CardboardBoxTileEntity;
+import iskallia.vault.block.render.ChallengeControllerRenderer;
 import iskallia.vault.block.render.ScavengerAltarRenderer;
 import iskallia.vault.item.CoinBlockItem;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,10 @@ import net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackBlockEntity;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.blocks.*;
 import xyz.iwolfking.woldsvaults.blocks.LootStatueBlock;
+import xyz.iwolfking.woldsvaults.blocks.challenge.ProtectVillagerControllerProxyBlock;
+import xyz.iwolfking.woldsvaults.blocks.renderers.challenge.ProtectVillagerControllerProxyRenderer;
+import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerProxyBlockEntity;
+import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerTileEntity;
 import xyz.iwolfking.woldsvaults.client.renderers.BrewingAltarRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.DecoGridGatewayRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.DungeonPedestalRenderer;
@@ -93,6 +98,9 @@ public class ModBlocks {
     public static final DecoTenosAltarBlock DECO_TENOS_ALTAR_BLOCK;
     public static final DecoWendarrAltarBlock DECO_WENDARR_ALTAR_BLOCK;
     public static final DecoVelaraAltarBlock DECO_VELARA_ALTAR_BLOCK;
+
+    public static final ProtectVillagerControllerProxyBlock PROTECT_VILLAGER_CONTROLLER_PROXY;
+    public static final ChallengeControllerBlock PROTECT_VILLAGER_CONTROLLER;
 
     public static final BlockEntityType<VaultSalvagerTileEntity> VAULT_SALVAGER_ENTITY;
     public static final BlockEntityType<IskallianLeavesTileEntity> ISKALLIAN_LEAVES_TILE_ENTITY_BLOCK_ENTITY_TYPE;
@@ -185,6 +193,9 @@ public class ModBlocks {
         BREWING_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(BrewingAltarTileEntity::new, new Block[]{BREWING_ALTAR}).build((Type)null);
         SOPHISTICATED_BACKPACK = BlockEntityType.Builder.of(BackpackBlockEntity::new, new Block[]{XL_BACKPACK}).build((Type)null);
 
+        PROTECT_VILLAGER_CONTROLLER_PROXY = new ProtectVillagerControllerProxyBlock();
+        PROTECT_VILLAGER_CONTROLLER = new ChallengeControllerBlock(() -> ModBlocks.PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY);
+
         RED_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.RED_CARDBOARD_BOX_TILE_ENTITY);
         YELLOW_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.YELLOW_CARDBOARD_BOX_TILE_ENTITY);
         GREEN_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.GREEN_CARDBOARD_BOX_TILE_ENTITY);
@@ -239,6 +250,8 @@ public class ModBlocks {
         registerBlock(event, YELLOW_CARDBOARD_BOX, WoldsVaults.id("yellow_cardboard_box"));
         registerBlock(event, GREEN_CARDBOARD_BOX, WoldsVaults.id("green_cardboard_box"));
         registerBlock(event, BLUE_CARDBOARD_BOX, WoldsVaults.id("blue_cardboard_box"));
+        registerBlock(event, PROTECT_VILLAGER_CONTROLLER_PROXY, WoldsVaults.id("protect_villager_controller_proxy_block"));
+        registerBlock(event, PROTECT_VILLAGER_CONTROLLER, WoldsVaults.id("protect_villager_controller"));
 
     }
     public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> event) {
@@ -266,6 +279,8 @@ public class ModBlocks {
         registerTileEntity(event, YELLOW_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("yellow_cardboard_box_tile_entity"));
         registerTileEntity(event, GREEN_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("green_cardboard_box_tile_entity"));
         registerTileEntity(event, BLUE_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("blue_cardboard_box_tile_entity"));
+        registerTileEntity(event, PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY, WoldsVaults.id("protect_villager_controller_tile_entity"));
+        registerTileEntity(event, PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY, WoldsVaults.id("protect_villager_controller_proxy_tile_entity"));
     }
 
     public static void registerBlockItems(RegistryEvent.Register<Item> event) {
@@ -284,6 +299,8 @@ public class ModBlocks {
         registerBlockItem(event, DECO_TENOS_ALTAR_BLOCK);
         registerBlockItem(event, DECO_WENDARR_ALTAR_BLOCK);
         registerBlockItem(event, DECO_VELARA_ALTAR_BLOCK);
+        registerBlockItem(event, PROTECT_VILLAGER_CONTROLLER_PROXY, 1);
+        registerBlockItem(event, PROTECT_VILLAGER_CONTROLLER, 1);
         registerBlockItem(event, CHROMATIC_GOLD_BLOCK);
         registerBlockItem(event, OMEGA_POG_BLOCK);
         registerBlockItem(event, ECHO_POG_BLOCK);
@@ -319,6 +336,8 @@ public class ModBlocks {
         event.registerBlockEntityRenderer(DUNGEON_PEDESTAL_TILE_ENTITY_BLOCK_ENTITY_TYPE, DungeonPedestalRenderer::new);
         event.registerBlockEntityRenderer(DECO_GRID_GATEWAY_TILE_ENTITY_BLOCK_ENTITY_TYPE, DecoGridGatewayRenderer::new);
         event.registerBlockEntityRenderer(BREWING_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE, BrewingAltarRenderer::new);
+        event.registerBlockEntityRenderer(PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY, ChallengeControllerRenderer::new);
+        event.registerBlockEntityRenderer(PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY, ProtectVillagerControllerProxyRenderer::new);
     }
 
 
@@ -344,6 +363,11 @@ public class ModBlocks {
         return IDONA_SAND_TILE_ENTITY_BLOCK_ENTITY_TYPE;
     }
 
+    public static final BlockEntityType<ProtectVillagerControllerTileEntity> PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY =
+            BlockEntityType.Builder.of(ProtectVillagerControllerTileEntity::new, PROTECT_VILLAGER_CONTROLLER).build(null);
+
+    public static final BlockEntityType<ProtectVillagerControllerProxyBlockEntity> PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY =
+            BlockEntityType.Builder.of(ProtectVillagerControllerProxyBlockEntity::new, PROTECT_VILLAGER_CONTROLLER_PROXY).build(null);
 
 
     private static <T extends BlockEntity> void registerTileEntity(RegistryEvent.Register<BlockEntityType<?>> event, BlockEntityType<?> type, ResourceLocation id) {
