@@ -8,7 +8,12 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(value = TreasureContainerContainer.class, remap = false)
 public class MixinTreasureContainer {
 
-    @ModifyConstant(method = "broadcastChanges", constant = @Constant(intValue = 18))
+    // Match the development and production names of this Minecraft override.
+    @ModifyConstant(
+            method = {"broadcastChanges()V", "m_38946_()V"},
+            constant = @Constant(intValue = 18),
+            remap = false
+    )
     private int speedUpReveal(int original) {
         return 4; // Reveal one occupied slot every 4 ticks
     }
