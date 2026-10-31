@@ -11,7 +11,7 @@ import xyz.iwolfking.woldsvaults.objectives.ScalingBallisticBingoCrystalObjectiv
 
 @Mixin(value = VaultCrystalConfig.class, remap = false)
 public class MixinVaultCrystalConfig {
-    @WrapOperation(method = "lambda$applySeal$5", at = @At(value = "INVOKE", target = "Liskallia/vault/item/crystal/CrystalData;setObjective(Liskallia/vault/item/crystal/objective/CrystalObjective;)V"))
+    @WrapOperation(method = "lambda$applySeal$18", at = @At(value = "INVOKE", target = "Liskallia/vault/item/crystal/CrystalData;setObjective(Liskallia/vault/item/crystal/objective/CrystalObjective;)V"))
     private static void modifyScalingBallisticBingoObjective(CrystalData instance, CrystalObjective objective, Operation<Void> original) {
         if (objective instanceof ScalingBallisticBingoCrystalObjective && instance.getObjective() instanceof ScalingBallisticBingoCrystalObjective current) {
             instance.setObjective(new ScalingBallisticBingoCrystalObjective(current.getObjectiveProbability(), current.getSealCount() + 1));
