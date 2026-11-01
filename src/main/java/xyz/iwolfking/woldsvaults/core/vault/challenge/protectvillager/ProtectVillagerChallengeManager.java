@@ -378,7 +378,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    @Override
    public boolean shouldRenderObjectives() {
-      return this.phase != Phase.IN_WAVE;
+      return false;
    }
 
    @OnlyIn(Dist.CLIENT)

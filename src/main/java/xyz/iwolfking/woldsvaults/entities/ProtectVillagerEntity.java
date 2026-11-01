@@ -10,4 +10,9 @@ public class ProtectVillagerEntity extends Villager {
         super(entityType, level);
         this.setNoAi(true);
     }
+
+    @Override
+    public float getHealth() {
+        return 1000;
+    }
 }

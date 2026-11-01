@@ -23,8 +23,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonObject> {
@@ -83,23 +81,43 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
       this.wave++;
       RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
-      for (EntityType<?> type : this.mobTypes) {
-         Entity entity = type.create(world);
-         if (entity != null) {
-            double x = (double)pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 8.0;
-            double y = (double)(pos.getY() + 1);
-            double z = (double)pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 8.0;
-            entity.moveTo(x, y, z, random.nextFloat() * 360.0F, 0.0F);
-            if (entity instanceof Mob) {
-               Mob mob = (Mob)entity;
-               if (this.targetVillagerId != null) {
-                  mob.targetSelector.addGoal(1, new ProtectVillagerTargetGoal(mob, this.targetVillagerId, 5.0F));
-                  mob.targetSelector.addGoal(0, new NearestAttackableTargetGoal(mob, Player.class, true));
-               }
-            }
+      // Distance of each corner from the center
+      int cornerDistance = 10;
 
-            world.addFreshEntity(entity);
-            this.mobs.add(entity.getUUID());
+      // Randomly select one of four corners
+      int corner = random.nextInt(4);
+
+      int offsetX = (corner == 0 || corner == 2) ? cornerDistance : -cornerDistance;
+      int offsetZ = (corner == 0 || corner == 1) ? cornerDistance : -cornerDistance;
+
+      // Center position of the selected corner
+      BlockPos spawnCenter = pos.offset(offsetX, 0, offsetZ);
+
+      // Random spread around the selected corner
+      double spread = 4.0;
+
+      for (EntityType<?> type : this.mobTypes) {
+         for (int amount = 0; amount <= this.mobTypes.size() * wave; amount++){
+            Entity entity = type.create(world);
+
+            if (entity != null) {
+               double x = spawnCenter.getX() + 0.5 + (random.nextDouble() - 0.5) * spread;
+
+               double y = pos.getY() + 1;
+
+               double z = spawnCenter.getZ() + 0.5 + (random.nextDouble() - 0.5) * spread;
+
+               entity.moveTo(x, y, z, random.nextFloat() * 360.0F, 0.0F);
+
+               if (entity instanceof Mob mob) {
+                  if (this.targetVillagerId != null) {
+                     mob.targetSelector.addGoal(0, new ProtectVillagerTargetGoal(mob, this.targetVillagerId, 0.0F));
+                  }
+               }
+
+               world.addFreshEntity(entity);
+               this.mobs.add(entity.getUUID());
+            }
          }
       }
    }
