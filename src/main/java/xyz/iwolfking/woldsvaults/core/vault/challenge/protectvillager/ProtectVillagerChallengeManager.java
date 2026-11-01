@@ -81,6 +81,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private final List<ChallengeAction<?>> actions = new ArrayList<>();
    private final List<ChallengeAction<?>> scheduledActions = new ArrayList<>();
    private final java.util.Map<BlockPos, List<ChallengeAction<?>>> proxies = new java.util.LinkedHashMap<>();
+   private final java.util.Map<String, List<ChallengeAction<?>>> rewardOptions = new java.util.LinkedHashMap<>();
    private int proxyTicker;
 
    public ProtectVillagerChallengeManager() {
@@ -106,6 +107,10 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    public void addFailureActions(List<ChallengeAction<?>> actions) {
       this.scheduledFailureActions.addAll(actions);
+   }
+
+   public void setRewardActions(String category, List<ChallengeAction<?>> actions) {
+      this.rewardOptions.put(category, new ArrayList<>(actions));
    }
 
    @Override
@@ -222,14 +227,15 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    }
 
    private void spawnRewardProxies(ServerLevel world) {
-      this.spawnProxies(world, List.of("Gilded", "Ornate", "Living", "Coin Piles"));
+      List<String> categories = List.of("Gilded", "Ornate", "Living", "Coin Piles");
+      this.spawnProxies(world, categories, categories.stream().map(this.rewardOptions::get).toList());
    }
 
    private void spawnContinueProxies(ServerLevel world) {
-      this.spawnProxies(world, List.of("Double It", "Forfeit and Loot"));
+      this.spawnProxies(world, List.of("Double It", "Forfeit and Loot"), List.of(List.of(), List.of()));
    }
 
-   private void spawnProxies(ServerLevel world, List<String> labels) {
+   private void spawnProxies(ServerLevel world, List<String> labels, List<List<ChallengeAction<?>>> options) {
       this.clearProxies(world);
       this.proxies.clear();
       int[][] offsets = labels.size() == 4
@@ -238,11 +244,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       for (int i = 0; i < labels.size(); i++) {
          BlockPos offset = new BlockPos(offsets[i][0], offsets[i][1], offsets[i][2]);
          BlockPos proxyPos = this.pos.offset(offset);
-         List<ChallengeAction<?>> optionActions = new ArrayList<>();
-         if (labels.size() == 2 && i == 0) {
-            optionActions.addAll(this.actions);
-            optionActions.addAll(this.actions);
-         }
+         List<ChallengeAction<?>> optionActions = options.get(i) == null ? new ArrayList<>() : new ArrayList<>(options.get(i));
          this.proxies.put(offset, optionActions);
          IZonedWorld.runWithBypass(world, true, () -> world.setBlock(proxyPos, ModBlocks.PROTECT_VILLAGER_CONTROLLER_PROXY.defaultBlockState(), 3));
          if (world.getBlockEntity(proxyPos) instanceof ProtectVillagerControllerProxyBlockEntity proxy) {
@@ -274,12 +276,12 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.success(world);
          return;
       }
-      for (ChallengeAction<?> action : proxy.getActions()) {
-         this.scheduledActions.add(action);
-      }
-      if ("Double It".equals(label)) this.actions.addAll(new ArrayList<>(this.actions));
-      if ("Gilded".equals(label) || "Ornate".equals(label) || "Living".equals(label) || "Coin Piles".equals(label)) {
-         this.actions.addAll(this.scheduledActions);
+      if ("Double It".equals(label)) {
+         this.actions.addAll(new ArrayList<>(this.actions));
+      } else if (this.rewardOptions.containsKey(label)) {
+         this.scheduledActions.addAll(proxy.getActions());
+         List<ChallengeAction<?>> computedActions = this.computeActions(this.scheduledActions, new ArrayList<>(), world);
+         this.actions.addAll(computedActions);
          this.scheduledActions.clear();
       }
       this.phase = Phase.IN_WAVE;
@@ -335,6 +337,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.writeActionsNbt(nbt, "scheduledFailureActions", this.scheduledFailureActions);
          this.writeActionsNbt(nbt, "rewardActions", this.actions);
          this.writeActionsNbt(nbt, "scheduledRewardActions", this.scheduledActions);
+         this.rewardOptions.forEach((category, optionActions) -> this.writeActionsNbt(nbt, "rewardOption_" + category.replace(" ", ""), optionActions));
          nbt.putInt("proxyTicker", this.proxyTicker);
          this.spawner.writeNbt().ifPresent(tag -> nbt.put("spawner", tag));
          return (CompoundTag)nbt;
@@ -361,6 +364,12 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.readActionsNbt(nbt, "scheduledFailureActions", this.scheduledFailureActions);
       this.readActionsNbt(nbt, "rewardActions", this.actions);
       this.readActionsNbt(nbt, "scheduledRewardActions", this.scheduledActions);
+      this.rewardOptions.clear();
+      for (String category : List.of("Gilded", "Ornate", "Living", "Coin Piles")) {
+         List<ChallengeAction<?>> optionActions = new ArrayList<>();
+         this.readActionsNbt(nbt, "rewardOption_" + category.replace(" ", ""), optionActions);
+         this.rewardOptions.put(category, optionActions);
+      }
       this.proxyTicker = nbt.getInt("proxyTicker");
       if (nbt.contains("spawner")) {
          this.spawner.readNbt(nbt.getCompound("spawner"));

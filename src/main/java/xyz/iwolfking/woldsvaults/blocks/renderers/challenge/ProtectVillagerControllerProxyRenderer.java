@@ -47,8 +47,10 @@ public class ProtectVillagerControllerProxyRenderer implements BlockEntityRender
             lines.add(new TextComponent(entity.getLabel()).withStyle(ChatFormatting.GOLD));
         }
 
-        for(ChallengeAction<?> action : entity.getActions()) {
-            lines.add(action.getText());
+        if(entity.getLabel().isEmpty()) {
+            for(ChallengeAction<?> action : entity.getActions()) {
+                lines.add(action.getText());
+            }
         }
 
         Collections.reverse(lines);

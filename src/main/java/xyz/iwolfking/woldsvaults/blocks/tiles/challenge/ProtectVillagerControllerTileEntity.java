@@ -26,6 +26,10 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
    private IntRoll waves;
    private final List<ChallengeAction<?>> successActions;
    private final List<ChallengeAction<?>> failureActions;
+   private final List<ChallengeAction<?>> gildedActions;
+   private final List<ChallengeAction<?>> ornateActions;
+   private final List<ChallengeAction<?>> livingActions;
+   private final List<ChallengeAction<?>> coinPileActions;
    public static final ArrayAdapter<ResourceLocation> IDENTIFIERS = Adapters.ofArray(ResourceLocation[]::new, Adapters.IDENTIFIER);
    public static final ArrayAdapter<ChallengeAction<?>> ACTIONS = Adapters.ofArray(ChallengeAction[]::new, Adapters.CHALLENGE_ACTION);
 
@@ -37,6 +41,10 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       this.waves = IntRoll.ofUniform(4, 8);
       this.successActions = new ArrayList<>();
       this.failureActions = new ArrayList<>();
+      this.gildedActions = new ArrayList<>();
+      this.ornateActions = new ArrayList<>();
+      this.livingActions = new ArrayList<>();
+      this.coinPileActions = new ArrayList<>();
       // The Vault base class only initializes its curses list during load().
       this.load(new CompoundTag());
    }
@@ -48,6 +56,10 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       manager.setMaxWaves(this.waves.get(JavaRandom.ofInternal(this.level.random.nextLong())));
       manager.addSuccessActions(this.successActions);
       manager.addFailureActions(this.failureActions);
+      manager.setRewardActions("Gilded", this.gildedActions);
+      manager.setRewardActions("Ornate", this.ornateActions);
+      manager.setRewardActions("Living", this.livingActions);
+      manager.setRewardActions("Coin Piles", this.coinPileActions);
       return manager;
    }
 
@@ -67,6 +79,28 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       this.sendUpdates();
    }
 
+   public void setGildedActions(List<ChallengeAction<?>> actions) {
+      this.replaceActions(this.gildedActions, actions);
+   }
+
+   public void setOrnateActions(List<ChallengeAction<?>> actions) {
+      this.replaceActions(this.ornateActions, actions);
+   }
+
+   public void setLivingActions(List<ChallengeAction<?>> actions) {
+      this.replaceActions(this.livingActions, actions);
+   }
+
+   public void setCoinPileActions(List<ChallengeAction<?>> actions) {
+      this.replaceActions(this.coinPileActions, actions);
+   }
+
+   private void replaceActions(List<ChallengeAction<?>> destination, List<ChallengeAction<?>> actions) {
+      destination.clear();
+      destination.addAll(actions);
+      this.sendUpdates();
+   }
+
    @Override
    protected void saveAdditional(CompoundTag nbt) {
       super.saveAdditional(nbt);
@@ -76,6 +110,10 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       Adapters.INT_ROLL.writeNbt(this.waves).ifPresent(tag -> nbt.put("waves", tag));
       ACTIONS.writeNbt(this.successActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("successActions", tag));
       ACTIONS.writeNbt(this.failureActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("failureActions", tag));
+      ACTIONS.writeNbt(this.gildedActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("gildedActions", tag));
+      ACTIONS.writeNbt(this.ornateActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("ornateActions", tag));
+      ACTIONS.writeNbt(this.livingActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("livingActions", tag));
+      ACTIONS.writeNbt(this.coinPileActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("coinPileActions", tag));
    }
 
    @Override
@@ -97,5 +135,13 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ACTIONS.readNbt(nbt.get("successActions")).ifPresent(actions -> this.successActions.addAll(Arrays.asList(actions)));
       this.failureActions.clear();
       ACTIONS.readNbt(nbt.get("failureActions")).ifPresent(actions -> this.failureActions.addAll(Arrays.asList(actions)));
+      this.gildedActions.clear();
+      ACTIONS.readNbt(nbt.get("gildedActions")).ifPresent(actions -> this.gildedActions.addAll(Arrays.asList(actions)));
+      this.ornateActions.clear();
+      ACTIONS.readNbt(nbt.get("ornateActions")).ifPresent(actions -> this.ornateActions.addAll(Arrays.asList(actions)));
+      this.livingActions.clear();
+      ACTIONS.readNbt(nbt.get("livingActions")).ifPresent(actions -> this.livingActions.addAll(Arrays.asList(actions)));
+      this.coinPileActions.clear();
+      ACTIONS.readNbt(nbt.get("coinPileActions")).ifPresent(actions -> this.coinPileActions.addAll(Arrays.asList(actions)));
    }
 }
