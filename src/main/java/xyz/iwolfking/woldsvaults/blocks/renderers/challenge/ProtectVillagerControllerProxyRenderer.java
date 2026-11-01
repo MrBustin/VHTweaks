@@ -43,6 +43,10 @@ public class ProtectVillagerControllerProxyRenderer implements BlockEntityRender
         RendererContext context = new RendererContext(matrixStack, partialTick, MultiBufferSource.immediate(Tesselator.getInstance().getBuilder()), this.font);
         List<Component> lines = new ArrayList<>();
 
+        if (!entity.getLabel().isEmpty()) {
+            lines.add(new TextComponent(entity.getLabel()).withStyle(ChatFormatting.GOLD));
+        }
+
         for(ChallengeAction<?> action : entity.getActions()) {
             lines.add(action.getText());
         }

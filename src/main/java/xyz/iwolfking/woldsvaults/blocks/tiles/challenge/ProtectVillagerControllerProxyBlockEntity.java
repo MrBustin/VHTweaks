@@ -29,6 +29,7 @@ public class ProtectVillagerControllerProxyBlockEntity extends BlockEntity {
 
     private BlockPos controller;
     private List<ChallengeAction<?>> actions;
+    private String label = "";
 
     public ProtectVillagerControllerProxyBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY, pos, state);
@@ -42,6 +43,15 @@ public class ProtectVillagerControllerProxyBlockEntity extends BlockEntity {
 
     public void setActions(List<ChallengeAction<?>> actions) {
         this.actions = actions;
+        this.sendUpdates();
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
         this.sendUpdates();
     }
 
@@ -85,12 +95,14 @@ public class ProtectVillagerControllerProxyBlockEntity extends BlockEntity {
         }
 
         nbt.put("actions", actions);
+        nbt.putString("label", this.label);
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
         this.controller = Adapters.BLOCK_POS.readNbt(nbt.get("controller")).orElse(null);
+        this.label = nbt.getString("label");
         ListTag actions = nbt.getList("actions", Tag.TAG_COMPOUND);
         this.actions.clear();
 
