@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=upper": {
+      "model": "the_vault:block/wild_west_controller_nothing"
+    },
+    "half=lower": {
+      "model": "the_vault:block/wild_west_controller"
+    }
+  }
+}
