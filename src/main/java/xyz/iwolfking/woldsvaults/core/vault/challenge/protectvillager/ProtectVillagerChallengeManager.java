@@ -18,6 +18,7 @@ import java.util.UUID;
 import lombok.Generated;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +27,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
+import xyz.iwolfking.woldsvaults.init.ModEntities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,7 +47,6 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private BlockCuboid zone;
    private ProtectVillagerChallengeManager.Phase phase;
    private final ProtectVillagerSpawner spawner = new ProtectVillagerSpawner();
-   private final ProtectVillagerAnimation animation = new ProtectVillagerAnimation();
    private final List<ChallengeAction<?>> successActions = new ArrayList<>();
    private final List<ChallengeAction<?>> failureActions = new ArrayList<>();
    private final List<ChallengeAction<?>> scheduledSuccessActions = new ArrayList<>();
@@ -84,9 +85,10 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       super.onAttach(world);
       this.spawner.onAttach(world);
       this.registerZone(world);
-      Villager villager = (Villager)EntityType.VILLAGER.create(world);
+      Villager villager = ModEntities.PROTECT_VILLAGER.create(world);
       if (villager != null) {
-         villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() + 1), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
+         villager.setCustomName(new TextComponent("Dinnerbone"));
+         villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() + 8), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
          world.addFreshEntity(villager);
          this.villagerId = villager.getUUID();
          this.villagerMaxHealth = (double)villager.getMaxHealth();
@@ -151,24 +153,17 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             this.computeScheduledActions(world);
          }
 
-         this.animation.onTick(world, this.pos);
          super.onTick(world);
          if (this.getBlockEntity(world.getServer()) instanceof ChallengeControllerBlockEntity<?> controller
             && controller.getState() == State.ACTIVE
-            && this.phase == ProtectVillagerChallengeManager.Phase.IDLE
+            && this.phase == Phase.IDLE
             && !this.players.isEmpty()) {
-            this.phase = ProtectVillagerChallengeManager.Phase.STARTING;
-            this.animation.onStart(xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager.ProtectVillagerAnimation.State.CLOSE_ROOM);
-         }
-
-         if (this.phase == ProtectVillagerChallengeManager.Phase.STARTING
-            && this.animation.getState() == xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager.ProtectVillagerAnimation.State.IDLE) {
-            this.phase = ProtectVillagerChallengeManager.Phase.ACTIVE;
+            this.phase = Phase.ACTIVE;
             this.spawner.spawnWave(world, this.pos);
             VaultMod.LOGGER.info("Spawning ProtectVillager challenge at {}", this.pos);
          }
 
-         if (this.phase == ProtectVillagerChallengeManager.Phase.ACTIVE) {
+         if (this.phase == Phase.ACTIVE) {
             if (world.getEntity(this.villagerId) instanceof Villager villager) {
                this.villagerHealth = (double)villager.getHealth();
                this.villagerMaxHealth = (double)villager.getMaxHealth();
@@ -197,7 +192,6 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       if (this.phase != ProtectVillagerChallengeManager.Phase.FAILED && this.phase != ProtectVillagerChallengeManager.Phase.COMPLETED) {
          this.phase = ProtectVillagerChallengeManager.Phase.FAILED;
          this.invokeFailEvent(world);
-         this.animation.onStart(xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager.ProtectVillagerAnimation.State.OPEN_ROOM);
          RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
          for (ChallengeAction<?> action : this.failureActions) {
@@ -214,7 +208,6 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             entity.discard();
          }
 
-         this.animation.onStart(xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager.ProtectVillagerAnimation.State.OPEN_ROOM);
          RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
          for (ChallengeAction<?> action : this.successActions) {
@@ -232,6 +225,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          Adapters.UUID.writeNbt(this.villagerId).ifPresent(tag -> nbt.put("villager", tag));
          Adapters.DOUBLE.writeNbt(Double.valueOf(this.villagerHealth)).ifPresent(tag -> nbt.put("villagerHealth", tag));
          Adapters.DOUBLE.writeNbt(Double.valueOf(this.villagerMaxHealth)).ifPresent(tag -> nbt.put("villagerMaxHealth", tag));
+         nbt.putString("phase", this.phase.name());
          this.writeActionsNbt(nbt, "successActions", this.successActions);
          this.writeActionsNbt(nbt, "failureActions", this.failureActions);
          this.writeActionsNbt(nbt, "scheduledSuccessActions", this.scheduledSuccessActions);
@@ -248,6 +242,13 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.villagerId = Adapters.UUID.readNbt(nbt.get("villager")).orElse(null);
       this.villagerHealth = Adapters.DOUBLE.readNbt(nbt.get("villagerHealth")).orElse(0.0);
       this.villagerMaxHealth = Adapters.DOUBLE.readNbt(nbt.get("villagerMaxHealth")).orElse(0.0);
+      if (nbt.contains("phase")) {
+         try {
+            this.phase = ProtectVillagerChallengeManager.Phase.valueOf(nbt.getString("phase"));
+         } catch (IllegalArgumentException ignored) {
+            this.phase = ProtectVillagerChallengeManager.Phase.IDLE;
+         }
+      }
       this.readActionsNbt(nbt, "successActions", this.successActions);
       this.readActionsNbt(nbt, "failureActions", this.failureActions);
       this.readActionsNbt(nbt, "scheduledSuccessActions", this.scheduledSuccessActions);
