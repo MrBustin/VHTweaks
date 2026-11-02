@@ -57,6 +57,10 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
       return this.wave >= this.maxWaves && this.mobs.isEmpty();
    }
 
+   public boolean isWaveMob(Entity entity) {
+      return entity != null && this.mobs.contains(entity.getUUID());
+   }
+
    public void onAttach(ServerLevel world) {
       CommonEvents.ENTITY_LEAVE.register(this, event -> {
          if (event.getEntity().level == world) {

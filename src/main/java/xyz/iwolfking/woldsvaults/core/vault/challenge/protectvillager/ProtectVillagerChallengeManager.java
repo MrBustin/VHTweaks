@@ -25,6 +25,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
@@ -54,6 +56,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import static iskallia.vault.core.vault.Vault.SEED;
 
@@ -117,16 +123,23 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    public void onAttach(ServerLevel world) {
       super.onAttach(world);
       this.spawner.onAttach(world);
+      MinecraftForge.EVENT_BUS.register(this);
       CommonEvents.BLOCK_USE.in(world).at(BlockUseEvent.Phase.HEAD).of(ModBlocks.PROTECT_VILLAGER_CONTROLLER_PROXY)
          .register(this, event -> {
             if (event.getPlayer() == null || !(world.getBlockEntity(event.getPos()) instanceof ProtectVillagerControllerProxyBlockEntity proxy)) return;
             this.onProxyClick(world, event.getPlayer(), proxy);
          });
       this.registerZone(world);
-      Villager villager = ModEntities.PROTECT_VILLAGER.create(world);
+      Villager villager = EntityType.VILLAGER.create(world);
       if (villager != null) {
-         villager.setCustomName(new TextComponent("Dinnerbone"));
-         villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() + 8), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
+         villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() - 3), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
+         AttributeInstance healthAttribute = villager.getAttribute(Attributes.MAX_HEALTH);
+
+         if(healthAttribute != null){
+            healthAttribute.setBaseValue(100.0D);
+            villager.setHealth(villager.getMaxHealth());
+         }
+
          world.addFreshEntity(villager);
          this.villagerId = villager.getUUID();
          this.villagerMaxHealth = (double)villager.getMaxHealth();
@@ -143,6 +156,18 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       super.onDetach();
       this.spawner.onDetach();
       CommonEvents.BLOCK_USE.release(this);
+      MinecraftForge.EVENT_BUS.unregister(this);
+   }
+
+   @SubscribeEvent(priority = EventPriority.HIGHEST)
+   public void onVillagerAttacked(LivingAttackEvent event) {
+      if (this.villagerId == null || !event.getEntityLiving().getUUID().equals(this.villagerId)) {
+         return;
+      }
+
+      if (!this.spawner.isWaveMob(event.getSource().getEntity())) {
+         event.setCanceled(true);
+      }
    }
 
    @Override

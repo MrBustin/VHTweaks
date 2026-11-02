@@ -201,6 +201,7 @@ dependencies {
     implementation fg.deobf("curse.maven:modular-routers-250294:4984984") // Vault Filters
     implementation fg.deobf('curse.maven:pehkui-319596:4823461') // scale abilities
     implementation fg.deobf('curse.maven:applied-energistics-2-223794:4136407') // Vault Filters
+    implementation fg.deobf("curse.maven:builders-delight-forge-563734:3857874")
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.34'
