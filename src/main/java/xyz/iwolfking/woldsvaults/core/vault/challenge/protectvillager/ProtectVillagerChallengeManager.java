@@ -89,6 +89,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private final java.util.Map<BlockPos, List<ChallengeAction<?>>> proxies = new java.util.LinkedHashMap<>();
    private final java.util.Map<String, List<ChallengeAction<?>>> rewardOptions = new java.util.LinkedHashMap<>();
    private int proxyTicker;
+   private boolean activatingRewardActions;
 
    public ProtectVillagerChallengeManager() {
       this.phase = Phase.IDLE;
@@ -340,8 +341,13 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             action.onActivate(world, this, random);
          }
 
-         for (ChallengeAction<?> action : this.actions) {
-            action.onActivate(world, this, random);
+         this.activatingRewardActions = true;
+         try {
+            for (ChallengeAction<?> action : this.actions) {
+               action.onActivate(world, this, random);
+            }
+         } finally {
+            this.activatingRewardActions = false;
          }
 
          world.playSound(null, this.pos, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 0.8F, 1.0F);
@@ -430,7 +436,20 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    @Generated
    @Override
    public BlockCuboid getZone() {
-      return this.zone;
+      if (!this.activatingRewardActions || this.zone == null || this.zone.getMaxY() <= 0) {
+         return this.zone;
+      }
+
+      int maxY = Math.min(this.zone.getMaxY(), 0);
+      int minY = Math.min(this.zone.getMinY(), maxY);
+      return BlockCuboid.of(
+         this.zone.getMinX(),
+         minY,
+         this.zone.getMinZ(),
+         this.zone.getMaxX(),
+         maxY,
+         this.zone.getMaxZ()
+      );
    }
 
    @Generated
