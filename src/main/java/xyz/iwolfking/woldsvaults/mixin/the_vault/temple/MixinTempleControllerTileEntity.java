@@ -22,7 +22,7 @@ import java.util.Map;
 public class MixinTempleControllerTileEntity {
     @Unique private final Map<BlockPos, Rotation> woldsvaults$gates = new LinkedHashMap<>();
 
-    @Inject(method = "createManager", at = @At("RETURN"))
+    @Inject(method = "createManager*", at = @At("RETURN"))
     private void woldsvaults$copyGatesToManager(CallbackInfoReturnable<TempleChallengeManager> cir) {
         TempleAnimationHolder holder = (TempleAnimationHolder) cir.getReturnValue();
         this.woldsvaults$gates.forEach(holder.woldsvaults$getAnimation()::addGate);
@@ -47,7 +47,7 @@ public class MixinTempleControllerTileEntity {
         for (int i = 0; i < gates.size(); i++) {
             CompoundTag gate = gates.getCompound(i);
             BlockPos gatePos = Adapters.BLOCK_POS.readNbt(gate.get("pos")).orElse(null);
-            int rotation = Adapters.INT.readNbt(gate.get("rotation")).orElse(0).intValue();
+            int rotation = Adapters.INT.readNbt(gate.get("rotation")).orElse(0);
             if (gatePos != null) {
                 Rotation[] rotations = Rotation.values();
                 this.woldsvaults$gates.put(gatePos, rotations[Math.floorMod(rotation, rotations.length)]);

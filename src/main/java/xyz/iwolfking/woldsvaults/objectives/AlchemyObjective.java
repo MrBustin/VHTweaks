@@ -25,7 +25,6 @@ import iskallia.vault.core.vault.stat.StatCollector;
 import iskallia.vault.core.world.storage.VirtualWorld;
 import iskallia.vault.entity.champion.ChampionLogic;
 import iskallia.vault.init.ModOptions;
-import iskallia.vault.options.types.ObjectiveHudSettings;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

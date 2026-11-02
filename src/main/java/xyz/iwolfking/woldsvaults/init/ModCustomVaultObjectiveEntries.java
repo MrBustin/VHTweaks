@@ -3,7 +3,18 @@ package xyz.iwolfking.woldsvaults.init;
 import iskallia.vault.init.ModBlocks;
 import net.minecraftforge.event.RegistryEvent;
 import xyz.iwolfking.vhapi.api.registry.objective.CustomObjectiveRegistryEntry;
-import xyz.iwolfking.woldsvaults.objectives.*;
+import xyz.iwolfking.woldsvaults.objectives.AlchemyCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.AlchemyObjective;
+import xyz.iwolfking.woldsvaults.objectives.BallisticBingoCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.BallisticBingoObjective;
+import xyz.iwolfking.woldsvaults.objectives.EnchantedElixirCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.EnchantedElixirObjective;
+import xyz.iwolfking.woldsvaults.objectives.HauntedBraziersCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.HauntedBraziersObjective;
+import xyz.iwolfking.woldsvaults.objectives.UnhingedScavengerCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.UnhingedScavengerObjective;
+import xyz.iwolfking.woldsvaults.objectives.ZealotCrystalObjective;
+import xyz.iwolfking.woldsvaults.objectives.ZealotObjective;
 
 
 public class ModCustomVaultObjectiveEntries {

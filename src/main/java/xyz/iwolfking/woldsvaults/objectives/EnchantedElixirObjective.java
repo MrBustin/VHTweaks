@@ -24,14 +24,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xyz.iwolfking.woldsvaults.api.core.vault_events.lib.EventTag;
 import xyz.iwolfking.woldsvaults.api.util.ObjectiveHelper;
+import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirBreakpointMap;
+import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirCollectionMap;
 import xyz.iwolfking.woldsvaults.util.VaultModifierUtils;
 import xyz.iwolfking.woldsvaults.init.ModConfigs;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirEventAmountModifier;
 import xyz.iwolfking.woldsvaults.modifiers.vault.EnchantedElixirPoolModifier;
 import xyz.iwolfking.woldsvaults.objectives.data.EnchantedEventsRegistry;
-import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirBreakpointMap;
-import xyz.iwolfking.woldsvaults.objectives.enchanted_elixir.ElixirCollectionMap;
-import xyz.iwolfking.woldsvaults.objectives.lib.BasicEnchantedEvent;
 
 import java.util.ArrayList;
 import java.util.List;

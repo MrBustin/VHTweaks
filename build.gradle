@@ -176,6 +176,13 @@ dependencies {
     implementation fg.deobf("curse.maven:selene-499980:6047192")
     implementation fg.deobf("curse.maven:supplementaries-412082:4548315")
     runtimeOnly fg.deobf("curse.maven:twigs-496913:3968055")
+    runtimeOnly fg.deobf("curse.maven:regions-unexplored-659110:4554212")
+    runtimeOnly fg.deobf("curse.maven:terrablender-563928:3957976")
+    runtimeOnly fg.deobf("curse.maven:every-compat-628539:7949360")
+    runtimeOnly fg.deobf("curse.maven:auxblocks-711533:7354451")
+    runtimeOnly fg.deobf("curse.maven:ispawner-533792:5925639")
+    runtimeOnly fg.deobf("curse.maven:architectury-api-419699:5137931")
+    runtimeOnly fg.deobf("curse.maven:decorative-blocks-362528:3965454")
 
     // Mods with Compat in this mod
     implementation fg.deobf('curse.maven:alexs-mobs-426558:3853078')

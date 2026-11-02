@@ -10,8 +10,6 @@ import iskallia.vault.core.vault.ClassicPortalLogic;
 import iskallia.vault.core.vault.Vault;
 import iskallia.vault.core.vault.objective.*;
 import iskallia.vault.item.crystal.CrystalData;
-import iskallia.vault.item.crystal.objective.BingoCrystalObjective;
-import iskallia.vault.item.crystal.objective.CrystalObjective;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.*;
@@ -28,18 +26,7 @@ public class BallisticBingoCrystalObjective extends WoldCrystalObjective {
     protected float objectiveProbability;
     protected boolean blackout;
 
-    public BallisticBingoCrystalObjective() {
-    }
-
-    public BallisticBingoCrystalObjective(float objectiveProbability) {
-        this.objectiveProbability = objectiveProbability;
-    }
-
-    public BallisticBingoCrystalObjective(float objectiveProbability, boolean blackout) {
-        this.objectiveProbability = objectiveProbability;
-        this.blackout = blackout;
-    }
-
+    public BallisticBingoCrystalObjective() {}
 
     @Override
     public void configure(Vault vault, RandomSource random, @Nullable String sigil) {
@@ -62,7 +49,7 @@ public class BallisticBingoCrystalObjective extends WoldCrystalObjective {
         MutableComponent objectiveTooltip = new TranslatableComponent("util.woldsvaults.objective_text")
                 .withStyle(ChatFormatting.WHITE);
 
-        if(blackout) {
+        if (blackout) {
             objectiveTooltip.append("Blackout ").withStyle(Style.EMPTY.withColor(this.getColor(time).orElseThrow()));
         }
 
@@ -102,7 +89,7 @@ public class BallisticBingoCrystalObjective extends WoldCrystalObjective {
     }
 
     @Override
-    ResourceLocation getObjectiveId() {
+    protected ResourceLocation getObjectiveId() {
         return ModCustomVaultObjectiveEntries.BALLISTIC_BINGO.getRegistryName();
     }
 }

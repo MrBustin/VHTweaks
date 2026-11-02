@@ -22,6 +22,5 @@ public abstract class WoldCrystalObjective extends CrystalObjective {
         tooltip.add(objectiveTooltip.append(objectiveName));
     }
 
-
-    abstract ResourceLocation getObjectiveId();
+    protected abstract ResourceLocation getObjectiveId();
 }

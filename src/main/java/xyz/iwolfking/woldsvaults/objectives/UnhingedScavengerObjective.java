@@ -2,7 +2,6 @@ package xyz.iwolfking.woldsvaults.objectives;
 
 import iskallia.vault.VaultMod;
 import iskallia.vault.block.DivineAltarBlock;
-import iskallia.vault.block.PlaceholderBlock;
 import iskallia.vault.block.entity.ScavengerAltarTileEntity;
 import iskallia.vault.container.oversized.OverSizedInventory;
 import iskallia.vault.container.oversized.OverSizedItemStack;
@@ -12,22 +11,14 @@ import iskallia.vault.core.data.adapter.basic.EnumAdapter;
 import iskallia.vault.core.data.key.FieldKey;
 import iskallia.vault.core.data.key.SupplierKey;
 import iskallia.vault.core.event.CommonEvents;
-import iskallia.vault.core.event.common.BlockSetEvent;
 import iskallia.vault.core.random.JavaRandom;
 import iskallia.vault.core.vault.Vault;
-import iskallia.vault.core.vault.VaultLevel;
 import iskallia.vault.core.vault.objective.Objective;
-import iskallia.vault.core.vault.objective.Objectives;
-import iskallia.vault.core.vault.objective.PvPObjective;
 import iskallia.vault.core.vault.objective.ScavengerObjective;
 import iskallia.vault.core.vault.objective.scavenger.ScavengeTask;
 import iskallia.vault.core.vault.objective.scavenger.ScavengerGoal;
 import iskallia.vault.core.vault.player.Listener;
-import iskallia.vault.core.vault.player.Listeners;
 import iskallia.vault.core.vault.player.Runner;
-import iskallia.vault.core.world.data.entity.PartialCompoundNbt;
-import iskallia.vault.core.world.data.tile.PartialBlockState;
-import iskallia.vault.core.world.data.tile.PartialTile;
 import iskallia.vault.core.world.storage.VirtualWorld;
 import iskallia.vault.init.ModBlocks;
 import iskallia.vault.init.ModConfigs;
@@ -36,18 +27,14 @@ import iskallia.vault.item.KeystoneItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.loading.LoadingModList;
 import xyz.iwolfking.woldsvaults.api.util.ObjectiveHelper;
 import xyz.iwolfking.woldsvaults.configs.UnhingedScavengerConfig;
 import xyz.iwolfking.woldsvaults.items.ItemScavengerPouch;
 
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class UnhingedScavengerObjective extends ScavengerObjective {
