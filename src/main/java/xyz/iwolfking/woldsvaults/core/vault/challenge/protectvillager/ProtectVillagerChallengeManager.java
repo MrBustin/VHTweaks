@@ -3,23 +3,16 @@ package xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager;
 import iskallia.vault.VaultMod;
 import iskallia.vault.block.entity.challenge.ChallengeControllerBlockEntity;
 import iskallia.vault.block.entity.challenge.ChallengeControllerBlockEntity.State;
-import iskallia.vault.block.entity.challenge.ChallengeControllerBlockEntity;
 import iskallia.vault.core.event.CommonEvents;
 import iskallia.vault.core.event.common.BlockUseEvent;
 import iskallia.vault.core.data.adapter.Adapters;
-import iskallia.vault.core.random.ChunkRandom;
 import iskallia.vault.core.random.JavaRandom;
 import iskallia.vault.core.random.RandomSource;
 import iskallia.vault.core.vault.challenge.action.ChallengeAction;
-import iskallia.vault.core.vault.challenge.action.MultiplyActionsChallengeAction;
 import iskallia.vault.core.vault.challenge.base.ChallengeManager;
-import iskallia.vault.core.vault.challenge.raid.RaidActionEntry;
 import iskallia.vault.core.world.storage.IZonedWorld;
-import iskallia.vault.init.ModNetwork;
 import iskallia.vault.init.ModSounds;
-import iskallia.vault.network.message.AbsorbingParticleMessage;
 import iskallia.vault.util.ServerScheduler;
-import iskallia.vault.world.data.ServerVaults;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -28,9 +21,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
-import xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager.ProtectVillagerAnimation;
 import iskallia.vault.core.vault.challenge.curse.renderer.context.ChallengeRenderContext;
 import iskallia.vault.core.world.storage.BlockCuboid;
 import java.util.ArrayList;
@@ -49,7 +39,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
-import xyz.iwolfking.woldsvaults.init.ModEntities;
 import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerProxyBlockEntity;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +50,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static iskallia.vault.core.vault.Vault.SEED;
+
 
 public class ProtectVillagerChallengeManager extends ChallengeManager {
    public static final ResourceLocation HUD = VaultMod.id("textures/gui/challenge/protect_villager.png");
@@ -238,7 +227,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
                this.fail(world);
             }
 
-            this.spawner.onTick(world);
+               this.spawner.onTick(world);
                if (this.spawner.isWaveCleared()) {
                   if (this.spawner.getWave() >= this.spawner.getMaxWaves()) {
                      this.success(world);
@@ -350,7 +339,83 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             this.activatingRewardActions = false;
          }
 
-         world.playSound(null, this.pos, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 0.8F, 1.0F);
+         world.playSound(null, this.pos, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 1.8F, 1.0F);
+      }
+   }
+
+
+   @Override
+   public boolean shouldRenderObjectives() {
+      return this.phase == Phase.IDLE;
+   }
+
+   @OnlyIn(Dist.CLIENT)
+   @Override
+   public void onRender(ChallengeRenderContext context) {
+
+      int currentWave = this.spawner.getWave();
+      int maxWaves = this.spawner.getMaxWaves();
+      Component txt;
+
+      if (this.phase != Phase.IDLE ){
+         if (maxWaves < 0 || currentWave < maxWaves && this.phase != Phase.FAILED) {
+            txt = new TextComponent("").withStyle(ChatFormatting.WHITE)
+                    .append(new TextComponent("Wave ").withStyle(ChatFormatting.WHITE))
+                    .append(new TextComponent((currentWave + 1)
+                            + (this.phase == Phase.IN_WAVE || maxWaves <= 0 ? "" : " of " + maxWaves)).withStyle(ChatFormatting.WHITE));
+         } else if (this.phase != Phase.FAILED){
+            txt = new TextComponent("Complete").withStyle(ChatFormatting.WHITE);
+         } else {
+            txt = new TextComponent("Failed").withStyle(ChatFormatting.WHITE);
+         }
+
+         double progress = this.villagerMaxHealth <= 0.0 ? 0.0 : this.villagerHealth / this.villagerMaxHealth;
+         this.renderProgressBar(context, HUD, progress, txt);
+      }
+   }
+
+   @Generated
+   @Override
+   public BlockCuboid getZone() {
+      if (!this.activatingRewardActions || this.zone == null || this.zone.getMaxY() <= 0) {
+         return this.zone;
+      }
+
+      int maxY = Math.min(this.zone.getMaxY(), 0);
+      int minY = Math.min(this.zone.getMinY(), maxY);
+      return BlockCuboid.of(
+         this.zone.getMinX(),
+         minY,
+         this.zone.getMinZ(),
+         this.zone.getMaxX(),
+         maxY,
+         this.zone.getMaxZ()
+      );
+   }
+
+   @Generated
+   @Override
+   public void setZone(BlockCuboid zone) {
+      this.zone = zone;
+   }
+
+   @Generated
+   public Phase getPhase() {
+      return this.phase;
+   }
+
+   @Generated
+   public void setPhase(Phase phase) {
+      this.phase = phase;
+   }
+
+   private static void forceBlockSync(ServerLevel world, BlockPos pos) {
+      BlockEntity blockEntity = world.getBlockEntity(pos);
+      for (ServerPlayer player : world.players()) {
+         player.connection.send(new ClientboundBlockUpdatePacket(world, pos));
+         if (blockEntity != null) {
+            player.connection.send(ClientboundBlockEntityDataPacket.create(blockEntity));
+         }
       }
    }
 
@@ -404,77 +469,6 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.proxyTicker = nbt.getInt("proxyTicker");
       if (nbt.contains("spawner")) {
          this.spawner.readNbt(nbt.getCompound("spawner"));
-      }
-   }
-
-   @Override
-   public boolean shouldRenderObjectives() {
-      return false;
-   }
-
-   @OnlyIn(Dist.CLIENT)
-   @Override
-   public void onRender(ChallengeRenderContext context) {
-
-      int currentWave = this.spawner.getWave();
-      int maxWaves = this.spawner.getMaxWaves();
-      Component txt;
-
-      if (maxWaves < 0 || currentWave < maxWaves) {
-         txt = new TextComponent("").withStyle(ChatFormatting.WHITE)
-                 .append(new TextComponent("Wave ").withStyle(ChatFormatting.WHITE))
-                 .append(new TextComponent((currentWave + 1)
-                         + (this.phase == Phase.IN_WAVE || maxWaves <= 0 ? "" : " of " + maxWaves)).withStyle(ChatFormatting.WHITE));
-      } else {
-         txt = new TextComponent("Complete").withStyle(ChatFormatting.WHITE);
-      }
-
-      double progress = this.villagerMaxHealth <= 0.0 ? 0.0 : this.villagerHealth / this.villagerMaxHealth;
-      this.renderProgressBar(context, HUD, progress, txt);
-   }
-
-   @Generated
-   @Override
-   public BlockCuboid getZone() {
-      if (!this.activatingRewardActions || this.zone == null || this.zone.getMaxY() <= 0) {
-         return this.zone;
-      }
-
-      int maxY = Math.min(this.zone.getMaxY(), 0);
-      int minY = Math.min(this.zone.getMinY(), maxY);
-      return BlockCuboid.of(
-         this.zone.getMinX(),
-         minY,
-         this.zone.getMinZ(),
-         this.zone.getMaxX(),
-         maxY,
-         this.zone.getMaxZ()
-      );
-   }
-
-   @Generated
-   @Override
-   public void setZone(BlockCuboid zone) {
-      this.zone = zone;
-   }
-
-   @Generated
-   public Phase getPhase() {
-      return this.phase;
-   }
-
-   @Generated
-   public void setPhase(Phase phase) {
-      this.phase = phase;
-   }
-
-   private static void forceBlockSync(ServerLevel world, BlockPos pos) {
-      BlockEntity blockEntity = world.getBlockEntity(pos);
-      for (ServerPlayer player : world.players()) {
-         player.connection.send(new ClientboundBlockUpdatePacket(world, pos));
-         if (blockEntity != null) {
-            player.connection.send(ClientboundBlockEntityDataPacket.create(blockEntity));
-         }
       }
    }
 
