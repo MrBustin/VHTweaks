@@ -11,6 +11,7 @@ import xyz.iwolfking.woldsvaults.network.message.CapeAssignmentsMessage;
 import xyz.iwolfking.woldsvaults.network.message.DiscoveredCapesMessage;
 import xyz.iwolfking.woldsvaults.network.message.LuckyHitCooldownParticleMessage;
 import xyz.iwolfking.woldsvaults.network.message.SelectCapeMessage;
+import xyz.iwolfking.woldsvaults.network.ServerboundMultiJumpMessage;
 
 public class ModNetwork {
     private static final String VERSION = "1.0.0";
@@ -106,6 +107,11 @@ public class ModNetwork {
                 SelectCapeMessage::encode,
                 SelectCapeMessage::decode,
                 SelectCapeMessage::handle);
+
+        CHANNEL.registerMessage(nextId(), ServerboundMultiJumpMessage.class,
+                ServerboundMultiJumpMessage::encode,
+                ServerboundMultiJumpMessage::decode,
+                ServerboundMultiJumpMessage::handle);
     }
 
     public static int nextId() {

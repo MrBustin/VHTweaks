@@ -287,6 +287,11 @@ public class ModGearAttributes {
             new JavelinConductReader("Javelin Conduct", 0xE35F12),
             booleanComparator());
 
+    public static final VaultGearAttribute<Integer> MULTI_JUMP = attr("multi_jump",
+            VaultGearAttributeType.intType(),
+            ModGearAttributeGenerators.intRange(),
+            ModGearAttributeReaders.addedIntReader("Multi Jump", 0x00C764),
+            VaultGearAttributeComparator.intComparator());
 
 
     @SubscribeEvent
@@ -335,6 +340,7 @@ public class ModGearAttributes {
                       registry.register(BURNING_HIT_CHANCE);
                       registry.register(PERCENT_MANA_PER_LOOTED_TILE);
                       registry.register(JAVELIN_CONDUCT);
+                      registry.register(MULTI_JUMP);
 
     }
 
