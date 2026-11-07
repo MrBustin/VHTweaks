@@ -23,6 +23,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonObject> {
@@ -114,6 +116,14 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
                entity.moveTo(x, y, z, random.nextFloat() * 360.0F, 0.0F);
 
                if (entity instanceof Mob mob) {
+
+                  AttributeInstance healthAttribute = mob.getAttribute(Attributes.MAX_HEALTH);
+
+                  if(healthAttribute != null){
+                     healthAttribute.setBaseValue(100.0D * wave);
+                     mob.setHealth(mob.getMaxHealth());
+                  }
+
                   if (this.targetVillagerId != null) {
                      mob.targetSelector.addGoal(0, new ProtectVillagerTargetGoal(mob, this.targetVillagerId, 0.0F));
                   }
