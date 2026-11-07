@@ -11,11 +11,16 @@ import iskallia.vault.core.world.storage.BlockCuboid;
 import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -30,6 +35,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
    private final List<ChallengeAction<?>> ornateActions;
    private final List<ChallengeAction<?>> livingActions;
    private final List<ChallengeAction<?>> coinPileActions;
+   private final Map<BlockPos, Rotation> gates;
    public static final ArrayAdapter<ResourceLocation> IDENTIFIERS = Adapters.ofArray(ResourceLocation[]::new, Adapters.IDENTIFIER);
    public static final ArrayAdapter<ChallengeAction<?>> ACTIONS = Adapters.ofArray(ChallengeAction[]::new, Adapters.CHALLENGE_ACTION);
 
@@ -45,6 +51,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       this.ornateActions = new ArrayList<>();
       this.livingActions = new ArrayList<>();
       this.coinPileActions = new ArrayList<>();
+      this.gates = new LinkedHashMap<>();
       // The Vault base class only initializes its curses list during load().
       this.load(new CompoundTag());
    }
@@ -60,6 +67,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       manager.setRewardActions("Ornate", this.ornateActions);
       manager.setRewardActions("Living", this.livingActions);
       manager.setRewardActions("Coin Piles", this.coinPileActions);
+      this.gates.forEach(manager::addGate);
       return manager;
    }
 
@@ -114,6 +122,14 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ACTIONS.writeNbt(this.ornateActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("ornateActions", tag));
       ACTIONS.writeNbt(this.livingActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("livingActions", tag));
       ACTIONS.writeNbt(this.coinPileActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("coinPileActions", tag));
+      ListTag gatesTag = new ListTag();
+      this.gates.forEach((pos, rotation) -> {
+         CompoundTag gate = new CompoundTag();
+         Adapters.BLOCK_POS.writeNbt(pos).ifPresent(value -> gate.put("pos", value));
+         Adapters.INT.writeNbt(rotation.ordinal()).ifPresent(value -> gate.put("rotation", value));
+         gatesTag.add(gate);
+      });
+      nbt.put("gates", gatesTag);
    }
 
    @Override
@@ -143,5 +159,16 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ACTIONS.readNbt(nbt.get("livingActions")).ifPresent(actions -> this.livingActions.addAll(Arrays.asList(actions)));
       this.coinPileActions.clear();
       ACTIONS.readNbt(nbt.get("coinPileActions")).ifPresent(actions -> this.coinPileActions.addAll(Arrays.asList(actions)));
+      this.gates.clear();
+      ListTag gatesTag = nbt.getList("gates", Tag.TAG_COMPOUND);
+      for (int i = 0; i < gatesTag.size(); i++) {
+         CompoundTag gate = gatesTag.getCompound(i);
+         BlockPos gatePos = Adapters.BLOCK_POS.readNbt(gate.get("pos")).orElse(null);
+         int rotation = Adapters.INT.readNbt(gate.get("rotation")).orElse(0);
+         if (gatePos != null) {
+            Rotation[] rotations = Rotation.values();
+            this.gates.put(gatePos, rotations[Math.floorMod(rotation, rotations.length)]);
+         }
+      }
    }
 }

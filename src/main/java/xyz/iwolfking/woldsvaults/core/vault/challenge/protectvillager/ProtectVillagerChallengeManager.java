@@ -14,12 +14,15 @@ import iskallia.vault.core.world.storage.IZonedWorld;
 import iskallia.vault.init.ModSounds;
 import iskallia.vault.util.ServerScheduler;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import iskallia.vault.core.vault.challenge.curse.renderer.context.ChallengeRenderContext;
 import iskallia.vault.core.world.storage.BlockCuboid;
@@ -80,6 +83,8 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private int proxyTicker;
    private boolean activatingRewardActions;
 
+   private final ProtectVillagerAnimation animation = new ProtectVillagerAnimation();
+
    public ProtectVillagerChallengeManager() {
       this.phase = Phase.IDLE;
    }
@@ -95,6 +100,10 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    public void setMaxWaves(int waves) {
       this.spawner.setMaxWaves(waves);
+   }
+
+   public void addGate(BlockPos offset, Rotation rotation) {
+      this.animation.addGate(offset, rotation);
    }
 
    public void addSuccessActions(List<ChallengeAction<?>> actions) {
@@ -207,12 +216,13 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             this.computeScheduledActions(world);
          }
 
-         super.onTick(world);
+
          if (this.getBlockEntity(world.getServer()) instanceof ChallengeControllerBlockEntity<?> controller
             && controller.getState() == State.ACTIVE
             && this.phase == Phase.IDLE
             && !this.players.isEmpty()) {
             this.phase = Phase.PROXIES;
+            this.animation.onStart(ProtectVillagerAnimation.State.CLOSE_ROOM);
             this.spawnRewardProxies(world);
          }
 
@@ -238,6 +248,9 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
                }
             }
          }
+
+         this.animation.onTick(world, this.pos);
+         super.onTick(world);
       }
    }
 
@@ -307,6 +320,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private void fail(ServerLevel world) {
       if (this.phase != Phase.FAILED && this.phase != Phase.COMPLETED) {
          this.phase = Phase.FAILED;
+         this.animation.onStart(ProtectVillagerAnimation.State.OPEN_ROOM);
          this.invokeFailEvent(world);
          RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
@@ -319,6 +333,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private void success(ServerLevel world) {
       if (this.phase != Phase.FAILED && this.phase != Phase.COMPLETED) {
          this.phase = Phase.COMPLETED;
+         this.animation.onStart(ProtectVillagerAnimation.State.OPEN_ROOM);
          Entity entity = world.getEntity(this.villagerId);
          if (entity != null) {
             entity.discard();
@@ -436,6 +451,16 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.rewardOptions.forEach((category, optionActions) -> this.writeActionsNbt(nbt, "rewardOption_" + category.replace(" ", ""), optionActions));
          nbt.putInt("proxyTicker", this.proxyTicker);
          this.spawner.writeNbt().ifPresent(tag -> nbt.put("spawner", tag));
+
+         ListTag gatesTag = new ListTag();
+         this.animation.getGates().forEach((offset, rotation) -> {
+            CompoundTag gateEntry = new CompoundTag();
+            Adapters.BLOCK_POS.writeNbt(offset).ifPresent(tag -> gateEntry.put("pos", tag));
+            Adapters.INT.writeNbt(rotation.ordinal()).ifPresent(tag -> gateEntry.put("rotation", tag));
+            gatesTag.add(gateEntry);
+         });
+         nbt.put("gates", gatesTag);
+
          return (CompoundTag)nbt;
       });
    }
@@ -469,6 +494,19 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.proxyTicker = nbt.getInt("proxyTicker");
       if (nbt.contains("spawner")) {
          this.spawner.readNbt(nbt.getCompound("spawner"));
+      }
+
+      if (nbt.contains("gates")) {
+         this.animation.getGates().clear();
+         ListTag gatesTag = nbt.getList("gates", Tag.TAG_COMPOUND);
+         for (int i = 0; i < gatesTag.size(); i++) {
+            CompoundTag gateEntry = gatesTag.getCompound(i);
+            BlockPos gatePos = Adapters.BLOCK_POS.readNbt(gateEntry.get("pos")).orElse(null);
+            int rotationOrdinal = Adapters.INT.readNbt(gateEntry.get("rotation")).orElse(0);
+            if (gatePos != null) {
+               this.animation.addGate(gatePos, Rotation.values()[Math.floorMod(rotationOrdinal, Rotation.values().length)]);
+            }
+         }
       }
    }
 
