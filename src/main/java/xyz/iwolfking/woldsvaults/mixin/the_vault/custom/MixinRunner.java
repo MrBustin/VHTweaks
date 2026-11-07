@@ -25,17 +25,23 @@ public abstract class MixinRunner extends Listener {
         if(this.getPlayer().isPresent()) {
             ServerPlayer player = this.getPlayer().get();
             ExpertiseTree expertiseTree = PlayerExpertisesData.get(player.server).getExpertises(player);
-            int surpriseModifiersExpertiseLevel = 0;
+            int surpriseModifiersExpertiseModifiers = 0;
+            float surpriseModifiersExpertiseChance = 0;
+
             for(SurpriseModifiersExpertise expertise : expertiseTree.getAll(SurpriseModifiersExpertise.class, Skill::isUnlocked)) {
-                surpriseModifiersExpertiseLevel = Math.max(surpriseModifiersExpertiseLevel, expertise.getExpertiseLevel());
+                surpriseModifiersExpertiseModifiers = Math.max(surpriseModifiersExpertiseModifiers, expertise.getModifierAmount());
+                surpriseModifiersExpertiseChance = Math.max(surpriseModifiersExpertiseChance, expertise.getChance());
             }
-            if(surpriseModifiersExpertiseLevel > 0) {
-                if(world.getRandom().nextFloat() < (surpriseModifiersExpertiseLevel * 0.2F)) {
+
+            if(surpriseModifiersExpertiseModifiers > 0) {
+                if(world.getRandom().nextFloat() < surpriseModifiersExpertiseChance) {
                     if(VaultUtils.isSpecialVault(vault) || VaultUtils.isRawVault(vault) || VaultUtils.isTrialVault(vault)) {
                         return;
                     }
                     else {
-                        VaultModifierUtils.addModifierFromPool(vault, VaultMod.id("catalyst_positive"));
+                        for(int i = 0; i < surpriseModifiersExpertiseModifiers; i++ ){
+                            VaultModifierUtils.addModifierFromPool(vault, VaultMod.id("catalyst_positive"));
+                        }
                     }
                 }
             }
