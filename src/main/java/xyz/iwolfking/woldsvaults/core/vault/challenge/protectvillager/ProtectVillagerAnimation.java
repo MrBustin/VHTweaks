@@ -59,7 +59,7 @@ public class ProtectVillagerAnimation extends AbstractChallengeAnimation<Protect
             this.gates.forEach((offset, rotation) ->
                     world.playSound(null, pos.offset(offset), SoundEvents.IRON_DOOR_CLOSE, SoundSource.BLOCKS, 1.0F, 0.8F));
             int stage = Math.min(4, this.ticker / 10);
-            template = VaultRegistry.TEMPLATE.getKey(VaultMod.id("vault/animations/memory/gate" + stage)).get(Version.latest());
+            template = VaultRegistry.TEMPLATE.getKey(VaultMod.id("vault/animations/protect/gate" + stage)).get(Version.latest());
          }
 
          if (template != null) {
@@ -72,7 +72,7 @@ public class ProtectVillagerAnimation extends AbstractChallengeAnimation<Protect
             this.gates.forEach((offset, rotation) ->
                     world.playSound(null, pos.offset(offset), SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0F, 1.2F));
             int stage = Math.min(5, this.ticker / 10);
-            template = VaultRegistry.TEMPLATE.getKey(VaultMod.id("vault/animations/memory/open/gate" + stage)).get(Version.latest());
+            template = VaultRegistry.TEMPLATE.getKey(VaultMod.id("vault/animations/protect/open/gate" + stage)).get(Version.latest());
          }
 
          if (template != null) {
@@ -88,23 +88,13 @@ public class ProtectVillagerAnimation extends AbstractChallengeAnimation<Protect
          BlockPos offset = entry.getKey();
          Rotation rotation = entry.getValue();
 
-         this.placeWithSandstone(world, template, pos, settings -> {
+         this.place(world, template, pos, settings -> {
             settings.addProcessor(TileProcessor.translate(0, 0, -1));
             settings.addProcessor(TileProcessor.rotate(rotation, BlockPos.ZERO, true));
             settings.addProcessor(TileProcessor.translate(pos));
             settings.addProcessor(TileProcessor.translate(offset));
          });
       }
-   }
-
-   private void placeWithSandstone(ServerLevel world, Template template, BlockPos pos,
-                                   Consumer<PlacementSettings> configurator) {
-      this.place(world, template, pos, settings -> {
-         settings.addProcessor(new WeightedTileProcessor()
-                 .target("minecraft:red_concrete")
-                 .into(PartialTile.of(Blocks.SANDSTONE.defaultBlockState()), 1));
-         configurator.accept(settings);
-      });
    }
 
 
