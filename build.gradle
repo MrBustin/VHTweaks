@@ -198,7 +198,7 @@ dependencies {
     compileOnly "net.luckperms:api:5.5"
 
     // Vault Hunters Core Mods
-    implementation fg.deobf("curse.maven:vault-hunters-official-mod-458203:9190888") //21.6.1
+    implementation fg.deobf("local.libs:the_vault:1.18.2-22.0.0-remastered.7152") // Custom jar until update comes out
     implementation fg.deobf("curse.maven:vault-hunters-api-1118899:8571300") // 3.21
     implementation fg.deobf("curse.maven:geckolib-388172:4181370")
     implementation fg.deobf("curse.maven:sophisticated-backpacks-422301:5654080")

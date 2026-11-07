@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 @Mixin(value = ShellQuillAbility.class, remap = false)
@@ -34,18 +33,18 @@ public abstract class MixinShellQuillAbility {
         vaultAdditions$sourceEntity = event.getSource().getEntity();
     }
 
-    @Redirect(method = "lambda$thornsReflectDamage$5", at = @At(value = "INVOKE", target = "Liskallia/vault/skill/ability/effect/ShellQuillAbility;doQuill(Lnet/minecraft/world/entity/player/Player;FI)V"))
-    private static void centerThornsAroundEntity(Player player, float reflectedDamage, int quillCount, @Local(argsOnly = true) ShellQuillAbility ability) {
+    @Redirect(method = "lambda$thornsReflectDamage$5", at = @At(value = "INVOKE", target = "Liskallia/vault/skill/ability/effect/ShellQuillAbility;doQuill(Lnet/minecraft/world/entity/player/Player;FII)V"))
+    private static void centerThornsAroundEntity(Player player, float reflectedDamage, int quillCount, int quillstormMobs, @Local(argsOnly = true) ShellQuillAbility ability) {
         if (vaultAdditions$sourceEntity instanceof LivingEntity source) {
-            vaultAdditions$doQuill(player, source, ability, reflectedDamage);
+            vaultAdditions$doQuill(player, source, ability, reflectedDamage, quillCount, quillstormMobs);
         } else {
-            doQuill(player, reflectedDamage, quillCount);
+            doQuill(player, reflectedDamage, quillCount, quillstormMobs);
         }
         vaultAdditions$sourceEntity = null;
     }
 
     @Unique
-    private static void vaultAdditions$doQuill(Player player, LivingEntity source, ShellQuillAbility ability, float reflectedDamage) {
+    private static void vaultAdditions$doQuill(Player player, LivingEntity source, ShellQuillAbility ability, float reflectedDamage, int quillCount, int quillstormMobs) {
         DamageSource src = ThornsReflectDamageSource.of(player);
         float chainRange = AreaOfEffectHelper.adjustAreaOfEffect(player, ability, 5.0F);
         List<Mob> nearby = EntityHelper.getNearby(player.getLevel(), source.blockPosition(), chainRange, Mob.class);
@@ -55,19 +54,22 @@ public abstract class MixinShellQuillAbility {
         }
 
         nearby.sort(Comparator.comparing(e -> e.distanceTo(source)));
-        nearby = nearby.subList(0, Math.min(ability.getQuillCount(), nearby.size()));
+        nearby = nearby.subList(0, Math.min(quillCount + quillstormMobs, nearby.size()));
         float multiplier = 0.5F;
 
-        for(Iterator<Mob> var6 = nearby.iterator(); var6.hasNext(); multiplier *= 0.5F) {
-            Mob mob = var6.next();
+        for (int index = 0; index < nearby.size(); index++) {
+            Mob mob = nearby.get(index);
             Vec3 movement = mob.getDeltaMovement();
             mob.hurt(src, reflectedDamage * multiplier);
             mob.setDeltaMovement(movement);
+            if (index + 1 < quillCount) {
+                multiplier *= 0.5F;
+            }
         }
     }
 
     @Shadow
-    private static void doQuill(Player player, float reflectedDamage, int quillCount) {
+    private static void doQuill(Player player, float reflectedDamage, int quillCount, int quillstormMobs) {
         throw new IllegalStateException("Mixin failed to shadow doQuill method");
     }
 }

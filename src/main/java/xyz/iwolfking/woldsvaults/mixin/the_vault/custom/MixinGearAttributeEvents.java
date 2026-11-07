@@ -20,6 +20,7 @@ import iskallia.vault.snapshot.AttributeSnapshotHelper;
 import iskallia.vault.util.EffectInstances;
 import iskallia.vault.util.EntityHelper;
 import iskallia.vault.util.Entropy;
+import iskallia.vault.util.damage.VesselMechanicDamageSource;
 import iskallia.vault.util.calc.BlockChanceHelper;
 import iskallia.vault.util.calc.EffectDurationHelper;
 import net.minecraft.server.level.ServerPlayer;
@@ -68,6 +69,7 @@ public class MixinGearAttributeEvents {
     public static void blockAttack(LivingAttackEvent event) {
         LivingEntity attacked = event.getEntityLiving();
         DamageSource damageSource = event.getSource();
+        if (VesselMechanicDamageSource.isUnreducible(damageSource)) return;
         if (!attacked.getLevel().isClientSide() && !damageSource.isBypassInvul()) {
             float blockChance = 0.0f;
             if (AttributeSnapshotHelper.canHaveSnapshot(attacked))
@@ -178,7 +180,7 @@ public class MixinGearAttributeEvents {
     }
 
     @Redirect(
-            method = "lambda$triggerKnockbackAttack$14",
+            method = "lambda$triggerKnockbackAttack$16",
             at = @At(
                     value = "INVOKE",
                     target = "Liskallia/vault/util/EntityHelper;knockbackIgnoreResist(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;F)V"
@@ -189,7 +191,7 @@ public class MixinGearAttributeEvents {
         EntityHelper.knockbackIgnoreResist(target, attacker, strength + distanceIncrease);
     }
 
-    @Redirect(method = "lambda$triggerEffectCloudsActive$17", at = @At(value = "INVOKE", target = "Liskallia/vault/util/Entropy;canExecute(Lnet/minecraft/world/entity/Entity;Liskallia/vault/util/Entropy$Stat;F)Z"))
+    @Redirect(method = "lambda$triggerEffectCloudsActive$18", at = @At(value = "INVOKE", target = "Liskallia/vault/util/Entropy;canExecute(Lnet/minecraft/world/entity/Entity;Liskallia/vault/util/Entropy$Stat;F)Z"))
     private static boolean addEffectCloudChanceFromAttributeActive(Entity entity, Entropy.Stat stat, float chance) {
         if(entity instanceof LivingEntity living && living instanceof Player) {
             float increasedEffectCloudChance = AttributeSnapshotHelper.getInstance().getSnapshot(living).getAttributeValue(xyz.iwolfking.woldsvaults.init.ModGearAttributes.INCREASED_EFFECT_CLOUD_CHANCE, VaultGearAttributeTypeMerger.floatSum());

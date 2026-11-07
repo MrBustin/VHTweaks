@@ -1,20 +1,16 @@
 package xyz.iwolfking.woldsvaults.abilities;
 
 import com.google.gson.JsonObject;
-import iskallia.vault.block.entity.AbilitySuppressorTileEntity;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.net.BitBuffer;
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.init.ModNetwork;
 import iskallia.vault.network.message.NovaParticleMessage;
 import iskallia.vault.skill.ability.effect.spi.AbstractNovaAbility;
-import iskallia.vault.skill.ability.effect.spi.core.Ability;
 import iskallia.vault.skill.base.SkillContext;
 import iskallia.vault.util.calc.EffectDurationHelper;
 import iskallia.vault.util.damage.DamageOverTimeHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -29,7 +25,6 @@ import net.minecraftforge.network.PacketDistributor;
 import xyz.iwolfking.woldsvaults.events.WoldActiveFlags;
 import xyz.iwolfking.woldsvaults.init.ModEffects;
 
-import java.util.List;
 import java.util.Optional;
 
 public class NovaBurnAbility extends AbstractNovaAbility {
@@ -52,40 +47,28 @@ public class NovaBurnAbility extends AbstractNovaAbility {
         return EffectDurationHelper.adjustEffectDurationFloor(entity, (float)durationTicks);
     }
 
-    protected Ability.ActionResult doAction(SkillContext context) {
-        return (Ability.ActionResult)context.getSource().as(ServerPlayer.class).map((player) -> {
-            if (AbilitySuppressorTileEntity.hasAbilitySuppressorAround(player)) {
-                player.displayClientMessage((new TextComponent("Ability Suppressor nearby")).withStyle(ChatFormatting.RED), true);
-                return ActionResult.fail();
-            } else {
-                Vec3 pos = (Vec3)context.getSource().getPos().orElse(player.position());
-                List<LivingEntity> targetEntities = this.getTargetEntities(player.level, player, pos);
-                float attackDamage = this.getAbilityPower(player);
-
-                for(LivingEntity targetEntity : targetEntities) {
-                    DamageOverTimeHelper.invalidateAll(targetEntity);
-                    ActiveFlags.IS_AP_ATTACKING.push();
-
-                    try {
-                        ActiveFlags.IS_EFFECT_ATTACKING.push();
-
-                        try {
-                            DamageOverTimeHelper.applyDamageOverTime(targetEntity, DamageSource.playerAttack(player), attackDamage, this.getDurationTicks(player), WoldActiveFlags.IS_FIRE_NOVA_ATTACKING);
-                        } finally {
-                            ActiveFlags.IS_EFFECT_ATTACKING.pop();
-                        }
-                    } finally {
-                        ActiveFlags.IS_AP_ATTACKING.pop();
-                    }
-
-                    targetEntity.addEffect(new MobEffectInstance(ModEffects.BURN, this.getDurationTicks(player), 0, false, true, false));
-                }
-
-                return ActionResult.successCooldownImmediate();
+    @Override
+    protected void burstAt(ServerPlayer player, Vec3 position, float damage, boolean isExtraCast) {
+        int durationTicks = this.getDurationTicks(player);
+        for (LivingEntity targetEntity : this.getTargetEntities(player.level, player, position)) {
+            if (!isExtraCast) {
+                DamageOverTimeHelper.invalidateAll(targetEntity);
             }
-        }).orElse(ActionResult.fail());
+            ActiveFlags.IS_AP_ATTACKING.push();
+            try {
+                ActiveFlags.IS_EFFECT_ATTACKING.push();
+                try {
+                    DamageOverTimeHelper.applyDamageOverTime(targetEntity, DamageSource.playerAttack(player),
+                            damage, durationTicks, WoldActiveFlags.IS_FIRE_NOVA_ATTACKING);
+                } finally {
+                    ActiveFlags.IS_EFFECT_ATTACKING.pop();
+                }
+            } finally {
+                ActiveFlags.IS_AP_ATTACKING.pop();
+            }
+            targetEntity.addEffect(new MobEffectInstance(ModEffects.BURN, durationTicks, 0, false, true, false));
+        }
     }
-
     protected void doParticles(SkillContext context) {
         context.getSource().as(ServerPlayer.class).ifPresent((player) -> {
             Vec3 pos = (Vec3)context.getSource().getPos().orElse(player.position());

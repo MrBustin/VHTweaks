@@ -15,7 +15,7 @@ import java.util.List;
 
 @Mixin(targets = "iskallia.vault.container.CrystalWorkbenchContainer$4", remap = false)
 public class MixinCrystalWorkbenchOutputSlot {
-    @Inject(method = "m_142406_", at = @At("HEAD"))
+    @Inject(method = {"onTake", "m_142406_"}, at = @At("HEAD"))
     private void rollCrystalSizePowerOnRealTake(Player player, ItemStack output, CallbackInfo ci) {
         CrystalWorkbenchContainer container = getCrystalWorkbenchContainer();
         if (container == null) {

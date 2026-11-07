@@ -1,6 +1,6 @@
 package xyz.iwolfking.woldsvaults.mixin.the_vault.custom;
 
-import iskallia.vault.block.entity.VaultJewelApplicationStationTileEntity;
+import iskallia.vault.item.tool.JewelApplication;
 import iskallia.vault.gear.data.VaultGearData;
 import iskallia.vault.init.ModGearAttributes;
 import iskallia.vault.item.tool.ToolItem;
@@ -16,14 +16,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import xyz.iwolfking.woldsvaults.prestige.JewelSizePrestigePower;
 import xyz.iwolfking.woldsvaults.util.ToolerPrestigeApplicationContext;
 
-@Mixin(value = VaultJewelApplicationStationTileEntity.class, remap = false)
-public abstract class MixinVaultJewelApplicationStationTileEntity {
+@Mixin(value = JewelApplication.class, remap = false)
+public abstract class MixinJewelApplication {
 
 
-    @Redirect(method = "applyJewels", at = @At(value = "INVOKE", target = "Liskallia/vault/item/tool/ToolItem;applyJewel(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z", remap = false), remap = false)
-    private boolean applyJewelWithToolerPrestigePower(ItemStack tool, ItemStack jewel, boolean checkCapacity) {
+    @Redirect(method = "plan", at = @At(value = "INVOKE", target = "Liskallia/vault/item/tool/ToolItem;applyJewel(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z", remap = false), remap = false)
+    private static boolean applyJewelWithToolerPrestigePower(ItemStack tool, ItemStack jewel, boolean checkCapacity) {
         Player player = ToolerPrestigeApplicationContext.getPlayer();
         if (player == null) {
+            return ToolItem.applyJewel(tool, jewel, checkCapacity);
+        }
+
+        // Capacity-granting geodes must retain their benefit and TOOL_CAPACITY_ADDED bookkeeping.
+        if (VaultGearData.read(jewel).getFirstValue(ModGearAttributes.JEWEL_SIZE).orElse(0) <= 0) {
             return ToolItem.applyJewel(tool, jewel, checkCapacity);
         }
 

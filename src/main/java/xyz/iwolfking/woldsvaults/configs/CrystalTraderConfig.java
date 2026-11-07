@@ -2,14 +2,8 @@ package xyz.iwolfking.woldsvaults.configs;
 
 import com.google.gson.annotations.Expose;
 import iskallia.vault.config.Config;
-import iskallia.vault.config.greed.GreedChallengeEntry;
-import iskallia.vault.config.greed.GreedQuestEntry;
 import iskallia.vault.core.random.RandomSource;
-import iskallia.vault.core.world.data.entity.EntityPredicate;
 import iskallia.vault.core.world.roll.IntRoll;
-import iskallia.vault.task.KillEntityTask;
-import iskallia.vault.task.counter.TaskCounter;
-import iskallia.vault.task.counter.TaskCounterPredicate;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -26,19 +20,6 @@ public class CrystalTraderConfig extends Config {
     private Map<String, List<CrystalTraderConfig.WeightedRoomPool>> roomPoolsByType = new LinkedHashMap();
     @Expose
     private Map<String, List<CrystalTraderConfig.WeightedModifier>> modifierPools = new LinkedHashMap();
-    @Expose
-    private List<GreedQuestEntry> quests = new ArrayList();
-    @Expose
-    private Map<Integer, Integer> maxQuestsPerTier = new LinkedHashMap();
-    @Expose
-    private List<GreedChallengeEntry> challenges = new ArrayList();
-    @Expose
-    private Map<Integer, Integer> maxChallengesPerTier = new LinkedHashMap();
-    @Expose
-    private int questRerollCoinCost = 3;
-    @Expose
-    private int challengeRebuyCoinCost = 5;
-
     public CrystalTraderConfig() {
     }
 
@@ -63,23 +44,7 @@ public class CrystalTraderConfig extends Config {
         this.roomPoolsByType.put("CHALLENGE", List.of(new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/crystal_caves", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/digsite", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/dragon", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/factory", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/laboratory", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/village", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/wildwest", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/challenge/x-mark", 10, 0)));
         this.roomPoolsByType.put("OMEGA", List.of(new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/digsite", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/vendor", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/painting", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/mine", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/blacksmith", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/pixel", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/temple", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/mush_room", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/library", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/cove", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/trove", 10, 0), new CrystalTraderConfig.WeightedRoomPool("the_vault:vault/rooms/omega/warehouse", 10, 0)));
         this.modifierPools = new LinkedHashMap();
-        this.quests = new ArrayList();
-        EntityPredicate monsterFilter = (EntityPredicate)EntityPredicate.of("minecraft:zombie", false).orElse(EntityPredicate.TRUE);
-        KillEntityTask.Config monsterHunterConfig = new KillEntityTask.Config(monsterFilter);
-        KillEntityTask monsterHunterTask = new KillEntityTask(monsterHunterConfig, TaskCounter.ofTargetInt(IntRoll.ofConstant(30), TaskCounterPredicate.GREATER_OR_EQUAL_TO));
-        this.quests.add(new GreedQuestEntry("the_vault:monster_hunter", "Monster Hunter", "Slay %target zombies within the vault to prove your worth.", 0, -1, 3600, 8, 12, 10, (double)1.0F, monsterHunterTask));
-        EntityPredicate eliteFilter = (EntityPredicate)EntityPredicate.of("minecraft:skeleton", false).orElse(EntityPredicate.TRUE);
-        KillEntityTask.Config eliteSlayerConfig = new KillEntityTask.Config(eliteFilter);
-        KillEntityTask eliteSlayerTask = new KillEntityTask(eliteSlayerConfig, TaskCounter.ofTargetInt(IntRoll.ofConstant(50), TaskCounterPredicate.GREATER_OR_EQUAL_TO));
-        this.quests.add(new GreedQuestEntry("the_vault:bone_collector", "Bone Collector", "Destroy %target skeletons deep within the vault.", 1, -1, 7200, 20, 30, 10, 1.2, eliteSlayerTask));
-        this.maxQuestsPerTier = new LinkedHashMap();
-        this.maxQuestsPerTier.put(0, 3);
-        this.maxQuestsPerTier.put(1, 4);
-        this.maxQuestsPerTier.put(2, 5);
-        this.maxChallengesPerTier = new LinkedHashMap();
-        this.maxChallengesPerTier.put(0, 3);
-        this.maxChallengesPerTier.put(1, 4);
-        this.maxChallengesPerTier.put(2, 5);
+
     }
 
     public int rollCoinCost(CrystalTraderConfig.TradeEntry entry, Random random) {
@@ -204,102 +169,6 @@ public class CrystalTraderConfig extends Config {
         } else {
             return Collections.emptyList();
         }
-    }
-
-    public int getMaxQuestsForTier(int tier) {
-        int maxQuests = 0;
-
-        for(Map.Entry<Integer, Integer> entry : this.maxQuestsPerTier.entrySet()) {
-            if ((Integer)entry.getKey() <= tier) {
-                maxQuests = Math.max(maxQuests, (Integer)entry.getValue());
-            }
-        }
-
-        return maxQuests;
-    }
-
-    public List<GreedQuestEntry> getEligibleQuests(int tier) {
-        List<GreedQuestEntry> eligible = new ArrayList();
-
-        for(GreedQuestEntry quest : this.quests) {
-            if (quest.isEligibleForTier(tier)) {
-                eligible.add(quest);
-            }
-        }
-
-        return eligible;
-    }
-
-    public GreedQuestEntry getQuestById(String id) {
-        if (id == null) {
-            return null;
-        } else {
-            for(GreedQuestEntry quest : this.quests) {
-                if (id.equals(quest.getId())) {
-                    return quest;
-                }
-            }
-
-            return null;
-        }
-    }
-
-    public List<GreedQuestEntry> getQuests() {
-        return this.quests;
-    }
-
-    public int getMaxChallengesForTier(int tier) {
-        int maxChallenges = 0;
-
-        for(Map.Entry<Integer, Integer> entry : this.maxChallengesPerTier.entrySet()) {
-            if ((Integer)entry.getKey() <= tier) {
-                maxChallenges = Math.max(maxChallenges, (Integer)entry.getValue());
-            }
-        }
-
-        return maxChallenges;
-    }
-
-    public List<GreedChallengeEntry> getChallenges() {
-        return this.challenges != null ? this.challenges : Collections.emptyList();
-    }
-
-    public List<GreedChallengeEntry> getEligibleChallenges(int greedTier) {
-        List<GreedChallengeEntry> eligible = new ArrayList();
-
-        for(GreedChallengeEntry entry : this.getChallenges()) {
-            if (entry.isEligibleForTier(greedTier)) {
-                eligible.add(entry);
-            }
-        }
-
-        return eligible;
-    }
-
-    public GreedChallengeEntry getChallengeEntry(int index) {
-        return this.challenges != null && index >= 0 && index < this.challenges.size() ? (GreedChallengeEntry)this.challenges.get(index) : null;
-    }
-
-    public GreedChallengeEntry getChallengeEntryById(String challengeId) {
-        if (this.challenges != null && challengeId != null) {
-            for(GreedChallengeEntry entry : this.challenges) {
-                if (challengeId.equals(entry.getChallengeCrystalId())) {
-                    return entry;
-                }
-            }
-
-            return null;
-        } else {
-            return null;
-        }
-    }
-
-    public int getQuestRerollCoinCost() {
-        return this.questRerollCoinCost;
-    }
-
-    public int getChallengeRebuyCoinCost() {
-        return this.challengeRebuyCoinCost;
     }
 
     protected boolean isValid() {
@@ -671,5 +540,4 @@ public class CrystalTraderConfig extends Config {
         }
     }
 }
-
 

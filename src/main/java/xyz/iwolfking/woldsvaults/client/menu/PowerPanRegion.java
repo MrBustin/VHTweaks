@@ -16,7 +16,7 @@ import java.util.Map;
 public class PowerPanRegion extends SkillPanRegion<PowerTree, PowerElementContainerScreen, PowerWidget> {
 
     public PowerPanRegion(PowerDialog powerDialog, PowerElementContainerScreen parentScreen) {
-        super(parentScreen, new TextComponent("Talents Tab"), powerDialog);
+        super(parentScreen, new TextComponent("Powers Tab"), parentScreen::getSkillTree, powerDialog::setSkillGroup, null);
     }
 
     @Override

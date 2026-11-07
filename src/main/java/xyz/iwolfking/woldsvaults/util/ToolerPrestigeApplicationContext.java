@@ -2,7 +2,7 @@ package xyz.iwolfking.woldsvaults.util;
 
 import net.minecraft.world.entity.player.Player;
 
-/** Carries the server-side player into the station's no-argument applyJewels method. */
+/** Carries the applying player into JewelApplication.plan, excluding client previews. */
 public final class ToolerPrestigeApplicationContext {
     private static final ThreadLocal<Player> PLAYER = new ThreadLocal<>();
 
