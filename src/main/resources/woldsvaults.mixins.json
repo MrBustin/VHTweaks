@@ -187,6 +187,8 @@
     "the_vault.skills.modifications.MixinIceBoltChunkAbility",
     "the_vault.temple.MixinTempleChallengeManager",
     "the_vault.temple.MixinTempleControllerTileEntity",
+    "the_vault.temple.MixinTempleRewardActions",
+    "the_vault.wildwest.MixinWildWestChallengeManager",
     "wither_sound.MixinServerLevel"
   ],
   "client": [

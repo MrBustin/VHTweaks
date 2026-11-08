@@ -13,6 +13,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.entities.*;
+import net.minecraft.world.entity.npc.Villager;
 import xyz.iwolfking.woldsvaults.entities.aprilfools.JackBoxEntity;
 import xyz.iwolfking.woldsvaults.entities.astral.*;
 import xyz.iwolfking.woldsvaults.entities.barnyard.HostileChickenEntity;
@@ -32,6 +33,7 @@ import java.util.function.Supplier;
 public class ModEntities {
     private static final Map<EntityType<? extends LivingEntity>, Supplier<AttributeSupplier.Builder>> ATTRIBUTE_BUILDERS = new HashMap<>();
     public static EntityType<WoldBoss> WOLD;
+    public static EntityType<ProtectVillagerEntity> PROTECT_VILLAGER;
     public static EntityType<VaultNecromancer> VAULT_NECROMANCER;
     public static EntityType<GreenGhost> GREEN_GHOST;
     public static EntityType<BlueGhost> BLUE_GHOST;
@@ -71,6 +73,10 @@ public class ModEntities {
 
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
+        PROTECT_VILLAGER = registerLivingWV("protect_villager", EntityType.Builder.of(ProtectVillagerEntity::new, MobCategory.MISC)
+                .sized(1.8F, 5.4F)
+                .clientTrackingRange(10)
+                .setCustomClientFactory((spawnEntity, level) -> new ProtectVillagerEntity(PROTECT_VILLAGER, level)), Villager::createAttributes, event);
         WOLD = registerLivingWV("wold", EntityType.Builder.of(WoldBoss::new, MobCategory.MONSTER)
                 .sized(1.2F, 3.9F), Zombie::createAttributes, event);
         VAULT_NECROMANCER = registerLivingWV("vault_necromancer", EntityType.Builder.of(VaultNecromancer::new, MobCategory.MONSTER)
