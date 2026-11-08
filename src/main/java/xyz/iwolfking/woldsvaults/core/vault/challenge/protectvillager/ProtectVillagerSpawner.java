@@ -7,6 +7,8 @@ import iskallia.vault.core.event.CommonEvents;
 import iskallia.vault.core.vault.challenge.protect.ProtectVillagerTargetGoal;
 import iskallia.vault.core.random.JavaRandom;
 import iskallia.vault.core.random.RandomSource;
+import iskallia.vault.entity.EntityScaler;
+import iskallia.vault.world.data.ServerVaults;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -116,10 +118,14 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
                entity.moveTo(x, y, z, random.nextFloat() * 360.0F, 0.0F);
 
                if (entity instanceof Mob mob) {
+                  // Initialize vault attributes now so first-tick scaling cannot overwrite wave health.
+                  ServerVaults.get(world).ifPresent(vault -> EntityScaler.scale(vault, mob));
 
                   AttributeInstance healthAttribute = mob.getAttribute(Attributes.MAX_HEALTH);
 
                   if(healthAttribute != null){
+                     // Wave health is absolute, including for babies and champions.
+                     healthAttribute.removeModifiers();
                      healthAttribute.setBaseValue(baseModHealth * wave);
                      mob.setHealth(mob.getMaxHealth());
                   }
