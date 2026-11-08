@@ -29,6 +29,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
    private BlockCuboid zone;
    private final List<EntityType<?>> mobTypes;
    private IntRoll waves;
+   private double baseMobHealth;
    private final List<ChallengeAction<?>> successActions;
    private final List<ChallengeAction<?>> failureActions;
    private final List<ChallengeAction<?>> gildedActions;
@@ -62,6 +63,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ProtectVillagerChallengeManager manager = new ProtectVillagerChallengeManager(this.uuid, this.level.dimension(), this.getBlockPos());
       manager.setZone(this.zone);
       manager.setMobTypes(this.mobTypes);
+      manager.setBaseMobHealth(this.baseMobHealth);
       manager.setMaxWaves(this.waves.get(JavaRandom.ofInternal(this.level.random.nextLong())));
       manager.addSuccessActions(this.successActions);
       manager.addFailureActions(this.failureActions);
@@ -123,6 +125,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       IDENTIFIERS.writeNbt(this.mobTypes.stream().map(ForgeRegistryEntry::getRegistryName).toArray(ResourceLocation[]::new))
          .ifPresent(tag -> nbt.put("mobTypes", tag));
       Adapters.INT_ROLL.writeNbt(this.waves).ifPresent(tag -> nbt.put("waves", tag));
+      Adapters.DOUBLE.writeNbt(this.baseMobHealth).ifPresent(tag -> nbt.put("baseModHealth", tag));
       ACTIONS.writeNbt(this.successActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("successActions", tag));
       ACTIONS.writeNbt(this.failureActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("failureActions", tag));
       ACTIONS.writeNbt(this.gildedActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("gildedActions", tag));
@@ -155,6 +158,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       }
 
       this.waves = Adapters.INT_ROLL.readNbt(nbt.get("waves")).orElse(IntRoll.ofUniform(4, 8));
+      this.baseMobHealth = Adapters.DOUBLE.readNbt(nbt.get("baseModHealth")).orElse(100.0);
       this.successActions.clear();
       ACTIONS.readNbt(nbt.get("successActions")).ifPresent(actions -> this.successActions.addAll(Arrays.asList(actions)));
       this.failureActions.clear();

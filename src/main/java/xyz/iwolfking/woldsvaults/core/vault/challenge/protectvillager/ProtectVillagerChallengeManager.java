@@ -77,6 +77,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private UUID villagerId;
    private double villagerHealth;
    private double villagerMaxHealth;
+   private double baseMobHealth = 100.0;
    private final List<ChallengeAction<?>> actions = new ArrayList<>();
    private final List<ChallengeAction<?>> scheduledActions = new ArrayList<>();
    private final List<ChallengeAction<?>> floatingItemActions = new ArrayList<>();
@@ -102,6 +103,10 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    public void setMaxWaves(int waves) {
       this.spawner.setMaxWaves(waves);
+   }
+
+   public void setBaseMobHealth(double baseMobHealth) {
+      this.baseMobHealth = baseMobHealth;
    }
 
    public void addGate(BlockPos offset, Rotation rotation) {
@@ -323,7 +328,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.scheduledActions.clear();
       }
       this.phase = Phase.IN_WAVE;
-      this.spawner.spawnWave(world, this.pos);
+      this.spawner.spawnWave(world, this.pos, baseMobHealth);
       ServerScheduler.INSTANCE.schedule(20, () -> world.playSound(null, this.pos, ModSounds.ARENA_HORNS_SFX, SoundSource.BLOCKS, 1.0F, 1.0F));
    }
 
@@ -388,10 +393,10 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       Component txt;
 
       if (this.phase != Phase.IDLE ){
-         if (maxWaves < 0 || currentWave < maxWaves && this.phase != Phase.FAILED) {
+         if (this.phase != Phase.FAILED && this.phase != Phase.COMPLETED) {
             txt = new TextComponent("").withStyle(ChatFormatting.WHITE)
                     .append(new TextComponent("Wave ").withStyle(ChatFormatting.WHITE))
-                    .append(new TextComponent((currentWave + 1)
+                    .append(new TextComponent((this.phase == Phase.IN_WAVE ? currentWave : currentWave + 1)
                             + (this.phase == Phase.IN_WAVE || maxWaves <= 0 ? "" : " of " + maxWaves)).withStyle(ChatFormatting.WHITE));
          } else if (this.phase != Phase.FAILED){
             txt = new TextComponent("Complete").withStyle(ChatFormatting.WHITE);
@@ -456,6 +461,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          Adapters.UUID.writeNbt(this.villagerId).ifPresent(tag -> nbt.put("villager", tag));
          Adapters.DOUBLE.writeNbt(Double.valueOf(this.villagerHealth)).ifPresent(tag -> nbt.put("villagerHealth", tag));
          Adapters.DOUBLE.writeNbt(Double.valueOf(this.villagerMaxHealth)).ifPresent(tag -> nbt.put("villagerMaxHealth", tag));
+         Adapters.DOUBLE.writeNbt(Double.valueOf(this.baseMobHealth)).ifPresent(tag -> nbt.put("baseMobHealth", tag));
          nbt.putString("phase", this.phase.name());
          this.writeActionsNbt(nbt, "successActions", this.successActions);
          this.writeActionsNbt(nbt, "failureActions", this.failureActions);
@@ -488,6 +494,8 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.villagerId = Adapters.UUID.readNbt(nbt.get("villager")).orElse(null);
       this.villagerHealth = Adapters.DOUBLE.readNbt(nbt.get("villagerHealth")).orElse(0.0);
       this.villagerMaxHealth = Adapters.DOUBLE.readNbt(nbt.get("villagerMaxHealth")).orElse(0.0);
+      this.baseMobHealth = Adapters.DOUBLE.readNbt(nbt.get("baseMobHealth"))
+         .orElseGet(() -> Adapters.DOUBLE.readNbt(nbt.get("baseModHealth")).orElse(100.0));
       if (nbt.contains("phase")) {
          try {
             this.phase = Phase.valueOf(nbt.getString("phase"));

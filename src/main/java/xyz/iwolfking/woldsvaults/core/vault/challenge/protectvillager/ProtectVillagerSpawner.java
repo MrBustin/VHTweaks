@@ -83,7 +83,7 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
       this.targetVillagerId = villagerId;
    }
 
-   public void spawnWave(ServerLevel world, BlockPos pos) {
+   public void spawnWave(ServerLevel world, BlockPos pos, double baseModHealth) {
       this.wave++;
       RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
@@ -120,7 +120,7 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
                   AttributeInstance healthAttribute = mob.getAttribute(Attributes.MAX_HEALTH);
 
                   if(healthAttribute != null){
-                     healthAttribute.setBaseValue(100.0D * wave);
+                     healthAttribute.setBaseValue(baseModHealth * wave);
                      mob.setHealth(mob.getMaxHealth());
                   }
 
