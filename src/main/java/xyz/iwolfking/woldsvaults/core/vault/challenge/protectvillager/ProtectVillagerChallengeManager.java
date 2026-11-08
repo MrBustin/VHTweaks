@@ -9,6 +9,7 @@ import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.random.JavaRandom;
 import iskallia.vault.core.random.RandomSource;
 import iskallia.vault.core.vault.challenge.action.ChallengeAction;
+import iskallia.vault.core.vault.challenge.action.TileRewardChallengeAction;
 import iskallia.vault.core.vault.challenge.base.ChallengeManager;
 import iskallia.vault.core.world.storage.IZonedWorld;
 import iskallia.vault.init.ModSounds;
@@ -78,10 +79,11 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private double villagerMaxHealth;
    private final List<ChallengeAction<?>> actions = new ArrayList<>();
    private final List<ChallengeAction<?>> scheduledActions = new ArrayList<>();
+   private final List<ChallengeAction<?>> floatingItemActions = new ArrayList<>();
    private final java.util.Map<BlockPos, List<ChallengeAction<?>>> proxies = new java.util.LinkedHashMap<>();
    private final java.util.Map<String, List<ChallengeAction<?>>> rewardOptions = new java.util.LinkedHashMap<>();
    private int proxyTicker;
-   private boolean activatingRewardActions;
+   private boolean activatingGroundRewards;
 
    private final ProtectVillagerAnimation animation = new ProtectVillagerAnimation();
 
@@ -116,6 +118,11 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    public void setRewardActions(String category, List<ChallengeAction<?>> actions) {
       this.rewardOptions.put(category, new ArrayList<>(actions));
+   }
+
+   public void setFloatingItemActions(List<ChallengeAction<?>> actions) {
+      this.floatingItemActions.clear();
+      this.floatingItemActions.addAll(actions);
    }
 
    @Override
@@ -273,6 +280,9 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          BlockPos offset = new BlockPos(offsets[i][0], offsets[i][1], offsets[i][2]);
          BlockPos proxyPos = this.pos.offset(offset);
          List<ChallengeAction<?>> optionActions = options.get(i) == null ? new ArrayList<>() : new ArrayList<>(options.get(i));
+         if (this.rewardOptions.containsKey(labels.get(i))) {
+            optionActions.addAll(this.floatingItemActions);
+         }
          this.proxies.put(offset, optionActions);
          IZonedWorld.runWithBypass(world, true, () -> world.setBlock(proxyPos, ModBlocks.PROTECT_VILLAGER_CONTROLLER_PROXY.defaultBlockState(), 3));
          if (world.getBlockEntity(proxyPos) instanceof ProtectVillagerControllerProxyBlockEntity proxy) {
@@ -342,19 +352,24 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
          for (ChallengeAction<?> action : this.successActions) {
-            action.onActivate(world, this, random);
+            this.activateRewardAction(action, world, random);
          }
 
-         this.activatingRewardActions = true;
-         try {
-            for (ChallengeAction<?> action : this.actions) {
-               action.onActivate(world, this, random);
-            }
-         } finally {
-            this.activatingRewardActions = false;
+         for (ChallengeAction<?> action : this.actions) {
+            this.activateRewardAction(action, world, random);
          }
 
          world.playSound(null, this.pos, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 1.8F, 1.0F);
+      }
+   }
+
+   private void activateRewardAction(ChallengeAction<?> action, ServerLevel world, RandomSource random) {
+      // Use VH's native actions; only ground tiles need the controller-height ceiling.
+      this.activatingGroundRewards = action instanceof TileRewardChallengeAction;
+      try {
+         action.onActivate(world, this, random);
+      } finally {
+         this.activatingGroundRewards = false;
       }
    }
 
@@ -392,7 +407,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    @Generated
    @Override
    public BlockCuboid getZone() {
-      if (!this.activatingRewardActions || this.zone == null || this.zone.getMaxY() <= 0) {
+      if (!this.activatingGroundRewards || this.zone == null || this.zone.getMaxY() <= 0) {
          return this.zone;
       }
 
@@ -448,6 +463,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.writeActionsNbt(nbt, "scheduledFailureActions", this.scheduledFailureActions);
          this.writeActionsNbt(nbt, "rewardActions", this.actions);
          this.writeActionsNbt(nbt, "scheduledRewardActions", this.scheduledActions);
+         this.writeActionsNbt(nbt, "floatingItemActions", this.floatingItemActions);
          this.rewardOptions.forEach((category, optionActions) -> this.writeActionsNbt(nbt, "rewardOption_" + category.replace(" ", ""), optionActions));
          nbt.putInt("proxyTicker", this.proxyTicker);
          this.spawner.writeNbt().ifPresent(tag -> nbt.put("spawner", tag));
@@ -485,6 +501,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.readActionsNbt(nbt, "scheduledFailureActions", this.scheduledFailureActions);
       this.readActionsNbt(nbt, "rewardActions", this.actions);
       this.readActionsNbt(nbt, "scheduledRewardActions", this.scheduledActions);
+      this.readActionsNbt(nbt, "floatingItemActions", this.floatingItemActions);
       this.rewardOptions.clear();
       for (String category : List.of("Gilded", "Ornate", "Living", "Coin Piles")) {
          List<ChallengeAction<?>> optionActions = new ArrayList<>();

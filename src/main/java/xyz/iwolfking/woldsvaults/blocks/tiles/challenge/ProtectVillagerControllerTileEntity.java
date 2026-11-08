@@ -35,6 +35,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
    private final List<ChallengeAction<?>> ornateActions;
    private final List<ChallengeAction<?>> livingActions;
    private final List<ChallengeAction<?>> coinPileActions;
+   private final List<ChallengeAction<?>> floatingItemActions;
    private final Map<BlockPos, Rotation> gates;
    public static final ArrayAdapter<ResourceLocation> IDENTIFIERS = Adapters.ofArray(ResourceLocation[]::new, Adapters.IDENTIFIER);
    public static final ArrayAdapter<ChallengeAction<?>> ACTIONS = Adapters.ofArray(ChallengeAction[]::new, Adapters.CHALLENGE_ACTION);
@@ -51,6 +52,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       this.ornateActions = new ArrayList<>();
       this.livingActions = new ArrayList<>();
       this.coinPileActions = new ArrayList<>();
+      this.floatingItemActions = new ArrayList<>();
       this.gates = new LinkedHashMap<>();
       // The Vault base class only initializes its curses list during load().
       this.load(new CompoundTag());
@@ -67,6 +69,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       manager.setRewardActions("Ornate", this.ornateActions);
       manager.setRewardActions("Living", this.livingActions);
       manager.setRewardActions("Coin Piles", this.coinPileActions);
+      manager.setFloatingItemActions(this.floatingItemActions);
       this.gates.forEach(manager::addGate);
       return manager;
    }
@@ -103,6 +106,10 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       this.replaceActions(this.coinPileActions, actions);
    }
 
+   public void setFloatingItemActions(List<ChallengeAction<?>> actions) {
+      this.replaceActions(this.floatingItemActions, actions);
+   }
+
    private void replaceActions(List<ChallengeAction<?>> destination, List<ChallengeAction<?>> actions) {
       destination.clear();
       destination.addAll(actions);
@@ -122,6 +129,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ACTIONS.writeNbt(this.ornateActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("ornateActions", tag));
       ACTIONS.writeNbt(this.livingActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("livingActions", tag));
       ACTIONS.writeNbt(this.coinPileActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("coinPileActions", tag));
+      ACTIONS.writeNbt(this.floatingItemActions.toArray(ChallengeAction[]::new)).ifPresent(tag -> nbt.put("floatingItemActions", tag));
       ListTag gatesTag = new ListTag();
       this.gates.forEach((pos, rotation) -> {
          CompoundTag gate = new CompoundTag();
@@ -159,6 +167,8 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ACTIONS.readNbt(nbt.get("livingActions")).ifPresent(actions -> this.livingActions.addAll(Arrays.asList(actions)));
       this.coinPileActions.clear();
       ACTIONS.readNbt(nbt.get("coinPileActions")).ifPresent(actions -> this.coinPileActions.addAll(Arrays.asList(actions)));
+      this.floatingItemActions.clear();
+      ACTIONS.readNbt(nbt.get("floatingItemActions")).ifPresent(actions -> this.floatingItemActions.addAll(Arrays.asList(actions)));
       this.gates.clear();
       ListTag gatesTag = nbt.getList("gates", Tag.TAG_COMPOUND);
       for (int i = 0; i < gatesTag.size(); i++) {
