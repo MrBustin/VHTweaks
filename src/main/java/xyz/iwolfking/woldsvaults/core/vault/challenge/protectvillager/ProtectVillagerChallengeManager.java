@@ -250,7 +250,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             }
 
                this.spawner.onTick(world);
-               if (this.spawner.isWaveCleared()) {
+               if (this.phase == Phase.IN_WAVE && this.spawner.isWaveCleared()) {
                   if (this.spawner.getWave() >= this.spawner.getMaxWaves()) {
                      this.success(world);
                      VaultMod.LOGGER.info("Success!");
@@ -258,6 +258,13 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
                   this.phase = Phase.PROXIES;
                   this.spawnContinueProxies(world);
                }
+            }
+         }
+
+         if (this.phase == Phase.COMPLETED || this.phase == Phase.FAILED) {
+            this.finishChallenge(world);
+            if (this.animation.isCompleted()) {
+               this.setDeleted(true);
             }
          }
 
@@ -367,6 +374,24 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
          world.playSound(null, this.pos, SoundEvents.VILLAGER_CELEBRATE, SoundSource.NEUTRAL, 1.8F, 1.0F);
       }
+   }
+
+   private void finishChallenge(ServerLevel world) {
+      if (!this.proxies.isEmpty()) {
+         this.clearProxies(world);
+         this.proxies.clear();
+      }
+      Entity villager = this.villagerId == null ? null : world.getEntity(this.villagerId);
+      if (villager != null) {
+         villager.discard();
+      }
+      if (this.getBlockEntity(world.getServer()) instanceof ChallengeControllerBlockEntity<?> controller
+         && controller.getState() != State.DESTROYED) {
+         this.setControllerState(world, State.DESTROYED);
+      }
+      // Match Wild West: release protection while the opening animation finishes,
+      // then let the challenge lifecycle remove the manager once it is deleted.
+      this.unregisterZone(world.getServer());
    }
 
    private void activateRewardAction(ChallengeAction<?> action, ServerLevel world, RandomSource random) {
