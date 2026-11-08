@@ -6,6 +6,7 @@
   "refmap": "woldsvaults.refmap.json",
   "plugin": "xyz.iwolfking.woldsvaults.mixin.plugins.WoldMixinPlugin",
   "mixins": [
+    "the_vault.custom.MixinFreeVillagerBingoTask",
     "GameRulesBooleanValueAccessor",
     "LivingEntityAccessor",
     "MixinAntiqueStampCollectorBook",

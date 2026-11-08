@@ -348,6 +348,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private void success(ServerLevel world) {
       if (this.phase != Phase.FAILED && this.phase != Phase.COMPLETED) {
          this.phase = Phase.COMPLETED;
+         this.invokeCompletionEvent(world);
          this.animation.onStart(ProtectVillagerAnimation.State.OPEN_ROOM);
          Entity entity = world.getEntity(this.villagerId);
          if (entity != null) {
