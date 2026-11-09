@@ -44,6 +44,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
+import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.init.ModBlocks;
 import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerProxyBlockEntity;
 import net.minecraft.world.entity.player.Player;
@@ -58,7 +59,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 
 public class ProtectVillagerChallengeManager extends ChallengeManager {
-   public static final ResourceLocation HUD = VaultMod.id("textures/gui/challenge/protect_villager.png");
+   public static final ResourceLocation HUD = WoldsVaults.id("textures/gui/challenge/protect_villager.png");
 
    static {
       Adapters.CHALLENGE_MANAGER.register(
