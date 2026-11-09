@@ -143,6 +143,7 @@
     "the_vault.custom.MixinInventoryUtil",
     "the_vault.custom.MixinJavelinAbility",
     "the_vault.custom.MixinJewelItem",
+    "the_vault.custom.MixinMagnetItem",
     "the_vault.custom.MixinModDynamicModels",
     "the_vault.custom.MixinModDynamicModels$Armor",
     "the_vault.custom.MixinModifierAffixTagGroupEnum",
