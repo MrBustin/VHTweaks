@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import iskallia.vault.core.data.adapter.Adapters;
 import iskallia.vault.core.data.serializable.ISerializable;
 import iskallia.vault.core.event.CommonEvents;
-import iskallia.vault.core.vault.challenge.protect.ProtectVillagerTargetGoal;
 import iskallia.vault.core.random.JavaRandom;
 import iskallia.vault.core.random.RandomSource;
 import iskallia.vault.entity.EntityScaler;
@@ -35,6 +34,7 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
    private int wave;
    private int maxWaves;
    private UUID targetVillagerId;
+   private List<BlockPos> pathNodes = List.of();
 
    public void setMobTypes(List<EntityType<?>> types) {
       this.mobTypes.clear();
@@ -85,6 +85,10 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
       this.targetVillagerId = villagerId;
    }
 
+   public void setPathNodes(List<BlockPos> pathNodes) {
+      this.pathNodes = List.copyOf(pathNodes);
+   }
+
    public void spawnWave(ServerLevel world, BlockPos pos, double baseModHealth) {
       this.wave++;
       RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
@@ -131,7 +135,8 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
                   }
 
                   if (this.targetVillagerId != null) {
-                     mob.targetSelector.addGoal(0, new ProtectVillagerTargetGoal(mob, this.targetVillagerId, 0.0F));
+                     mob.targetSelector.addGoal(0, new ProtectVillagerTargetGoal(mob, this.targetVillagerId));
+                     mob.goalSelector.addGoal(0, new ProtectVillagerPathGoal(mob, this.targetVillagerId, this.pathNodes));
                   }
                }
 

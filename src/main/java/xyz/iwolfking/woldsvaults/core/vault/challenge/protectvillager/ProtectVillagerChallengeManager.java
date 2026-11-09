@@ -3,6 +3,7 @@ package xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager;
 import iskallia.vault.VaultMod;
 import iskallia.vault.block.entity.challenge.ChallengeControllerBlockEntity;
 import iskallia.vault.block.entity.challenge.ChallengeControllerBlockEntity.State;
+import iskallia.vault.block.entity.challenge.DragonPathNodeBlockEntity;
 import iskallia.vault.core.event.CommonEvents;
 import iskallia.vault.core.event.common.BlockUseEvent;
 import iskallia.vault.core.data.adapter.Adapters;
@@ -141,6 +142,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             this.onProxyClick(world, event.getPlayer(), proxy);
          });
       this.registerZone(world);
+      this.spawner.setPathNodes(this.findVillagerPathNodes(world));
       Villager villager = EntityType.VILLAGER.create(world);
       if (villager != null) {
          villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() - 3), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
@@ -160,6 +162,19 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          VaultMod.LOGGER.warn("Failed to create villager for ProtectVillager challenge at {}", this.pos);
          this.phase = Phase.FAILED;
       }
+   }
+
+   private List<BlockPos> findVillagerPathNodes(ServerLevel world) {
+      BlockCuboid worldZone = this.zone == null ? null : this.zone.offset(this.pos);
+      BlockPos min = worldZone == null ? this.pos.offset(-32, -16, -32) : worldZone.getMin();
+      BlockPos max = worldZone == null ? this.pos.offset(32, 16, 32) : worldZone.getMax();
+      List<BlockPos> pathNodes = new ArrayList<>();
+      for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+         if (world.getBlockEntity(pos) instanceof DragonPathNodeBlockEntity) {
+            pathNodes.add(pos.immutable());
+         }
+      }
+      return pathNodes;
    }
 
    @Override
