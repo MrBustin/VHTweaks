@@ -41,6 +41,7 @@ import xyz.iwolfking.woldsvaults.blocks.renderers.StatueCauldronRenderer;
 import xyz.iwolfking.woldsvaults.configs.ServerConfigs;
 import xyz.iwolfking.woldsvaults.configs.core.WoldsVaultsConfig;
 import xyz.iwolfking.woldsvaults.core.AddonLoader;
+import xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager.ProtectVillagerChallengeManager;
 import xyz.iwolfking.woldsvaults.api.util.DelayedExecutionHelper;
 import xyz.iwolfking.woldsvaults.client.overworld.OverworldVaultCompassHandler;
 import xyz.iwolfking.woldsvaults.client.overworld.OverworldVaultKeybinds;
@@ -89,6 +90,7 @@ public class WoldsVaults {
     public static final CreativeModeTab VAULT_ADDITIONS_TAB = new ModCreativeTab(MODID);
 
     public WoldsVaults() {
+        ProtectVillagerChallengeManager.registerAdapter();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WoldsVaultsConfig.COMMON_SPEC, "woldsvaults-common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC, "woldsvaults-server.toml");
         // Register the setup method for modloading

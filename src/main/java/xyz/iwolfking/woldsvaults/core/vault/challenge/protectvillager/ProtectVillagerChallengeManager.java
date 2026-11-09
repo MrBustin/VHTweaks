@@ -69,6 +69,10 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       );
    }
 
+   public static void registerAdapter() {
+      // Calling this method forces the challenge-manager adapter registration on the client too.
+   }
+
    private BlockCuboid zone;
    private Phase phase;
    private final ProtectVillagerSpawner spawner = new ProtectVillagerSpawner();
@@ -483,13 +487,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    @Generated
    public void setPhase(Phase phase) {
-      if (this.phase == phase) {
-         return;
-      }
       this.phase = phase;
-      if (this.attachedWorld != null) {
-         this.forEachPlayer(this.attachedWorld, this::syncToClient);
-      }
    }
 
    private static void forceBlockSync(ServerLevel world, BlockPos pos) {
