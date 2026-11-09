@@ -161,7 +161,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.spawner.setTargetVillager(villager.getUUID());
       } else {
          VaultMod.LOGGER.warn("Failed to create villager for ProtectVillager challenge at {}", this.pos);
-         this.phase = Phase.FAILED;
+         this.setPhase(Phase.FAILED);
       }
    }
 
@@ -249,7 +249,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
             && controller.getState() == State.ACTIVE
             && this.phase == Phase.IDLE
             && !this.players.isEmpty()) {
-            this.phase = Phase.PROXIES;
+            this.setPhase(Phase.PROXIES);
             this.animation.onStart(ProtectVillagerAnimation.State.CLOSE_ROOM);
             this.spawnRewardProxies(world);
          }
@@ -271,7 +271,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
                      this.success(world);
                      VaultMod.LOGGER.info("Success!");
                   } else {
-                  this.phase = Phase.PROXIES;
+                  this.setPhase(Phase.PROXIES);
                   this.spawnContinueProxies(world);
                }
             }
@@ -338,7 +338,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.clearProxies(world);
       this.proxies.clear();
       if ("Forfeit and Loot".equals(label)) {
-         this.phase = Phase.FORFEITED;
+         this.setPhase(Phase.FORFEITED);
          this.success(world);
          return;
       }
@@ -350,14 +350,14 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.actions.addAll(computedActions);
          this.scheduledActions.clear();
       }
-      this.phase = Phase.IN_WAVE;
+      this.setPhase(Phase.IN_WAVE);
       this.spawner.spawnWave(world, this.pos, baseMobHealth);
       ServerScheduler.INSTANCE.schedule(20, () -> world.playSound(null, this.pos, ModSounds.ARENA_HORNS_SFX, SoundSource.BLOCKS, 1.0F, 1.0F));
    }
 
    private void fail(ServerLevel world) {
       if (this.phase != Phase.FAILED && this.phase != Phase.COMPLETED) {
-         this.phase = Phase.FAILED;
+         this.setPhase(Phase.FAILED);
          this.animation.onStart(ProtectVillagerAnimation.State.OPEN_ROOM);
          this.invokeFailEvent(world);
          RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
@@ -370,7 +370,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    private void success(ServerLevel world) {
       if (this.phase != Phase.FAILED && this.phase != Phase.COMPLETED) {
-         this.phase = Phase.COMPLETED;
+         this.setPhase(Phase.COMPLETED);
          this.invokeCompletionEvent(world);
          this.animation.onStart(ProtectVillagerAnimation.State.OPEN_ROOM);
          Entity entity = world.getEntity(this.villagerId);
@@ -483,7 +483,13 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    @Generated
    public void setPhase(Phase phase) {
+      if (this.phase == phase) {
+         return;
+      }
       this.phase = phase;
+      if (this.attachedWorld != null) {
+         this.forEachPlayer(this.attachedWorld, this::syncToClient);
+      }
    }
 
    private static void forceBlockSync(ServerLevel world, BlockPos pos) {
