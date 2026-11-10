@@ -2,7 +2,10 @@ package xyz.iwolfking.woldsvaults.mixin.the_vault.skills;
 
 import iskallia.vault.skill.ability.component.AbilityLabelFactory;
 import iskallia.vault.skill.base.Skill;
+import iskallia.vault.util.calc.AbilityPowerHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,8 +30,15 @@ public abstract class MixinAbilityLabelFactory {
         return null;
     }
 
+    @Shadow
+    private static MutableComponent labelWithAbilityRange(String label, String minValue, String maxValue, String colorKey, float damageValue) {
+        throw new UnsupportedOperationException("Implemented via mixin");
+    }
+
     @Inject(method = "<clinit>",at=@At("TAIL"))
     private static void addLabels(CallbackInfo ci) {
+
+        Player player = Minecraft.getInstance().player;
         FACTORY_MAP.put(
                 "additionalResistance",
                 context -> label("\n Resistance: ",binding(context.config(), "additionalResistance"),"resistance")
@@ -89,6 +99,14 @@ public abstract class MixinAbilityLabelFactory {
         FACTORY_MAP.put(
                 "maxRange",
                 context -> label("\n Max Range: ", binding(context.config(), "maxRange"), "radius")
+        );
+        FACTORY_MAP.put(
+                "ability_range",
+                context -> labelWithAbilityRange("\n Ability Power Range: ",
+                        binding(context.config(), "percentAbilityPowerDealtMin"),
+                        binding(context.config(), "percentAbilityPowerDealtMax"),
+                        "ability_power",
+                        player != null ? AbilityPowerHelper.getAbilityPower(player) : 0)
         );
     }
 }
