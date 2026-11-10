@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "half=upper": {
+            "model": "woldsvaults:block/temple_controller_nothing"
+        },
+        "half=lower": {
+            "model": "woldsvaults:block/temple_controller"
+        }
+    }
+}

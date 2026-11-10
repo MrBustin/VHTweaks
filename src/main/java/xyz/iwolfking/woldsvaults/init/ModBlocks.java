@@ -25,9 +25,15 @@ import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.blocks.*;
 import xyz.iwolfking.woldsvaults.blocks.LootStatueBlock;
 import xyz.iwolfking.woldsvaults.blocks.challenge.ProtectVillagerControllerProxyBlock;
+import xyz.iwolfking.woldsvaults.blocks.challenge.TempleControllerProxyBlock;
+import xyz.iwolfking.woldsvaults.blocks.challenge.TempleControllerBlock;
+import xyz.iwolfking.woldsvaults.blocks.renderers.challenge.TempleControllerRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.challenge.ProtectVillagerControllerProxyRenderer;
+import xyz.iwolfking.woldsvaults.blocks.renderers.challenge.TempleControllerProxyRenderer;
 import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerProxyBlockEntity;
+import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.TempleControllerProxyBlockEntity;
 import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerTileEntity;
+import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.TempleControllerTileEntity;
 import xyz.iwolfking.woldsvaults.client.renderers.BrewingAltarRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.DecoGridGatewayRenderer;
 import xyz.iwolfking.woldsvaults.blocks.renderers.DungeonPedestalRenderer;
@@ -100,7 +106,9 @@ public class ModBlocks {
     public static final DecoVelaraAltarBlock DECO_VELARA_ALTAR_BLOCK;
 
     public static final ProtectVillagerControllerProxyBlock PROTECT_VILLAGER_CONTROLLER_PROXY;
+    public static final TempleControllerProxyBlock TEMPLE_CONTROLLER_PROXY;
     public static final ChallengeControllerBlock PROTECT_VILLAGER_CONTROLLER;
+    public static final TempleControllerBlock TEMPLE_CONTROLLER;
 
     public static final BlockEntityType<VaultSalvagerTileEntity> VAULT_SALVAGER_ENTITY;
     public static final BlockEntityType<IskallianLeavesTileEntity> ISKALLIAN_LEAVES_TILE_ENTITY_BLOCK_ENTITY_TYPE;
@@ -194,7 +202,9 @@ public class ModBlocks {
         SOPHISTICATED_BACKPACK = BlockEntityType.Builder.of(BackpackBlockEntity::new, new Block[]{XL_BACKPACK}).build((Type)null);
 
         PROTECT_VILLAGER_CONTROLLER_PROXY = new ProtectVillagerControllerProxyBlock();
+        TEMPLE_CONTROLLER_PROXY = new TempleControllerProxyBlock();
         PROTECT_VILLAGER_CONTROLLER = new ChallengeControllerBlock(() -> ModBlocks.PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY);
+        TEMPLE_CONTROLLER = new TempleControllerBlock(() -> ModBlocks.TEMPLE_CONTROLLER_TILE_ENTITY);
 
         RED_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.RED_CARDBOARD_BOX_TILE_ENTITY);
         YELLOW_CARDBOARD_BOX = new ColoredCardboardBoxBlock(() -> ModBlocks.YELLOW_CARDBOARD_BOX_TILE_ENTITY);
@@ -251,7 +261,9 @@ public class ModBlocks {
         registerBlock(event, GREEN_CARDBOARD_BOX, WoldsVaults.id("green_cardboard_box"));
         registerBlock(event, BLUE_CARDBOARD_BOX, WoldsVaults.id("blue_cardboard_box"));
         registerBlock(event, PROTECT_VILLAGER_CONTROLLER_PROXY, WoldsVaults.id("protect_villager_controller_proxy_block"));
+        registerBlock(event, TEMPLE_CONTROLLER_PROXY, WoldsVaults.id("temple_controller_proxy"));
         registerBlock(event, PROTECT_VILLAGER_CONTROLLER, WoldsVaults.id("protect_villager_controller"));
+        registerBlock(event, TEMPLE_CONTROLLER, WoldsVaults.id("temple_controller"));
 
     }
     public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> event) {
@@ -280,7 +292,9 @@ public class ModBlocks {
         registerTileEntity(event, GREEN_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("green_cardboard_box_tile_entity"));
         registerTileEntity(event, BLUE_CARDBOARD_BOX_TILE_ENTITY, WoldsVaults.id("blue_cardboard_box_tile_entity"));
         registerTileEntity(event, PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY, WoldsVaults.id("protect_villager_controller_tile_entity"));
+        registerTileEntity(event, TEMPLE_CONTROLLER_TILE_ENTITY, WoldsVaults.id("temple_controller_tile_entity"));
         registerTileEntity(event, PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY, WoldsVaults.id("protect_villager_controller_proxy_tile_entity"));
+        registerTileEntity(event, TEMPLE_CONTROLLER_PROXY_TILE_ENTITY, WoldsVaults.id("temple_controller_proxy_tile_entity"));
     }
 
     public static void registerBlockItems(RegistryEvent.Register<Item> event) {
@@ -300,7 +314,9 @@ public class ModBlocks {
         registerBlockItem(event, DECO_WENDARR_ALTAR_BLOCK);
         registerBlockItem(event, DECO_VELARA_ALTAR_BLOCK);
         registerBlockItem(event, PROTECT_VILLAGER_CONTROLLER_PROXY, 1);
+        registerBlockItem(event, TEMPLE_CONTROLLER_PROXY, 1);
         registerBlockItem(event, PROTECT_VILLAGER_CONTROLLER, 1);
+        registerBlockItem(event, TEMPLE_CONTROLLER, 1);
         registerBlockItem(event, CHROMATIC_GOLD_BLOCK);
         registerBlockItem(event, OMEGA_POG_BLOCK);
         registerBlockItem(event, ECHO_POG_BLOCK);
@@ -337,7 +353,9 @@ public class ModBlocks {
         event.registerBlockEntityRenderer(DECO_GRID_GATEWAY_TILE_ENTITY_BLOCK_ENTITY_TYPE, DecoGridGatewayRenderer::new);
         event.registerBlockEntityRenderer(BREWING_ALTAR_TILE_ENTITY_BLOCK_ENTITY_TYPE, BrewingAltarRenderer::new);
         event.registerBlockEntityRenderer(PROTECT_VILLAGER_CONTROLLER_TILE_ENTITY, ChallengeControllerRenderer::new);
+        event.registerBlockEntityRenderer(TEMPLE_CONTROLLER_TILE_ENTITY, TempleControllerRenderer::new);
         event.registerBlockEntityRenderer(PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY, ProtectVillagerControllerProxyRenderer::new);
+        event.registerBlockEntityRenderer(TEMPLE_CONTROLLER_PROXY_TILE_ENTITY, TempleControllerProxyRenderer::new);
     }
 
 
@@ -369,6 +387,12 @@ public class ModBlocks {
     public static final BlockEntityType<ProtectVillagerControllerProxyBlockEntity> PROTECT_VILLAGER_CONTROLLER_PROXY_TILE_ENTITY =
             BlockEntityType.Builder.of(ProtectVillagerControllerProxyBlockEntity::new, PROTECT_VILLAGER_CONTROLLER_PROXY).build(null);
 
+
+    public static final BlockEntityType<TempleControllerTileEntity> TEMPLE_CONTROLLER_TILE_ENTITY =
+            BlockEntityType.Builder.of(TempleControllerTileEntity::new, TEMPLE_CONTROLLER).build(null);
+
+    public static final BlockEntityType<TempleControllerProxyBlockEntity> TEMPLE_CONTROLLER_PROXY_TILE_ENTITY =
+            BlockEntityType.Builder.of(TempleControllerProxyBlockEntity::new, TEMPLE_CONTROLLER_PROXY).build(null);
 
     private static <T extends BlockEntity> void registerTileEntity(RegistryEvent.Register<BlockEntityType<?>> event, BlockEntityType<?> type, ResourceLocation id) {
         type.setRegistryName(id);

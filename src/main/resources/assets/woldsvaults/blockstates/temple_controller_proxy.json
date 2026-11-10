@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "woldsvaults:block/challenge/temple_controller_proxy"
+        }
+    }
+}

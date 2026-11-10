@@ -1,4 +1,6 @@
 {
+    "block.woldsvaults.temple_controller": "Temple Controller",
+    "block.woldsvaults.temple_controller_proxy": "Temple Proxy",
     "effect.woldsvaults.stacking_burn": "Burning",
     "item.woldsvaults.crystal_seal_unhinged":  "Seal of the Psychopath",
     "item.woldsvaults.crystal_seal_doomsayer":  "Seal of the Doomsayer",

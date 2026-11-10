@@ -10,6 +10,10 @@ import iskallia.vault.core.world.template.PlacementSettings;
 import iskallia.vault.core.world.template.Template;
 import iskallia.vault.init.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import iskallia.vault.core.data.adapter.Adapters;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Rotation;
@@ -29,6 +33,34 @@ public class TempleAnimation extends AbstractChallengeAnimation<TempleAnimation.
 
     public void addGate(BlockPos offset, Rotation rotation) {
         this.gates.put(offset, rotation);
+    }
+
+    public void writeNbt(CompoundTag tag) {
+        ListTag gates = new ListTag();
+        this.gates.forEach((pos, rotation) -> {
+            CompoundTag gate = new CompoundTag();
+            Adapters.BLOCK_POS.writeNbt(pos).ifPresent(value -> gate.put("pos", value));
+            gate.putInt("rotation", rotation.ordinal());
+            gates.add(gate);
+        });
+        tag.put("gates", gates);
+        tag.putString("gateAnimationState", this.state.name());
+        tag.putInt("gateAnimationTick", this.ticker);
+    }
+
+    public void readNbt(CompoundTag tag) {
+        this.gates.clear();
+        for (Tag entry : tag.getList("gates", Tag.TAG_COMPOUND)) {
+            CompoundTag gate = (CompoundTag) entry;
+            Rotation rotation = Rotation.values()[Math.floorMod(gate.getInt("rotation"), Rotation.values().length)];
+            Adapters.BLOCK_POS.readNbt(gate.get("pos")).ifPresent(pos -> this.addGate(pos, rotation));
+        }
+        try {
+            this.state = State.valueOf(tag.getString("gateAnimationState"));
+        } catch (IllegalArgumentException ignored) {
+            this.state = State.IDLE;
+        }
+        this.ticker = Math.max(0, tag.getInt("gateAnimationTick"));
     }
 
     @Override

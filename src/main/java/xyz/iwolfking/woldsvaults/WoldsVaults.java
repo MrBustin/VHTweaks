@@ -91,6 +91,7 @@ public class WoldsVaults {
 
     public WoldsVaults() {
         ProtectVillagerChallengeManager.registerAdapter();
+        xyz.iwolfking.woldsvaults.core.vault.challenge.temple.TempleChallengeManager.registerAdapter();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WoldsVaultsConfig.COMMON_SPEC, "woldsvaults-common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC, "woldsvaults-server.toml");
         // Register the setup method for modloading
