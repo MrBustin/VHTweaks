@@ -71,11 +71,14 @@ public class TempleCorner {
                 area.getMaxX(), area.getMaxY(), area.getMaxZ())) {
             var block = world.getBlockState(pos).getBlock();
             if (block instanceof VaultChestBlock || block instanceof CoinPileBlock) {
-                counts.merge(block.getName().getString(), 1, Integer::sum);
+                String displayType = block.getName().getString()
+                        .replaceFirst("(?i)\\s+strong\\s*box$", "")
+                        .replaceFirst("(?i)\\s+chest$", "");
+                counts.merge(displayType, 1, Integer::sum);
             }
         }
         return counts.isEmpty() ? "Reveal corner (no loot detected)" : "Reveal " + counts.entrySet().stream()
-                .map(entry -> entry.getValue() + " x " + entry.getKey()).collect(Collectors.joining(", "));
+                .map(entry -> entry.getValue() + " " + entry.getKey()).collect(Collectors.joining(", "));
     }
 
     public boolean reveal(ServerLevel world, BlockPos origin) {
@@ -92,7 +95,9 @@ public class TempleCorner {
             removeRegion(world, origin, worldBase);
             removeRegion(world, origin, worldStatue);
         });
-        world.playSound(null, origin, ModSounds.RAID_HATCH_OPEN, SoundSource.MASTER, 1.0F, 0.7F);
+        BlockPos soundPos = new BlockPos((worldStatue.getMinX() + worldStatue.getMaxX()) / 2,
+                worldStatue.getMinY(), (worldStatue.getMinZ() + worldStatue.getMaxZ()) / 2);
+        world.playSound(null, soundPos, ModSounds.RAID_HATCH_OPEN, SoundSource.MASTER, 1.0F, 0.7F);
         this.revealed = true;
         return true;
     }
