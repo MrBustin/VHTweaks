@@ -95,6 +95,9 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
     @Getter
     private final TempleSpawner spawner = new TempleSpawner();
 
+    @Getter
+    private final List<TempleCorner> corners = new ArrayList<>();
+
     private final List<ChallengeAction<?>> selectedPositives = new ArrayList<>();
     private final List<ChallengeAction<?>> selectedNegatives = new ArrayList<>();
 
@@ -140,7 +143,7 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
         if (controller == null) return;
 
         if (controller.getState() == ACTIVE && this.phase == Phase.PROXY_SELECTION) {
-            if (this.selectedPositives.isEmpty()) {
+            if (this.selectedPositives.isEmpty() && this.corners.stream().noneMatch(TempleCorner::isSelected)) {
                 if (player instanceof ServerPlayer serverPlayer) {
                     serverPlayer.displayClientMessage(
                             new TextComponent("You must infuse at least one pillar first!").withStyle(ChatFormatting.RED), true);
@@ -176,6 +179,10 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
             this.spawnProxies(world);
         }
 
+        if (this.phase == Phase.PROXY_SELECTION && world.getGameTime() % 20 == 0) {
+            this.refreshProxyRewards(world);
+        }
+
         switch (this.phase) {
             case ACTIVATING -> {
                 this.infusingTicks++;
@@ -186,9 +193,11 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
             case COMBAT -> {
                 this.spawner.onTick(world);
                 if (this.spawner.isCompleted()) {
-                    this.activatePositives(world);
-                    this.completeChallenge(world);
+                    this.beginReveal(world);
                 }
+            }
+            case REVEALING -> {
+                if (this.activatePositives(world)) this.completeChallenge(world);
             }
             case COMPLETED -> {
                 if (!this.animation.isCompleted()) break;
@@ -242,7 +251,9 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
             if (world.getBlockEntity(proxyPos) instanceof TempleControllerProxyBlockEntity proxy) {
                 proxy.setController(this.pos);
 
-                ChallengeAction<?> positive = rollAction(this.positivePool, random, vaultLevel);
+                TempleCorner corner = this.cornerFor(offset);
+                ChallengeAction<?> positive = corner == null ? rollAction(this.positivePool, random, vaultLevel) : null;
+                if (corner != null) proxy.setRewardDescription(corner.describe(world, this.pos));
                 ChallengeAction<?> negative = rollAction(this.negativePool, random, vaultLevel);
 
                 proxy.setPositiveAction(positive);
@@ -267,7 +278,12 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
         if (!(world.getBlockEntity(proxyPos) instanceof TempleControllerProxyBlockEntity proxy)) return;
 
         if (!this.pos.equals(proxy.getController())) return;
-        ChallengeAction<?> positive = TempleActions.localize(proxy.getPositiveAction());
+        TempleCorner corner = this.cornerFor(proxyPos.subtract(this.pos));
+        if (corner != null) {
+            if (corner.isSelected()) return;
+            corner.select();
+        }
+        ChallengeAction<?> positive = corner == null ? TempleActions.localize(proxy.getPositiveAction()) : null;
         ChallengeAction<?> negative = TempleActions.localize(proxy.getNegativeAction());
 
         if (positive != null) this.selectedPositives.add(positive);
@@ -287,6 +303,18 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
         world.playSound(null, this.pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 2.0F);
     }
 
+    private TempleCorner cornerFor(BlockPos proxyOffset) {
+        return this.corners.stream().filter(corner -> corner.proxy.equals(proxyOffset)).findFirst().orElse(null);
+    }
+
+    private void refreshProxyRewards(ServerLevel world) {
+        for (TempleCorner corner : this.corners) {
+            if (!corner.isSelected() && world.getBlockEntity(this.pos.offset(corner.proxy)) instanceof TempleControllerProxyBlockEntity proxy) {
+                proxy.setRewardDescription(corner.describe(world, this.pos));
+            }
+        }
+    }
+
     private void activateChallenge(ServerLevel world) {
         RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
 
@@ -299,16 +327,24 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
             this.phase = Phase.COMBAT;
             world.playSound(null, this.pos, ModSounds.PUZZLE_COMPLETION_MINOR, SoundSource.MASTER, 1.0F, 0.7F);
         } else {
-            this.activatePositives(world);
-            this.completeChallenge(world);
+            this.beginReveal(world);
         }
     }
 
-    private void activatePositives(ServerLevel world) {
+    private void beginReveal(ServerLevel world) {
+        this.phase = Phase.REVEALING;
+        if (this.activatePositives(world)) this.completeChallenge(world);
+    }
+
+    private boolean activatePositives(ServerLevel world) {
+        boolean revealed = true;
+        for (TempleCorner corner : this.corners) revealed &= corner.reveal(world, this.pos);
+        if (!revealed) return false;
         RandomSource random = JavaRandom.ofInternal(world.getRandom().nextLong());
         for (ChallengeAction<?> positive : this.selectedPositives) {
             positive.onActivate(world, this, random);
         }
+        return true;
     }
 
     private void completeChallenge(ServerLevel world) {
@@ -355,7 +391,7 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
         if (this.phase == Phase.IDLE) return;
 
         if (this.phase == Phase.PROXY_SELECTION) {
-            MutableComponent text = new TextComponent("Infuse the controller with the power of the proxies!").withStyle(ChatFormatting.GOLD);
+            MutableComponent text = new TextComponent("Infuse the controller with proxies!").withStyle(ChatFormatting.GOLD);
             this.renderProgressBar(context, HUD, 1.0D, text);
         } else if (this.phase == Phase.COMBAT) {
             double progress = this.spawner.getTotalHealth() > 0
@@ -372,6 +408,9 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
     public Optional<CompoundTag> writeNbt() {
         return super.writeNbt().map(nbt -> {
             this.animation.writeNbt(nbt);
+            ListTag cornersTag = new ListTag();
+            this.corners.forEach(corner -> cornersTag.add(corner.writeNbt()));
+            nbt.put("corners", cornersTag);
             Adapters.BLOCK_CUBOID.writeNbt(this.zone).ifPresent(tag -> nbt.put("zone", tag));
             PHASE.asNullable().writeNbt(this.phase).ifPresent(tag -> nbt.put("phase", tag));
             Adapters.BOOLEAN.writeNbt(this.scannedForSpawnPositions).ifPresent(tag -> nbt.put("scannedForSpawnPositions", tag));
@@ -401,6 +440,8 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
     public void readNbt(CompoundTag nbt) {
         super.readNbt(nbt);
         this.animation.readNbt(nbt);
+        this.corners.clear();
+        for (Tag entry : nbt.getList("corners", Tag.TAG_COMPOUND)) this.corners.add(TempleCorner.readNbt((CompoundTag) entry));
         this.zone = Adapters.BLOCK_CUBOID.readNbt(nbt.get("zone")).orElse(null);
         this.phase = PHASE.readNbt(nbt.get("phase")).orElse(Phase.IDLE);
         this.scannedForSpawnPositions = Adapters.BOOLEAN.readNbt(nbt.get("scannedForSpawnPositions")).orElse(false);
@@ -443,6 +484,7 @@ public class TempleChallengeManager extends ChallengeManager implements TempleAn
         PROXY_SELECTION,
         ACTIVATING,
         COMBAT,
+        REVEALING,
         COMPLETED
     }
 }

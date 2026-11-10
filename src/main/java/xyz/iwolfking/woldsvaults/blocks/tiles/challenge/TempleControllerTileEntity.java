@@ -17,11 +17,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.ArrayList;
 import java.util.List;
 import xyz.iwolfking.woldsvaults.core.vault.challenge.temple.TempleAnimation;
+import xyz.iwolfking.woldsvaults.core.vault.challenge.temple.TempleCorner;
 
 public class TempleControllerTileEntity extends ChallengeControllerBlockEntity<TempleChallengeManager> {
 
     @Getter
     private final TempleAnimation animation = new TempleAnimation();
+
+    @Getter
+    private final List<TempleCorner> corners = new ArrayList<>(TempleCorner.defaults());
 
     @Getter
     private BlockCuboid zone;
@@ -46,6 +50,7 @@ public class TempleControllerTileEntity extends ChallengeControllerBlockEntity<T
                 this.uuid, this.level.dimension(), this.getBlockPos(),
                 this.zone, this.positivePool, this.negativePool);
         manager.getProxyPositions().addAll(this.proxyPositions);
+        this.corners.forEach(corner -> manager.getCorners().add(new TempleCorner(corner.proxy, corner.rewards, corner.statue)));
         manager.getSpawnPositions().addAll(this.spawnPositions);
         this.animation.getGates().forEach(manager.getAnimation()::addGate);
         return manager;
@@ -60,6 +65,9 @@ public class TempleControllerTileEntity extends ChallengeControllerBlockEntity<T
     protected void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
         this.animation.writeNbt(nbt);
+        ListTag cornersTag = new ListTag();
+        this.corners.forEach(corner -> cornersTag.add(corner.writeNbt()));
+        nbt.put("corners", cornersTag);
         Adapters.BLOCK_CUBOID.writeNbt(this.zone).ifPresent(tag -> nbt.put("zone", tag));
         Adapters.CHALLENGE_ACTION.writeNbt(this.positivePool).ifPresent(tag -> nbt.put("positivePool", tag));
         Adapters.CHALLENGE_ACTION.writeNbt(this.negativePool).ifPresent(tag -> nbt.put("negativePool", tag));
@@ -77,6 +85,12 @@ public class TempleControllerTileEntity extends ChallengeControllerBlockEntity<T
     public void load(CompoundTag nbt) {
         super.load(nbt);
         this.animation.readNbt(nbt);
+        this.corners.clear();
+        if (nbt.contains("corners", Tag.TAG_LIST)) {
+            for (Tag entry : nbt.getList("corners", Tag.TAG_COMPOUND)) this.corners.add(TempleCorner.readNbt((CompoundTag) entry));
+        } else {
+            this.corners.addAll(TempleCorner.defaults());
+        }
         this.zone = Adapters.BLOCK_CUBOID.readNbt(nbt.get("zone")).orElse(null);
         this.positivePool = Adapters.CHALLENGE_ACTION.readNbt(nbt.get("positivePool")).orElse(null);
         this.negativePool = Adapters.CHALLENGE_ACTION.readNbt(nbt.get("negativePool")).orElse(null);

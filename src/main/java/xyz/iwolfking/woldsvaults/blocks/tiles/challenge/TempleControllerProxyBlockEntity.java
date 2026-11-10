@@ -25,6 +25,13 @@ import java.util.Optional;
 public class TempleControllerProxyBlockEntity extends BlockEntity {
 
     private BlockPos controller;
+    private String rewardDescription = "";
+
+    public void setRewardDescription(String description) {
+        if (this.rewardDescription.equals(description)) return;
+        this.rewardDescription = description;
+        this.sendUpdates();
+    }
     @Nullable
     private ChallengeAction<?> positiveAction;
     @Nullable
@@ -76,6 +83,7 @@ public class TempleControllerProxyBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
+        nbt.putString("rewardDescription", this.rewardDescription);
         Adapters.BLOCK_POS.writeNbt(this.controller).ifPresent(tag -> nbt.put("controller", tag));
         if (this.positiveAction != null) {
             Adapters.CHALLENGE_ACTION.writeNbt(this.positiveAction).ifPresent(tag -> nbt.put("positiveAction", tag));
@@ -88,6 +96,7 @@ public class TempleControllerProxyBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
+        this.rewardDescription = nbt.getString("rewardDescription");
         this.controller = Adapters.BLOCK_POS.readNbt(nbt.get("controller")).orElse(null);
         this.positiveAction = nbt.contains("positiveAction")
                 ? Adapters.CHALLENGE_ACTION.readNbt(nbt.get("positiveAction")).orElse(null) : null;
@@ -126,6 +135,7 @@ public class TempleControllerProxyBlockEntity extends BlockEntity {
                 BlockEntity blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof TempleControllerProxyBlockEntity proxy) {
                     proxy.controller = controllerPos;
+                    proxy.rewardDescription = this.rewardDescription;
                     proxy.positiveAction = storedPositive;
                     proxy.negativeAction = storedNegative;
                     proxy.sendUpdates();

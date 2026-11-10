@@ -30,7 +30,8 @@ public class TempleControllerProxyRenderer implements BlockEntityRenderer<Temple
                        MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         ChallengeAction<?> positive = entity.getPositiveAction();
         ChallengeAction<?> negative = entity.getNegativeAction();
-        if (positive == null && negative == null) return;
+        String rewardDescription = entity.getRewardDescription();
+        if (positive == null && negative == null && rewardDescription.isEmpty()) return;
 
         RenderSystem.enableDepthTest();
         matrixStack.pushPose();
@@ -44,8 +45,9 @@ public class TempleControllerProxyRenderer implements BlockEntityRenderer<Temple
         RendererContext context = new RendererContext(matrixStack, partialTick,
                 MultiBufferSource.immediate(Tesselator.getInstance().getBuilder()), this.font);
 
-        if (positive != null) {
-            Component text = positive.getText();
+        if (!rewardDescription.isEmpty() || positive != null) {
+            Component text = rewardDescription.isEmpty() ? positive.getText()
+                    : new TextComponent(rewardDescription).withStyle(ChatFormatting.GREEN);
             Component shadow = new TextComponent("").append(text.getString()).withStyle(Style.EMPTY.withColor(ChatFormatting.BLACK));
             context.renderText(shadow, 66.0F, 66.0F, true, true);
             context.renderText(text, 65.0F, 65.0F, true, true);
