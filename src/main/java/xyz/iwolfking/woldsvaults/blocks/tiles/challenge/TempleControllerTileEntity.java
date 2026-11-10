@@ -50,7 +50,7 @@ public class TempleControllerTileEntity extends ChallengeControllerBlockEntity<T
                 this.uuid, this.level.dimension(), this.getBlockPos(),
                 this.zone, this.positivePool, this.negativePool);
         manager.getProxyPositions().addAll(this.proxyPositions);
-        this.corners.forEach(corner -> manager.getCorners().add(new TempleCorner(corner.proxy, corner.rewards, corner.statue)));
+        this.corners.forEach(corner -> manager.getCorners().add(new TempleCorner(corner.proxy, corner.rewards, corner.base, corner.statue)));
         manager.getSpawnPositions().addAll(this.spawnPositions);
         this.animation.getGates().forEach(manager.getAnimation()::addGate);
         return manager;

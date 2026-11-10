@@ -21,13 +21,15 @@ import java.util.stream.Collectors;
 public class TempleCorner {
     public final BlockPos proxy;
     public final BlockCuboid rewards;
+    public final BlockCuboid base;
     public final BlockCuboid statue;
     private boolean selected;
     private boolean revealed;
 
-    public TempleCorner(BlockPos proxy, BlockCuboid rewards, BlockCuboid statue) {
+    public TempleCorner(BlockPos proxy, BlockCuboid rewards, BlockCuboid base, BlockCuboid statue) {
         this.proxy = proxy;
         this.rewards = rewards;
+        this.base = base;
         this.statue = statue;
     }
 
@@ -35,14 +37,22 @@ public class TempleCorner {
         List<TempleCorner> corners = new ArrayList<>();
         for (int x : new int[]{1, -1}) {
             for (int z : new int[]{1, -1}) {
-                int minX = x > 0 ? 16 : -20;
-                int minZ = z > 0 ? 16 : -20;
-                corners.add(new TempleCorner(new BlockPos(x * 2, 0, z * 2),
-                        BlockCuboid.of(minX, -6, minZ, minX + 4, -3, minZ + 4),
-                        BlockCuboid.of(minX, -2, minZ, minX + 4, 10, minZ + 4)));
+                BlockPos proxy = new BlockPos(x * 2, 0, z * 2);
+                corners.add(defaultForProxy(proxy));
             }
         }
         return corners;
+    }
+
+    private static TempleCorner defaultForProxy(BlockPos proxy) {
+        int baseMinX = proxy.getX() > 0 ? 16 : -20;
+        int baseMinZ = proxy.getZ() > 0 ? 16 : -20;
+        int statueMinX = proxy.getX() > 0 ? 15 : -21;
+        int statueMinZ = proxy.getZ() > 0 ? 15 : -21;
+        return new TempleCorner(proxy,
+                BlockCuboid.of(baseMinX, -6, baseMinZ, baseMinX + 4, -3, baseMinZ + 4),
+                BlockCuboid.of(baseMinX, -2, baseMinZ, baseMinX + 4, 1, baseMinZ + 4),
+                BlockCuboid.of(statueMinX, 2, statueMinZ, statueMinX + 6, 10, statueMinZ + 6));
     }
 
     public boolean isSelected() {
@@ -70,21 +80,39 @@ public class TempleCorner {
 
     public boolean reveal(ServerLevel world, BlockPos origin) {
         if (!this.selected || this.revealed) return true;
-        BlockCuboid area = this.statue.offset(origin);
-        if (!loaded(world, area)) return false;
+        BlockCuboid worldBase = this.base.offset(origin);
+        BlockCuboid worldStatue = this.statue.offset(origin);
+        BlockCuboid worldFoundation = BlockCuboid.of(this.base.getMinX(), this.base.getMinY() - 1, this.base.getMinZ(),
+                this.base.getMaxX(), this.base.getMinY() - 1, this.base.getMaxZ()).offset(origin);
+        if (!loaded(world, worldBase) || !loaded(world, worldStatue) || !loaded(world, worldFoundation)) return false;
         // Never remove the reward pocket, even if edited statue bounds overlap it.
         IZonedWorld.runWithBypass(world, true, () -> {
-            for (BlockPos pos : BlockPos.betweenClosed(area.getMinX(), area.getMinY(), area.getMinZ(),
-                    area.getMaxX(), area.getMaxY(), area.getMaxZ())) {
-                if (this.rewards.contains(pos.subtract(origin)) || pos.equals(origin)) continue;
-                var block = world.getBlockState(pos).getBlock();
-                if (block instanceof VaultChestBlock || block instanceof CoinPileBlock) continue;
-                world.removeBlock(pos, false);
-            }
+            // The footing shares the reward cuboid's top Y layer; clear the footing explicitly.
+            removeRegion(world, origin, worldFoundation, false);
+            removeRegion(world, origin, worldBase);
+            removeRegion(world, origin, worldStatue);
         });
         world.playSound(null, origin, ModSounds.RAID_HATCH_OPEN, SoundSource.MASTER, 1.0F, 0.7F);
         this.revealed = true;
         return true;
+    }
+
+    private void removeRegion(ServerLevel world, BlockPos origin, BlockCuboid area) {
+        removeRegion(world, origin, area, true);
+    }
+
+    private void removeRegion(ServerLevel world, BlockPos origin, BlockCuboid area, boolean protectRewards) {
+        for (BlockPos pos : BlockPos.betweenClosed(area.getMinX(), area.getMinY(), area.getMinZ(),
+                area.getMaxX(), area.getMaxY(), area.getMaxZ())) {
+            removeRevealBlock(world, origin, pos, protectRewards);
+        }
+    }
+
+    private void removeRevealBlock(ServerLevel world, BlockPos origin, BlockPos pos, boolean protectRewards) {
+        if ((protectRewards && this.rewards.contains(pos.subtract(origin))) || pos.equals(origin)) return;
+        var block = world.getBlockState(pos).getBlock();
+        if (block instanceof VaultChestBlock || block instanceof CoinPileBlock) return;
+        world.removeBlock(pos, false);
     }
 
     private static boolean loaded(ServerLevel world, BlockCuboid area) {
@@ -96,16 +124,21 @@ public class TempleCorner {
         CompoundTag tag = new CompoundTag();
         Adapters.BLOCK_POS.writeNbt(this.proxy).ifPresent(value -> tag.put("proxy", value));
         Adapters.BLOCK_CUBOID.writeNbt(this.rewards).ifPresent(value -> tag.put("rewards", value));
-        Adapters.BLOCK_CUBOID.writeNbt(this.statue).ifPresent(value -> tag.put("statue", value));
+        Adapters.BLOCK_CUBOID.writeNbt(this.base).ifPresent(value -> tag.put("baseRegion", value));
+        Adapters.BLOCK_CUBOID.writeNbt(this.statue).ifPresent(value -> tag.put("statueRegion", value));
         tag.putBoolean("selected", this.selected);
         tag.putBoolean("revealed", this.revealed);
         return tag;
     }
 
     public static TempleCorner readNbt(CompoundTag tag) {
-        TempleCorner corner = new TempleCorner(Adapters.BLOCK_POS.readNbt(tag.get("proxy")).orElseThrow(),
-                Adapters.BLOCK_CUBOID.readNbt(tag.get("rewards")).orElseThrow(),
-                Adapters.BLOCK_CUBOID.readNbt(tag.get("statue")).orElseThrow());
+        BlockPos proxy = Adapters.BLOCK_POS.readNbt(tag.get("proxy")).orElseThrow();
+        TempleCorner defaults = defaultForProxy(proxy);
+        BlockCuboid rewards = Adapters.BLOCK_CUBOID.readNbt(tag.get("rewards")).orElse(defaults.rewards);
+        BlockCuboid base = Adapters.BLOCK_CUBOID.readNbt(tag.get("baseRegion")).orElse(defaults.base);
+        BlockCuboid statue = Adapters.BLOCK_CUBOID.readNbt(tag.get("statueRegion"))
+                .orElseGet(() -> Adapters.BLOCK_CUBOID.readNbt(tag.get("statue")).orElse(defaults.statue));
+        TempleCorner corner = new TempleCorner(proxy, rewards, base, statue);
         corner.selected = tag.getBoolean("selected");
         corner.revealed = tag.getBoolean("revealed");
         return corner;
