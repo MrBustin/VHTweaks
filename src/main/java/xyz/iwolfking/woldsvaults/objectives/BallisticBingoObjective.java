@@ -30,6 +30,7 @@ import iskallia.vault.task.BingoTask;
 import iskallia.vault.task.ProgressConfiguredTask;
 import iskallia.vault.task.Task;
 import iskallia.vault.task.TaskContext;
+import iskallia.vault.task.TaskSyncState;
 import iskallia.vault.task.counter.TargetTaskCounter;
 import iskallia.vault.task.counter.TaskCounter;
 import iskallia.vault.task.renderer.context.TaskRendererContext;
@@ -60,6 +61,8 @@ public class BallisticBingoObjective extends BingoObjective {
     public static final FieldKey<BingoObjective.TaskMap> TASKS;
     private boolean pvp;
     private int lastScaledJoined = -1;
+    private boolean taskSyncStateInitialized;
+    private long lastTaskSyncState;
 
     protected BallisticBingoObjective() {
     }
@@ -218,6 +221,7 @@ public class BallisticBingoObjective extends BingoObjective {
         if (this.getBingos() > 0) {
             this.get(CHILDREN).forEach(child -> child.tickServer(world, vault));
             if (this.isCompleted()) {
+                this.markTaskProgressDirtyIfChanged();
                 return;
             }
         }
@@ -309,6 +313,29 @@ public class BallisticBingoObjective extends BingoObjective {
             }
         }
 
+        this.markTaskProgressDirtyIfChanged();
+
+    }
+
+    /** Keep the client's copy of the board in sync, matching BingoObjective's task sync behavior. */
+    private void markTaskProgressDirtyIfChanged() {
+        long syncState = this.pvp
+                ? TaskSyncState.hashTaskMap(this.get(TASKS))
+                : TaskSyncState.hash(this.get(TASK));
+        if (this.taskSyncStateInitialized && this.lastTaskSyncState == syncState) {
+            return;
+        }
+
+        this.taskSyncStateInitialized = true;
+        this.lastTaskSyncState = syncState;
+        if (this.pvp) {
+            BingoObjective.TaskMap tasks = this.get(TASKS);
+            for (var entry : new java.util.ArrayList<>(tasks.entrySet())) {
+                tasks.put(entry.getKey(), entry.getValue());
+            }
+        } else {
+            this.markDirty(TASK);
+        }
     }
 
     @Override
