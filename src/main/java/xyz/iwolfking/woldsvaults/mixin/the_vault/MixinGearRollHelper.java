@@ -9,6 +9,7 @@ import iskallia.vault.gear.data.VaultGearData;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.init.ModGearAttributes;
 import iskallia.vault.skill.base.Skill;
+import iskallia.vault.skill.expertise.type.LegendaryExpertise;
 import iskallia.vault.skill.tree.ExpertiseTree;
 import iskallia.vault.world.data.PlayerExpertisesData;
 import net.minecraft.server.MinecraftServer;
@@ -41,9 +42,14 @@ public class MixinGearRollHelper {
         if(data.equals(VaultGearData.empty())) {
             return;
         }
+        ExpertiseTree expertises = PlayerExpertisesData.get((ServerLevel) player.getLevel()).getExpertises(player);
+        float extraLegendaryChance = 0.0F;
 
-        if ((Boolean) data.getFirstValue(ModGearAttributes.CRAFTED_BY).isPresent() && rand.nextFloat() < ModConfigs.VAULT_GEAR_COMMON.getLegendaryModifierChance()) {
-            ExpertiseTree expertises = PlayerExpertisesData.get((ServerLevel) player.getLevel()).getExpertises(player);
+        for(LegendaryExpertise expertise : expertises.getAll(LegendaryExpertise.class, Skill::isUnlocked)) {
+            extraLegendaryChance += expertise.getExtraLegendaryChance();
+        }
+
+        if ((Boolean) data.getFirstValue(ModGearAttributes.CRAFTED_BY).isPresent() && rand.nextFloat() < ModConfigs.VAULT_GEAR_COMMON.getLegendaryModifierChance() + extraLegendaryChance) {
             int craftsmanLevel = 0;
 
             for (CraftsmanExpertise craftsmanExpertise : expertises.getAll(CraftsmanExpertise.class, Skill::isUnlocked)) {
