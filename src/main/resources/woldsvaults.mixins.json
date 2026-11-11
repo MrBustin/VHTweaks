@@ -136,6 +136,7 @@
     "the_vault.custom.MixinCustomisationDiscoveryConfig",
     "the_vault.custom.MixinCustomisationDiscoveryHelper",
     "the_vault.custom.MixinDebugCommand",
+    "the_vault.custom.MixinDeckSocketItem",
     "the_vault.custom.MixinEffectTrailAttribute",
     "the_vault.custom.MixinFreeVillagerBingoTask",
     "the_vault.custom.MixinGearAttributeEvents",
