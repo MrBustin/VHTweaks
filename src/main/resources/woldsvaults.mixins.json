@@ -8,6 +8,7 @@
   "mixins": [
     "the_vault.custom.MixinChallengeCurseHelper",
     "the_vault.custom.MixinProtectVillagerAbility",
+    "the_vault.custom.MixinProtectVillagerGuardian",
     "GameRulesBooleanValueAccessor",
     "LivingEntityAccessor",
     "MixinAntiqueStampCollectorBook",

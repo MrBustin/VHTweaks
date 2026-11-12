@@ -1,12 +1,15 @@
 package xyz.iwolfking.woldsvaults.core.vault.challenge.protectvillager;
 
 import iskallia.vault.entity.ai.GoalTask;
+import iskallia.vault.entity.entity.guardian.AbstractGuardianEntity;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import xyz.iwolfking.woldsvaults.entities.ProtectVillagerEntity;
 
 /** Follows configured Dragon Path Node waypoints before normal combat goals resume. */
@@ -42,6 +45,14 @@ public class ProtectVillagerPathGoal extends GoalTask<Mob> {
     @Override
     public void start() {
         this.completed = false;
+        if (this.getEntity() instanceof AbstractGuardianEntity guardian && guardian.level instanceof ServerLevel world) {
+            // Stop existing brain movement before giving navigation to the waypoint goal.
+            // The guardian mixin pauses brain ticks until this goal releases control.
+            guardian.getBrain().stopAll(world, guardian);
+            guardian.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
+            guardian.getBrain().eraseMemory(MemoryModuleType.PATH);
+            guardian.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
+        }
         this.navigateToWaypoint();
     }
 

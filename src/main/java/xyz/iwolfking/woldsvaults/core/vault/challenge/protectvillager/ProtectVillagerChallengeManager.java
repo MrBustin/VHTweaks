@@ -153,6 +153,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.spawner.setPathNodes(this.findVillagerPathNodes(world));
       ProtectVillagerEntity villager = ModEntities.PROTECT_VILLAGER.create(world);
       if (villager != null) {
+         villager.setCustomName(new TextComponent("Dinnerbone"));
          villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() - 5), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
          AttributeInstance healthAttribute = villager.getAttribute(Attributes.MAX_HEALTH);
 
