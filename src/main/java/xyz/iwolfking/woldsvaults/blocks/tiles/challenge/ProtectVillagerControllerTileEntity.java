@@ -28,6 +28,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class ProtectVillagerControllerTileEntity extends ChallengeControllerBlockEntity<ProtectVillagerChallengeManager> {
    private BlockCuboid zone;
    private final List<EntityType<?>> mobTypes;
+   private final List<String> blockedAbilities = new ArrayList<>();
    private IntRoll waves;
    private double baseMobHealth;
    private final List<ChallengeAction<?>> successActions;
@@ -63,6 +64,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       ProtectVillagerChallengeManager manager = new ProtectVillagerChallengeManager(this.uuid, this.level.dimension(), this.getBlockPos());
       manager.setZone(this.zone);
       manager.setMobTypes(this.mobTypes);
+      manager.setBlockedAbilities(this.blockedAbilities);
       manager.setBaseMobHealth(this.baseMobHealth);
       manager.setMaxWaves(this.waves.get(JavaRandom.ofInternal(this.level.random.nextLong())));
       manager.addSuccessActions(this.successActions);
@@ -122,6 +124,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
    protected void saveAdditional(CompoundTag nbt) {
       super.saveAdditional(nbt);
       Adapters.BLOCK_CUBOID.writeNbt(this.zone).ifPresent(tag -> nbt.put("zone", tag));
+      Adapters.<String>ofArrayList(Adapters.UTF_8).writeNbt(this.blockedAbilities).ifPresent(tag -> nbt.put("blockedAbilities", tag));
       IDENTIFIERS.writeNbt(this.mobTypes.stream().map(ForgeRegistryEntry::getRegistryName).toArray(ResourceLocation[]::new))
          .ifPresent(tag -> nbt.put("mobTypes", tag));
       Adapters.INT_ROLL.writeNbt(this.waves).ifPresent(tag -> nbt.put("waves", tag));
@@ -147,6 +150,8 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
    public void load(CompoundTag nbt) {
       super.load(nbt);
       this.zone = Adapters.BLOCK_CUBOID.readNbt(nbt.get("zone")).orElse(null);
+      this.blockedAbilities.clear();
+      this.blockedAbilities.addAll(Adapters.<String>ofArrayList(Adapters.UTF_8).readNbt(nbt.get("blockedAbilities")).orElseGet(ArrayList::new));
       this.mobTypes.clear();
       ResourceLocation[] ids = IDENTIFIERS.readNbt(nbt.get("mobTypes")).orElse(new ResourceLocation[0]);
 

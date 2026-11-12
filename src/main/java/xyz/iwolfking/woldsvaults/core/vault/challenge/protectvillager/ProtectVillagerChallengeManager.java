@@ -15,6 +15,7 @@ import iskallia.vault.core.vault.challenge.base.ChallengeManager;
 import iskallia.vault.core.world.storage.IZonedWorld;
 import iskallia.vault.init.ModSounds;
 import iskallia.vault.util.ServerScheduler;
+import iskallia.vault.world.data.ChallengeData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -75,6 +76,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    }
 
    private BlockCuboid zone;
+   private final List<String> blockedAbilities = new ArrayList<>();
    private Phase phase;
    private final ProtectVillagerSpawner spawner = new ProtectVillagerSpawner();
    private final List<ChallengeAction<?>> successActions = new ArrayList<>();
@@ -481,6 +483,32 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.zone = zone;
    }
 
+   public void setBlockedAbilities(List<String> abilities) {
+      this.blockedAbilities.clear();
+      abilities.stream().map(String::trim).filter(id -> !id.isEmpty()).distinct().forEach(this.blockedAbilities::add);
+   }
+
+   public static boolean isAbilityBlocked(ServerPlayer player, String abilityId) {
+      return ChallengeData.get(player.getServer())
+         .getManagers(ProtectVillagerChallengeManager.class, player.level.dimension())
+         .stream().anyMatch(manager -> manager.blocksAbility(player, abilityId));
+   }
+
+   private boolean blocksAbility(ServerPlayer player, String abilityId) {
+      if (this.isDeleted() || this.attachedWorld != player.level || !this.blockedAbilities.contains(abilityId)
+         || this.phase == Phase.COMPLETED || this.phase == Phase.FAILED || this.phase == Phase.FORFEITED) {
+         return false;
+      }
+      // Check the server controller directly: the base isActive() selects client state
+      // on an integrated server. Never rely on cached room membership for a cast.
+      if (!(this.getBlockEntity(player.getServer()) instanceof ChallengeControllerBlockEntity<?> controller)
+         || controller.getState() != State.ACTIVE) {
+         return false;
+      }
+      BlockCuboid activeZone = this.getActiveZone();
+      return activeZone != null && activeZone.contains(player.blockPosition());
+   }
+
    @Generated
    public Phase getPhase() {
       return this.phase;
@@ -505,6 +533,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    public Optional<CompoundTag> writeNbt() {
       return super.writeNbt().map(nbt -> {
          Adapters.BLOCK_CUBOID.writeNbt(this.zone).ifPresent(tag -> nbt.put("zone", tag));
+         Adapters.<String>ofArrayList(Adapters.UTF_8).writeNbt(this.blockedAbilities).ifPresent(tag -> nbt.put("blockedAbilities", tag));
          Adapters.UUID.writeNbt(this.villagerId).ifPresent(tag -> nbt.put("villager", tag));
          Adapters.DOUBLE.writeNbt(Double.valueOf(this.villagerHealth)).ifPresent(tag -> nbt.put("villagerHealth", tag));
          Adapters.DOUBLE.writeNbt(Double.valueOf(this.villagerMaxHealth)).ifPresent(tag -> nbt.put("villagerMaxHealth", tag));
@@ -538,6 +567,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    public void readNbt(CompoundTag nbt) {
       super.readNbt(nbt);
       this.zone = Adapters.BLOCK_CUBOID.readNbt(nbt.get("zone")).orElse(null);
+      this.setBlockedAbilities(Adapters.<String>ofArrayList(Adapters.UTF_8).readNbt(nbt.get("blockedAbilities")).orElseGet(ArrayList::new));
       this.villagerId = Adapters.UUID.readNbt(nbt.get("villager")).orElse(null);
       this.villagerHealth = Adapters.DOUBLE.readNbt(nbt.get("villagerHealth")).orElse(0.0);
       this.villagerMaxHealth = Adapters.DOUBLE.readNbt(nbt.get("villagerMaxHealth")).orElse(0.0);
