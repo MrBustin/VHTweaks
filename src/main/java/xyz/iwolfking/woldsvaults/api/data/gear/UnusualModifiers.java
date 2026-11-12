@@ -26,18 +26,21 @@ public class UnusualModifiers {
     private static VaultGearTierConfig.AttributeGroup SACK_PREFIX = new VaultGearTierConfig.AttributeGroup();
     private static VaultGearTierConfig.AttributeGroup JEWEL_SUFFIX = new VaultGearTierConfig.AttributeGroup();
 
-    private static VaultGearTierConfig.AttributeGroup MAP_PREFIX = new VaultGearTierConfig.AttributeGroup();
-    private static VaultGearTierConfig.AttributeGroup MAP_SUFFIX = new VaultGearTierConfig.AttributeGroup();
-
     static {
+        //-------------------------------------------------------------------------------------------------
+        // Jewels
+        //-------------------------------------------------------------------------------------------------
         JEWEL_SUFFIX.add(UnusualModifierLib.HEALING_EFFECTIVENESS_JEWEL);
         JEWEL_SUFFIX.add(UnusualModifierLib.MANA_REGEN_JEWEL);
         JEWEL_SUFFIX.add(UnusualModifierLib.KNOCKBACK_RESISTANCE_JEWEL);
         JEWEL_SUFFIX.add(UnusualModifierLib.VEIN_MINER_LEVEL_JEWEL);
         JEWEL_SUFFIX.add(UnusualModifierLib.CHAIN_MINER_LEVEL_JEWEL);
         JEWEL_SUFFIX.add(UnusualModifierLib.FINESSE_MINER_LEVEL_JEWEL);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("jewel"), JEWEL_SUFFIX);
 
+
+        //-------------------------------------------------------------------------------------------------
+        // Axe
+        //-------------------------------------------------------------------------------------------------
         AXE_MODIFIERS_PREFIX.add(UnusualModifierLib.REACH);
         AXE_MODIFIERS_PREFIX.add(UnusualModifierLib.MOVEMENT_SPEED);
         AXE_MODIFIERS_PREFIX.add(UnusualModifierLib.RESISTANCE);
@@ -56,9 +59,10 @@ public class UnusualModifiers {
         AXE_MODIFIERS_SUFFIX.add(UnusualModifierLib.ABILITY_POWER_PERCENTILE);
         AXE_MODIFIERS_SUFFIX.add(UnusualModifierLib.HEALING_EFFECTIVENESS);
         AXE_MODIFIERS_SUFFIX.add(UnusualModifierLib.HEXING_HIT);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("axe"), AXE_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("axe"), AXE_MODIFIERS_SUFFIX);
 
+        //-------------------------------------------------------------------------------------------------
+        // Swords
+        //-------------------------------------------------------------------------------------------------
         SWORD_MODIFIERS_PREFIX.add(UnusualModifierLib.REACH);
         SWORD_MODIFIERS_PREFIX.add(UnusualModifierLib.MOVEMENT_SPEED);
         SWORD_MODIFIERS_PREFIX.add(UnusualModifierLib.RESISTANCE);
@@ -79,17 +83,13 @@ public class UnusualModifiers {
         SWORD_MODIFIERS_SUFFIX.add(UnusualModifierLib.ABILITY_POWER_PERCENTILE);
         SWORD_MODIFIERS_SUFFIX.add(UnusualModifierLib.HEALING_EFFECTIVENESS);
         SWORD_MODIFIERS_SUFFIX.add(UnusualModifierLib.HEXING_HIT);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("sword"), SWORD_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("sword"), SWORD_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("battlestaff"), SWORD_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("battlestaff"), SWORD_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("trident"), SWORD_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("trident"), SWORD_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("rang"), SWORD_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("rang"), SWORD_MODIFIERS_SUFFIX);
 
 
 
+
+        //-------------------------------------------------------------------------------------------------
+        // Armor
+        //-------------------------------------------------------------------------------------------------
         ARMOR_MODIFIERS_PREFIX.add(UnusualModifierLib.MOVEMENT_SPEED);
         ARMOR_MODIFIERS_PREFIX.add(UnusualModifierLib.COPIOUSLY);
         ARMOR_MODIFIERS_SUFFIX.add(UnusualModifierLib.KINETIC_IMMUNITY);
@@ -101,15 +101,11 @@ public class UnusualModifiers {
         ARMOR_MODIFIERS_SUFFIX.add(UnusualModifierLib.POISON_CLOUD_ON_HIT);
         ARMOR_MODIFIERS_SUFFIX.add(UnusualModifierLib.WEAKNESS_CLOUD_ON_HIT);
         ARMOR_MODIFIERS_SUFFIX.add(UnusualModifierLib.VULNERABLE_CLOUD_ON_HIT);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("helmet"), ARMOR_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("helmet"), ARMOR_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("chestplate"), ARMOR_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("chestplate"), ARMOR_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("leggings"), ARMOR_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("leggings"), ARMOR_MODIFIERS_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("boots"), ARMOR_MODIFIERS_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("boots"), ARMOR_MODIFIERS_SUFFIX);
 
+
+        //-------------------------------------------------------------------------------------------------
+        // plushies
+        //-------------------------------------------------------------------------------------------------
         NON_SACK_PREFIX.add(UnusualModifierLib.REACH);
         NON_SACK_PREFIX.add(UnusualModifierLib.MOVEMENT_SPEED);
         NON_SACK_PREFIX.add(UnusualModifierLib.RESISTANCE);
@@ -119,10 +115,10 @@ public class UnusualModifiers {
         NON_SACK_PREFIX.add(UnusualModifierLib.COOLDOWN_REDUCTION);
         NON_SACK_PREFIX.add(UnusualModifierLib.AXE_CLEAVE);
 //        NON_SACK_PREFIX.add(UnusualModifierLib.EFFECT_CLOUD_CHANCE);
-        PLUSHIE_PREFIX.addAll(NON_SACK_PREFIX);
         NON_SACK_PREFIX.add(UnusualModifierLib.ABILITY_POWER);
         NON_SACK_PREFIX.add(UnusualModifierLib.CHAINING);
         NON_SACK_PREFIX.add(UnusualModifierLib.CRITICAL_HIT_MITIGATION);
+        PLUSHIE_PREFIX.addAll(NON_SACK_PREFIX);
 
         NON_SACK_SUFFIX.add(UnusualModifierLib.ITEM_QUANTITY);
         NON_SACK_SUFFIX.add(UnusualModifierLib.ITEM_RARITY);
@@ -135,19 +131,15 @@ public class UnusualModifiers {
         NON_SACK_SUFFIX.add(UnusualModifierLib.DURABILITY_WEAR_REDUCTION);
         NON_SACK_SUFFIX.add(UnusualModifierLib.HEALING_EFFECTIVENESS);
 //        NON_SACK_SUFFIX.add(UnusualModifierLib.DODGE_CHANCE);
-        PLUSHIE_SUFFIX.addAll(NON_SACK_SUFFIX);
 
         NON_SACK_SUFFIX.add(UnusualModifierLib.ABILITY_POWER_PERCENTILE);
         NON_SACK_PREFIX.add(UnusualModifierLib.DAMAGE_INCREASE);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("plushie"), PLUSHIE_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("plushie"), PLUSHIE_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("focus"), NON_SACK_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("focus"), NON_SACK_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("wand"), NON_SACK_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("wand"), NON_SACK_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("shield"), NON_SACK_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("shield"), NON_SACK_SUFFIX);
+        PLUSHIE_SUFFIX.addAll(NON_SACK_SUFFIX);
 
+
+        //-------------------------------------------------------------------------------------------------
+        // Sacks
+        //-------------------------------------------------------------------------------------------------
         SACK_PREFIX.add(UnusualModifierLib.RESISTANCE);
         SACK_PREFIX.add(UnusualModifierLib.DAMAGE_INCREASE);
         SACK_PREFIX.add(UnusualModifierLib.LEECH);
@@ -169,38 +161,57 @@ public class UnusualModifiers {
         SACK_SUFFIX.add(UnusualModifierLib.VULNERABLE_CLOUD_ON_HIT);
         SACK_SUFFIX.add(UnusualModifierLib.BLEED_CLOUD_ON_HIT);
         SACK_SUFFIX.add(UnusualModifierLib.LUCKY_HIT_CHANCE);
+
+
+
+        //-------------------------------------------------------------------------------------------------
+        // Registration
+        //-------------------------------------------------------------------------------------------------
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("axe"), AXE_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("axe"), AXE_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("sword"), SWORD_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("sword"), SWORD_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("battlestaff"), SWORD_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("battlestaff"), SWORD_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("trident"), SWORD_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("trident"), SWORD_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("rang"), SWORD_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("rang"), SWORD_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("helmet"), ARMOR_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("helmet"), ARMOR_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("chestplate"), ARMOR_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("chestplate"), ARMOR_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("leggings"), ARMOR_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("leggings"), ARMOR_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("boots"), ARMOR_MODIFIERS_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("boots"), ARMOR_MODIFIERS_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("plushie"), PLUSHIE_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("plushie"), PLUSHIE_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("focus"), NON_SACK_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("focus"), NON_SACK_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("wand"), NON_SACK_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("wand"), NON_SACK_SUFFIX);
+
+        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("shield"), NON_SACK_PREFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("shield"), NON_SACK_SUFFIX);
+
         UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("loot_sack"), SACK_PREFIX);
         UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("loot_sack"), SACK_SUFFIX);
+
         UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("magnet"), SACK_PREFIX);
         UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("magnet"), SACK_SUFFIX);
 
-        MAP_PREFIX.add(UnusualModifierLib.CORROSIVE);
-        MAP_PREFIX.add(UnusualModifierLib.EXTRA_REINFORCED);
-        MAP_PREFIX.add(UnusualModifierLib.TIRED);
-        MAP_PREFIX.add(UnusualModifierLib.LEECHING);
-        MAP_PREFIX.add(UnusualModifierLib.BLESSED);
-        MAP_PREFIX.add(UnusualModifierLib.FRENZY);
-        MAP_PREFIX.add(UnusualModifierLib.JUMPY);
-        MAP_PREFIX.add(UnusualModifierLib.KILL_NOVA);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("map"), MAP_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("map_1"), MAP_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("map_2"), MAP_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("map_3"), MAP_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("map_4"), MAP_PREFIX);
-        UNUSUAL_MODIFIERS_MAP_PREFIX.put(VaultMod.id("map_5"), MAP_PREFIX);
-
-        MAP_SUFFIX.add(UnusualModifierLib.NON_LETHAL);
-        MAP_SUFFIX.add(UnusualModifierLib.DOOR_HUNTER);
-        MAP_SUFFIX.add(UnusualModifierLib.SWEET_RETRO);
-        MAP_SUFFIX.add(UnusualModifierLib.HUNGER);
-        MAP_PREFIX.add(UnusualModifierLib.HAUNTED_MANSION);
-        MAP_PREFIX.add(UnusualModifierLib.KILL_FROST_NOVA);
-        MAP_PREFIX.add(UnusualModifierLib.BACKWARDS);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("map"), MAP_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("map_1"), MAP_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("map_2"), MAP_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("map_3"), MAP_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("map_4"), MAP_SUFFIX);
-        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("map_5"), MAP_SUFFIX);
+        UNUSUAL_MODIFIERS_MAP_SUFFIX.put(VaultMod.id("jewel"), JEWEL_SUFFIX);
     }
 }
