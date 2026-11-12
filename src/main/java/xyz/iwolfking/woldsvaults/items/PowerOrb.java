@@ -34,7 +34,7 @@ public class PowerOrb extends Item {
     @ParametersAreNonnullByDefault
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TextComponent("Grants a").withStyle(ChatFormatting.YELLOW)
-                        .append(new TextComponent(" Power Point").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(16724414))))
+                        .append(new TextComponent(" Skill Point").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(16724414))))
                         .append(new TextComponent(" upon use.").withStyle(ChatFormatting.YELLOW))
         );
     }
@@ -45,12 +45,12 @@ public class PowerOrb extends Item {
         world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
 
         if (!world.isClientSide) {
-            PlayerAdditionalVaultStatData statsData = PlayerAdditionalVaultStatData.get((ServerLevel) world);
+            PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerLevel) world);
             int amount = player.isCrouching() ? itemStack.getCount() : 1;
             if (!player.getAbilities().instabuild) {
                 itemStack.shrink(amount);
             }
-            statsData.addPowerPoints((ServerPlayer) player, amount);
+            statsData.addSkillPoints((ServerPlayer) player, amount);
             player.awardStat(Stats.ITEM_USED.get(this), amount);
             return InteractionResultHolder.success(itemStack);
         }
