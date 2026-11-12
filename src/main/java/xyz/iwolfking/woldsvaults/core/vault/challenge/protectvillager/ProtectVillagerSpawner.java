@@ -123,16 +123,16 @@ public class ProtectVillagerSpawner implements ISerializable<CompoundTag, JsonOb
 
                if (entity instanceof Mob mob) {
                   // Initialize vault attributes now so first-tick scaling cannot overwrite wave health.
-                  ServerVaults.get(world).ifPresent(vault -> EntityScaler.scale(vault, mob));
-
-                  AttributeInstance healthAttribute = mob.getAttribute(Attributes.MAX_HEALTH);
-
-                  if(healthAttribute != null){
-                     // Wave health is absolute, including for babies and champions.
-                     healthAttribute.removeModifiers();
-                     healthAttribute.setBaseValue(baseModHealth * wave);
-                     mob.setHealth(mob.getMaxHealth());
-                  }
+//                  ServerVaults.get(world).ifPresent(vault -> EntityScaler.scale(vault, mob));
+//
+//                  AttributeInstance healthAttribute = mob.getAttribute(Attributes.MAX_HEALTH);
+//
+//                  if(healthAttribute != null){
+//                     // Wave health is absolute, including for babies and champions.
+//                     healthAttribute.removeModifiers();
+//                     healthAttribute.setBaseValue(baseModHealth * wave);
+//                     mob.setHealth(mob.getMaxHealth());
+//                  }
 
                   if (this.targetVillagerId != null) {
                      mob.targetSelector.addGoal(0, new ProtectVillagerTargetGoal(mob, this.targetVillagerId));

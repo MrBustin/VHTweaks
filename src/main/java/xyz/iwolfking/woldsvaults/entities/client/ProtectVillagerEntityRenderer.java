@@ -12,6 +12,6 @@ public class ProtectVillagerEntityRenderer extends VillagerRenderer {
 
     @Override
     protected void scale(Villager villager, PoseStack poseStack, float partialTickTime) {
-        poseStack.scale(3.0F, 3.0F, 3.0F);
+        poseStack.scale(1.0F, 1.0F, 1.0F);
     }
 }

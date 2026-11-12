@@ -7,7 +7,7 @@ import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.npc.Villager;
+import xyz.iwolfking.woldsvaults.entities.ProtectVillagerEntity;
 
 /** Follows configured Dragon Path Node waypoints before normal combat goals resume. */
 public class ProtectVillagerPathGoal extends GoalTask<Mob> {
@@ -64,7 +64,7 @@ public class ProtectVillagerPathGoal extends GoalTask<Mob> {
     }
 
     private boolean targetsVillager() {
-        return this.getEntity().getTarget() instanceof Villager villager
+        return this.getEntity().getTarget() instanceof ProtectVillagerEntity villager
             && villager.isAlive() && villager.getUUID().equals(this.villagerId);
     }
 

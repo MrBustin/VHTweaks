@@ -74,7 +74,7 @@ public class ModEntities {
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
         PROTECT_VILLAGER = registerLivingWV("protect_villager", EntityType.Builder.of(ProtectVillagerEntity::new, MobCategory.MISC)
-                .sized(1.8F, 5.4F)
+                .sized(0.6F, 1.95F)
                 .clientTrackingRange(10)
                 .setCustomClientFactory((spawnEntity, level) -> new ProtectVillagerEntity(PROTECT_VILLAGER, level)), Villager::createAttributes, event);
         WOLD = registerLivingWV("wold", EntityType.Builder.of(WoldBoss::new, MobCategory.MONSTER)

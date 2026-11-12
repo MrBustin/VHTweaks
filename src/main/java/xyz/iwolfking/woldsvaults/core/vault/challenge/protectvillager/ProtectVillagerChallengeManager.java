@@ -43,9 +43,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.Villager;
+import xyz.iwolfking.woldsvaults.entities.ProtectVillagerEntity;
 import xyz.iwolfking.woldsvaults.WoldsVaults;
 import xyz.iwolfking.woldsvaults.init.ModBlocks;
+import xyz.iwolfking.woldsvaults.init.ModEntities;
 import xyz.iwolfking.woldsvaults.blocks.tiles.challenge.ProtectVillagerControllerProxyBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -148,9 +149,9 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          });
       this.registerZone(world);
       this.spawner.setPathNodes(this.findVillagerPathNodes(world));
-      Villager villager = EntityType.VILLAGER.create(world);
+      ProtectVillagerEntity villager = ModEntities.PROTECT_VILLAGER.create(world);
       if (villager != null) {
-         villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() - 3), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
+         villager.moveTo((double)this.pos.getX() + 0.5, (double)(this.pos.getY() - 5), (double)this.pos.getZ() + 0.5, 0.0F, 0.0F);
          AttributeInstance healthAttribute = villager.getAttribute(Attributes.MAX_HEALTH);
 
          if(healthAttribute != null){
@@ -259,7 +260,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          }
 
          if (this.phase == Phase.IN_WAVE) {
-            if (world.getEntity(this.villagerId) instanceof Villager villager) {
+            if (world.getEntity(this.villagerId) instanceof ProtectVillagerEntity villager) {
                this.villagerHealth = (double)villager.getHealth();
                this.villagerMaxHealth = (double)villager.getMaxHealth();
                if (!villager.isAlive()) {
