@@ -67,7 +67,7 @@ public class ProtectVillagerControllerTileEntity extends ChallengeControllerBloc
       manager.setBlockedAbilities(this.blockedAbilities);
       manager.setBaseMobHealth(this.baseMobHealth);
       manager.setMaxWaves(this.waves.get(JavaRandom.ofInternal(this.level.random.nextLong())));
-      manager.addSuccessActions(this.successActions);
+      manager.setRewardChoiceActions(this.successActions);
       manager.addFailureActions(this.failureActions);
       manager.setRewardActions("Gilded", this.gildedActions);
       manager.setRewardActions("Ornate", this.ornateActions);

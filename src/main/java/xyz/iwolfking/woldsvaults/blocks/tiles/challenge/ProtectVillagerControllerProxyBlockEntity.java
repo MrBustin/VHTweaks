@@ -146,6 +146,7 @@ public class ProtectVillagerControllerProxyBlockEntity extends BlockEntity {
                 if(blockEntity instanceof ProtectVillagerControllerProxyBlockEntity proxy) {
                     proxy.controller = controllerPos;
                     proxy.actions = new ArrayList<>(storedActions);
+                    proxy.label = this.label;
                     proxy.sendUpdates();
                 }
 

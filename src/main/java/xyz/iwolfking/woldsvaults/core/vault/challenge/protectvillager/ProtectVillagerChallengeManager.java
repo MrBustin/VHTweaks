@@ -83,6 +83,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    private final List<ChallengeAction<?>> failureActions = new ArrayList<>();
    private final List<ChallengeAction<?>> scheduledSuccessActions = new ArrayList<>();
    private final List<ChallengeAction<?>> scheduledFailureActions = new ArrayList<>();
+   private final List<ChallengeAction<?>> rewardChoiceActions = new ArrayList<>();
    private UUID villagerId;
    private double villagerHealth;
    private double villagerMaxHealth;
@@ -124,6 +125,11 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
 
    public void addSuccessActions(List<ChallengeAction<?>> actions) {
       this.scheduledSuccessActions.addAll(actions);
+   }
+
+   public void setRewardChoiceActions(List<ChallengeAction<?>> actions) {
+      this.rewardChoiceActions.clear();
+      this.rewardChoiceActions.addAll(actions);
    }
 
    public void addFailureActions(List<ChallengeAction<?>> actions) {
@@ -298,6 +304,17 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
    }
 
    private void spawnRewardProxies(ServerLevel world) {
+      if (!this.rewardChoiceActions.isEmpty()) {
+         List<List<ChallengeAction<?>>> options = new ArrayList<>();
+         for (int i = 0; i < 4; i++) {
+            List<ChallengeAction<?>> scheduled = new ArrayList<>(this.rewardChoiceActions);
+            scheduled.addAll(this.floatingItemActions);
+            options.add(this.computeActions(scheduled, new ArrayList<>(), world));
+         }
+         // Empty labels let the renderer show the resolved rewards, as in Wild West.
+         this.spawnProxies(world, List.of("", "", "", ""), options);
+         return;
+      }
       List<String> categories = List.of("Gilded", "Ornate", "Living", "Coin Piles");
       this.spawnProxies(world, categories, categories.stream().map(this.rewardOptions::get).toList());
    }
@@ -352,6 +369,9 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       }
       if ("Double It".equals(label)) {
          this.actions.addAll(new ArrayList<>(this.actions));
+      } else if (label.isEmpty()) {
+         // These choices were already rolled for display; selecting must not reroll them.
+         this.actions.addAll(proxy.getActions());
       } else if (this.rewardOptions.containsKey(label)) {
          this.scheduledActions.addAll(proxy.getActions());
          List<ChallengeAction<?>> computedActions = this.computeActions(this.scheduledActions, new ArrayList<>(), world);
@@ -544,6 +564,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
          this.writeActionsNbt(nbt, "failureActions", this.failureActions);
          this.writeActionsNbt(nbt, "scheduledSuccessActions", this.scheduledSuccessActions);
          this.writeActionsNbt(nbt, "scheduledFailureActions", this.scheduledFailureActions);
+         this.writeActionsNbt(nbt, "rewardChoiceActions", this.rewardChoiceActions);
          this.writeActionsNbt(nbt, "rewardActions", this.actions);
          this.writeActionsNbt(nbt, "scheduledRewardActions", this.scheduledActions);
          this.writeActionsNbt(nbt, "floatingItemActions", this.floatingItemActions);
@@ -585,6 +606,7 @@ public class ProtectVillagerChallengeManager extends ChallengeManager {
       this.readActionsNbt(nbt, "failureActions", this.failureActions);
       this.readActionsNbt(nbt, "scheduledSuccessActions", this.scheduledSuccessActions);
       this.readActionsNbt(nbt, "scheduledFailureActions", this.scheduledFailureActions);
+      this.readActionsNbt(nbt, "rewardChoiceActions", this.rewardChoiceActions);
       this.readActionsNbt(nbt, "rewardActions", this.actions);
       this.readActionsNbt(nbt, "scheduledRewardActions", this.scheduledActions);
       this.readActionsNbt(nbt, "floatingItemActions", this.floatingItemActions);
