@@ -1,8 +1,9 @@
 package xyz.iwolfking.woldsvaults.jei;
 
-import dev.attackeight.just_enough_vh.jei.TheVaultJEIPlugin;
+import iskallia.vault.client.gui.screen.player.AbstractSkillTabElementContainerScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -58,5 +59,10 @@ public class WoldsVaultsJeiPlugin implements IModPlugin {
         registration.addRecipes(InscriptionBoxRecipeCategory.RECIPE_TYPE, List.of(xyz.iwolfking.woldsvaults.init.ModConfigs.INSCRIPTION_BOX));
         registration.addRecipes(CatalystBoxRecipeCategory.RECIPE_TYPE, List.of(xyz.iwolfking.woldsvaults.init.ModConfigs.CATALYST_BOX));
         registration.addRecipes(VaultarBoxRecipeCategory.RECIPE_TYPE, List.of(xyz.iwolfking.woldsvaults.init.ModConfigs.VAULTAR_BOX));
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addGuiScreenHandler(AbstractSkillTabElementContainerScreen.class, screen -> null);
     }
 }
