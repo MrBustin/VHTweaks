@@ -398,6 +398,8 @@ public class CrystalTraderConfig extends Config {
         private CrystalTraderConfig.InscriptionBuilder inscription;
         @Expose
         private CrystalTraderConfig.CrystalBuilder crystal;
+        @Expose
+        private String challengeCrystalId;
 
         public PoolEntry() {
         }
@@ -443,6 +445,10 @@ public class CrystalTraderConfig extends Config {
 
         public CrystalTraderConfig.CrystalBuilder getCrystal() {
             return this.crystal;
+        }
+
+        public String getChallengeCrystalId() {
+            return this.challengeCrystalId;
         }
     }
 

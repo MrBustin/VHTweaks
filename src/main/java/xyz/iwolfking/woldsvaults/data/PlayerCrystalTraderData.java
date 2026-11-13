@@ -197,10 +197,38 @@ public class PlayerCrystalTraderData extends SavedData {
         ItemStack stack;
         if (poolEntry.getType().equals("random_crystal")) {
             stack = this.buildCrystal(poolEntry.getCrystal(), random, playerVaultLevel);
+        } else if (poolEntry.getType().equals("challenge_crystal")) {
+            stack = this.buildChallengeCrystal(poolEntry.getChallengeCrystalId(), playerVaultLevel);
         } else {
             stack = poolEntry.getItemStack() != null ? poolEntry.getItemStack().copy() : null;
         }
 
+        return stack;
+    }
+
+    private ItemStack buildChallengeCrystal(String challengeCrystalId, int playerVaultLevel) {
+        if (challengeCrystalId == null || iskallia.vault.init.ModConfigs.CHALLENGE_CRYSTALS == null) {
+            return null;
+        }
+
+        iskallia.vault.config.ChallengeCrystalConfig.Entry entry = iskallia.vault.init.ModConfigs.CHALLENGE_CRYSTALS
+                .getChallenge(challengeCrystalId)
+                .orElse(null);
+        if (entry == null) {
+            return null;
+        }
+
+        ItemStack stack = new ItemStack(ModItems.VAULT_CRYSTAL);
+        CrystalData crystal = CrystalData.read(stack);
+        crystal.getProperties().setLevel(playerVaultLevel);
+        crystal.setObjective(entry.getObjective());
+        crystal.setLayout(entry.getLayout());
+        crystal.setTheme(entry.getTheme());
+        crystal.setTime(entry.getTime());
+        crystal.setModifiers(entry.getModifiers());
+        crystal.setHazards(entry.getHazards());
+        crystal.setSigil(entry.getSigil());
+        crystal.write(stack);
         return stack;
     }
 
