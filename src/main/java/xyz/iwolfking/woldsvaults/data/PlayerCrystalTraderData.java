@@ -221,13 +221,14 @@ public class PlayerCrystalTraderData extends SavedData {
         ItemStack stack = new ItemStack(ModItems.VAULT_CRYSTAL);
         CrystalData crystal = CrystalData.read(stack);
         crystal.getProperties().setLevel(playerVaultLevel);
-        crystal.setObjective(entry.getObjective());
-        crystal.setLayout(entry.getLayout());
-        crystal.setTheme(entry.getTheme());
-        crystal.setTime(entry.getTime());
-        crystal.setModifiers(entry.getModifiers());
-        crystal.setHazards(entry.getHazards());
-        crystal.setSigil(entry.getSigil());
+        if (entry.getObjective() != null) crystal.setObjective(entry.getObjective());
+        if (entry.getLayout() != null) crystal.setLayout(entry.getLayout());
+        if (entry.getTheme() != null) crystal.setTheme(entry.getTheme());
+        if (entry.getTime() != null) crystal.setTime(entry.getTime());
+        if (entry.getModifiers() != null) crystal.setModifiers(entry.getModifiers());
+        if (entry.getHazards() != null) crystal.setHazards(entry.getHazards());
+        if (entry.getSigil() != null) crystal.setSigil(entry.getSigil());
+        if (entry.getExhausted() != null) crystal.getProperties().setUnmodifiable(true);
         crystal.write(stack);
         return stack;
     }
