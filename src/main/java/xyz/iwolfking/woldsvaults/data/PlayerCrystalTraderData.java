@@ -80,7 +80,7 @@ public class PlayerCrystalTraderData extends SavedData {
     }
 
     private int calculateSlotCount(int greedTier) {
-        return 8;
+        return 4;
     }
 
     private List<PlayerCrystalTraderData.TradeOffer> rollOffers(int greedTier, int count, int playerVaultLevel) {
