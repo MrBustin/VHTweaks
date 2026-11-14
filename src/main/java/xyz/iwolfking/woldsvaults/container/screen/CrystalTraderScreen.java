@@ -132,12 +132,12 @@ public abstract class CrystalTraderScreen extends AbstractElementContainerScreen
     }
 
     protected void addShopRestockButton() {
-        int iconW = ScreenTextures.CYCLE.width();
-        int btnX = 147 - iconW - 7;
-        this.addContentEl((ButtonElement)((ButtonElement)(new ButtonElement(Spatials.positionXY(btnX, 5), ScreenTextures.CYCLE_BUTTONS, () -> {
-            xyz.iwolfking.woldsvaults.init.additions.ModNetwork.sendToServer(new ServerboundCrystalTraderResetMessage());
-            this.playClick();
-        })).tooltip(Tooltips.single(() -> (new TextComponent("Restock (" + ((CrystalTraderContainer)this.menu).getResetCost() + " Reputation)")).withStyle(((CrystalTraderContainer)this.menu).getReputationBalance() >= ((CrystalTraderContainer)this.menu).getResetCost() ? Style.EMPTY.withColor(-1) : Style.EMPTY.withColor(-43691))))).setDisabled(() -> ((CrystalTraderContainer)this.menu).getReputationBalance() < ((CrystalTraderContainer)this.menu).getResetCost()).layout(this.translateWorldSpatial()));
+//        int iconW = ScreenTextures.CYCLE.width();
+//        int btnX = 147 - iconW - 7;
+//        this.addContentEl((ButtonElement)((ButtonElement)(new ButtonElement(Spatials.positionXY(btnX, 5), ScreenTextures.CYCLE_BUTTONS, () -> {
+//            xyz.iwolfking.woldsvaults.init.additions.ModNetwork.sendToServer(new ServerboundCrystalTraderResetMessage());
+//            this.playClick();
+//        })).tooltip(Tooltips.single(() -> (new TextComponent("Restock (" + ((CrystalTraderContainer)this.menu).getResetCost() + " Reputation)")).withStyle(((CrystalTraderContainer)this.menu).getReputationBalance() >= ((CrystalTraderContainer)this.menu).getResetCost() ? Style.EMPTY.withColor(-1) : Style.EMPTY.withColor(-43691))))).setDisabled(() -> ((CrystalTraderContainer)this.menu).getReputationBalance() < ((CrystalTraderContainer)this.menu).getResetCost()).layout(this.translateWorldSpatial()));
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {

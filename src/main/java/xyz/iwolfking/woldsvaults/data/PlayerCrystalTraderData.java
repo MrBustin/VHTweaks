@@ -18,6 +18,7 @@ import iskallia.vault.world.data.PlayerGreedTreeData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -183,7 +184,16 @@ public class PlayerCrystalTraderData extends SavedData {
                         ItemStack stack = this.buildPoolEntryStack(chosen, random, playerVaultLevel);
                         if (stack != null && !stack.isEmpty()) {
                             int coinCost = chosen.rollCoinCost(random, config.rollCoinCost(entry, random));
-                            return new PlayerCrystalTraderData.TradeOffer(LootInitialization.initializeVaultLoot(stack, playerVaultLevel), coinCost);
+                            ItemStack initializedStack = LootInitialization.initializeVaultLoot(stack, playerVaultLevel);
+                            if (chosen.getNbt() != null && !chosen.getNbt().isBlank()) {
+                                try {
+                                    initializedStack.getOrCreateTag().merge(TagParser.parseTag(chosen.getNbt()));
+                                } catch (com.mojang.brigadier.exceptions.CommandSyntaxException exception) {
+                                    xyz.iwolfking.woldsvaults.WoldsVaults.LOGGER.error(
+                                            "Invalid NBT configured for crystal trader pool '{}'", poolId, exception);
+                                }
+                            }
+                            return new PlayerCrystalTraderData.TradeOffer(initializedStack, coinCost);
                         } else {
                             return null;
                         }
