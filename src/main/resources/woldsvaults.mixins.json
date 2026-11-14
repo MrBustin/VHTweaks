@@ -215,6 +215,7 @@
     "the_vault.MixinCardItem",
     "the_vault.MixinCatalystItem",
     "the_vault.MixinToolItemRenderer",
+    "the_vault.MixinTalentPanRegion",
     "the_vault.custom.MixinPlayerCustomisationStationScreen",
     "the_vault.custom.MixinTransmogTableScreen",
     "the_vault.custom.MixinUniqueCodexScreen",
