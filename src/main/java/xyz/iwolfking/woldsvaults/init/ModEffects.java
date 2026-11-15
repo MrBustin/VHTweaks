@@ -30,6 +30,7 @@ public class ModEffects {
     public static final MobEffect BURN = new PercentBurnEffect();
     public static final MobEffect STACKING_BURN = new StackingBurnEffect();
     public static final ThresholdEffect BLOOD_CHAKRA = new ThresholdEffect(0xa83262, WoldsVaults.id("blood_chakra"));
+    public static final ThresholdEffect DISARMING_MOMENTUM = new ThresholdEffect(0xa83262, WoldsVaults.id("disarming_momentum"));
 
     public static final ToggleAbilityEffect EMPOWER_FIRE_AURA = new EmpowerFireAuraAbility.EmpowerFireAuraEffect(Color.WHITE.getRGB(), WoldsVaults.id("empower_fire_aura"));
 
@@ -52,6 +53,7 @@ public class ModEffects {
                 BURN,
                 STACKING_BURN,
                 BLOOD_CHAKRA,
+                DISARMING_MOMENTUM,
                 EMPOWER_FIRE_AURA);
     }
 }
