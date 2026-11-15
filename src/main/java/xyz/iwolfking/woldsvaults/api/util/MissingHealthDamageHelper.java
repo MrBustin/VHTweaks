@@ -1,6 +1,8 @@
 package xyz.iwolfking.woldsvaults.api.util;
 
 import atomicstryker.infernalmobs.common.InfernalMobsCore;
+import iskallia.vault.core.vault.modifier.spi.predicate.IModifierImmunity;
+import iskallia.vault.entity.VaultBoss;
 import iskallia.vault.entity.boss.ArtifactBossEntity;
 import iskallia.vault.entity.boss.TheVesselEntity;
 import iskallia.vault.entity.champion.ChampionLogic;
@@ -20,7 +22,7 @@ public class MissingHealthDamageHelper {
         else if(target instanceof ArtifactBossEntity) {
             return 0.1F;
         }
-        else if(VaultMobUtils.isSpecialMob(target)) {
+        else if(isSpecialMob(target)) {
             return 0.25F;
         }
         else if(ChampionLogic.isChampion(target) || InfernalMobsCore.getMobModifiers(target) != null) {
@@ -32,6 +34,14 @@ public class MissingHealthDamageHelper {
         else {
             return 1.0F;
         }
+    }
+
+    public static boolean isEliteMob(Entity entity) {
+        return entity instanceof IModifierImmunity;
+    }
+
+    public static boolean isSpecialMob(Entity entity) {
+        return isEliteMob(entity) || ChampionLogic.isChampion(entity) || entity instanceof VaultBoss;
     }
 
 
