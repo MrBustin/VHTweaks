@@ -83,7 +83,7 @@ public class MythicalModifier extends VaultModifier<MythicalModifier.Properties>
             Item gearItem = data.getLoot().get(lootIndex).getItem();
             ItemStack stack = new ItemStack(gearItem);
             VaultGearData gearData = VaultGearData.read(stack);
-            gearData.setItemLevel(vault.get(Vault.LEVEL).get());
+            gearData.setItemLevel(100);
             gearData.setRarity(VaultGearRarity.valueOf("MYTHIC"));
             gearData.setState(VaultGearState.UNIDENTIFIED);
             gearData.createOrReplaceAttributeValue(ModGearAttributes.GEAR_ROLL_TYPE, "Mythic");
