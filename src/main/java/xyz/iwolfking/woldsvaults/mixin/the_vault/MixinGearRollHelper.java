@@ -39,13 +39,24 @@ public class MixinGearRollHelper {
 
     @Inject(method = "canGenerateLegendaryModifier", at = @At(value = "TAIL"), cancellable = true)
     private static void canGenerateLegendaryModifier(Player player, VaultGearData data, CallbackInfoReturnable<Boolean> cir) {
-        if(data.equals(VaultGearData.empty())) {
+        if (data.equals(VaultGearData.empty())) {
             return;
         }
-        ExpertiseTree expertises = PlayerExpertisesData.get((ServerLevel) player.getLevel()).getExpertises(player);
+
+        if (data.getFirstValue(ModGearAttributes.GEAR_ROLL_TYPE_POOL).isPresent()) {
+            if (data.getFirstValue(ModGearAttributes.GEAR_ROLL_TYPE_POOL).get().equals("jewel_crafted") && rand.nextFloat() < 0.02F) {
+                cir.setReturnValue(true);
+            }
+        }
+
+        if (player == null || !(player.getLevel() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        ExpertiseTree expertises = PlayerExpertisesData.get(serverLevel).getExpertises(player);
         float extraLegendaryChance = 0.0F;
 
-        for(LegendaryExpertise expertise : expertises.getAll(LegendaryExpertise.class, Skill::isUnlocked)) {
+        for (LegendaryExpertise expertise : expertises.getAll(LegendaryExpertise.class, Skill::isUnlocked)) {
             extraLegendaryChance += expertise.getExtraLegendaryChance();
         }
 
@@ -55,14 +66,7 @@ public class MixinGearRollHelper {
             for (CraftsmanExpertise craftsmanExpertise : expertises.getAll(CraftsmanExpertise.class, Skill::isUnlocked)) {
                 craftsmanLevel = craftsmanExpertise.getCraftsmanLevel();
             }
-            if(craftsmanLevel > 0) {
-                cir.setReturnValue(true);
-            }
-
-        }
-
-        if(data.getFirstValue(ModGearAttributes.GEAR_ROLL_TYPE_POOL).isPresent()) {
-            if(data.getFirstValue(ModGearAttributes.GEAR_ROLL_TYPE_POOL).get().equals("jewel_crafted") && rand.nextFloat() < 0.02F) {
+            if (craftsmanLevel > 0) {
                 cir.setReturnValue(true);
             }
         }
@@ -98,8 +102,8 @@ public class MixinGearRollHelper {
         int itemLevel = data.getItemLevel();
         float increasedSpecialRollsChance = 0.0F;
 
-        if(player != null) {
-            ExpertiseTree expertises = PlayerExpertisesData.get((ServerLevel) player.getLevel()).getExpertises(player);
+        if (player != null && player.getLevel() instanceof ServerLevel serverLevel) {
+            ExpertiseTree expertises = PlayerExpertisesData.get(serverLevel).getExpertises(player);
             for (EclecticGearExpertise eclecticGearExpertise : expertises.getAll(EclecticGearExpertise.class, Skill::isUnlocked)) {
                 increasedSpecialRollsChance += eclecticGearExpertise.getIncreasedChance();
             }
